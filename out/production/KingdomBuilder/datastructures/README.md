@@ -1,0 +1,1 @@
+This directory is to be used in order to store files for datastructures.
