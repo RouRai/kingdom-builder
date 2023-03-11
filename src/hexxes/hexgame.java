@@ -109,6 +109,7 @@ public class hexgame
 					hexmech.drawHex(i,j,g2);
 				}
 			}
+			// UH AM TESTING
 			//fill in hexes
 			for (int i=0;i<BSIZE;i++) {
 				for (int j=0;j<BSIZE;j++) {					
