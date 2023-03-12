@@ -15,6 +15,7 @@ public class KBWindow extends JFrame {
       pane = new KBPanel ();
       pane.setLayout(null);
       pane.setBounds(0,0,1920, 1080);
+      setResizable(false);
       pane.setBorder(BorderFactory.createLineBorder(Color.black));
 
 

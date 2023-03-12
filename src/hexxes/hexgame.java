@@ -118,9 +118,6 @@ public class hexgame
 					hexmech.fillHex(i,j,board[i][j],g2);
 				}
 			}
-
-			//g.setColor(Color.RED);
-			//g.drawLine(mPt.x,mPt.y, mPt.x,mPt.y);
 		}
 
 		class MyMouseListener extends MouseAdapter	{	//inner class inside DrawingPanel 
