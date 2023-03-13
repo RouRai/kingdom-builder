@@ -17,7 +17,7 @@ public class HexButton extends JButton {
 
    /**
     * Creates a hexagonal button with a single character label
-    * @param character
+    * //@param character
     */
    public HexButton() {
       this.calculateBounds();

@@ -12,9 +12,10 @@ public class KBPanel extends JPanel {
    //Images
    public BufferedImage[] boards, actionTiles, charCards, landCards, settlements;
    public BufferedImage background;
-
-   KBPanel (){
-      setLayout(null);
+   private CardLayout cl;
+   public KBPanel (CardLayout c){
+      //setLayout(null);
+      cl = c;
       boards = new BufferedImage [16];
       settlements = new BufferedImage [4];
       landCards = new BufferedImage [5];
@@ -55,7 +56,7 @@ public class KBPanel extends JPanel {
       super.paintComponent(g2);
 
       // 1 -- BACKGROUND
-      g2.drawImage(background,0, 0,1920, 1050, null);
+      g2.drawImage(background,0, 0, 1536, 864, null);
       g2.setBackground(Color.BLACK);
       //g2.fillRect(0,0,2000,1000);
      // g2.drawImage(boards[0], 0, 0,400, 400, null);
