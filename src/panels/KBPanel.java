@@ -1,5 +1,6 @@
 package panels;
 
+import game.Constants;
 import hexxes.hexmech;
 
 import javax.imageio.ImageIO;
@@ -56,7 +57,7 @@ public class KBPanel extends JPanel {
       super.paintComponent(g2);
 
       // 1 -- BACKGROUND
-      g2.drawImage(background,0, 0, 1536, 864, null);
+      g2.drawImage(background,0, 0, Constants.WIDTH, Constants.HEIGHT, null);
       g2.setBackground(Color.BLACK);
       //g2.fillRect(0,0,2000,1000);
      // g2.drawImage(boards[0], 0, 0,400, 400, null);

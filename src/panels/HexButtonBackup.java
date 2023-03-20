@@ -119,7 +119,6 @@ public class HexButton extends JButton {
       graphics.setColor(getBackground());
       graphics.drawPolygon(inside);
       graphics.fillPolygon(inside);
-
       // Draw the label
       Font font = new Font("Arial", Font.BOLD, 64);
       graphics.setFont(font);
@@ -138,8 +137,8 @@ public class HexButton extends JButton {
     */
    public void click() {
       this.clicked = true;
-      this.setBackground(Color.MAGENTA);
-      this.setForeground(Color.BLACK);
+      //this.setBackground(Color.MAGENTA);
+      //this.setForeground(Color.BLACK);
    }
 
    /**

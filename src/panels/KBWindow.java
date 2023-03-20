@@ -43,5 +43,14 @@ public class KBWindow extends JFrame {
    public static void setup(){
       panels.put(Constants.GAME_PANEL, new KBPanel(cl));
       Constants.PANEL_CONT.add(panels.get(Constants.GAME_PANEL), Constants.GAME_PANEL);
+      panels.put(Constants.END_PANEL, new EndPanel(cl));
+      Constants.PANEL_CONT.add(panels.get(Constants.END_PANEL), Constants.END_PANEL);
+      cl.show(Constants.PANEL_CONT, Constants.GAME_PANEL);
+   }
+   public static void terminate(){
+      Constants.PANEL_CONT.remove(panels.get(Constants.END_PANEL));
+      panels.remove(Constants.END_PANEL);
+      Constants.PANEL_CONT.remove(panels.get(Constants.GAME_PANEL));
+      panels.remove(Constants.GAME_PANEL);
    }
 }

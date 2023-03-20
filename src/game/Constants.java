@@ -5,8 +5,8 @@ import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 public class Constants {
     // Screen dimensions
-    public static final int WIDTH = 1920;
-    public static final int HEIGHT = 1080;
+    public static final int WIDTH = 1536;
+    public static final int HEIGHT = 864;
     /*
     public static final int WIDTH = 1536;
     public static final int HEIGHT = 864;
