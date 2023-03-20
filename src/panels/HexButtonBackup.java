@@ -10,7 +10,7 @@ import java.awt.Polygon;
 import java.awt.Rectangle;
 import javax.swing.JButton;
 
-public class HexButton extends JButton {
+public class HexButtonBackup extends JButton {
    Polygon bounds;
    Character character;
    Boolean clicked;
@@ -19,7 +19,7 @@ public class HexButton extends JButton {
     * Creates a hexagonal button with a single character label
     * //@param character
     */
-   public HexButton() {
+   public HexButtonBackup() {
       this.calculateBounds();
       this.setBackground(Color.YELLOW);
       this.setForeground(Color.RED);
