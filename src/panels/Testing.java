@@ -4,7 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class Testing extends JFrame{
-   HexButton jbutton1;
+   HexButtonBackup jbutton1;
    private Container win;
    private JButton button1;
 
@@ -12,7 +12,7 @@ public class Testing extends JFrame{
       win = getContentPane();
       win.setLayout(null);
 
-      jbutton1 = new HexButton();
+      jbutton1 = new HexButtonBackup();
       jbutton1.setSize(20,20);
       jbutton1.setLocation(10,40);
       //jbutton1.addActionListener(this);
