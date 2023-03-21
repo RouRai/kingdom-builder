@@ -1,7 +1,6 @@
 package panels;
 
 import game.Constants;
-import hexxes.hexmech;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -64,8 +63,5 @@ public class KBPanel extends JPanel {
 
 
       g2.setColor(new Color (0,0,0,50));
-
-
    }
-
 }
