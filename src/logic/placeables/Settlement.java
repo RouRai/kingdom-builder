@@ -8,4 +8,8 @@ public class Settlement {
     public Settlement (Color playerColor) {
         settlementColor = playerColor;
     }
+
+    public Color getSettlementColor() {
+        return settlementColor;
+    }
 }

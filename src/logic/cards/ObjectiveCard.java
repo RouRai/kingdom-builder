@@ -8,4 +8,8 @@ public class ObjectiveCard {
     public ObjectiveCard (ObjectiveEnum type) {
         this.type = type;
     }
+
+    public ObjectiveEnum getType () {
+        return type;
+    }
 }

@@ -9,4 +9,8 @@ public class TerrainCard {
     public TerrainCard (TerrainEnum type) {
         this.type = type;
     }
+
+    public TerrainEnum getType() {
+        return type;
+    }
 }

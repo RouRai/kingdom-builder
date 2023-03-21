@@ -9,4 +9,8 @@ public class Board {
     public Board () {
         board = new TerrainTile[20][20];
     }
+
+    public TerrainTile[][] getBoard () {
+        return board;
+    }
 }

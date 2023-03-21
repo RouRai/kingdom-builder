@@ -7,9 +7,9 @@ import java.util.ArrayList;
 
 public class Player {
 
-    private ArrayList<Settlement> settlements;
+    private final ArrayList<Settlement> settlements;
     private int settlementsRemaining;
-    private Color playerColor;
+    private final Color playerColor;
 
 
     public Player (Color playerColor) {
@@ -26,4 +26,19 @@ public class Player {
         return new Settlement(playerColor);
     }
 
+    public ArrayList<Settlement> getSettlements() {
+        return settlements;
+    }
+
+    public int getSettlementsRemaining() {
+        return settlementsRemaining;
+    }
+
+    public Color getPlayerColor() {
+        return playerColor;
+    }
+
+    public void setSettlementsRemaining(int settlementsRemaining) {
+        this.settlementsRemaining = settlementsRemaining;
+    }
 }
