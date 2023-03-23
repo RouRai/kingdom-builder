@@ -6,9 +6,11 @@ import logic.constantFolder.TerrainEnum;
 import java.io.File;
 import java.util.ArrayList;
 
-public class BoardGraph extends Graph {
+public class TerrainGraph extends Graph<TerrainNode> {
 
-    public BoardGraph (ArrayList<File> boardTextFiles) {
+    public TerrainGraph(ArrayList<File> boardTextFiles) {
         super(new TerrainNode(TerrainEnum.CANYON));
     }
+
+
 }

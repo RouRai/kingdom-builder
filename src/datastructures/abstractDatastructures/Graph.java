@@ -1,16 +1,14 @@
 package datastructures.abstractDatastructures;
 
-public class Graph{
+public class Graph<T extends Node<T>>{
 
-    private final Node origin;
+    private final T origin;
 
-    public Graph(Node origin) {
+    public Graph(T origin) {
         this.origin = origin;
     }
 
-    public Node getOrigin() {
+    public T getOrigin() {
         return origin;
     }
-
-
 }
