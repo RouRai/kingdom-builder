@@ -1,4 +1,4 @@
-package datastructures.abstractDatastructures;
+package datastructures.baseDatastructures;
 
 import java.util.ArrayList;
 

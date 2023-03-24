@@ -1,6 +1,6 @@
 package datastructures.gameDatastructures;
 
-import datastructures.abstractDatastructures.Node;
+import datastructures.baseDatastructures.Node;
 import logic.constantFolder.TerrainEnum;
 import logic.tiles.TerrainTile;
 

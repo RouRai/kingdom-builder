@@ -6,4 +6,5 @@ package logic.constantFolder;
  */
 public enum ObjectiveEnum {
     CITIZEN, DISCOVERER, FARMER, FISHERMAN, HERMIT, KNIGHT, LORD, MERCHANT, MINER, WORKER
+
 }
