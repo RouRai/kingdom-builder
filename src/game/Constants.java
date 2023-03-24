@@ -22,7 +22,7 @@ public class Constants {
     // Gets Image from image folder
     public static BufferedImage getImage(String name) {
         try{
-            return ImageIO.read(Constants.class.getResource(Constants.IMG_DIRECTORY + name + ".jpg"));
+            return ImageIO.read(Constants.class.getResource(Constants.IMG_DIRECTORY + name + ".png"));
         } catch (Exception e) {
             e.printStackTrace();
             return null;

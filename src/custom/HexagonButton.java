@@ -1,5 +1,6 @@
-package panels;
+package custom;
 import javax.swing.*;
+import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.*;
 
@@ -8,14 +9,17 @@ public class HexagonButton extends JButton {
     private int x[];
     private int y[];
     private double angle;
+    private boolean draw;
     private Polygon polygon;
-    private Color c;
+    //private Color color;
     public HexagonButton(){
         super();
         n = 6;
         x = new int[n];
         y = new int [n];
         angle = 2*Math.PI/n;
+        draw = false;
+        //border = BorderFactory.createLineBorder(new Color(90, 219, 181), 10);
         Dimension size = getPreferredSize();
         size.width = size.height = Math.max(size.width, size.height);
         setPreferredSize(size);
@@ -23,11 +27,11 @@ public class HexagonButton extends JButton {
     }
 
     public void paintComponent(Graphics g) {
-        if (c == null) {
-            g.setColor(Color.lightGray);
-        } else {
-            g.setColor(c);
-        }
+        this.setOpaque(false);
+        this.setContentAreaFilled(false);
+        this.setBorderPainted(false);
+        //this.setAlignmentX();
+        g.setColor(color);
         int x0 = getSize().width/2;
         int y0 = getSize().height/2;
         for(int i=0; i<n; i++) {
@@ -35,23 +39,13 @@ public class HexagonButton extends JButton {
             x[i] = x0 + (int)Math.round((getWidth()/2)*Math.cos(v + Math.PI/2));
             y[i ] = y0 + (int)Math.round((getHeight()/2)*Math.sin(v + Math.PI/2));
         }
-        g.fillPolygon(x, y, n);
-
+        if(true)
+            //g.fillPolygon(x, y, n);
+            g.setColor(Color.BLACK);
+            g.drawPolygon(x, y, n);
+            //this.setIcon(icon);
         super.paintComponent(g);
     }
-
-    public void paintBorder(Graphics g) {
-        g.setColor(c);
-        int x0 = getSize().width/2;
-        int y0 = getSize().height/2;
-        for(int i=0; i<n; i++) {
-            double v = i*angle;
-            x[i] = x0 + (int)Math.round((getWidth()/2)*Math.cos(v + Math.PI/2));
-            y[i] = y0 + (int)Math.round((getHeight()/2)*Math.sin(v + Math.PI/2));
-        }
-        g.drawPolygon(x, y, n);
-    }
-
     public boolean contains(int x1, int y1) {
         if (polygon == null ||
                 !polygon.getBounds().equals(getBounds())) {
@@ -66,8 +60,12 @@ public class HexagonButton extends JButton {
         }
         return polygon.contains(x1, y1);
     }
-    //this method sets the color of the Hexagon
-    public void setColor(Color col){
-        c = col;
+    public void setVisible(){
+        draw = true;
     }
+
+    public void setColor(Color c){
+        color = c;
+    }
+
 }
