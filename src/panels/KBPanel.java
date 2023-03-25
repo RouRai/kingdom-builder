@@ -35,6 +35,7 @@ public class KBPanel extends JPanel {
          boards[3] = ImageIO.read(getClass().getResource("/images/boards/horse.png"));
          boards[4] = ImageIO.read(getClass().getResource("/images/boards/house.png"));
          boards[5] = ImageIO.read(getClass().getResource("/images/boards/stone.png"));
+         //
 
 
          // 3 -- SETTLEMENTS & MOVABLE PARTS (IE. TEXT,
