@@ -76,79 +76,69 @@ public class KBPanel extends JPanel implements ActionListener {
       g.setFont(new Font("TimesRoman", Font.PLAIN, 20));
       super.paintComponent(g2);
       // 1 -- BACKGROUND
-      g2.drawImage(background,0, 0, Constants.WIDTH, Constants.HEIGHT, null);
+      //g2.drawImage(background,0, 0, Constants.WIDTH, Constants.HEIGHT, null);
       g2.setBackground(Color.BLACK);
-      //g2.fillRect(0,0,2000,1000);
-     // g2.drawImage(boards[0], 0, 0,400, 400, null);
+      //image for top right board
+      g2.drawImage(boards[1], 423, 6, 435, 365, null);
       //top right board
       double x = 423;
       double y = 6;
       for(int r = 0; r < 10; r++){
          for(int c = 0; c < 10; c++){
             if(r % 2 == 0){
-               board[r][c].setColor(Color.RED);
                board[r][c].setBounds((int)(x + c * 41.2), (int)y, 46, 46);
             } else{
-               board[r][c].setColor(Color.yellow);
                board[r][c].setBounds((int)(x + 21 + c * 41.3), (int)y, 46, 46);
             }
-            g2.drawImage(highlight, board[r][c].getX() - 40, board[r][c].getY() - 35, 120, 120, null);
-            //board[r][c].setIcon(highlight);
-            //gameButton.setIcon(icon);
+            //board[r][c].drawHighlight(g2, highlight);
          }
          y+=35.5;
       }
+      //image for top left board
+      g2.drawImage(boards[1], 10, 6, 435, 365, null);
       //top left board
       x = 10;
       y = 6;
       for(int r = 0; r < 10; r++){
          for(int c = 0; c < 10; c++){
             if(r % 2 == 0){
-               board2[r][c].setColor(Color.RED);
                board2[r][c].setBounds((int)(x + c * 41.2), (int)y, 46, 46);
             } else{
-               board2[r][c].setColor(Color.yellow);
                board2[r][c].setBounds((int)(x + 21 + c * 41.3), (int)y, 46, 46);
             }
-            g2.drawImage(highlight, board2[r][c].getX() - 40, board2[r][c].getY() - 35, 120, 120, null);
-            //board[r][c].setIcon(highlight);
-            //gameButton.setIcon(icon);
+            //board2[r][c].drawHighlight(g2, highlight);
          }
          y+=35.5;
       }
+      //image for bottom left board
+      g2.drawImage(boards[1], 10, 360, 435, 365, null);
       //bottom left board
       x = 10;
-      y = 365;
+      y = 360;
       for(int r = 0; r < 10; r++){
          for(int c = 0; c < 10; c++){
             if(r % 2 == 0){
-               board3[r][c].setColor(Color.RED);
                board3[r][c].setBounds((int)(x + c * 41.2), (int)y, 46, 46);
             } else{
-               board3[r][c].setColor(Color.yellow);
                board3[r][c].setBounds((int)(x + 21 + c * 41.3), (int)y, 46, 46);
             }
-            g2.drawImage(highlight, board3[r][c].getX() - 40, board3[r][c].getY() - 35, 120, 120, null);
-            //board[r][c].setIcon(highlight);
-            //gameButton.setIcon(icon);
+            //board3[r][c].drawHighlight(g2, highlight);
          }
          y+=35.5;
       }
+      //image for bottom right board
+      g2.drawImage(boards[1], 423, 360, 435, 365, null);
       //bottom right board
       x = 423;
-      y = 365;
+      y = 360;
       for(int r = 0; r < 10; r++){
          for(int c = 0; c < 10; c++){
             if(r % 2 == 0){
-               board4[r][c].setColor(Color.RED);
                board4[r][c].setBounds((int)(x + c * 41.2), (int)y, 46, 46);
             } else{
-               board4[r][c].setColor(Color.yellow);
                board4[r][c].setBounds((int)(x + 21 + c * 41.3), (int)y, 46, 46);
             }
-            g2.drawImage(highlight, board4[r][c].getX() - 40, board4[r][c].getY() - 35, 120, 120, null);
-            //board[r][c].setIcon(highlight);
-            //gameButton.setIcon(icon);
+            //board4[r][c].drawHighlight(g2, highlight);
          }
          y+=35.5;
       }

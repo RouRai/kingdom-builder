@@ -3,6 +3,7 @@ import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.image.BufferedImage;
 
 public class HexagonButton extends JButton {
     private int n;
@@ -12,6 +13,7 @@ public class HexagonButton extends JButton {
     private boolean draw;
     private Polygon polygon;
     private Color color;
+    private BufferedImage settlement;
     public HexagonButton(){
         super();
         n = 6;
@@ -39,11 +41,12 @@ public class HexagonButton extends JButton {
             x[i] = x0 + (int)Math.round((getWidth()/2)*Math.cos(v + Math.PI/2));
             y[i ] = y0 + (int)Math.round((getHeight()/2)*Math.sin(v + Math.PI/2));
         }
-        if(true)
-            //g.fillPolygon(x, y, n);
+        if(draw) {
+            g.fillPolygon(x, y, n);
             g.setColor(Color.BLACK);
             g.drawPolygon(x, y, n);
-            //this.setIcon(icon);
+        }
+        g.drawPolygon(x, y, n);
         super.paintComponent(g);
     }
     public boolean contains(int x1, int y1) {
@@ -60,12 +63,17 @@ public class HexagonButton extends JButton {
         }
         return polygon.contains(x1, y1);
     }
-    public void setVisible(){
-        draw = true;
+    public void setChangeVisible(boolean b){
+        draw = b;
     }
 
     public void setColor(Color c){
         color = c;
     }
-
+    public void drawHighlight(Graphics2D g, BufferedImage highlight){
+        g.drawImage(highlight, this.getX() - 40, this.getY() - 35, 120, 120, null);
+    }
+    public void setSettlement(BufferedImage settle){
+        settlement = settle;
+    }
 }
