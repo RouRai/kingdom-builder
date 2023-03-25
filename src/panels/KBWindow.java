@@ -3,9 +3,9 @@ package panels;
 import javax.swing.*;
 import java.awt.*;
 import java.util.HashMap;
-
 import game.Constants;
 import game.Constants.*;
+
 public class KBWindow extends JFrame {
 
    private Container win;

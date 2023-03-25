@@ -2,7 +2,7 @@ package panels;
 
 import custom.HexagonButton;
 import game.Constants;
-import hexxes.hexmech;
+//import hexxes.hexmech;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;

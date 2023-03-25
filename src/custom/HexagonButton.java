@@ -11,7 +11,7 @@ public class HexagonButton extends JButton {
     private double angle;
     private boolean draw;
     private Polygon polygon;
-    //private Color color;
+    private Color color;
     public HexagonButton(){
         super();
         n = 6;
