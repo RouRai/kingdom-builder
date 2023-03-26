@@ -43,22 +43,18 @@ public class KBPanel extends JPanel implements ActionListener {
          }
       }
       try{
-
          // 1 -- BACKGROUND - BOTTOM LAYER
-         background = ImageIO.read(getClass().getResource("/images/graphicsExtra/1 - overall position.png.png"));
+         background = ImageIO.read(getClass().getResource("/images/backgroundImages/game play.png"));
          highlight = ImageIO.read(getClass().getResource("/images/graphicsExtra/Hex.png"));
 
          // 2 -- BOARDS,
-
          boards[0] = ImageIO.read(getClass().getResource("/images/boards/beach.png"));
          boards[1] = ImageIO.read(getClass().getResource("/images/boards/boat.png"));
          boards[2] = ImageIO.read(getClass().getResource("/images/boards/farm.png"));
          boards[3] = ImageIO.read(getClass().getResource("/images/boards/horse.png"));
          boards[4] = ImageIO.read(getClass().getResource("/images/boards/house.png"));
          boards[5] = ImageIO.read(getClass().getResource("/images/boards/stone.png"));
-
-
-         // 3 -- SETTLEMENTS & MOVABLE PARTS (IE. TEXT,
+         // 3 -- SETTLEMENTS
 
          // 4 - TOP BORDERS & EXTRAS - TOP LAYER
 
@@ -76,7 +72,7 @@ public class KBPanel extends JPanel implements ActionListener {
       g.setFont(new Font("TimesRoman", Font.PLAIN, 20));
       super.paintComponent(g2);
       // 1 -- BACKGROUND
-      g2.drawImage(background,0, 0, Constants.WIDTH, Constants.HEIGHT, null);
+      g2.drawImage(background,0, 0, Constants.WIDTH, Constants.HEIGHT-8, null);
       g2.setBackground(Color.BLACK);
       //g2.fillRect(0,0,2000,1000);
      // g2.drawImage(boards[0], 0, 0,400, 400, null);
