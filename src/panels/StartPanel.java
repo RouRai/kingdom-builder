@@ -1,6 +1,7 @@
 package panels;
 
 import custom.HexagonButton;
+import custom.TranslucentButton;
 import game.Constants;
 
 import javax.imageio.ImageIO;
@@ -15,11 +16,20 @@ import java.io.IOException;
 public class StartPanel extends JPanel implements ActionListener {
     private CardLayout cl;
     private BufferedImage bg;
-    private JButton gameButton;
+    private TranslucentButton gameButton;
     private HexagonButton test;
+    private BufferedImage startBackground;
     private HexagonButton[][] board;
     public StartPanel(CardLayout c){
+        //background image
+        try{
+        startBackground = ImageIO.read(getClass().getResource("/images/backgroundImages/startPage.png"));
+        } catch (Exception ex) {
+            System.out.println("----------------------------------------- Image Error");
+        }
+        // cardlayout
         cl = c;
+        //setting up buttons
         setUpButtons();
         board = new HexagonButton[10][10];
         for(int r = 0; r < 10; r++){
@@ -31,6 +41,12 @@ public class StartPanel extends JPanel implements ActionListener {
     }
     public void paintComponent(Graphics g){
         super.paintComponent(g);
+        // background
+        g.drawImage(startBackground, 0,0, Constants.WIDTH, Constants.HEIGHT, null);
+        gameButton.setBounds(90,380,510,150);
+        //Start Button
+
+        //Button outlines
         ImageIcon highlight = new ImageIcon(getClass().getResource("/images/graphicsExtra/Hex.png"));
         test.setBounds(0, 90, 46, 46);
         test.setIcon(highlight);
@@ -70,7 +86,8 @@ public class StartPanel extends JPanel implements ActionListener {
     private void setUpButtons(){
         //gameButton = new JButton("Start");
         //gameButton = new JButton(new ImageIcon(getClass().getResource("images/settlementIcons/Black_Settlement - Copy.png")));
-        gameButton = new JButton("Start");
+        gameButton = new TranslucentButton(40,300,300,40);
+
         //gameButton.setIcon(icon);
         test = new HexagonButton();
         add(gameButton);
