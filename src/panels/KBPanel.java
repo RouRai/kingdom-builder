@@ -14,14 +14,15 @@ import java.awt.image.BufferedImage;
 public class KBPanel extends JPanel implements ActionListener {
 
    //Images
-   public BufferedImage[] boards, actionTiles, charCards, landCards, settlements;
+   public BufferedImage[] boards, flippedBoards, actionTiles, charCards, landCards, settlements;
    public BufferedImage background, highlight;
    private CardLayout cl;
    private HexagonButton[][] board, board2, board3, board4;
    public KBPanel (CardLayout c){
       //setLayout(null);
       cl = c;
-      boards = new BufferedImage [16];
+      boards = new BufferedImage [8];
+      flippedBoards = new BufferedImage [16];
       settlements = new BufferedImage [4];
       landCards = new BufferedImage [5];
       charCards = new BufferedImage [10];
@@ -47,16 +48,40 @@ public class KBPanel extends JPanel implements ActionListener {
          background = ImageIO.read(getClass().getResource("/images/backgroundImages/game play.png"));
          highlight = ImageIO.read(getClass().getResource("/images/graphicsExtra/Hex.png"));
 
-         // 2 -- BOARDS,
+         // 2 -- BOARDS
          boards[0] = ImageIO.read(getClass().getResource("/images/boards/beach.png"));
          boards[1] = ImageIO.read(getClass().getResource("/images/boards/boat.png"));
          boards[2] = ImageIO.read(getClass().getResource("/images/boards/farm.png"));
          boards[3] = ImageIO.read(getClass().getResource("/images/boards/horse.png"));
          boards[4] = ImageIO.read(getClass().getResource("/images/boards/house.png"));
          boards[5] = ImageIO.read(getClass().getResource("/images/boards/stone.png"));
+         boards[6] = ImageIO.read(getClass().getResource("/images/boards/tower.png"));
+         boards[7] = ImageIO.read(getClass().getResource("/images/boards/Tavern.png"));
+         // 2.5 -- FLIPPED BOARDS
+         boards[0] = ImageIO.read(getClass().getResource("/images/boards/beach_flipped.png"));
+         boards[1] = ImageIO.read(getClass().getResource("/images/boards/boat_flipped.png"));
+         boards[2] = ImageIO.read(getClass().getResource("/images/boards/farm_flipped.png"));
+         boards[3] = ImageIO.read(getClass().getResource("/images/boards/horse_flipped.png"));
+         boards[4] = ImageIO.read(getClass().getResource("/images/boards/house_flipped.png"));
+         boards[5] = ImageIO.read(getClass().getResource("/images/boards/oracle_flipped.png"));
+         boards[6] = ImageIO.read(getClass().getResource("/images/boards/tower_flipped.png"));
+         boards[7] = ImageIO.read(getClass().getResource("/images/boards/tavern_flipped.png"));
          // 3 -- SETTLEMENTS
+         settlements[0] = ImageIO.read(getClass().getResource("/images/settlementIcons/Black_Settlement - Copy.png"));
+         settlements[1] = ImageIO.read(getClass().getResource("/images/settlementIcons/Blue_Settlement - Copy.png"));
+         settlements[2] = ImageIO.read(getClass().getResource("/images/settlementIcons/Red_Settlement - Copy.png"));
+         settlements[3] = ImageIO.read(getClass().getResource("/images/settlementIcons/White_Settlement - Copy.png"));
+         // 4 - ACTIONTILES
+         actionTiles[0] = ImageIO.read(getClass().getResource("/images/actionTiles/barn_Tile.png"));
+         actionTiles[1] = ImageIO.read(getClass().getResource("/images/actionTiles/farm_Tile.png"));
+         actionTiles[2] = ImageIO.read(getClass().getResource("/images/actionTiles/harbor_Tile.png"));
+         actionTiles[3] = ImageIO.read(getClass().getResource("/images/actionTiles/oasis_Tile.png"));
+         actionTiles[4] = ImageIO.read(getClass().getResource("/images/actionTiles/oracle_Tile.png"));
+         actionTiles[5] = ImageIO.read(getClass().getResource("/images/actionTiles/paddock_Tile.png"));
+         actionTiles[6] = ImageIO.read(getClass().getResource("/images/actionTiles/tavern_Tile.png"));
+         actionTiles[7] = ImageIO.read(getClass().getResource("/images/actionTiles/tower_Tile.png"));
 
-         // 4 - TOP BORDERS & EXTRAS - TOP LAYER
+
 
 
       } catch (Exception ex) {
