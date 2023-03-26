@@ -12,12 +12,13 @@ public class HexagonButton extends JButton {
     private boolean draw;
     private Polygon polygon;
     private Color color;
+    private int quadNum, row, col;
     public HexagonButton(){
         super();
         n = 6;
         x = new int[n];
         y = new int [n];
-        angle = 2*Math.PI/n;
+        angle = 2 * Math.PI/n;
         draw = false;
         //border = BorderFactory.createLineBorder(new Color(90, 219, 181), 10);
         Dimension size = getPreferredSize();
@@ -66,6 +67,12 @@ public class HexagonButton extends JButton {
 
     public void setColor(Color c){
         color = c;
+    }
+
+    public void setBoardLocation(int quad, int r, int c){
+        quadNum = quad;
+        row = r;
+        col = c;
     }
 
 }

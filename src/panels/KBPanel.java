@@ -10,14 +10,15 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
 public class KBPanel extends JPanel implements ActionListener {
-
    //Images
    public BufferedImage[] boards, flippedBoards, actionTiles, charCards, landCards, settlements;
    public BufferedImage background, highlight;
    private CardLayout cl;
    private HexagonButton[][] board, board2, board3, board4;
+
    public KBPanel (CardLayout c){
       //setLayout(null);
       cl = c;
@@ -33,11 +34,13 @@ public class KBPanel extends JPanel implements ActionListener {
       board4 = new HexagonButton[10][10];
       for(int r = 0; r < 10; r++){
          for(int co = 0; co < 10; co++){
+
             board[r][co] = new HexagonButton();
+            setUpHexes(board[r][co]);
             board2[r][co] = new HexagonButton();
             board3[r][co] = new HexagonButton();
             board4[r][co] = new HexagonButton();
-            setUpHexes(board[r][co]);
+
             setUpHexes(board2[r][co]);
             setUpHexes(board3[r][co]);
             setUpHexes(board4[r][co]);
@@ -190,15 +193,21 @@ public class KBPanel extends JPanel implements ActionListener {
 
 
    }
-   private void setUpHexes(HexagonButton J){
-      add(J);
-      J.addActionListener(this);
+   public void setUpHexes(HexagonButton temp) {
+      add(temp);
+      // cl.show(Constants.PANEL_CONT, Constants.GAME_PANEL);
+      temp.addActionListener(new ActionListener() {
+         @Override
+         public void actionPerformed(ActionEvent e) {
+            System.out.println("Hex Button clicked " + temp + "  ");
+            //panel.updateAll(allFactory,factoryFloor,bag, allPlayer, roundscore,endgame,strt, output,end);
+            //REPAINT EVERYTHING
+         }
+      });
    }
 
    @Override
    public void actionPerformed(ActionEvent e) {
-      if(e.getSource().equals(board4[0][0])){
-         cl.show(Constants.PANEL_CONT, Constants.GAME_PANEL);
-      }
+
    }
 }
