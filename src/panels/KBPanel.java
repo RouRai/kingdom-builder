@@ -47,7 +47,6 @@ public class KBPanel extends JPanel implements ActionListener {
          // 1 -- BACKGROUND - BOTTOM LAYER
          background = ImageIO.read(getClass().getResource("/images/backgroundImages/game play.png"));
          highlight = ImageIO.read(getClass().getResource("/images/graphicsExtra/Hex.png"));
-
          // 2 -- BOARDS
          boards[0] = ImageIO.read(getClass().getResource("/images/boards/beach.png"));
          boards[1] = ImageIO.read(getClass().getResource("/images/boards/boat.png"));
@@ -80,10 +79,24 @@ public class KBPanel extends JPanel implements ActionListener {
          actionTiles[5] = ImageIO.read(getClass().getResource("/images/actionTiles/paddock_Tile.png"));
          actionTiles[6] = ImageIO.read(getClass().getResource("/images/actionTiles/tavern_Tile.png"));
          actionTiles[7] = ImageIO.read(getClass().getResource("/images/actionTiles/tower_Tile.png"));
-
-
-
-
+         // 4 - charCards
+         charCards[0] = ImageIO.read(getClass().getResource("/images/characterCards/Citizen.png"));
+         charCards[1] = ImageIO.read(getClass().getResource("/images/characterCards/Discoverers.png"));
+         charCards[2] = ImageIO.read(getClass().getResource("/images/characterCards/Farmers.png"));
+         charCards[3] = ImageIO.read(getClass().getResource("/images/characterCards/Fishermen.png"));
+         charCards[4] = ImageIO.read(getClass().getResource("/images/characterCards/Knights.png"));
+         charCards[5] = ImageIO.read(getClass().getResource("/images/characterCards/Marchants.png"));
+         charCards[6] = ImageIO.read(getClass().getResource("/images/characterCards/Miners.png"));
+         charCards[7] = ImageIO.read(getClass().getResource("/images/characterCards/Workers.png"));
+         charCards[8] = ImageIO.read(getClass().getResource("/images/characterCards/Lord.png"));
+         charCards[9] = ImageIO.read(getClass().getResource("/images/characterCards/Hermits.png"));
+         //5- landCards
+         landCards[0] = ImageIO.read(getClass().getResource("/images/landscapeCards/KB-Card-Back.png"));
+         landCards[1] = ImageIO.read(getClass().getResource("/images/landscapeCards/KB-Card-Canyon.png"));
+         landCards[2] = ImageIO.read(getClass().getResource("/images/landscapeCards/KB-Card-Desert.png"));
+         landCards[3] = ImageIO.read(getClass().getResource("/images/landscapeCards/KB-Card-Flower.png"));
+         landCards[4] = ImageIO.read(getClass().getResource("/images/landscapeCards/KB-Card-Forest.png"));
+         landCards[5] = ImageIO.read(getClass().getResource("/images/landscapeCards/KB-Card-Meadow.png"));
       } catch (Exception ex) {
          System.out.println("----------------------------------------- Image Error -----------------------------------------");
       }
