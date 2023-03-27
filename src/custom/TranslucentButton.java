@@ -11,10 +11,9 @@ public class TranslucentButton extends JButton {
       Boolean bool = false;
       /**
        * only for Start Game Button
-       * @param x
+       * @param
        */
-      public TranslucentButton (int x, int y, int w, int h){
-         setSize(x, y);
+      public TranslucentButton (){
          setBorder(BorderFactory.createBevelBorder(10));
          //setBorder(null);
          setBorderPainted(bool);
