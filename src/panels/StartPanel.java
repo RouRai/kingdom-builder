@@ -86,7 +86,7 @@ public class StartPanel extends JPanel implements ActionListener {
     private void setUpButtons(){
         //gameButton = new JButton("Start");
         //gameButton = new JButton(new ImageIcon(getClass().getResource("images/settlementIcons/Black_Settlement - Copy.png")));
-        gameButton = new TranslucentButton(40,300,300,40);
+        gameButton = new TranslucentButton();
 
         //gameButton.setIcon(icon);
         test = new HexagonButton();
