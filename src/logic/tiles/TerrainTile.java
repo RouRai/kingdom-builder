@@ -3,17 +3,11 @@ package logic.tiles;
 import logic.game.Player;
 import logic.constantFolder.TerrainEnum;
 
-public class TerrainTile {
-
-    private final TerrainEnum type;
+public class TerrainTile extends Tile<TerrainEnum> {
     private Player owner;
 
     public TerrainTile (TerrainEnum type) {
-        this.type = type;
-    }
-
-    public TerrainEnum getType () {
-        return type;
+        super(type);
     }
 
     public Player getOwner () {

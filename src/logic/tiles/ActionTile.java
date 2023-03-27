@@ -2,18 +2,12 @@ package logic.tiles;
 
 import logic.constantFolder.ActionEnum;
 
-public class ActionTile {
-
-    private final ActionEnum type;
+public class ActionTile extends Tile<ActionEnum> {
     private int count;
 
     public ActionTile (ActionEnum type) {
-        this.type = type;
+        super(type);
         count = 2;
-    }
-
-    public ActionEnum getType() {
-        return type;
     }
 
     public int getCount () {
