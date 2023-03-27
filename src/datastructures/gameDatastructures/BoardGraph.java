@@ -19,30 +19,5 @@ public class BoardGraph extends Graph {
      * @param node Node to be added to the board
      * @param board Board that contains the rest of the nodes in order to gather adjacent nodes to that node
      */
-    public void addNode (Node node, Board board) {
-        if(node instanceof TerrainNode) {
-            addTerrainNode((TerrainNode) node, board);
-        }
-        else {
-           addActionNode((ActionNode) node, board);
-        }
-    }
-
-    /**
-     * This method adds a Node of type Terrain to the graph, given a board that contains its adjacent nodes.
-     * @param node Type of node that is to be added to the graph.
-     * @param board Board that contains the matrix that has all the types of nodes
-     */
-    private void addTerrainNode (TerrainNode node, Board board) {
-
-    }
-
-    /**
-     This method adds a Node of type Action to the graph, given a board that contains its adjacent nodes.
-     * @param node Type of node that is to be added to the graph.
-     * @param board Board that contains the matrix that has all the types of nodes
-     */
-    private void addActionNode (ActionNode node, Board board) {
-
-    }
+    public void addNode (Node node, Board board) {}
 }
