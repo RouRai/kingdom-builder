@@ -19,7 +19,7 @@ public class BoardGraph extends Graph<TerrainNode, ActionNode> {
      * @param node Node to be added to the board
      * @param board Board that contains the rest of the nodes in order to gather adjacent nodes to that node
      */
-    public void addNode (Node<?> node, Board board) {
+    public void addNode (Node node, Board board) {
         if(node instanceof TerrainNode) {
             addTerrainNode((TerrainNode) node, board);
         }

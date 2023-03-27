@@ -4,7 +4,7 @@ import datastructures.baseDatastructures.Node;
 import logic.constantFolder.ActionEnum;
 import logic.tiles.ActionTile;
 
-public class ActionNode extends Node<ActionNode> {
+public class ActionNode extends Node {
 
     private final ActionEnum type;
 

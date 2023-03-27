@@ -2,9 +2,9 @@ package datastructures.baseDatastructures;
 
 import java.util.ArrayList;
 
-public class Node<T> {
+public class Node {
 
-    private final ArrayList<Node<T>> adjacentNodes;
+    private final ArrayList<Node> adjacentNodes;
 
     public Node () {
         adjacentNodes = new ArrayList<>();
@@ -13,7 +13,7 @@ public class Node<T> {
     /**
      * @return Adjacency list of this specific node
      */
-    public ArrayList<Node<T>> getAdjacentNodes () {
+    public ArrayList<Node> getAdjacentNodes () {
         return adjacentNodes;
     }
 
@@ -21,11 +21,11 @@ public class Node<T> {
      * Adds a new node to the adjacency list that can be accessed.
      * @param newAdjacentNode The node that is to be added to the adjacency list
      */
-    public void addAdjacentNode (Node<T> newAdjacentNode) {
+    public void addAdjacentNode (Node newAdjacentNode) {
         adjacentNodes.add(newAdjacentNode);
     }
 
-    public void removeAdjacentNode (Node<T> eliminateNode) {
+    public void removeAdjacentNode (Node eliminateNode) {
         adjacentNodes.remove(eliminateNode);
     }
 }

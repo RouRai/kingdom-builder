@@ -4,7 +4,7 @@ import datastructures.baseDatastructures.Node;
 import logic.constantFolder.TerrainEnum;
 import logic.tiles.TerrainTile;
 
-public class TerrainNode extends Node<TerrainNode> {
+public class TerrainNode extends Node {
 
     private final TerrainEnum type;
     private final TerrainTile tile;
