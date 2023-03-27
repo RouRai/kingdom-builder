@@ -11,7 +11,7 @@ import java.util.ArrayList;
 public class BoardGraph extends Graph {
 
     public BoardGraph(ArrayList<File> boardTextFiles) {
-        super(new TerrainNode(TerrainEnum.CANYON));
+        super(null);
     }
 
     /**
