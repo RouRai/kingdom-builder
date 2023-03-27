@@ -1,20 +1,20 @@
 package logic.game;
 
+import datastructures.gameDatastructures.BoardGraph;
 import logic.tiles.TerrainTile;
-import logic.tiles.Tile;
 
 import java.io.File;
 import java.util.ArrayList;
 
 public class Board {
 
-    private final Tile[][] board;
+    private final BoardGraph board;
 
     public Board () {
-        board = new Tile[20][20];
+        board = new BoardGraph(null);
     }
 
-    public Tile[][] getBoard () {
+    public BoardGraph getBoard () {
         return board;
     }
 
