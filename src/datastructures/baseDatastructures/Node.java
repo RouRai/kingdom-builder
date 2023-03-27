@@ -1,19 +1,23 @@
 package datastructures.baseDatastructures;
 
+import logic.constantFolder.DirectionEnum;
+import logic.tiles.Tile;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Node {
 
-    private final ArrayList<Node> adjacentNodes;
+    private final HashMap<DirectionEnum, Node> adjacentNodes;
 
     public Node () {
-        adjacentNodes = new ArrayList<>();
+       adjacentNodes = new HashMap<>();
     }
 
     /**
      * @return Adjacency list of this specific node
      */
-    public ArrayList<Node> getAdjacentNodes () {
+    public HashMap<DirectionEnum, Node> getAdjacentNodes () {
         return adjacentNodes;
     }
 
@@ -21,11 +25,7 @@ public class Node {
      * Adds a new node to the adjacency list that can be accessed.
      * @param newAdjacentNode The node that is to be added to the adjacency list
      */
-    public void addAdjacentNode (Node newAdjacentNode) {
-        adjacentNodes.add(newAdjacentNode);
-    }
-
-    public void removeAdjacentNode (Node eliminateNode) {
-        adjacentNodes.remove(eliminateNode);
+    public void addAdjacentNode (DirectionEnum direction, Node newAdjacentNode) {
+        adjacentNodes.put(direction, newAdjacentNode);
     }
 }
