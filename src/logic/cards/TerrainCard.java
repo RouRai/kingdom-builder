@@ -2,15 +2,4 @@ package logic.cards;
 
 import logic.constantFolder.TerrainEnum;
 
-public class TerrainCard {
-
-    private final TerrainEnum type;
-
-    public TerrainCard (TerrainEnum type) {
-        this.type = type;
-    }
-
-    public TerrainEnum getType() {
-        return type;
-    }
-}
+public record TerrainCard(TerrainEnum type) {}
