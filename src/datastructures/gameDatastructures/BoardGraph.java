@@ -8,7 +8,7 @@ import logic.gameLogic.Board;
 import java.io.File;
 import java.util.ArrayList;
 
-public class BoardGraph extends Graph<TerrainNode, ActionNode> {
+public class BoardGraph extends Graph {
 
     public BoardGraph(ArrayList<File> boardTextFiles) {
         super(new TerrainNode(TerrainEnum.CANYON));

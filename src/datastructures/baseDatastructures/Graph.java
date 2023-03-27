@@ -2,15 +2,15 @@ package datastructures.baseDatastructures;
 
 import logic.constantFolder.DirectionEnum;
 
-public class Graph<T extends Node, S extends Node>{
+public class Graph{
 
-    private final T origin;
+    private final Node origin;
 
-    public Graph(T origin) {
+    public Graph(Node origin) {
         this.origin = origin;
     }
 
-    public T getOrigin() {
+    public Node getOrigin() {
         return origin;
     }
 
