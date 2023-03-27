@@ -14,6 +14,7 @@ public class HexagonButton extends JButton {
     private Polygon polygon;
     private Color color;
     private BufferedImage settlement;
+    private int quadNum, row, col;
     public HexagonButton(){
         super();
         n = 6;
@@ -50,8 +51,7 @@ public class HexagonButton extends JButton {
         super.paintComponent(g);
     }
     public boolean contains(int x1, int y1) {
-        if (polygon == null ||
-                !polygon.getBounds().equals(getBounds())) {
+        if (polygon == null || !polygon.getBounds().equals(getBounds())) {
             int x0 = getSize().width/2;
             int y0 = getSize().height/2;
             for(int i=0; i<n; i++) {
@@ -75,5 +75,10 @@ public class HexagonButton extends JButton {
     }
     public void setSettlement(BufferedImage settle){
         settlement = settle;
+    }
+    public void setBoardLocation(int quad, int r, int c){
+        quadNum = quad;
+        row = r;
+        col = c;
     }
 }
