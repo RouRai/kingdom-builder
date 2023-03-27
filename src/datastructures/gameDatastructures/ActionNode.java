@@ -6,19 +6,24 @@ import logic.tiles.ActionTile;
 
 public class ActionNode extends Node {
 
-    private final ActionEnum type;
-
     private final ActionTile tile;
 
     public ActionNode (ActionEnum type) {
-        this.type = type;
         tile = new ActionTile(type);
     }
 
+    /**
+     * Returns what type of action tile this is using one of the Action Enums
+     * @return Type of action tile
+     */
     public ActionEnum getType () {
-        return type;
+        return tile.getType();
     }
 
+    /**
+     * Returns the tile object stored inside the node
+     * @return Tile associated with this node.
+     */
     public ActionTile getTile () {
         return tile;
     }

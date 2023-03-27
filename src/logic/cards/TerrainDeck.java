@@ -10,6 +10,10 @@ public class TerrainDeck extends CardDeck<TerrainCard> {
         addCards(cards);
     }
 
+    /**
+     * Returns the terrain cards to be used in this game.
+     * @return ArrayList of shuffled Terrain Cards.
+     */
     public ArrayList<TerrainCard> getTerrainDeck () {
         return getShuffledCards();
     }

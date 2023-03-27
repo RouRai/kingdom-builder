@@ -15,9 +15,9 @@ public class BoardGraph extends Graph {
     }
 
     /**
-     * Adds a node to the graph given it is a Terrain Node or an Action Node.
-     * @param node Node to be added to the board
-     * @param board Board that contains the rest of the nodes in order to gather adjacent nodes to that node
+     * Adds a node to the graph given the board and the specific node to add
+     * @param node Node to add to the graph
+     * @param board The entire game board
      */
     public void addNode (Node node, Board board) {}
 }

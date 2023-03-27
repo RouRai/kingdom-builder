@@ -5,5 +5,10 @@ import logic.gameLogic.Player;
 
 public interface Objective {
 
-    int scoreObjective (Player player, Board board);
+    /**
+     * Scores and updates the player using the algorithm for a specific objective.
+     * @param player The player whose score is to be updated.
+     * @param board The game board
+     */
+    void scoreObjective (Player player, Board board);
 }
