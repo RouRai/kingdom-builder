@@ -10,7 +10,6 @@ public class ButtonQuadrant {
          for (int co = 0; co < 10; co++) {
             HexagonButton hex = board[r][co];
             hex.setBoardLocation(id, r, co);
-
          }}
 
 
