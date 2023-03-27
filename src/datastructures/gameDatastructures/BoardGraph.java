@@ -3,7 +3,7 @@ package datastructures.gameDatastructures;
 import datastructures.baseDatastructures.Graph;
 import datastructures.baseDatastructures.Node;
 import logic.constantFolder.TerrainEnum;
-import logic.game.Board;
+import logic.gameLogic.Board;
 
 import java.io.File;
 import java.util.ArrayList;

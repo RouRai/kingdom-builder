@@ -1,4 +1,4 @@
-package logic.game;
+package logic.gameLogic;
 
 import datastructures.gameDatastructures.BoardGraph;
 

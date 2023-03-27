@@ -1,6 +1,6 @@
 package logic.tiles;
 
-import logic.game.Player;
+import logic.gameLogic.Player;
 import logic.constantFolder.TerrainEnum;
 
 public class TerrainTile extends Tile<TerrainEnum> {

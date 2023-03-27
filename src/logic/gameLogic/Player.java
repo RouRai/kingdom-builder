@@ -1,4 +1,4 @@
-package logic.game;
+package logic.gameLogic;
 
 import logic.cards.TerrainCard;
 import logic.placeables.Settlement;

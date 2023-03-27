@@ -1,7 +1,7 @@
-package logic.game.objectiveScoring;
+package logic.gameLogic.objectiveScoring;
 
-import logic.game.Board;
-import logic.game.Player;
+import logic.gameLogic.Board;
+import logic.gameLogic.Player;
 
 public class Merchant implements Objective{
     @Override
