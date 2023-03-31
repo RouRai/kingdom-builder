@@ -28,6 +28,12 @@ public class HexagonButton extends JButton {
         setPreferredSize(size);
         setContentAreaFilled(false);
     }
+    public HexagonButton(int q, int r, int c){
+        this();
+        quadNum = q;
+        row = r;
+        col = c;
+    }
 
     public void paintComponent(Graphics g) {
         this.setOpaque(false);
@@ -80,5 +86,8 @@ public class HexagonButton extends JButton {
         quadNum = quad;
         row = r;
         col = c;
+    }
+    public String toString (){
+        return "Hex button Clicked - quad"+ this.quadNum + " ("+ this.row+ ", "+ col+ ") ";
     }
 }

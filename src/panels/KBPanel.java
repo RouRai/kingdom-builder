@@ -20,26 +20,26 @@ public class KBPanel extends JPanel implements ActionListener {
    private CardLayout cl;
    private HexagonButton[][] board, board2, board3, board4;
 
-   public KBPanel (CardLayout c){
+   public KBPanel (CardLayout cardL){
       //setLayout(null);
-      cl = c;
+      cl = cardL;
 
       board = new HexagonButton[10][10];
       board2 = new HexagonButton[10][10];
       board3 = new HexagonButton[10][10];
       board4 = new HexagonButton[10][10];
       for(int r = 0; r < 10; r++){
-         for(int co = 0; co < 10; co++){
+         for(int c = 0; c < 10; c++){
 
-            board[r][co] = new HexagonButton();
-            setUpHexes(board[r][co]);
-            board2[r][co] = new HexagonButton();
-            board3[r][co] = new HexagonButton();
-            board4[r][co] = new HexagonButton();
+            board[r][c] = new HexagonButton(1,r,c);
+            setUpHexes(board[r][c]);
+            board2[r][c] = new HexagonButton(2,r,c);
+            board3[r][c] = new HexagonButton(3,r,c);
+            board4[r][c] = new HexagonButton(4,r,c);
 
-            setUpHexes(board2[r][co]);
-            setUpHexes(board3[r][co]);
-            setUpHexes(board4[r][co]);
+            setUpHexes(board2[r][c]);
+            setUpHexes(board3[r][c]);
+            setUpHexes(board4[r][c]);
          }
       }
       try{
@@ -146,8 +146,6 @@ public class KBPanel extends JPanel implements ActionListener {
          @Override
          public void actionPerformed(ActionEvent e) {
             System.out.println("Hex Button clicked " + temp + "  ");
-            //panel.updateAll(allFactory,factoryFloor,bag, allPlayer, roundscore,endgame,strt, output,end);
-            //REPAINT EVERYTHING
          }
       });
    }
