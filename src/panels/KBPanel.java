@@ -16,9 +16,10 @@ import java.util.ArrayList;
 public class KBPanel extends JPanel implements ActionListener {
    //Images
 
-   public BufferedImage background, highlight;
-   public ButtonQuadrant[] boards;
-   public Graphics2D g2;
+   private BufferedImage background, highlight;
+   private ButtonQuadrant[] boards;
+   private Graphics2D g2;
+   private ArrayList <BufferedImage> boardImages;
    private CardLayout cardLay;
    private HexagonButton[][] board, board2, board3, board4;
 
@@ -30,6 +31,7 @@ public class KBPanel extends JPanel implements ActionListener {
       boards = new ButtonQuadrant[4];
       int[] boardStartX = {10,423,10,423};
       int[] boardStartY = {6,6,365,365};
+      boardImages = new ArrayList<>();
 
       for (int q = 0; q < 4; q++) {
          HexagonButton[][] tempBoard = new HexagonButton[10][10];
@@ -61,6 +63,8 @@ public class KBPanel extends JPanel implements ActionListener {
       g2.drawImage(background,0, 0, Constants.WIDTH, Constants.HEIGHT-8, null);
       g2.setBackground(Color.BLACK);
      //g2.drawImage(Constants.getBoards()[0], 0, 0,400, 400, null);
+
+      // 2- drawBoards
      drawBoards();
 
    }
