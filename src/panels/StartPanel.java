@@ -13,6 +13,7 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
+
 public class StartPanel extends JPanel implements ActionListener {
     private CardLayout cl;
     private BufferedImage bg;
@@ -36,22 +37,24 @@ public class StartPanel extends JPanel implements ActionListener {
         g.drawImage(startBackground, 0,0, Constants.WIDTH, Constants.HEIGHT, null);
         gameButton.setBounds(90,380,510,150);
         //Start Button
-
-
-
     }
     private void setUpButtons(){
         gameButton = new TranslucentButton();
         add(gameButton);
-        gameButton.addActionListener(this);
+        // cl.show(Constants.PANEL_CONT, Constants.GAME_PANEL);
+        gameButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                KBWindow.setup();
+            }
+        });
+
     }
     private void setUpHexes(HexagonButton J){
         add(J);
         J.addActionListener(this);
     }
-    public void actionPerformed(ActionEvent e){
-        if(e.getSource().equals(gameButton)){
-            KBWindow.setup();
-        }
+    public void actionPerformed(ActionEvent e) {
+
     }
 }
