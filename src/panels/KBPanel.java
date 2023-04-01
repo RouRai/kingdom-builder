@@ -2,6 +2,7 @@ package panels;
 
 import custom.ButtonQuadrant;
 import custom.HexagonButton;
+import custom.TranslucentButton;
 import game.Constants;
 //import hexxes.hexmech;
 
@@ -25,6 +26,8 @@ public class KBPanel extends JPanel implements ActionListener {
    //Images
 
    private BufferedImage background, highlight;
+   private TranslucentButton menuButton, finishButton;
+   private TranslucentButton[] objectivesButton;
    private ButtonQuadrant[] boards;
    private Graphics2D g2;
    private ArrayList <BufferedImage> boardImages;
@@ -53,13 +56,15 @@ public class KBPanel extends JPanel implements ActionListener {
          for (int r = 0; r < 10; r++) {
             for (int c = 0; c < 10; c++) {
                tempBoard[r][c] = new HexagonButton(q, r, c);
-               setUpHexes(tempBoard[r][c]);
+               setUpBoardHexes(tempBoard[r][c]);
             }
          }
          boards[q] = new ButtonQuadrant(q,tempBoard, boardStartX[q],boardStartY[q]);
       }
+
+      // 1 -- BACKGROUND - BOTTOM LAYER
       try{
-         // 1 -- BACKGROUND - BOTTOM LAYER
+
          background = ImageIO.read(getClass().getResource("/images/backgroundImages/game play.png"));
          highlight = ImageIO.read(getClass().getResource("/images/graphicsExtra/Hex.png"));
       } catch (Exception ex) {
@@ -76,15 +81,17 @@ public class KBPanel extends JPanel implements ActionListener {
       // 1 -- BACKGROUND
       g2.drawImage(background,0, 0, Constants.WIDTH, Constants.HEIGHT-8, null);
       g2.setBackground(Color.BLACK);
-     //g2.drawImage(Constants.getBoards()[0], 0, 0,400, 400, null);
-
-      //DRAW BUTTONS
-         drawBoards();
+      //2- drawing hex buttons
+         drawHexButtons();
+      //3- drawing current player attributes
          drawCurrentPlayer();
-      //
+      //Functionality buttons
 
    }
 
+   /**
+    * draws all graphics and images of the current player
+    */
    public void drawCurrentPlayer(){
       //Player p = null;
       //number
@@ -122,7 +129,7 @@ public class KBPanel extends JPanel implements ActionListener {
    /**
     * draws the outline for each Hexbutton with Button Quadrant
     */
-   public void drawBoards(){
+   public void drawHexButtons(){
       for (ButtonQuadrant b: boards) {
          double x = b.startX;
          double y = b.startY;
@@ -147,9 +154,10 @@ public class KBPanel extends JPanel implements ActionListener {
    }
    /**
     * @param temp hexbutton
-    *             send in a hex button to set up its action listener function
+    *             send in a hex button to set up its action listener function - for every he button clicked
+    *             the console will print out the quad number, the row, and the column of the hex
     */
-   public void setUpHexes(HexagonButton temp) {
+   public void setUpBoardHexes(HexagonButton temp) {
       add(temp);
       // cl.show(Constants.PANEL_CONT, Constants.GAME_PANEL);
       temp.addActionListener(new ActionListener() {
