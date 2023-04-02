@@ -17,7 +17,7 @@ import java.io.IOException;
 public class StartPanel extends JPanel implements ActionListener {
     private CardLayout cl;
     private BufferedImage bg;
-    private TranslucentButton gameButton;
+private TranslucentButton gameButton;
     private BufferedImage startBackground;
     public StartPanel(CardLayout c){
         //background image

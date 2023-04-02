@@ -65,7 +65,7 @@ public class KBPanel extends JPanel implements ActionListener {
       // 1 -- BACKGROUND - BOTTOM LAYER
       try{
 
-         background = ImageIO.read(getClass().getResource("/images/backgroundImages/game play.png"));
+         background = ImageIO.read(getClass().getResource("/images/backgroundImages/game play2.png"));
          highlight = ImageIO.read(getClass().getResource("/images/graphicsExtra/Hex.png"));
       } catch (Exception ex) {
          System.out.println("----------------------------------------- Image Error -----------------------------------------");
@@ -82,11 +82,51 @@ public class KBPanel extends JPanel implements ActionListener {
       g2.drawImage(background,0, 0, Constants.WIDTH, Constants.HEIGHT-8, null);
       g2.setBackground(Color.BLACK);
       //2- drawing hex buttons
+         drawLeftPanel();
          drawHexButtons();
       //3- drawing current player attributes
          drawCurrentPlayer();
-      //Functionality buttons
+         drawOtherPlayer();
+      //4- drawing
 
+
+            //Functionality buttons
+
+   }
+   public void drawLeftPanel(){
+      for (int i = 0; i < 3; i++)
+         g2.drawImage(constantClass.getCharCards()[0], 325+ i * 150, 735, 130, 240, null);
+      for (int i = 0; i < 4; i++){
+         ButtonQuadrant b = boards[i];
+         double x = b.startX;
+         double y = b.startY;
+         g2.drawImage(constantClass.getBoards()[i],(int)x+2, (int)y-1,435, 369, null);
+      }
+   }
+   public void drawOtherPlayer(){
+      int space_between_Players = 123;
+      for (int i =0; i < 3; i++) {
+         //Player p = player example array [i];
+         //number
+         g2.setColor(Color.black);
+         g2.setFont(new Font("TimesRoman", Font.PLAIN, 40));
+         g2.drawString("1", 1045, 90+space_between_Players*i);
+         //action tiles
+         g2.setFont(new Font("TimesRoman", Font.PLAIN, 20));
+         g2.setColor(Color.white);
+         for (int j = 0; j < 4; j++) {
+            int x = 1210;
+            int y = 35;
+               g2.drawImage(constantClass.getActionTiles()[j], x+j *65, 35 + i * space_between_Players, 60, 60, null);
+               g2.drawString("0", x+j *65,  y+65+i  * space_between_Players);
+         }
+         //settlement
+         //settlement icon
+         g2.drawImage(constantClass.getSettlements()[i], 1090, 40 +i * space_between_Players, 90, 80, null);
+         //settlement number
+         g2.setFont(new Font("TimesRoman", Font.PLAIN, 30));
+         g2.drawString("40", 1120+10, 90 + i * space_between_Players);
+      }
    }
 
    /**
