@@ -4,6 +4,12 @@ import logic.gameLogic.Player;
 import logic.constantFolder.TerrainEnum;
 import logic.placeables.Settlement;
 
+/**
+ * Author: Rounak Rai <br>
+ * Contributors: None <br> <br>
+ *
+ * This class stores data relevant to specifically Terrain Tiles.
+ */
 public class TerrainTile extends Tile<TerrainEnum> {
     private Player owner;
     private Settlement settlement;
