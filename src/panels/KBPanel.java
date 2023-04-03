@@ -33,6 +33,7 @@ public class KBPanel extends JPanel implements ActionListener {
    private ArrayList <BufferedImage> boardImages;
    private CardLayout cardLay;
    private Constants constantClass;
+   private final String fontStr = "Lucida Calligraphy";
 
    public KBPanel (CardLayout cl){
       //setLayout(null);
@@ -82,15 +83,15 @@ public class KBPanel extends JPanel implements ActionListener {
       g2.drawImage(background,0, 0, Constants.WIDTH, Constants.HEIGHT-8, null);
       g2.setBackground(Color.BLACK);
       //2- drawing hex buttons
-         drawLeftPanel();
-         drawHexButtons();
+      drawLeftPanel();
+      drawHexButtons();
       //3- drawing current player attributes
-         drawCurrentPlayer();
-         drawOtherPlayer();
+      drawCurrentPlayer();
+      drawOtherPlayer();
       //4- drawing
 
 
-            //Functionality buttons
+      //Functionality buttons
 
    }
    public void drawLeftPanel(){
@@ -109,23 +110,30 @@ public class KBPanel extends JPanel implements ActionListener {
          //Player p = player example array [i];
          //number
          g2.setColor(Color.black);
-         g2.setFont(new Font("TimesRoman", Font.PLAIN, 40));
-         g2.drawString("1", 1045, 90+space_between_Players*i);
+         g2.setFont(new Font(fontStr, Font.PLAIN, 40));
+         if (i%2 ==0)
+            g2.drawString("1", 1040, 85+space_between_Players*i);
+         else
+            g2.drawString("1", 1040, 90+space_between_Players*i);
          //action tiles
-         g2.setFont(new Font("TimesRoman", Font.PLAIN, 20));
+         g2.setFont(new Font(fontStr, Font.PLAIN, 20));
          g2.setColor(Color.white);
          for (int j = 0; j < 4; j++) {
-            int x = 1210;
+            int x = 1230;
             int y = 35;
-               g2.drawImage(constantClass.getActionTiles()[j], x+j *65, 35 + i * space_between_Players, 60, 60, null);
-               g2.drawString("0", x+j *65,  y+65+i  * space_between_Players);
+            g2.drawImage(constantClass.getActionTiles()[j], x-25+j *68, y-5 + i * space_between_Players, 60, 60, null);
+            if (i%2 ==0)
+               g2.drawString("0", x+j *65,  y+80+i  * space_between_Players);
+            else
+               g2.drawString("0", x+j *65,  y+80+i  * (space_between_Players+8));
+
          }
          //settlement
          //settlement icon
-         g2.drawImage(constantClass.getSettlements()[i], 1090, 40 +i * space_between_Players, 90, 80, null);
+         g2.drawImage(constantClass.getSettlements()[i], 1100, 40 +i * space_between_Players, 90, 70, null);
          //settlement number
-         g2.setFont(new Font("TimesRoman", Font.PLAIN, 30));
-         g2.drawString("40", 1120+10, 90 + i * space_between_Players);
+         g2.setFont(new Font(fontStr, Font.PLAIN, 30));
+         g2.drawString("40", 1125, 90 + i * space_between_Players);
       }
    }
 
@@ -136,35 +144,36 @@ public class KBPanel extends JPanel implements ActionListener {
       //Player p = null;
       //number
       g2.setColor(Color.black);
-      g2.setFont(new Font("TimesRoman", Font.PLAIN, 40));
-      g2.drawString("1",1190,460);
+      g2.setFont(new Font(fontStr, Font.PLAIN, 50));
+      g2.drawString("1",1185,460);
       //action tiles
-      g2.setFont(new Font("TimesRoman", Font.PLAIN, 20));
+      g2.setFont(new Font(fontStr, Font.PLAIN, 20));
       g2.setColor(Color.white);
-            for (int i = 0; i < 4; i++) {
-               if (i % 2== 0) {
-                  g2.drawImage(constantClass.getActionTiles()[0], 1005, 515+ i * 75, 80, 80 , null);
-                  g2.drawString("0",980,560+ i * 75);
-               }
-               else{
-                  g2.drawImage(constantClass.getActionTiles()[0], 960, 515+ i * 75, 80, 80 , null);
-                  g2.drawString("0",1055,560+ i * 75);
-               }
-            }
+      for (int i = 0; i < 4; i++) {
+         if (i % 2== 0) {
+            g2.drawImage(constantClass.getActionTiles()[0], 1005+ i * 2, 515+ i * 75, 80, 85 , null);
+            g2.drawString("0",980,560+ i * 75);
+         }
+         else{
+            g2.drawImage(constantClass.getActionTiles()[0], 959+ i *1, 515+ i * 75, 80, 85 , null);
+            g2.drawString("0",1055,560+ i * 75);
+         }
+      }
       //action tile selected
       if (true){
-         g2.drawImage(constantClass.getActionProcess()[6], 1135, 645, 150, 65, null);
+         g2.drawImage(constantClass.getActionProcess()[1], 1135, 645, 150, 60, null);
       }
       //landscape card
-         g2.drawImage(constantClass.getLandCards()[0], 1335, 530, 130, 200, null);
+      g2.drawImage(constantClass.getLandCards()[0], 1335, 530, 130, 200, null);
 
       //settlement
-         //settlement icon
-            g2.drawImage(constantClass.getSettlements()[0], 1330, 420, 120, 80, null);
-         //settlement number
-            g2.setFont(new Font("TimesRoman", Font.PLAIN, 50));
-            g2.drawString("40",1365,480);
+      //settlement icon
+      g2.drawImage(constantClass.getSettlements()[0], 1330, 410, 120, 100, null);
+      //settlement number
+      g2.setFont(new Font(fontStr, Font.PLAIN, 35));
+      g2.drawString("40",1365,480);
    }
+
 
    /**
     * draws the outline for each Hexbutton with Button Quadrant
