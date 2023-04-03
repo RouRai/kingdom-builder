@@ -13,22 +13,21 @@ public class ButtonQuadrant {
    public double startX, startY;
    public BufferedImage image;
 
-   public ButtonQuadrant(int id, HexagonButton[][] board, int x, int y) {
+   public ButtonQuadrant(int id, HexagonButton[][] b, int x, int y) {
       board = new HexagonButton[10][10];
       quadNumber = id;
-      this.board = board;
+      board = b;
       startX = x;
       startY = y;
-      cloneBoard(board);
+      for (int r = 0; r < 10; r++) {
+         for (int co = 0; co < 10; co++) {
+            board[r][co] = b[r][co];
+         }
+      }
    }
 
    public HexagonButton[][] getBoard() {
       return board;
    }
 
-   private void cloneBoard (HexagonButton[][] board) {
-      for (int r = 0; r < board.length; r++) {
-         System.arraycopy(board[r], 0, this.board[r], 0, board[r].length);
-      }
-   }
 }
