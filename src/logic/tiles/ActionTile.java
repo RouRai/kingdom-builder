@@ -2,6 +2,13 @@ package logic.tiles;
 
 import logic.constantFolder.ActionEnum;
 
+/**
+ * Author: Rounak Rai <br>
+ * Contributors: None <br> <br>
+ *
+ * This class is used in order to store and track data relevant to Action Tiles throughout the game.
+ */
+
 public class ActionTile extends Tile<ActionEnum> {
     private int count;
 

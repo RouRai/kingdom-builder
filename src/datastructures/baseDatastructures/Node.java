@@ -6,6 +6,15 @@ import logic.tiles.Tile;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+
+/**
+ * Author: Rounak Rai <br>
+ * Contributors: None <br> <br>
+ * Forms a basic node that can carry data of its adjacent nodes. This type of node relies on direction
+ * in order to be able to tell where each adjacent node is. These directions are represented through constants
+ * in the Direction Enum, found in the directory "logic/constantFolder/DirectionEnum". This Node also does not
+ * hold its own data, and requires for it to be extended through another class in order to do so.
+ */
 public class Node {
 
     private final HashMap<DirectionEnum, Node> adjacentNodes;

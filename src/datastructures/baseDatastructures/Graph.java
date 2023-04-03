@@ -2,7 +2,15 @@ package datastructures.baseDatastructures;
 
 import logic.constantFolder.DirectionEnum;
 
-public class Graph{
+/**
+ * Author: Rounak Rai <br>
+ * Contributors: None <br> <br>
+ *
+ * This is the basic Graph class. This class only stores an origin and has Depth-First Search as its default
+ * search algorithm. This is meant to store all the adjacent nodes in a graph in order to make traversal
+ * and adjacency simpler to handle. This class is not to be used in a basic fashion, and relies on being extended.
+ */
+public abstract class Graph{
 
     private final Node origin;
 

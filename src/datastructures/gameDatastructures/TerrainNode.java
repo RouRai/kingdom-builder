@@ -4,6 +4,12 @@ import datastructures.baseDatastructures.Node;
 import logic.constantFolder.TerrainEnum;
 import logic.tiles.TerrainTile;
 
+/**
+ * Author: Rounak Rai <br>
+ * Contributors: None <br> <br>
+ *
+ * This node is used in order to store data related to Terrain Tiles. It stores nodes adjacent to it as well.
+ */
 public class TerrainNode extends Node {
     private final TerrainTile tile;
 

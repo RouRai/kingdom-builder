@@ -6,6 +6,12 @@ import logic.tiles.TerrainTile;
 import java.io.File;
 import java.util.ArrayList;
 
+/**
+ * Author: Rounak Rai <br>
+ * Contributors: None <br> <br>
+ *
+ * This is the high-level class mainly used to perform operations upon the Kingdom Builder Board.
+ */
 public class Board {
 
     private final BoardGraph board;

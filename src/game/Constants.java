@@ -1,6 +1,7 @@
 package game;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.util.Objects;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 public class Constants {
@@ -22,7 +23,7 @@ public class Constants {
     // Gets Image from image folder
     public static BufferedImage getImage(String name) {
         try{
-            return ImageIO.read(Constants.class.getResource(Constants.IMG_DIRECTORY + name + ".jpg"));
+            return ImageIO.read(Objects.requireNonNull(Constants.class.getResource(Constants.IMG_DIRECTORY + name + ".jpg")));
         } catch (Exception e) {
             e.printStackTrace();
             return null;

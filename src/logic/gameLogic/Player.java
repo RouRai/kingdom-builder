@@ -9,6 +9,13 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashSet;
 
+/**
+ * Author: Rounak Rai <br>
+ * Contributors: None <br> <br>
+ *
+ * This is the high-level class mainly used to track and store relevant user action data.
+ */
+
 public class Player {
 
     private final ArrayList<Settlement> settlements;

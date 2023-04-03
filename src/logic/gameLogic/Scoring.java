@@ -5,6 +5,14 @@ import logic.cards.ObjectiveCard;
 
 import java.util.ArrayList;
 
+/**
+ * Author: Rounak Rai <br>
+ * Contributors: None <br> <br>
+ *
+ * This high-level class is mainly used to perform scoring based on a player's actions and update their
+ * amount of points at the end of the game.
+ */
+
 public class Scoring {
 
     private ArrayList<Player> players;
