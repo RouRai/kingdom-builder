@@ -1,1 +1,0 @@
-This directory is to be used in order to store custom component files.
