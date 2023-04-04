@@ -31,6 +31,7 @@ public class KBPanel extends JPanel implements ActionListener {
    private ButtonQuadrant[] boards;
    private Graphics2D g2;
    private ArrayList <BufferedImage> boardImages;
+   private ArrayList <HexagonButton> actionTiles;
    private CardLayout cardLay;
    private Constants constantClass;
    private final String fontStr = "Lucida Calligraphy";
