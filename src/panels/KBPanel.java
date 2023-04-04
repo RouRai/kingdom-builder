@@ -39,13 +39,13 @@ public class KBPanel extends JPanel implements ActionListener {
       //setLayout(null);
       cardLay = cl;
       constantClass = new Constants();
+      menuButton = new TranslucentButton();
+      setUpMenu(menuButton);
+      finishButton = new TranslucentButton();
+      setUpFinish(finishButton);
 
       // for coordinates
-      addMouseListener(new MouseAdapter() {
-         @Override
-         public void mousePressed(MouseEvent e) {
-            System.out.println("mouse clicked on coord (" +e.getX()+ ", " +e.getY()+ ")");
-         }});
+      addMouseListener(new MouseAdapter() { @Override public void mousePressed(MouseEvent e) { System.out.println("mouse clicked on coord (" +e.getX()+ ", " +e.getY()+ ")");}});
       //Boards setup - see ButtonQuadrant class for more details
       boards = new ButtonQuadrant[4];
       int[] boardStartX = {10,423,10,423};
@@ -85,6 +85,8 @@ public class KBPanel extends JPanel implements ActionListener {
       //2- drawing hex buttons
       drawLeftPanel();
       drawHexButtons();
+      drawMenu();
+      drawFinish();
       //3- drawing current player attributes
       drawCurrentPlayer();
       drawOtherPlayer();
@@ -174,7 +176,8 @@ public class KBPanel extends JPanel implements ActionListener {
       g2.drawString("40",1365,480);
    }
 
-
+   public void drawMenu (){ menuButton.setBounds(785,765,70,60);}
+   public void drawFinish (){ finishButton.setBounds(1320,750,170,60);}
    /**
     * draws the outline for each Hexbutton with Button Quadrant
     */
@@ -215,8 +218,32 @@ public class KBPanel extends JPanel implements ActionListener {
             System.out.println("Hex Button clicked " + temp + "  ");
 
          }
+
       });
    }
+   public void setUpMenu(TranslucentButton temp) {
+      add(temp);
+      // cl.show(Constants.PANEL_CONT, Constants.GAME_PANEL);
+      temp.addActionListener(new ActionListener() {
+         @Override
+         public void actionPerformed(ActionEvent e) {
+            System.out.println("Menu clicked ");
+
+         }
+      });
+   }
+   public void setUpFinish(TranslucentButton temp) {
+      add(temp);
+      // cl.show(Constants.PANEL_CONT, Constants.GAME_PANEL);
+      temp.addActionListener(new ActionListener() {
+         @Override
+         public void actionPerformed(ActionEvent e) {
+            System.out.println("Finish clicked ");
+
+         }
+      });
+   }
+
 
    @Override
    public void actionPerformed(ActionEvent e) {
