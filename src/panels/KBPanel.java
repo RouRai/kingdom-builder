@@ -27,7 +27,7 @@ public class KBPanel extends JPanel implements ActionListener {
 
    private BufferedImage background, highlight;
    private TranslucentButton menuButton, finishButton;
-   private TranslucentButton[] objectivesButton;
+   private TranslucentButton [] objectivesButton;
    private ButtonQuadrant[] boards;
    private Graphics2D g2;
    private ArrayList <BufferedImage> boardImages;
@@ -43,6 +43,11 @@ public class KBPanel extends JPanel implements ActionListener {
       setUpMenu(menuButton);
       finishButton = new TranslucentButton();
       setUpFinish(finishButton);
+      objectivesButton = new TranslucentButton[3];
+         for (int q = 0; q < 3; q++) {
+            objectivesButton [q]= new TranslucentButton();
+         }
+      setUpObjective(objectivesButton);
 
       // for coordinates
       addMouseListener(new MouseAdapter() { @Override public void mousePressed(MouseEvent e) { System.out.println("mouse clicked on coord (" +e.getX()+ ", " +e.getY()+ ")");}});
@@ -87,6 +92,7 @@ public class KBPanel extends JPanel implements ActionListener {
       drawHexButtons();
       drawMenu();
       drawFinish();
+      drawObjectives();
       //3- drawing current player attributes
       drawCurrentPlayer();
       drawOtherPlayer();
@@ -178,6 +184,10 @@ public class KBPanel extends JPanel implements ActionListener {
 
    public void drawMenu (){ menuButton.setBounds(785,765,70,60);}
    public void drawFinish (){ finishButton.setBounds(1320,750,170,60);}
+   public void drawObjectives (){
+      for (int i = 0; i< 3; i++)
+         objectivesButton[i].setBounds(325+ i * 150, 735, 130, 240);
+   }
    /**
     * draws the outline for each Hexbutton with Button Quadrant
     */
@@ -242,6 +252,21 @@ public class KBPanel extends JPanel implements ActionListener {
 
          }
       });
+   }
+   public void setUpObjective(TranslucentButton[] arr) {
+      for (int i = 0; i< 3; i++) {
+         TranslucentButton temp = arr[i];
+         add(temp);
+
+         // cl.show(Constants.PANEL_CONT, Constants.GAME_PANEL);
+         temp.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+               System.out.println("char clicked ");
+
+            }
+         });
+      }
    }
 
 
