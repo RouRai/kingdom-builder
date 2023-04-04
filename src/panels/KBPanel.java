@@ -213,6 +213,7 @@ public class KBPanel extends JPanel implements ActionListener {
          @Override
          public void actionPerformed(ActionEvent e) {
             System.out.println("Hex Button clicked " + temp + "  ");
+
          }
       });
    }
