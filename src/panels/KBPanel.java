@@ -54,7 +54,7 @@ public class KBPanel extends JPanel implements ActionListener {
             actionTiles[q] = new HexagonButton();
             actionTiles[q].setBoardLocation(q,-1,-1);
          }
-      setUpCurrentPlayerActionTiles (actionTiles);
+      setUpactionTiles(actionTiles);
 
       // for coordinates
       addMouseListener(new MouseAdapter() { @Override public void mousePressed(MouseEvent e) { System.out.println("mouse clicked on coord (" +e.getX()+ ", " +e.getY()+ ")");}});
@@ -199,12 +199,9 @@ public class KBPanel extends JPanel implements ActionListener {
    public void drawActionTiles(){
       for (int i = 0; i < 4; i++) {
          if (i % 2== 0)
-            actionTiles[i].setBounds( 1005+ i * 2, 515+ i * 75, 80, 85);
-
+            actionTiles[i].setBounds(997 + i * 2, 515 + i * 75, 90, 85);
          else
-            actionTiles[i].setBounds(959+ i *1, 515+ i * 75, 80, 85);
-         System.out.println(i);
-
+            actionTiles[i].setBounds(950 +i+3, 515 + i * 75, 90, 87);
       }
    }
    /**
@@ -231,21 +228,6 @@ public class KBPanel extends JPanel implements ActionListener {
             }
             y += 35.5;
          }
-      }
-   }
-   public void setUpCurrentPlayerActionTiles (HexagonButton[] arr) {
-      for (int i = 0; i < 3; i++) {
-         HexagonButton temp = arr[i];
-         add(temp);
-
-         // cl.show(Constants.PANEL_CONT, Constants.GAME_PANEL);
-         temp.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-               System.out.println("action Tile clicked: " + temp);
-
-            }
-         });
       }
    }
    /**
