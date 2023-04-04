@@ -31,7 +31,7 @@ public class KBPanel extends JPanel implements ActionListener {
    private ButtonQuadrant[] boards;
    private Graphics2D g2;
    private ArrayList <BufferedImage> boardImages;
-   private ArrayList <HexagonButton> actionTiles;
+   private HexagonButton[] actionTiles;
    private CardLayout cardLay;
    private Constants constantClass;
    private final String fontStr = "Lucida Calligraphy";
@@ -45,10 +45,16 @@ public class KBPanel extends JPanel implements ActionListener {
       finishButton = new TranslucentButton();
       setUpFinish(finishButton);
       objectivesButton = new TranslucentButton[3];
-         for (int q = 0; q < 3; q++) {
+         for (int q = 0; q < 3; q++)
             objectivesButton [q]= new TranslucentButton();
-         }
       setUpObjective(objectivesButton);
+
+      actionTiles = new HexagonButton[4];
+         for (int q = 0; q < 4; q++) {
+            actionTiles[q] = new HexagonButton();
+            actionTiles[q].setBoardLocation(q,-1,-1);
+         }
+      setUpCurrentPlayerActionTiles (actionTiles);
 
       // for coordinates
       addMouseListener(new MouseAdapter() { @Override public void mousePressed(MouseEvent e) { System.out.println("mouse clicked on coord (" +e.getX()+ ", " +e.getY()+ ")");}});
@@ -94,6 +100,7 @@ public class KBPanel extends JPanel implements ActionListener {
       drawMenu();
       drawFinish();
       drawObjectives();
+      drawActionTiles();
       //3- drawing current player attributes
       drawCurrentPlayer();
       drawOtherPlayer();
@@ -189,6 +196,17 @@ public class KBPanel extends JPanel implements ActionListener {
       for (int i = 0; i< 3; i++)
          objectivesButton[i].setBounds(325+ i * 150, 735, 130, 240);
    }
+   public void drawActionTiles(){
+      for (int i = 0; i < 4; i++) {
+         if (i % 2== 0)
+            actionTiles[i].setBounds( 1005+ i * 2, 515+ i * 75, 80, 85);
+
+         else
+            actionTiles[i].setBounds(959+ i *1, 515+ i * 75, 80, 85);
+         System.out.println(i);
+
+      }
+   }
    /**
     * draws the outline for each Hexbutton with Button Quadrant
     */
@@ -213,6 +231,21 @@ public class KBPanel extends JPanel implements ActionListener {
             }
             y += 35.5;
          }
+      }
+   }
+   public void setUpCurrentPlayerActionTiles (HexagonButton[] arr) {
+      for (int i = 0; i < 3; i++) {
+         HexagonButton temp = arr[i];
+         add(temp);
+
+         // cl.show(Constants.PANEL_CONT, Constants.GAME_PANEL);
+         temp.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+               System.out.println("action Tile clicked: " + temp);
+
+            }
+         });
       }
    }
    /**
@@ -264,6 +297,21 @@ public class KBPanel extends JPanel implements ActionListener {
             @Override
             public void actionPerformed(ActionEvent e) {
                System.out.println("char clicked ");
+
+            }
+         });
+      }
+   }
+   public void setUpactionTiles(HexagonButton[] arr) {
+      for (int i = 0; i< 4; i++) {
+         HexagonButton temp = arr[i];
+         add(temp);
+
+         // cl.show(Constants.PANEL_CONT, Constants.GAME_PANEL);
+         temp.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+               System.out.println("Action tiles " + temp);
 
             }
          });
