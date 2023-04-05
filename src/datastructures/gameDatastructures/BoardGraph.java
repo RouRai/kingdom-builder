@@ -18,9 +18,7 @@ import java.util.ArrayList;
  */
 public class BoardGraph extends Graph {
 
-    public BoardGraph(ArrayList<File> boardTextFiles) {
-        super(null);
-    }
+    public BoardGraph(ArrayList<File> boardTextFiles) {}
 
     /**
      * Adds a node to the graph given the board and the specific node to add

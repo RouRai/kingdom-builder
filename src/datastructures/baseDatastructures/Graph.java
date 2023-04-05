@@ -12,11 +12,9 @@ import logic.constantFolder.DirectionEnum;
  */
 public abstract class Graph{
 
-    private final Node origin;
+    private Node origin;
 
-    public Graph(Node origin) {
-        this.origin = origin;
-    }
+    public Graph() {}
 
     /**
      * Returns the origin of the graph
@@ -24,6 +22,10 @@ public abstract class Graph{
      */
     public Node getOrigin() {
         return origin;
+    }
+
+    public void setOrigin (Node origin) {
+        this.origin = origin;
     }
 
     /**
@@ -34,8 +36,8 @@ public abstract class Graph{
      * @param directionTwo The direction of the first vertex relative to the second vertex
      */
     public void addEdge (Node vertexOne, Node vertexTwo, DirectionEnum directionOne, DirectionEnum directionTwo) {
-        vertexOne.addAdjacentNode(directionTwo, vertexTwo);
-        vertexTwo.addAdjacentNode(directionOne, vertexOne);
+        vertexOne.addAdjacentNode(directionOne, vertexTwo);
+        vertexTwo.addAdjacentNode(directionTwo, vertexOne);
     }
 
     /**
