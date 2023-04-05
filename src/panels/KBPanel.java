@@ -75,10 +75,8 @@ public class KBPanel extends JPanel implements ActionListener {
          boards[q] = new ButtonQuadrant(q,tempBoard, boardStartX[q],boardStartY[q]);
       }
 
-      // 1 -- BACKGROUND - BOTTOM LAYER
       try{
-
-         background = ImageIO.read(getClass().getResource("/images/backgroundImages/game play2.png"));
+         background = ImageIO.read(getClass().getResource("/images/backgroundImages/game play1.png"));
          highlight = ImageIO.read(getClass().getResource("/images/graphicsExtra/Hex.png"));
       } catch (Exception ex) {
          System.out.println("----------------------------------------- Image Error -----------------------------------------");
@@ -89,25 +87,20 @@ public class KBPanel extends JPanel implements ActionListener {
    {
       g2 = (Graphics2D)g;
       //Base Calls
-      g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-      super.paintComponent(g2);
+         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+         super.paintComponent(g2);
       // 1 -- BACKGROUND
-      g2.drawImage(background,0, 0, Constants.WIDTH, Constants.HEIGHT-8, null);
-      g2.setBackground(Color.BLACK);
-      //2- drawing hex buttons
-      drawLeftPanel();
-      drawHexButtons();
-      drawMenu();
-      drawFinish();
-      drawObjectives();
-      drawActionTiles();
-      //3- drawing current player attributes
-      drawCurrentPlayer();
-      drawOtherPlayer();
-      //4- drawing
-
-
-      //Functionality buttons
+         g2.drawImage(background,0, 0, Constants.WIDTH, Constants.HEIGHT-8, null);
+         g2.setBackground(Color.BLACK);
+      //2- drawing
+         drawLeftPanel();
+         drawHexButtons();
+         drawMenu();
+         drawFinish();
+         drawObjectives();
+         drawActionTiles();
+         drawCurrentPlayer();
+         drawOtherPlayer();
 
    }
    public void drawLeftPanel(){
@@ -137,7 +130,7 @@ public class KBPanel extends JPanel implements ActionListener {
          for (int j = 0; j < 4; j++) {
             int x = 1230;
             int y = 35;
-            g2.drawImage(constantClass.getActionTiles()[j], x-25+j *68, y-5 + i * space_between_Players, 60, 60, null);
+            g2.drawImage(constantClass.getActionTiles()[j], x-25+j *65, y-5 + i * space_between_Players, 60, 60, null);
             if (i%2 ==0)
                g2.drawString("0", x+j *65,  y+80+i  * space_between_Players);
             else
