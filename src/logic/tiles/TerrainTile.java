@@ -1,19 +1,21 @@
 package logic.tiles;
 
-import logic.game.Player;
+import logic.gameLogic.Player;
 import logic.constantFolder.TerrainEnum;
+import logic.placeables.Settlement;
 
-public class TerrainTile {
-
-    private final TerrainEnum type;
+/**
+ * Author: Rounak Rai <br>
+ * Contributors: None <br> <br>
+ *
+ * This class stores data relevant to specifically Terrain Tiles.
+ */
+public class TerrainTile extends Tile<TerrainEnum> {
     private Player owner;
+    private Settlement settlement;
 
     public TerrainTile (TerrainEnum type) {
-        this.type = type;
-    }
-
-    public TerrainEnum getType () {
-        return type;
+        super(type);
     }
 
     public Player getOwner () {
@@ -22,5 +24,11 @@ public class TerrainTile {
 
     public void setOwner (Player settler) {
         owner = settler;
+        settlement = new Settlement(settler.getPlayerColor());
+    }
+
+    public void removeOwner () {
+        owner = null;
+        settlement = null;
     }
 }

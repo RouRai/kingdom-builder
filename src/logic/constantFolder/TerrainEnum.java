@@ -1,8 +1,11 @@
 package logic.constantFolder;
 
-/*
-    Provides all the types of terrain in Kingdom Builder
+/**
+ * Author: Rounak Rai <br>
+ * Contributors: None <br> <br>
+ *
+ * This enum is used to represent all Terrain Types.
  */
 public enum TerrainEnum {
-    CANYON, DESERT, FLOWER_FIELD, FOREST, GRASS, MOUNTAIN, WATER
+    CANYON, DESERT, FLOWER, FOREST, GRASS, MOUNTAIN, WATER
 }
