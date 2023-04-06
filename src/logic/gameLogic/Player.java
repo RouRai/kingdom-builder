@@ -7,6 +7,7 @@ import logic.tiles.Tile;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 
 /**
@@ -20,17 +21,17 @@ public class Player {
 
     private final ArrayList<Settlement> settlements;
     private int settlementsRemaining;
-    private final Color playerColor;
+    private final int playerColor;
     private TerrainCard card;
-    private final HashSet<ActionTile> actionTiles;
+    private final HashMap<ActionTile, Integer> actionTiles;
     private int points;
 
 
-    public Player (Color playerColor) {
+    public Player (int playerColor) {
         settlements = new ArrayList<>();
         settlementsRemaining = 40;
         this.playerColor = playerColor;
-        actionTiles = new HashSet<>();
+        actionTiles = new HashMap<ActionTile, Integer>();
         points = 0;
     }
 
@@ -50,7 +51,7 @@ public class Player {
         return settlementsRemaining;
     }
 
-    public Color getPlayerColor() {
+    public int getPlayerColor() {
         return playerColor;
     }
 
@@ -72,7 +73,9 @@ public class Player {
     }
 
     public void giveActionTile (ActionTile tile) {
-        actionTiles.add(tile);
+        if(actionTiles.containsKey(tile)){
+
+        }
     }
 
     public void removeActionTile (ActionTile tile) {
@@ -80,7 +83,7 @@ public class Player {
     }
 
     public HashSet<ActionTile> getActionTiles () {
-        return actionTiles;
+        return null;
     }
 
     public void addPoints (int pointsToAdd) {

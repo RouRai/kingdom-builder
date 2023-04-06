@@ -10,12 +10,12 @@ import java.awt.*;
  */
 public class Settlement {
 
-    private final Color settlementColor;
-    public Settlement (Color playerColor) {
+    private final int settlementColor;
+    public Settlement (int playerColor) {
         settlementColor = playerColor;
     }
 
-    public Color getSettlementColor() {
+    public int getSettlementColor() {
         return settlementColor;
     }
 }
