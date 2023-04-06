@@ -13,26 +13,22 @@ public class Player {
 
     private final ArrayList<Settlement> settlements;
     private int settlementsRemaining;
-    private final Color playerColor;
+    private int id;
     private TerrainCard card;
     private final HashSet<ActionTile> actionTiles;
     private int points;
 
 
-    public Player (Color playerColor) {
+    public Player (int playerid) {
         settlements = new ArrayList<>();
         settlementsRemaining = 40;
-        this.playerColor = playerColor;
+        id = playerid;
         actionTiles = new HashSet<>();
         points = 0;
     }
 
-    public Settlement getSettlement () {
-        if(settlementsRemaining <= 0) {
-            return null;
-        }
-        settlementsRemaining--;
-        return new Settlement(playerColor);
+    public int getID () {
+        return id;
     }
 
     public ArrayList<Settlement> getSettlements() {
@@ -41,10 +37,6 @@ public class Player {
 
     public int getSettlementsRemaining() {
         return settlementsRemaining;
-    }
-
-    public Color getPlayerColor() {
-        return playerColor;
     }
 
     public void setSettlementsRemaining(int settlementsRemaining) {

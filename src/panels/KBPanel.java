@@ -4,6 +4,7 @@ import custom.ButtonQuadrant;
 import custom.HexagonButton;
 import custom.TranslucentButton;
 import game.Constants;
+import logic.game.Game;
 //import hexxes.hexmech;
 
 import javax.imageio.ImageIO;
@@ -34,6 +35,7 @@ public class KBPanel extends JPanel implements ActionListener {
    private HexagonButton[] actionTiles;
    private CardLayout cardLay;
    private Constants constantClass;
+   private Game gameLogic;
    private final String fontStr = "Lucida Calligraphy";
 
    public KBPanel (CardLayout cl){
@@ -160,11 +162,17 @@ public class KBPanel extends JPanel implements ActionListener {
       g2.setColor(Color.white);
       for (int i = 0; i < 4; i++) {
          if (i % 2== 0) {
-            g2.drawImage(constantClass.getActionTiles()[0], 1005+ i * 2, 515+ i * 75, 80, 85 , null);
+            // if can use action tile
+            //g2.drawImage(constantClass.getActionTiles()[0], 1005+ i * 2, 515+ i * 75, 80, 85 , null);
+            // if can't use
+            g2.drawImage(constantClass.getActionProcess()[0], 1005+ i * 2, 538+ i * 75, 75, 30, null);
             g2.drawString("0",980,560+ i * 75);
          }
          else{
-            g2.drawImage(constantClass.getActionTiles()[0], 959+ i *1, 515+ i * 75, 80, 85 , null);
+            // if can use action tile
+            //g2.drawImage(constantClass.getActionTiles()[0], 959+ i *1, 515+ i * 75, 80, 85 , null);
+            // if can't use
+            g2.drawImage(constantClass.getActionProcess()[0], 959+ i *1, 538+ i * 75, 80, 30 , null);
             g2.drawString("0",1055,560+ i * 75);
          }
       }
