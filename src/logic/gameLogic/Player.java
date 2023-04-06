@@ -21,13 +21,13 @@ public class Player {
 
     private final ArrayList<Settlement> settlements;
     private int settlementsRemaining;
-    private final int playerColor;
+    private final Color playerColor;
     private TerrainCard card;
     private final HashMap<ActionTile, Integer> actionTiles;
     private int points;
 
 
-    public Player (int playerColor) {
+    public Player (Color playerColor) {
         settlements = new ArrayList<>();
         settlementsRemaining = 40;
         this.playerColor = playerColor;
@@ -51,7 +51,7 @@ public class Player {
         return settlementsRemaining;
     }
 
-    public int getPlayerColor() {
+    public Color getPlayerColor() {
         return playerColor;
     }
 
