@@ -79,10 +79,10 @@ public class KBPanel extends JPanel implements ActionListener {
       menuButton.addActionListener(this);
       finishButton.addActionListener(this);
       objectivesButton = new TranslucentButton[3];
-      for(TranslucentButton b: objectivesButton){
-         b = new TranslucentButton();
-         add(b);
-         b.addActionListener(this);
+      for(int i = 0; i < 3; i++){
+         objectivesButton[i] = new TranslucentButton();
+         add(objectivesButton[i]);
+         objectivesButton[i].addActionListener(this);
       }
       // 1 -- BACKGROUND - BOTTOM LAYER
       try{
@@ -116,7 +116,7 @@ public class KBPanel extends JPanel implements ActionListener {
       menuButton.setBounds(785, 770, 70, 65);
       finishButton.setBounds(1310, 745, 180, 65);
       for(int p = 0; p < 3; p++){
-         objectivesButton[p].setBounds(700 + p * 200, 700, 200, 100);
+         objectivesButton[p].setBounds(330 + p * 150, 735, 120, 100);
       }
    }
    public void drawLeftPanel(){
@@ -158,6 +158,9 @@ public class KBPanel extends JPanel implements ActionListener {
          g2.drawImage(constantClass.getSettlements()[players.get(i + 1).getPlayerNumber() - 1], 1100, 40 +i * space_between_Players, 90, 70, null);
          //settlement number
          g2.setFont(new Font(fontStr, Font.PLAIN, 30));
+         if(players.get(i + 1).getPlayerNumber() == 4){
+            g2.setColor(Color.BLACK);
+         }
          g2.drawString("" + players.get(i + 1).getSettlementsRemaining(), 1125, 90 + i * space_between_Players);
       }
    }
@@ -171,6 +174,7 @@ public class KBPanel extends JPanel implements ActionListener {
       g2.setColor(Color.black);
       g2.setFont(new Font(fontStr, Font.PLAIN, 50));
       g2.drawString("" + players.get(0).getPlayerNumber(),1185,460);
+
       //action tiles
       g2.setFont(new Font(fontStr, Font.PLAIN, 20));
       g2.setColor(Color.white);
@@ -201,6 +205,9 @@ public class KBPanel extends JPanel implements ActionListener {
       g2.drawImage(constantClass.getSettlements()[players.get(0).getPlayerNumber() - 1], 1330, 410, 120, 100, null);
       //settlement number
       g2.setFont(new Font(fontStr, Font.PLAIN, 35));
+      if(players.get(0).getPlayerNumber() == 4){
+         g2.setColor(Color.BLACK);
+      }
       g2.drawString("" + players.get(0).getSettlementsRemaining(),1365,480);
    }
 
