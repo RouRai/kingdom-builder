@@ -5,6 +5,7 @@ import custom.HexagonButton;
 import custom.TranslucentButton;
 import game.Constants;
 import logic.gameLogic.Player;
+import logic.tiles.ActionTile;
 //import hexxes.hexmech;
 
 import javax.imageio.ImageIO;
@@ -21,6 +22,9 @@ import java.awt.EventQueue;
 import java.awt.GridLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.Iterator;
+import java.util.Set;
+import java.util.TreeSet;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 public class KBPanel extends JPanel implements ActionListener {
@@ -45,6 +49,7 @@ public class KBPanel extends JPanel implements ActionListener {
       for(int i = 0; i < 4; i++){
          players.add(new Player(i + 1));
       }
+
       // for coordinates
       addMouseListener(new MouseAdapter() {
          @Override
@@ -73,6 +78,12 @@ public class KBPanel extends JPanel implements ActionListener {
       add(finishButton);
       menuButton.addActionListener(this);
       finishButton.addActionListener(this);
+      objectivesButton = new TranslucentButton[3];
+      for(TranslucentButton b: objectivesButton){
+         b = new TranslucentButton();
+         add(b);
+         b.addActionListener(this);
+      }
       // 1 -- BACKGROUND - BOTTOM LAYER
       try{
 
@@ -104,6 +115,9 @@ public class KBPanel extends JPanel implements ActionListener {
       //Functionality buttons
       menuButton.setBounds(785, 770, 70, 65);
       finishButton.setBounds(1310, 745, 180, 65);
+      for(int p = 0; p < 3; p++){
+         objectivesButton[p].setBounds(700 + p * 200, 700, 200, 100);
+      }
    }
    public void drawLeftPanel(){
       for (int i = 0; i < 3; i++)
@@ -141,10 +155,10 @@ public class KBPanel extends JPanel implements ActionListener {
          }
          //settlement
          //settlement icon
-         g2.drawImage(constantClass.getSettlements()[i], 1100, 40 +i * space_between_Players, 90, 70, null);
+         g2.drawImage(constantClass.getSettlements()[players.get(i + 1).getPlayerNumber() - 1], 1100, 40 +i * space_between_Players, 90, 70, null);
          //settlement number
          g2.setFont(new Font(fontStr, Font.PLAIN, 30));
-         g2.drawString("40", 1125, 90 + i * space_between_Players);
+         g2.drawString("" + players.get(i + 1).getSettlementsRemaining(), 1125, 90 + i * space_between_Players);
       }
    }
 
@@ -160,7 +174,11 @@ public class KBPanel extends JPanel implements ActionListener {
       //action tiles
       g2.setFont(new Font(fontStr, Font.PLAIN, 20));
       g2.setColor(Color.white);
-      for (int i = 0; i < 4; i++) {
+      Set tiles = players.get(0).getActionTiles().keySet();
+      Iterator<ActionTile> iter = tiles.iterator();
+      int i = 0;
+      while(iter.hasNext()) {
+         ActionTile temp = iter.next();
          if (i % 2== 0) {
             g2.drawImage(constantClass.getActionTiles()[0], 1005+ i * 2, 515+ i * 75, 80, 85 , null);
             g2.drawString("0",980,560+ i * 75);
@@ -169,6 +187,7 @@ public class KBPanel extends JPanel implements ActionListener {
             g2.drawImage(constantClass.getActionTiles()[0], 959+ i *1, 515+ i * 75, 80, 85 , null);
             g2.drawString("0",1055,560+ i * 75);
          }
+         i++;
       }
       //action tile selected
       if (true){
@@ -179,10 +198,10 @@ public class KBPanel extends JPanel implements ActionListener {
 
       //settlement
       //settlement icon
-      g2.drawImage(constantClass.getSettlements()[0], 1330, 410, 120, 100, null);
+      g2.drawImage(constantClass.getSettlements()[players.get(0).getPlayerNumber() - 1], 1330, 410, 120, 100, null);
       //settlement number
       g2.setFont(new Font(fontStr, Font.PLAIN, 35));
-      g2.drawString("40",1365,480);
+      g2.drawString("" + players.get(0).getSettlementsRemaining(),1365,480);
    }
 
 
@@ -232,13 +251,17 @@ public class KBPanel extends JPanel implements ActionListener {
          }
       });
    }
-
+   //method that checks if current player can end their turn;
+   private boolean canEndTurn(){
+      return true;
+   }
    @Override
    public void actionPerformed(ActionEvent e) {
       if(e.getSource().equals(menuButton)){
-
+         cardLay.show(Constants.PANEL_CONT, Constants.MENU_PANEL);
       } else if(e.getSource().equals(finishButton)){
-         endTurn();
+         if(canEndTurn())
+            endTurn();
       }
       repaint();
    }

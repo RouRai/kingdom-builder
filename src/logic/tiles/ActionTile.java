@@ -1,6 +1,9 @@
 package logic.tiles;
 
+import game.Constants;
 import logic.constantFolder.ActionEnum;
+
+import java.awt.image.BufferedImage;
 
 /**
  * Author: Rounak Rai <br>
@@ -11,6 +14,7 @@ import logic.constantFolder.ActionEnum;
 
 public class ActionTile extends Tile<ActionEnum> {
     private int count;
+    private BufferedImage front, back;
 
     public ActionTile (ActionEnum type) {
         super(type);
@@ -23,9 +27,5 @@ public class ActionTile extends Tile<ActionEnum> {
 
     public void takeTile () {
         count--;
-    }
-
-    public void giveTile () {
-        count++;
     }
 }
