@@ -1,6 +1,15 @@
 package game;
+import logic.constantFolder.ActionEnum;
+import logic.constantFolder.TerrainEnum;
+import logic.tiles.ActionTile;
+import logic.tiles.TerrainTile;
+import logic.tiles.Tile;
+
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 public class Constants {
@@ -17,6 +26,7 @@ public class Constants {
         public static final String MENU_PANEL = "menuPanel";
         // Image Directory
         public static final String IMG_DIRECTORY = "/images/";
+        public static Tile[] BoardTileTypes;
     // Gets Image from image folder
     public Constants(){
         boards = new BufferedImage [8];
@@ -27,6 +37,11 @@ public class Constants {
         actionTiles = new BufferedImage[8];
         actionProcess = new BufferedImage[8];
 
+        readImages();
+
+    }
+
+    private void readImages(){
         try{
             // 2 -- BOARDS
             actionProcess[0] = ImageIO.read(getClass().getResource("/images/actionProcess/Oasis.png"));
@@ -53,29 +68,29 @@ public class Constants {
             System.out.println("board error");}
         try{
             // 2.5 -- FLIPPED BOARDS
-            boards[0] = ImageIO.read(getClass().getResource("/images/boards/beach_flipped.png"));
-            boards[1] = ImageIO.read(getClass().getResource("/images/boards/boat_flipped.png"));
-            boards[2] = ImageIO.read(getClass().getResource("/images/boards/farm_flipped.png"));
-            boards[3] = ImageIO.read(getClass().getResource("/images/boards/paddock_flipped.png"));
-            boards[4] = ImageIO.read(getClass().getResource("/images/boards/house_flipped.png"));
-            boards[5] = ImageIO.read(getClass().getResource("/images/boards/oracle_flipped.png"));
-            boards[6] = ImageIO.read(getClass().getResource("/images/boards/tower_flipped.png"));
-            boards[7] = ImageIO.read(getClass().getResource("/images/boards/tavern_flipped.png"));
-            } catch (Exception ex1) {
-                System.out.println("board flipped error");}
+            flippedBoards[0] = ImageIO.read(getClass().getResource("/images/boards/beach_flipped.png"));
+             flippedBoards[1] = ImageIO.read(getClass().getResource("/images/boards/boat_flipped.png"));
+             flippedBoards[2] = ImageIO.read(getClass().getResource("/images/boards/farm_flipped.png"));
+             flippedBoards[3] = ImageIO.read(getClass().getResource("/images/boards/paddock_flipped.png"));
+             flippedBoards[4] = ImageIO.read(getClass().getResource("/images/boards/house_flipped.png"));
+             flippedBoards[5] = ImageIO.read(getClass().getResource("/images/boards/oracle_flipped.png"));
+             flippedBoards[6] = ImageIO.read(getClass().getResource("/images/boards/tower_flipped.png"));
+             flippedBoards[7] = ImageIO.read(getClass().getResource("/images/boards/tavern_flipped.png"));
+        } catch (Exception ex1) {
+            System.out.println("board flipped error");}
 
-            try{
-                // 3 -- SETTLEMENTS
+        try{
+            // 3 -- SETTLEMENTS
             settlements[0] = ImageIO.read(getClass().getResource("/images/settlementIcons/Black_Settlement - Copy.png"));
             settlements[1] = ImageIO.read(getClass().getResource("/images/settlementIcons/Blue_Settlement - Copy.png"));
             settlements[2] = ImageIO.read(getClass().getResource("/images/settlementIcons/Red_Settlement - Copy.png"));
             settlements[3] = ImageIO.read(getClass().getResource("/images/settlementIcons/White_Settlement - Copy.png"));
-                }
-            catch (Exception ex2) {
-                    System.out.println("settlement error");}
+        }
+        catch (Exception ex2) {
+            System.out.println("settlement error");}
 
-            try{
-                // 4 - ACTIONTILES
+        try{
+            // 4 - ACTIONTILES
             actionTiles[0] = ImageIO.read(getClass().getResource("/images/actionTiles/barn_Tile.png"));
             actionTiles[1] = ImageIO.read(getClass().getResource("/images/actionTiles/farm_Tile.png"));
             actionTiles[2] = ImageIO.read(getClass().getResource("/images/actionTiles/harbor_Tile.png"));
@@ -84,9 +99,9 @@ public class Constants {
             actionTiles[5] = ImageIO.read(getClass().getResource("/images/actionTiles/paddock_Tile.png"));
             actionTiles[6] = ImageIO.read(getClass().getResource("/images/actionTiles/tavern_Tile.png"));
             actionTiles[7] = ImageIO.read(getClass().getResource("/images/actionTiles/tower_Tile.png"));
-                    }
-            catch (Exception ex3) {
-                        System.out.println("actionTile error");}
+        }
+        catch (Exception ex3) {
+            System.out.println("actionTile error");}
         try{
             // 4 - charCards
             charCards[0] = ImageIO.read(getClass().getResource("/images/characterCards/Citizen.png"));
@@ -99,10 +114,10 @@ public class Constants {
             charCards[7] = ImageIO.read(getClass().getResource("/images/characterCards/Workers.png"));
             charCards[8] = ImageIO.read(getClass().getResource("/images/characterCards/Lords.png"));
             charCards[9] = ImageIO.read(getClass().getResource("/images/characterCards/Hermits.png"));
-                        }
+        }
         catch (Exception ex4) {
-                            System.out.println("char card error");}
-                    try{  //5- landCards
+            System.out.println("char card error");}
+        try{  //5- landCards
             landCards[5] = ImageIO.read(getClass().getResource("/images/landscapeCards/KB-Card-Back.png"));
             landCards[1] = ImageIO.read(getClass().getResource("/images/landscapeCards/KB-Card-Canyon.png"));
             landCards[2] = ImageIO.read(getClass().getResource("/images/landscapeCards/KB-Card-Desert.png"));
@@ -145,4 +160,5 @@ public class Constants {
     public static BufferedImage[] getActionProcess() {
         return actionProcess;
     }
+
 }

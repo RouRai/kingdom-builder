@@ -17,4 +17,6 @@ public class TerrainTile extends Tile<TerrainEnum> {
     public void setOwner (Player settler) {
         owner = settler;
     }
+
+    public String toString (){return ""+getType();}
 }
