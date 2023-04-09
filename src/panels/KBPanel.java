@@ -4,6 +4,7 @@ import custom.ButtonQuadrant;
 import custom.HexagonButton;
 import custom.TranslucentButton;
 import game.Constants;
+import logic.game.FileCheckerBoard;
 import logic.gameLogic.Player;
 import logic.tiles.ActionTile;
 //import hexxes.hexmech;
@@ -40,6 +41,10 @@ public class KBPanel extends JPanel implements ActionListener {
    private Constants constantClass;
    private final String fontStr = "Lucida Calligraphy";
    private ArrayList<Player> players;
+   private FileCheckerBoard b1;
+
+   private Boolean fileCheckDot_Switch = false;
+
 
    public KBPanel (CardLayout cl){
       //setLayout(null);
@@ -49,13 +54,6 @@ public class KBPanel extends JPanel implements ActionListener {
       for(int i = 0; i < 4; i++){
          players.add(new Player(i + 1));
       }
-
-      // for coordinates
-      addMouseListener(new MouseAdapter() {
-         @Override
-         public void mousePressed(MouseEvent e) {
-            System.out.println("mouse clicked on coord (" +e.getX()+ ", " +e.getY()+ ")");
-         }});
       //Boards setup - see ButtonQuadrant class for more details
       boards = new ButtonQuadrant[4];
       int[] boardStartX = {10,423,10,423};
@@ -86,13 +84,12 @@ public class KBPanel extends JPanel implements ActionListener {
       }
       // 1 -- BACKGROUND - BOTTOM LAYER
       try{
-
          background = ImageIO.read(getClass().getResource("/images/backgroundImages/game play2.png"));
          highlight = ImageIO.read(getClass().getResource("/images/graphicsExtra/Hex.png"));
       } catch (Exception ex) {
          System.out.println("----------------------------------------- Image Error -----------------------------------------");
       }
-
+      setUpMiscellaneous ();
    }
    public void paintComponent(Graphics g)
    {
@@ -126,7 +123,7 @@ public class KBPanel extends JPanel implements ActionListener {
          ButtonQuadrant b = boards[i];
          double x = b.startX;
          double y = b.startY;
-         g2.drawImage(constantClass.getBoards()[i],(int)x+2, (int)y-1,435, 369, null);
+         g2.drawImage(constantClass.getBoards()[b1.boardNum],(int)x+2, (int)y-1,435, 369, null);
       }
    }
    public void drawOtherPlayer(){
@@ -211,7 +208,6 @@ public class KBPanel extends JPanel implements ActionListener {
       g2.drawString("" + players.get(0).getSettlementsRemaining(),1365,480);
    }
 
-
    /**
     * draws the outline for each Hexbutton with Button Quadrant
     */
@@ -231,7 +227,9 @@ public class KBPanel extends JPanel implements ActionListener {
                   board[r][c].setBounds((int) (x + 21 + c * 41.3), (int) y, 46, 46);
                }
                board[r][c].drawHighlight(g2, highlight);
-               //gameButton.setIcon(icon);
+
+               // this condition checks the file - JUST LEAVE IT HERE
+              if (fileCheckDot_Switch) drawDotChecker(r, c, board);
             }
             y += 35.5;
          }
@@ -271,5 +269,44 @@ public class KBPanel extends JPanel implements ActionListener {
             endTurn();
       }
       repaint();
+   }
+
+
+   /**
+    * adds a mouse listener which returns the specific coordinates of a click
+    * checks the correctness of a text file according to its color on the screen
+    *    change the number "n" if you want to check a specific file
+    */
+   public void setUpMiscellaneous(){
+
+      String [] simpName = {"beach", "Boat", "farm", "paddock", "house", "oracle", "tower", "tavern"};
+      // type in the board you want to check corresponding to the string array above
+      int n = 7;
+      b1 = new FileCheckerBoard(simpName[n],n);
+      // for coordinates
+      addMouseListener(new MouseAdapter() {
+         @Override
+         public void mousePressed(MouseEvent e) {
+            System.out.println("mouse clicked on coord (" +e.getX()+ ", " +e.getY()+ ")");
+         }});
+   }
+   /**
+    * draws the dots for a file checker
+    * **/
+   public void drawDotChecker(int r, int c, HexagonButton [][] board){
+      if (b1.tiles[r][c]!= null){
+         switch (b1.tiles[r][c]){
+            case "CANYON": g2.setColor(new Color(100,67,81)); break;
+            case "DESERT": g2.setColor(new Color(251,200,39));break;
+            case "FLOWER_FIELD": g2.setColor(new Color(215,168,173));break;
+            case "FOREST": g2.setColor(new Color(29,94,40));break;
+            case "GRASS": g2.setColor(new Color(134,176,73));break;
+            case "MOUNTAIN": g2.setColor(new Color(165,170,180));break;
+            case "WATER": g2.setColor(new Color(91,139,182));break;
+            case "CITY":g2.setColor(new Color(251,10,81));break;
+         }}
+      else
+         g2.setColor(Color.WHITE);
+      g2.fillOval(board[r][c].getX() +10,board[r][c].getY()+30,20,20);
    }
 }
