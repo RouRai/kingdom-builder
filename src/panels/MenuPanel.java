@@ -33,7 +33,10 @@ public class MenuPanel extends JPanel {
         } catch (Exception ex) {
             System.out.println("----------------------------------------- Image Error -----------------------------------------");
         }
+        startPage = new TranslucentButton();
+        resume = new TranslucentButton();
         setUpButtons();
+        setUpResume();
     }
     public void paintComponent(Graphics g) {
         g2 = (Graphics2D) g;
@@ -43,30 +46,28 @@ public class MenuPanel extends JPanel {
         // 1 -- BACKGROUND
         g2.drawImage(background, 0, 0, Constants.WIDTH, Constants.HEIGHT - 8, null);
 
-        startPage.setBounds(90,380,510,150);
-        resume.setBounds(500,380,510,150);
+        startPage.setBounds(395,250,310,100);
+        resume.setBounds(395,390,240,110);
     }
     private void setUpButtons(){
-        startPage = new TranslucentButton();
         add(startPage);
         // cl.show(Constants.PANEL_CONT, Constants.GAME_PANEL);
         startPage.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //button action here
+                System.out.println("start page");
+                cl.show(Constants.PANEL_CONT, Constants.START_PANEL);
             }
         });
-
-        resume = new TranslucentButton();
+    }
+    private void setUpResume(){
         add(resume);
-        // cl.show(Constants.PANEL_CONT, Constants.GAME_PANEL);
         resume.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //button action here
+                System.out.println("resume");
+                cl.show(Constants.PANEL_CONT, Constants.GAME_PANEL);
             }
-        });
-
-    }
+        });}
 
 }
