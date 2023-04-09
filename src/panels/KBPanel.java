@@ -4,6 +4,7 @@ import custom.ButtonQuadrant;
 import custom.HexagonButton;
 import custom.TranslucentButton;
 import game.Constants;
+import logic.gameLogic.Player;
 //import hexxes.hexmech;
 
 import javax.imageio.ImageIO;
@@ -34,12 +35,16 @@ public class KBPanel extends JPanel implements ActionListener {
    private CardLayout cardLay;
    private Constants constantClass;
    private final String fontStr = "Lucida Calligraphy";
+   private ArrayList<Player> players;
 
    public KBPanel (CardLayout cl){
       //setLayout(null);
       cardLay = cl;
       constantClass = new Constants();
-
+      players = new ArrayList<>();
+      for(int i = 0; i < 4; i++){
+         players.add(new Player(i + 1));
+      }
       // for coordinates
       addMouseListener(new MouseAdapter() {
          @Override
@@ -62,7 +67,12 @@ public class KBPanel extends JPanel implements ActionListener {
          }
          boards[q] = new ButtonQuadrant(q,tempBoard, boardStartX[q],boardStartY[q]);
       }
-
+      menuButton = new TranslucentButton();
+      finishButton = new TranslucentButton();
+      add(menuButton);
+      add(finishButton);
+      menuButton.addActionListener(this);
+      finishButton.addActionListener(this);
       // 1 -- BACKGROUND - BOTTOM LAYER
       try{
 
@@ -92,7 +102,8 @@ public class KBPanel extends JPanel implements ActionListener {
 
 
       //Functionality buttons
-
+      menuButton.setBounds(785, 770, 70, 65);
+      finishButton.setBounds(1310, 745, 180, 65);
    }
    public void drawLeftPanel(){
       for (int i = 0; i < 3; i++)
@@ -112,9 +123,9 @@ public class KBPanel extends JPanel implements ActionListener {
          g2.setColor(Color.black);
          g2.setFont(new Font(fontStr, Font.PLAIN, 40));
          if (i%2 ==0)
-            g2.drawString("1", 1040, 85+space_between_Players*i);
+            g2.drawString("" + players.get(i + 1).getPlayerNumber(), 1040, 85+space_between_Players*i);
          else
-            g2.drawString("1", 1040, 90+space_between_Players*i);
+            g2.drawString("" + players.get(i + 1).getPlayerNumber(), 1040, 90+space_between_Players*i);
          //action tiles
          g2.setFont(new Font(fontStr, Font.PLAIN, 20));
          g2.setColor(Color.white);
@@ -145,7 +156,7 @@ public class KBPanel extends JPanel implements ActionListener {
       //number
       g2.setColor(Color.black);
       g2.setFont(new Font(fontStr, Font.PLAIN, 50));
-      g2.drawString("1",1185,460);
+      g2.drawString("" + players.get(0).getPlayerNumber(),1185,460);
       //action tiles
       g2.setFont(new Font(fontStr, Font.PLAIN, 20));
       g2.setColor(Color.white);
@@ -193,13 +204,17 @@ public class KBPanel extends JPanel implements ActionListener {
                   //board[r][c].setColor(Color.yellow);
                   board[r][c].setBounds((int) (x + 21 + c * 41.3), (int) y, 46, 46);
                }
-               g2.drawImage(highlight, board[r][c].getX() - 40, board[r][c].getY() - 35, 120, 120, null);
-               //board[r][c].setIcon(highlight);
+               board[r][c].drawHighlight(g2, highlight);
                //gameButton.setIcon(icon);
             }
             y += 35.5;
          }
       }
+   }
+   public void endTurn(){
+      Player temp = players.get(0);
+      players.remove(0);
+      players.add(temp);
    }
    /**
     * @param temp hexbutton
@@ -220,6 +235,11 @@ public class KBPanel extends JPanel implements ActionListener {
 
    @Override
    public void actionPerformed(ActionEvent e) {
+      if(e.getSource().equals(menuButton)){
 
+      } else if(e.getSource().equals(finishButton)){
+         endTurn();
+      }
+      repaint();
    }
 }

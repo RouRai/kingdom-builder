@@ -21,27 +21,27 @@ public class Player {
 
     private final ArrayList<Settlement> settlements;
     private int settlementsRemaining;
-    private final Color playerColor;
+    private final int playerNumber;
     private TerrainCard card;
     private final HashMap<ActionTile, Integer> actionTiles;
     private int points;
 
 
-    public Player (Color playerColor) {
+    public Player (int playerNumber) {
         settlements = new ArrayList<>();
         settlementsRemaining = 40;
-        this.playerColor = playerColor;
+        this.playerNumber = playerNumber;
         actionTiles = new HashMap<ActionTile, Integer>();
         points = 0;
     }
 
-    public Settlement getSettlement () {
+    /*public Settlement getSettlement () {
         if(settlementsRemaining <= 0) {
             return null;
         }
         settlementsRemaining--;
         return new Settlement(playerColor);
-    }
+    }*/
 
     public ArrayList<Settlement> getSettlements() {
         return settlements;
@@ -51,8 +51,8 @@ public class Player {
         return settlementsRemaining;
     }
 
-    public Color getPlayerColor() {
-        return playerColor;
+    public int getPlayerNumber() {
+        return playerNumber;
     }
 
     public void setSettlementsRemaining(int settlementsRemaining) {
@@ -74,16 +74,25 @@ public class Player {
 
     public void giveActionTile (ActionTile tile) {
         if(actionTiles.containsKey(tile)){
-
+            actionTiles.put(tile, 2);
+            return;
         }
+        actionTiles.put(tile, 1);
     }
 
     public void removeActionTile (ActionTile tile) {
+        if(actionTiles.containsKey(tile) == false){
+            return;
+        }
+        if(actionTiles.get(tile) == 2){
+            actionTiles.put(tile, 1);
+            return;
+        }
         actionTiles.remove(tile);
     }
 
-    public HashSet<ActionTile> getActionTiles () {
-        return null;
+    public HashMap<ActionTile, Integer> getActionTiles () {
+        return actionTiles;
     }
 
     public void addPoints (int pointsToAdd) {

@@ -5,13 +5,13 @@ import java.awt.image.BufferedImage;
 
 public class Settlement {
 
-    private final Color color;
+    private final int color;
 
-    public Settlement (Color color) {
+    public Settlement (int color) {
         this.color = color;
     }
 
-    public Color getImage () {
+    public int getImage () {
         return color;
     }
 }
