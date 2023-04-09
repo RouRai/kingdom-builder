@@ -38,11 +38,11 @@ public class KBWindow extends JFrame {
       Constants.PANEL_CONT.setLayout(cl);
       Constants.PANEL_CONT.add(panels.get(Constants.START_PANEL), Constants.START_PANEL);
       Constants.PANEL_CONT.add(panels.get(Constants.MENU_PANEL), Constants.MENU_PANEL);
+      //remove the part below later
       panels.put(Constants.GAME_PANEL, new KBPanel(cl));
       Constants.PANEL_CONT.add(panels.get(Constants.GAME_PANEL), Constants.GAME_PANEL);
       panels.put(Constants.END_PANEL, new EndPanel(cl));
       Constants.PANEL_CONT.add(panels.get(Constants.END_PANEL), Constants.END_PANEL);
-      cl.show(Constants.PANEL_CONT, Constants.GAME_PANEL);
       cl.show(Constants.PANEL_CONT, Constants.GAME_PANEL);
    }
    public static void setup(){

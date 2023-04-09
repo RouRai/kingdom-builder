@@ -4,7 +4,8 @@ import custom.ButtonQuadrant;
 import custom.HexagonButton;
 import custom.TranslucentButton;
 import game.Constants;
-import logic.game.Game;
+import logic.gameLogic.Player;
+import logic.tiles.ActionTile;
 //import hexxes.hexmech;
 
 import javax.imageio.ImageIO;
@@ -21,6 +22,9 @@ import java.awt.EventQueue;
 import java.awt.GridLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.Iterator;
+import java.util.Set;
+import java.util.TreeSet;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 public class KBPanel extends JPanel implements ActionListener {
@@ -28,38 +32,30 @@ public class KBPanel extends JPanel implements ActionListener {
 
    private BufferedImage background, highlight;
    private TranslucentButton menuButton, finishButton;
-   private TranslucentButton [] objectivesButton;
+   private TranslucentButton[] objectivesButton;
    private ButtonQuadrant[] boards;
    private Graphics2D g2;
    private ArrayList <BufferedImage> boardImages;
-   private HexagonButton[] actionTiles;
    private CardLayout cardLay;
    private Constants constantClass;
-   private Game gameLogic;
    private final String fontStr = "Lucida Calligraphy";
+   private ArrayList<Player> players;
 
    public KBPanel (CardLayout cl){
       //setLayout(null);
       cardLay = cl;
       constantClass = new Constants();
-      menuButton = new TranslucentButton();
-      setUpMenu(menuButton);
-      finishButton = new TranslucentButton();
-      setUpFinish(finishButton);
-      objectivesButton = new TranslucentButton[3];
-         for (int q = 0; q < 3; q++)
-            objectivesButton [q]= new TranslucentButton();
-      setUpObjective(objectivesButton);
-
-      actionTiles = new HexagonButton[4];
-         for (int q = 0; q < 4; q++) {
-            actionTiles[q] = new HexagonButton();
-            actionTiles[q].setBoardLocation(q,-1,-1);
-         }
-      setUpactionTiles(actionTiles);
+      players = new ArrayList<>();
+      for(int i = 0; i < 4; i++){
+         players.add(new Player(i + 1));
+      }
 
       // for coordinates
-      addMouseListener(new MouseAdapter() { @Override public void mousePressed(MouseEvent e) { System.out.println("mouse clicked on coord (" +e.getX()+ ", " +e.getY()+ ")");}});
+      addMouseListener(new MouseAdapter() {
+         @Override
+         public void mousePressed(MouseEvent e) {
+            System.out.println("mouse clicked on coord (" +e.getX()+ ", " +e.getY()+ ")");
+         }});
       //Boards setup - see ButtonQuadrant class for more details
       boards = new ButtonQuadrant[4];
       int[] boardStartX = {10,423,10,423};
@@ -76,9 +72,22 @@ public class KBPanel extends JPanel implements ActionListener {
          }
          boards[q] = new ButtonQuadrant(q,tempBoard, boardStartX[q],boardStartY[q]);
       }
-
+      menuButton = new TranslucentButton();
+      finishButton = new TranslucentButton();
+      add(menuButton);
+      add(finishButton);
+      menuButton.addActionListener(this);
+      finishButton.addActionListener(this);
+      objectivesButton = new TranslucentButton[3];
+      for(int i = 0; i < 3; i++){
+         objectivesButton[i] = new TranslucentButton();
+         add(objectivesButton[i]);
+         objectivesButton[i].addActionListener(this);
+      }
+      // 1 -- BACKGROUND - BOTTOM LAYER
       try{
-         background = ImageIO.read(getClass().getResource("/images/backgroundImages/game play1.png"));
+
+         background = ImageIO.read(getClass().getResource("/images/backgroundImages/game play2.png"));
          highlight = ImageIO.read(getClass().getResource("/images/graphicsExtra/Hex.png"));
       } catch (Exception ex) {
          System.out.println("----------------------------------------- Image Error -----------------------------------------");
@@ -89,21 +98,26 @@ public class KBPanel extends JPanel implements ActionListener {
    {
       g2 = (Graphics2D)g;
       //Base Calls
-         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-         super.paintComponent(g2);
+      g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+      super.paintComponent(g2);
       // 1 -- BACKGROUND
-         g2.drawImage(background,0, 0, Constants.WIDTH, Constants.HEIGHT-8, null);
-         g2.setBackground(Color.BLACK);
-      //2- drawing
-         drawLeftPanel();
-         drawHexButtons();
-         drawMenu();
-         drawFinish();
-         drawObjectives();
-         drawActionTiles();
-         drawCurrentPlayer();
-         drawOtherPlayer();
+      g2.drawImage(background,0, 0, Constants.WIDTH, Constants.HEIGHT-8, null);
+      g2.setBackground(Color.BLACK);
+      //2- drawing hex buttons
+      drawLeftPanel();
+      drawHexButtons();
+      //3- drawing current player attributes
+      drawCurrentPlayer();
+      drawOtherPlayer();
+      //4- drawing
 
+
+      //Functionality buttons
+      menuButton.setBounds(785, 770, 70, 65);
+      finishButton.setBounds(1310, 745, 180, 65);
+      for(int p = 0; p < 3; p++){
+         objectivesButton[p].setBounds(330 + p * 150, 735, 120, 100);
+      }
    }
    public void drawLeftPanel(){
       for (int i = 0; i < 3; i++)
@@ -123,16 +137,16 @@ public class KBPanel extends JPanel implements ActionListener {
          g2.setColor(Color.black);
          g2.setFont(new Font(fontStr, Font.PLAIN, 40));
          if (i%2 ==0)
-            g2.drawString("1", 1040, 85+space_between_Players*i);
+            g2.drawString("" + players.get(i + 1).getPlayerNumber(), 1040, 85+space_between_Players*i);
          else
-            g2.drawString("1", 1040, 90+space_between_Players*i);
+            g2.drawString("" + players.get(i + 1).getPlayerNumber(), 1040, 90+space_between_Players*i);
          //action tiles
          g2.setFont(new Font(fontStr, Font.PLAIN, 20));
          g2.setColor(Color.white);
          for (int j = 0; j < 4; j++) {
             int x = 1230;
             int y = 35;
-            g2.drawImage(constantClass.getActionTiles()[j], x-25+j *65, y-5 + i * space_between_Players, 60, 60, null);
+            g2.drawImage(constantClass.getActionTiles()[j], x-25+j *68, y-5 + i * space_between_Players, 60, 60, null);
             if (i%2 ==0)
                g2.drawString("0", x+j *65,  y+80+i  * space_between_Players);
             else
@@ -141,10 +155,13 @@ public class KBPanel extends JPanel implements ActionListener {
          }
          //settlement
          //settlement icon
-         g2.drawImage(constantClass.getSettlements()[i], 1100, 40 +i * space_between_Players, 90, 70, null);
+         g2.drawImage(constantClass.getSettlements()[players.get(i + 1).getPlayerNumber() - 1], 1100, 40 +i * space_between_Players, 90, 70, null);
          //settlement number
          g2.setFont(new Font(fontStr, Font.PLAIN, 30));
-         g2.drawString("40", 1125, 90 + i * space_between_Players);
+         if(players.get(i + 1).getPlayerNumber() == 4){
+            g2.setColor(Color.BLACK);
+         }
+         g2.drawString("" + players.get(i + 1).getSettlementsRemaining(), 1125, 90 + i * space_between_Players);
       }
    }
 
@@ -156,25 +173,25 @@ public class KBPanel extends JPanel implements ActionListener {
       //number
       g2.setColor(Color.black);
       g2.setFont(new Font(fontStr, Font.PLAIN, 50));
-      g2.drawString("1",1185,460);
+      g2.drawString("" + players.get(0).getPlayerNumber(),1185,460);
+
       //action tiles
       g2.setFont(new Font(fontStr, Font.PLAIN, 20));
       g2.setColor(Color.white);
-      for (int i = 0; i < 4; i++) {
+      Set tiles = players.get(0).getActionTiles().keySet();
+      Iterator<ActionTile> iter = tiles.iterator();
+      int i = 0;
+      while(iter.hasNext()) {
+         ActionTile temp = iter.next();
          if (i % 2== 0) {
-            // if can use action tile
-            //g2.drawImage(constantClass.getActionTiles()[0], 1005+ i * 2, 515+ i * 75, 80, 85 , null);
-            // if can't use
-            g2.drawImage(constantClass.getActionProcess()[0], 1005+ i * 2, 538+ i * 75, 75, 30, null);
+            g2.drawImage(constantClass.getActionTiles()[0], 1005+ i * 2, 515+ i * 75, 80, 85 , null);
             g2.drawString("0",980,560+ i * 75);
          }
          else{
-            // if can use action tile
-            //g2.drawImage(constantClass.getActionTiles()[0], 959+ i *1, 515+ i * 75, 80, 85 , null);
-            // if can't use
-            g2.drawImage(constantClass.getActionProcess()[0], 959+ i *1, 538+ i * 75, 80, 30 , null);
+            g2.drawImage(constantClass.getActionTiles()[0], 959+ i *1, 515+ i * 75, 80, 85 , null);
             g2.drawString("0",1055,560+ i * 75);
          }
+         i++;
       }
       //action tile selected
       if (true){
@@ -185,26 +202,16 @@ public class KBPanel extends JPanel implements ActionListener {
 
       //settlement
       //settlement icon
-      g2.drawImage(constantClass.getSettlements()[0], 1330, 410, 120, 100, null);
+      g2.drawImage(constantClass.getSettlements()[players.get(0).getPlayerNumber() - 1], 1330, 410, 120, 100, null);
       //settlement number
       g2.setFont(new Font(fontStr, Font.PLAIN, 35));
-      g2.drawString("40",1365,480);
+      if(players.get(0).getPlayerNumber() == 4){
+         g2.setColor(Color.BLACK);
+      }
+      g2.drawString("" + players.get(0).getSettlementsRemaining(),1365,480);
    }
 
-   public void drawMenu (){ menuButton.setBounds(785,765,70,60);}
-   public void drawFinish (){ finishButton.setBounds(1320,750,170,60);}
-   public void drawObjectives (){
-      for (int i = 0; i< 3; i++)
-         objectivesButton[i].setBounds(325+ i * 150, 735, 130, 240);
-   }
-   public void drawActionTiles(){
-      for (int i = 0; i < 4; i++) {
-         if (i % 2== 0)
-            actionTiles[i].setBounds(997 + i * 2, 515 + i * 75, 90, 85);
-         else
-            actionTiles[i].setBounds(950 +i+3, 515 + i * 75, 90, 87);
-      }
-   }
+
    /**
     * draws the outline for each Hexbutton with Button Quadrant
     */
@@ -223,13 +230,17 @@ public class KBPanel extends JPanel implements ActionListener {
                   //board[r][c].setColor(Color.yellow);
                   board[r][c].setBounds((int) (x + 21 + c * 41.3), (int) y, 46, 46);
                }
-               g2.drawImage(highlight, board[r][c].getX() - 40, board[r][c].getY() - 35, 120, 120, null);
-               //board[r][c].setIcon(highlight);
+               board[r][c].drawHighlight(g2, highlight);
                //gameButton.setIcon(icon);
             }
             y += 35.5;
          }
       }
+   }
+   public void endTurn(){
+      Player temp = players.get(0);
+      players.remove(0);
+      players.add(temp);
    }
    /**
     * @param temp hexbutton
@@ -245,65 +256,20 @@ public class KBPanel extends JPanel implements ActionListener {
             System.out.println("Hex Button clicked " + temp + "  ");
 
          }
-
       });
    }
-   public void setUpMenu(TranslucentButton temp) {
-      add(temp);
-      // cl.show(Constants.PANEL_CONT, Constants.GAME_PANEL);
-      temp.addActionListener(new ActionListener() {
-         @Override
-         public void actionPerformed(ActionEvent e) {
-            System.out.println("Menu clicked ");
-
-         }
-      });
+   //method that checks if current player can end their turn;
+   private boolean canEndTurn(){
+      return true;
    }
-   public void setUpFinish(TranslucentButton temp) {
-      add(temp);
-      // cl.show(Constants.PANEL_CONT, Constants.GAME_PANEL);
-      temp.addActionListener(new ActionListener() {
-         @Override
-         public void actionPerformed(ActionEvent e) {
-            System.out.println("Finish clicked ");
-
-         }
-      });
-   }
-   public void setUpObjective(TranslucentButton[] arr) {
-      for (int i = 0; i< 3; i++) {
-         TranslucentButton temp = arr[i];
-         add(temp);
-
-         // cl.show(Constants.PANEL_CONT, Constants.GAME_PANEL);
-         temp.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-               System.out.println("char clicked ");
-
-            }
-         });
-      }
-   }
-   public void setUpactionTiles(HexagonButton[] arr) {
-      for (int i = 0; i< 4; i++) {
-         HexagonButton temp = arr[i];
-         add(temp);
-
-         // cl.show(Constants.PANEL_CONT, Constants.GAME_PANEL);
-         temp.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-               System.out.println("Action tiles " + temp);
-
-            }
-         });
-      }
-   }
-
-
    @Override
    public void actionPerformed(ActionEvent e) {
-
+      if(e.getSource().equals(menuButton)){
+         cardLay.show(Constants.PANEL_CONT, Constants.MENU_PANEL);
+      } else if(e.getSource().equals(finishButton)){
+         if(canEndTurn())
+            endTurn();
+      }
+      repaint();
    }
 }

@@ -3,46 +3,27 @@ package datastructures.gameDatastructures;
 import datastructures.baseDatastructures.Graph;
 import datastructures.baseDatastructures.Node;
 import logic.constantFolder.TerrainEnum;
-import logic.game.Board;
+import logic.gameLogic.Board;
 
 import java.io.File;
 import java.util.ArrayList;
 
-public class BoardGraph extends Graph<TerrainNode, ActionNode> {
+/**
+ * Author: Rounak Rai <br>
+ * Contributors: None <br> <br>
+ *
+ * This class is used in order to store the graph of the board specifically. It contains methods
+ * that are used in order to traverse this graph in an efficient manner and gather the data
+ * used in order to verify and complete actions in Kingdom Builder.
+ */
+public class BoardGraph extends Graph {
 
-    public BoardGraph(ArrayList<File> boardTextFiles) {
-        super(new TerrainNode(TerrainEnum.CANYON));
-    }
-
-    /**
-     * Adds a node to the graph given it is a Terrain Node or an Action Node.
-     * @param node Node to be added to the board
-     * @param board Board that contains the rest of the nodes in order to gather adjacent nodes to that node
-     */
-    public void addNode (Node node, Board board) {
-        if(node instanceof TerrainNode) {
-            addTerrainNode((TerrainNode) node, board);
-        }
-        else {
-           addActionNode((ActionNode) node, board);
-        }
-    }
+    public BoardGraph(ArrayList<File> boardTextFiles) {}
 
     /**
-     * This method adds a Node of type Terrain to the graph, given a board that contains its adjacent nodes.
-     * @param node Type of node that is to be added to the graph.
-     * @param board Board that contains the matrix that has all the types of nodes
+     * Adds a node to the graph given the board and the specific node to add
+     * @param node Node to add to the graph
+     * @param board The entire game board
      */
-    private void addTerrainNode (TerrainNode node, Board board) {
-
-    }
-
-    /**
-     This method adds a Node of type Action to the graph, given a board that contains its adjacent nodes.
-     * @param node Type of node that is to be added to the graph.
-     * @param board Board that contains the matrix that has all the types of nodes
-     */
-    private void addActionNode (ActionNode node, Board board) {
-
-    }
+    public void addNode (Node node, Board board) {}
 }

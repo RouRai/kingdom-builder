@@ -1,15 +1,17 @@
 package logic.placeables;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
 
 public class Settlement {
 
-    private final Color settlementColor;
-    public Settlement (Color playerColor) {
-        settlementColor = playerColor;
+    private final int color;
+
+    public Settlement (int color) {
+        this.color = color;
     }
 
-    public Color getSettlementColor() {
-        return settlementColor;
+    public int getImage () {
+        return color;
     }
 }

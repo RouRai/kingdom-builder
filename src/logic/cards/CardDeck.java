@@ -3,6 +3,14 @@ package logic.cards;
 import java.util.ArrayList;
 import java.util.Collections;
 
+/**
+ * Author: Rounak Rai <br>
+ * Contributors: None <br> <br>
+ *
+ * This class is used in order to create a deck of cards given a generic type. In this case, it is to be used
+ * in order to store cards of the type given.
+ * @param <T>
+ */
 public class CardDeck<T> {
 
     private final ArrayList<T> cards;
