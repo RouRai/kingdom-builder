@@ -68,7 +68,7 @@ public class Constants {
             System.out.println("board error");}
         try{
             // 2.5 -- FLIPPED BOARDS
-            flippedBoards[0] = ImageIO.read(getClass().getResource("/images/boards/beach_flipped.png"));
+             flippedBoards[0] = ImageIO.read(getClass().getResource("/images/boards/beach_flipped.png"));
              flippedBoards[1] = ImageIO.read(getClass().getResource("/images/boards/boat_flipped.png"));
              flippedBoards[2] = ImageIO.read(getClass().getResource("/images/boards/farm_flipped.png"));
              flippedBoards[3] = ImageIO.read(getClass().getResource("/images/boards/paddock_flipped.png"));

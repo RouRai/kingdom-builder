@@ -56,6 +56,7 @@ public class MenuPanel extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 System.out.println("start page");
+                KBWindow.terminate();
                 cl.show(Constants.PANEL_CONT, Constants.START_PANEL);
             }
         });

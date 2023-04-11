@@ -5,9 +5,9 @@ import custom.HexagonButton;
 import custom.TranslucentButton;
 import game.Constants;
 import logic.game.FileCheckerBoard;
+import logic.gameLogic.Board;
 import logic.gameLogic.Player;
 import logic.tiles.ActionTile;
-//import hexxes.hexmech;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -37,6 +37,7 @@ public class KBPanel extends JPanel implements ActionListener {
    private ButtonQuadrant[] boards;
    private Graphics2D g2;
    private ArrayList <BufferedImage> boardImages;
+   private ArrayList <Board> actualBoards;
    private CardLayout cardLay;
    private Constants constantClass;
    private final String fontStr = "Lucida Calligraphy";
@@ -59,7 +60,22 @@ public class KBPanel extends JPanel implements ActionListener {
       int[] boardStartX = {10,423,10,423};
       int[] boardStartY = {6,6,365,365};
       boardImages = new ArrayList<>();
-
+      actualBoards = new ArrayList<>();
+      for(int i = 0; i < 4; i++){
+         int rand = 0;
+         do {
+            rand = (int) (Math.random() * (2 * Constants.getBoards().length));
+         }while(Constants.getBoards()[rand % 8] == null);
+         if(rand < Constants.getBoards().length){
+            boardImages.add(Constants.getBoards()[rand % 8]);
+            Constants.getBoards()[rand % 8] = null;
+            Constants.getFlippedBoards()[rand % 8] = null;
+         } else {
+            boardImages.add(Constants.getFlippedBoards()[rand % 8]);
+            Constants.getBoards()[rand % 8] = null;
+            Constants.getFlippedBoards()[rand % 8] = null;
+         }
+      }
       for (int q = 0; q < 4; q++) {
          HexagonButton[][] tempBoard = new HexagonButton[10][10];
          for (int r = 0; r < 10; r++) {
@@ -80,7 +96,12 @@ public class KBPanel extends JPanel implements ActionListener {
       for(int i = 0; i < 3; i++){
          objectivesButton[i] = new TranslucentButton();
          add(objectivesButton[i]);
-         objectivesButton[i].addActionListener(this);
+         objectivesButton[i].addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+            }
+         });
       }
       // 1 -- BACKGROUND - BOTTOM LAYER
       try{
@@ -123,7 +144,7 @@ public class KBPanel extends JPanel implements ActionListener {
          ButtonQuadrant b = boards[i];
          double x = b.startX;
          double y = b.startY;
-         g2.drawImage(constantClass.getBoards()[b1.boardNum],(int)x+2, (int)y-1,435, 369, null);
+         g2.drawImage(boardImages.get(i),(int)x+2, (int)y-1,435, 369, null);
       }
    }
    public void drawOtherPlayer(){

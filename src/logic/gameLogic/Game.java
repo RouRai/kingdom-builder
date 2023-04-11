@@ -1,6 +1,8 @@
 package logic.game;
 
 import logic.cards.*;
+import logic.gameLogic.Board;
+import logic.gameLogic.Player;
 
 import java.util.ArrayList;
 
