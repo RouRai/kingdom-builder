@@ -1,6 +1,5 @@
 package logic.tiles;
 
-import game.Constants;
 import logic.constantFolder.ActionEnum;
 
 import java.awt.image.BufferedImage;

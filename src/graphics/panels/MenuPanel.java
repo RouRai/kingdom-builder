@@ -1,7 +1,8 @@
-package panels;
+package graphics.panels;
 
 import custom.TranslucentButton;
-import game.Constants;
+import graphics.frames.KBWindow;
+import logic.constantFolder.Constants;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;

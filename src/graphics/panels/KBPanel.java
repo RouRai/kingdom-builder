@@ -1,32 +1,25 @@
-package panels;
+package graphics.panels;
 
 import custom.ButtonQuadrant;
 import custom.HexagonButton;
 import custom.TranslucentButton;
-import game.Constants;
+import logic.constantFolder.Constants;
 import logic.game.FileCheckerBoard;
 import logic.gameLogic.Board;
 import logic.gameLogic.Player;
 import logic.tiles.ActionTile;
 
 import javax.imageio.ImageIO;
-import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.awt.Color;
-import java.awt.Container;
-import java.awt.Dimension;
-import java.awt.EventQueue;
-import java.awt.GridLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Iterator;
 import java.util.Set;
-import java.util.TreeSet;
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 public class KBPanel extends JPanel implements ActionListener {
    //Images

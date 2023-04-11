@@ -1,10 +1,14 @@
-package panels;
+package graphics.frames;
+
+import graphics.panels.EndPanel;
+import graphics.panels.KBPanel;
+import graphics.panels.MenuPanel;
+import graphics.panels.StartPanel;
+import logic.constantFolder.Constants;
 
 import javax.swing.*;
 import java.awt.*;
 import java.util.HashMap;
-import game.Constants;
-import game.Constants.*;
 
 public class KBWindow extends JFrame {
 
@@ -12,7 +16,7 @@ public class KBWindow extends JFrame {
    private KBPanel pane;
    private static CardLayout cl;
    private static HashMap<String,JPanel> panels;
-   KBWindow (){
+   public KBWindow (){
       super("Kingdom Builder");
       pack();
       //win = getContentPane();

@@ -1,17 +1,16 @@
-package panels;
+package graphics.panels;
 
 import custom.HexagonButton;
 import custom.TranslucentButton;
-import game.Constants;
+import graphics.frames.KBWindow;
+import logic.constantFolder.Constants;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
-import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
 
 
 public class StartPanel extends JPanel implements ActionListener {

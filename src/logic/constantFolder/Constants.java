@@ -1,15 +1,7 @@
-package game;
-import logic.constantFolder.ActionEnum;
-import logic.constantFolder.TerrainEnum;
-import logic.tiles.ActionTile;
-import logic.tiles.TerrainTile;
+package logic.constantFolder;
 import logic.tiles.Tile;
 
-import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.util.Scanner;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 public class Constants {
