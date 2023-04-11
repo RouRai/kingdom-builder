@@ -293,7 +293,7 @@ public class KBPanel extends JPanel implements ActionListener {
     */
    public void setUpMiscellaneous(){
 
-      String [] simpName = {"beach", "Boat", "farm", "paddock", "house", "oracle", "tower", "tavern"};
+      String [] simpName = {"beach", "boat", "farm", "paddock", "house", "oracle", "tower", "tavern"};
       // type in the board you want to check corresponding to the string array above
       int n = 7;
       b1 = new FileCheckerBoard(simpName[n],n);
