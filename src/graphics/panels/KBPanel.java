@@ -251,6 +251,10 @@ public class KBPanel extends JPanel implements ActionListener {
    }
    public void endTurn(){
       Player temp = players.get(0);
+      temp.setHasPlacedSettlements(false);
+      temp.setUsingActionTile(false);
+      temp.setPlacingSettlements(false);
+      temp.setNumSettlementsPlaced(0);
       players.remove(0);
       players.add(temp);
    }
@@ -266,13 +270,30 @@ public class KBPanel extends JPanel implements ActionListener {
          @Override
          public void actionPerformed(ActionEvent e) {
             System.out.println("Hex Button clicked " + temp + "  ");
-
+            checkRegularSettlementPlacement(players.get(0));
+            repaint();
          }
       });
    }
+
+   private void checkRegularSettlementPlacement (Player player) {
+      if (player.isHasPlacedSettlements()) {
+         return;
+      }
+      if(!player.isPlacingSettlements()){
+         player.setPlacingSettlements(true);
+      }
+      player.setNumSettlementsPlaced(player.getNumSettlementsPlaced() + 1);
+      player.getSettlement();
+      if(player.getNumSettlementsPlaced() == 3) {
+         player.setHasPlacedSettlements(true);
+         player.setPlacingSettlements(false);
+      }
+   }
+
    //method that checks if current player can end their turn;
    private boolean canEndTurn(){
-      return true;
+      return players.get(0).isHasPlacedSettlements();
    }
    @Override
    public void actionPerformed(ActionEvent e) {
