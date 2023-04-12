@@ -37,7 +37,7 @@ public class KBPanel extends JPanel implements ActionListener {
    private ArrayList<Player> players;
    private FileCheckerBoard b1;
 
-   private Boolean fileCheckDot_Switch = false;
+   private Boolean fileCheckDot_Switch = true;
 
 
    public KBPanel (CardLayout cl){
@@ -59,14 +59,15 @@ public class KBPanel extends JPanel implements ActionListener {
          do {
             rand = (int) (Math.random() * (2 * Constants.getBoards().length));
          }while(Constants.getBoards()[rand % 8] == null);
+         int boardNum = rand % 8;
          if(rand < Constants.getBoards().length){
-            boardImages.add(Constants.getBoards()[rand % 8]);
-            Constants.getBoards()[rand % 8] = null;
-            Constants.getFlippedBoards()[rand % 8] = null;
+            boardImages.add(Constants.getBoards()[boardNum]);
+            Constants.getBoards()[boardNum] = null;
+            Constants.getFlippedBoards()[boardNum] = null;
          } else {
-            boardImages.add(Constants.getFlippedBoards()[rand % 8]);
-            Constants.getBoards()[rand % 8] = null;
-            Constants.getFlippedBoards()[rand % 8] = null;
+            boardImages.add(Constants.getFlippedBoards()[boardNum]);
+            Constants.getBoards()[boardNum] = null;
+            Constants.getFlippedBoards()[boardNum] = null;
          }
       }
       for (int q = 0; q < 4; q++) {
