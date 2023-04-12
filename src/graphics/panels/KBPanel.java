@@ -4,7 +4,7 @@ import custom.ButtonQuadrant;
 import custom.HexagonButton;
 import custom.TranslucentButton;
 import logic.constantFolder.Constants;
-import logic.game.FileCheckerBoard;
+import files.FileCheckerBoard;
 import logic.gameLogic.Board;
 import logic.gameLogic.Player;
 import logic.tiles.ActionTile;
