@@ -24,8 +24,8 @@ public class Player {
     private final int playerNumber;
     private TerrainCard card;
     private final HashMap<ActionTile, Integer> actionTiles;
-    private int points;
-
+    private int points, numSettlementsPlaced;
+    private boolean hasPlacedSettlements, isPlacingSettlements, isUsingActionTile;
 
     public Player (int playerNumber) {
         settlements = new ArrayList<>();
@@ -33,15 +33,19 @@ public class Player {
         this.playerNumber = playerNumber;
         actionTiles = new HashMap<ActionTile, Integer>();
         points = 0;
+        numSettlementsPlaced = 0;
+        hasPlacedSettlements = false;
+        isPlacingSettlements = false;
+        isUsingActionTile = false;
     }
 
-    /*public Settlement getSettlement () {
+    public Settlement getSettlement () {
         if(settlementsRemaining <= 0) {
             return null;
         }
         settlementsRemaining--;
-        return new Settlement(playerColor);
-    }*/
+        return new Settlement(playerNumber);
+    }
 
     public ArrayList<Settlement> getSettlements() {
         return settlements;
@@ -101,5 +105,35 @@ public class Player {
 
     public void removePoints (int pointsToRemove) {
         points = Math.max(points - pointsToRemove, 0);
+    }
+
+    public boolean isPlacingSettlements() {
+        return isPlacingSettlements;
+    }
+
+    public boolean isHasPlacedSettlements() {
+        return hasPlacedSettlements;
+    }
+
+    public boolean isUsingActionTile() {
+        return isUsingActionTile;
+    }
+
+    public void setHasPlacedSettlements(boolean hasPlacedSettlements) {
+        this.hasPlacedSettlements = hasPlacedSettlements;
+    }
+
+    public void setPlacingSettlements(boolean placingSettlements) {
+        isPlacingSettlements = placingSettlements;
+    }
+
+    public void setUsingActionTile(boolean usingActionTile) {
+        isUsingActionTile = usingActionTile;
+    }
+    public void setNumSettlementsPlaced(int num){
+        numSettlementsPlaced = num;
+    }
+    public int getNumSettlementsPlaced(){
+        return numSettlementsPlaced;
     }
 }
