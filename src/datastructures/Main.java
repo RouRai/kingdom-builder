@@ -3,28 +3,26 @@ package datastructures;
 import datastructures.baseDatastructures.Node;
 import datastructures.gameDatastructures.ActionNode;
 import datastructures.gameDatastructures.BoardGraph;
+import datastructures.gameDatastructures.BoardMatrix;
 import datastructures.gameDatastructures.TerrainNode;
 import logic.constantFolder.ActionEnum;
 import logic.constantFolder.DirectionEnum;
 import logic.constantFolder.TerrainEnum;
 
+import java.util.ArrayList;
+import java.util.Collections;
+
 public class Main {
     public static void main(String[] args) {
-        BoardGraph bg = new BoardGraph(null);
-        Node firstTerrainHex = new TerrainNode(TerrainEnum.CANYON);
-        Node secondTerrainHex = new ActionNode(ActionEnum.HARBOR);
-        bg.addEdge(firstTerrainHex, secondTerrainHex, DirectionEnum.BOTTOM_LEFT, DirectionEnum.TOP_RIGHT);
-        Node n = firstTerrainHex.getAdjacentNodes().get(DirectionEnum.BOTTOM_LEFT);
-        Node m = secondTerrainHex.getAdjacentNodes().get(DirectionEnum.TOP_RIGHT);
-        System.out.println(Main.getType(n));
-
-        System.out.println(Main.getType(m));
-    }
-
-    private static Enum getType (Node n) {
-        if(n instanceof ActionNode) {
-            return ((ActionNode) n).getType();
+        ArrayList<String> names = new ArrayList<>();
+        names.add("tavern"); names.add("farm"); names.add("house"); names.add("oracle");
+        BoardMatrix bm = new BoardMatrix(names);
+        TerrainNode[][] boardMatrix = bm.getBoardMatrix();
+        for (int r = 0; r < boardMatrix.length; r++) {
+            for (int c = 0; c < boardMatrix[r].length; c++) {
+                System.out.print(boardMatrix[r][c].getType() + " ");
+            }
+            System.out.println();
         }
-        return ((TerrainNode) n).getType();
     }
 }

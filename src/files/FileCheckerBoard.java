@@ -1,5 +1,7 @@
 package files;
 
+import logic.constantFolder.ActionEnum;
+import logic.constantFolder.TerrainEnum;
 import logic.gameLogic.Player;
 import logic.tiles.TerrainTile;
 
@@ -16,12 +18,15 @@ public class FileCheckerBoard {
    public int boardNum;
    private String enumName;
    public String [][] tiles;
+   private TerrainEnum[][] enumTiles;
 
 
    public FileCheckerBoard (String simpName, int i) {
       // do not touch this is for graphics
       tiles = new String[10][10];
+      enumTiles = new TerrainEnum[10][10];
       addStrings(simpName);
+      getEnumMatrix(simpName);
       boardNum = i;
    }
 
@@ -65,9 +70,52 @@ public class FileCheckerBoard {
       }
    }
 
+   public void getEnumMatrix (String fileName) {
+      try {
+         String fileURL = Objects.requireNonNull(getClass().getResource("/files/textFiles/" + fileName + "")).getFile();
+         File myObj = new File(fileURL);
+         Scanner myReader = new Scanner(myObj);
+         createTerrainMatrix(enumTiles, myReader);
+      }catch(FileNotFoundException e){
+         e.printStackTrace();
+      }
+   }
+
+   private void createTerrainMatrix (TerrainEnum[][] terrainMatrix, Scanner myReader) {
+      int rows = 0;
+      while (myReader.hasNext()) {
+         String data = myReader.nextLine();
+         String[] arr = data.split(" ");
+         int columns = 0;
+         for (String symbol: arr){
+            terrainMatrix[rows][columns] = getTerrainTypeFromSymbol(symbol);
+            columns++;
+         }
+         rows++;
+      }
+   }
+
+   private TerrainEnum getTerrainTypeFromSymbol (String symbol) {
+      return switch (symbol) {
+         case "d" -> TerrainEnum.DESERT;
+         case "g" -> TerrainEnum.GRASS;
+         case "f" -> TerrainEnum.FOREST;
+         case "fl" -> TerrainEnum.FLOWER;
+         case "w" -> TerrainEnum.WATER;
+         case "v" -> TerrainEnum.CANYON;
+         case "m" -> TerrainEnum.MOUNTAIN;
+         case "c" -> TerrainEnum.CITY;
+         default -> null;
+      };
+   }
+
 
    public ArrayList<TerrainTile> playerCanUseStrings (Player player) {
       // Returns arraylist of tiles player can use
       return null;
+   }
+
+   public TerrainEnum[][] getEnumTiles () {
+      return enumTiles;
    }
 }
