@@ -39,4 +39,5 @@ public class BoardMatrix {
 
         boardMatrix[row][column] = node;
     }
+    
 }
