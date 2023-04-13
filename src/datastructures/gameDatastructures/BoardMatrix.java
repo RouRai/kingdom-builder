@@ -1,8 +1,7 @@
 package datastructures.gameDatastructures;
 
-import datastructures.baseDatastructures.Node;
-
-import java.io.File;
+import files.FileCheckerBoard;
+import logic.constantFolder.TerrainEnum;
 import java.util.ArrayList;
 
 /**
@@ -15,29 +14,57 @@ import java.util.ArrayList;
  */
 public class BoardMatrix {
 
-    private final Node[][] boardMatrix;
+    private final TerrainNode[][] boardMatrix;
 
-    public BoardMatrix (ArrayList<File> textFiles) {
-        boardMatrix = null;
+    public BoardMatrix (ArrayList<String> boardNames) {
+        boardMatrix = new TerrainNode[20][20];
+        setBoardNodes(boardNames);
     }
 
-    public BoardMatrix () {
-        boardMatrix = new Node[20][20];
-    }
-
-    public Node[][] getBoardMatrix() {
+    public TerrainNode[][] getBoardMatrix() {
         return boardMatrix;
     }
 
-    public void setBoardNode (int row, int column, Node node) {
-        boolean rowsInBounds = row > -1 && row < boardMatrix.length;
-        boolean columnsInBounds = column > -1 && column < boardMatrix[row].length;
-
-        if(!(rowsInBounds && columnsInBounds)) {
-            return;
+    private void setBoardNodes (ArrayList<String> boardNames) {
+        ArrayList<FileCheckerBoard> quadrants = new ArrayList<>();
+        for(int i = 0; i < boardNames.size(); i++) {
+            quadrants.add(new FileCheckerBoard(boardNames.get(i), i));
         }
+        combineQuadrants(quadrants);
+    }
 
-        boardMatrix[row][column] = node;
+    private void combineQuadrants (ArrayList<FileCheckerBoard> quadrants) {
+        ArrayList<TerrainNode[][]> nodeQuadrants = getTerrainNodeMatrices(quadrants);
+        setOneQuadrant(nodeQuadrants.get(0), 0, 0);
+        setOneQuadrant(nodeQuadrants.get(1), 0, 10);
+        setOneQuadrant(nodeQuadrants.get(2), 10, 0);
+        setOneQuadrant(nodeQuadrants.get(3), 10, 10);
+    }
+
+    private void setOneQuadrant (TerrainNode[][] quadrant, int startRow, int startColumn) {
+        for(int row = startRow; row < (startRow + 10); row++) {
+            for(int column = startColumn; column < (startColumn + 10); column++) {
+                boardMatrix[row][column] = quadrant[row - startRow][column - startColumn];
+            }
+        }
+    }
+
+    private ArrayList<TerrainNode[][]> getTerrainNodeMatrices (ArrayList<FileCheckerBoard> quadrants) {
+        ArrayList<TerrainNode[][]> nodeQuadrants = new ArrayList<>();
+        for(FileCheckerBoard quadrant : quadrants) {
+            nodeQuadrants.add(getTerrainNodeMatrix(quadrant.getEnumTiles()));
+        }
+        return nodeQuadrants;
+    }
+
+    private TerrainNode[][] getTerrainNodeMatrix (TerrainEnum[][] terrainEnumMatrix) {
+        TerrainNode[][] nodeMatrix = new TerrainNode[10][10];
+        for (int row = 0; row < terrainEnumMatrix.length; row++) {
+            for(int column = 0; column < terrainEnumMatrix[row].length; column++) {
+                nodeMatrix[row][column] = new TerrainNode(terrainEnumMatrix[row][column]);
+            }
+        }
+        return nodeMatrix;
     }
     
 }

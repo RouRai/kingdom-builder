@@ -7,5 +7,5 @@ package logic.constantFolder;
  * This enum is used to store the basic types of Action Tiles.
  */
 public enum ActionEnum {
-    BARN, FARM, HARBOR, OASIS, ORACLE, PADDOCK, TAVERN, TOWER, CITY
+    BARN, FARM, HARBOR, OASIS, ORACLE, PADDOCK, TAVERN, TOWER
 }
