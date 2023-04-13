@@ -27,6 +27,7 @@ public class Constants {
         public static final String[] boardNames = {"beach", "boat","farm", "paddock", "house", "oracle", "tower", "tavern"};
 
     // Gets Image from image folder
+    //srgusdfgh
     public Constants(){
         boards = new BufferedImage [8];
         flippedBoards = new BufferedImage [16];
