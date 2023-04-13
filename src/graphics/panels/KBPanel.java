@@ -59,7 +59,6 @@ public class KBPanel extends JPanel implements ActionListener {
       boardText = new String [4][10][10];
 
       // generating random boards
-      boardIndexes = new int[4];
       for(int i = 0; i < 4; i++){
          String [][] temp = new String[10][10];
          int rand = 0;
@@ -67,18 +66,16 @@ public class KBPanel extends JPanel implements ActionListener {
             rand = (int) (Math.random() * (2 * Constants.getBoards().length));
          }while(Constants.getBoards()[rand % 8] == null);
          int boardNum = rand % 8;
-         boardIndexes [i] = boardNum;
          if(rand < Constants.getBoards().length){
             boardImages.add(Constants.getBoards()[boardNum]);
             Constants.getBoards()[boardNum] = null;
             Constants.getFlippedBoards()[boardNum] = null;
-            temp = constantClass.readNormalFile(i);
-
+            temp = constantClass.readNormalFile(boardNum);
          } else {
             boardImages.add(Constants.getFlippedBoards()[boardNum]);
             Constants.getBoards()[boardNum] = null;
             Constants.getFlippedBoards()[boardNum] = null;
-            temp = constantClass.readFlippedFile(i);
+            temp = constantClass.readFlippedFile(boardNum);
          }
          boardText[i] = temp;
       }

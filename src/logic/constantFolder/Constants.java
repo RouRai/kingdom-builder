@@ -24,7 +24,7 @@ public class Constants {
         public static final String IMG_DIRECTORY = "/images/";
         public static Tile[] BoardTileTypes;
 
-        public static final String[] boardNames = {"beach", "farm", "paddock", "house", "oracle", "tower", "tavern"};
+        public static final String[] boardNames = {"beach", "boat","farm", "paddock", "house", "oracle", "tower", "tavern"};
 
     // Gets Image from image folder
     public Constants(){
