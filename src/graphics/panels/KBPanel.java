@@ -241,6 +241,7 @@ public class KBPanel extends JPanel implements ActionListener {
                   board[r][c].setBounds((int) (x + 21 + c * 41.3), (int) y, 46, 46);
                }
                board[r][c].drawHighlight(g2, highlight);
+               board[r][c].drawSettlement(g2);
 
                // this condition checks the file - JUST LEAVE IT HERE
               if (fileCheckDot_Switch) drawDotChecker(r, c, board);
@@ -270,14 +271,14 @@ public class KBPanel extends JPanel implements ActionListener {
          @Override
          public void actionPerformed(ActionEvent e) {
             System.out.println("Hex Button clicked " + temp + "  ");
-            checkRegularSettlementPlacement(players.get(0));
+            checkRegularSettlementPlacement(players.get(0), temp);
             repaint();
          }
       });
    }
 
-   private void checkRegularSettlementPlacement (Player player) {
-      if (player.isHasPlacedSettlements()) {
+   private void checkRegularSettlementPlacement (Player player, HexagonButton temp) {
+      if (player.isHasPlacedSettlements() || temp.getSettlement() != null || player.getSettlementsRemaining() == 0) {
          return;
       }
       if(!player.isPlacingSettlements()){
@@ -285,6 +286,7 @@ public class KBPanel extends JPanel implements ActionListener {
       }
       player.setNumSettlementsPlaced(player.getNumSettlementsPlaced() + 1);
       player.getSettlement();
+      temp.setSettlement(constantClass.getSettlements()[players.get(0).getPlayerNumber() - 1]);
       if(player.getNumSettlementsPlaced() == 3) {
          player.setHasPlacedSettlements(true);
          player.setPlacingSettlements(false);
@@ -300,12 +302,22 @@ public class KBPanel extends JPanel implements ActionListener {
       if(e.getSource().equals(menuButton)){
          cardLay.show(Constants.PANEL_CONT, Constants.MENU_PANEL);
       } else if(e.getSource().equals(finishButton)){
-         if(canEndTurn())
+         if(canEndTurn()) {
+            if (players.get(0).getPlayerNumber() == 4) {
+               //make sure to check this later
+               checkEndGame();
+            }
             endTurn();
+         }
       }
       repaint();
    }
-
+   //make sure to check this later
+   public void checkEndGame(){
+      if(players.get(0).getSettlementsRemaining() == 0 || players.get(1).getSettlementsRemaining() == 0 || players.get(2).getSettlementsRemaining() == 0 || players.get(3).getSettlementsRemaining() == 0){
+         cardLay.show(Constants.PANEL_CONT, Constants.END_PANEL);
+      }
+   }
 
    /**
     * adds a mouse listener which returns the specific coordinates of a click
