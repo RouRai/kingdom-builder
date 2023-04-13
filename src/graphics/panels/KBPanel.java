@@ -3,6 +3,8 @@ package graphics.panels;
 import custom.ButtonQuadrant;
 import custom.HexagonButton;
 import custom.TranslucentButton;
+import logic.cards.TerrainCard;
+import logic.cards.TerrainDeck;
 import logic.constantFolder.Constants;
 import files.FileCheckerBoard;
 import logic.gameLogic.Board;
@@ -35,6 +37,8 @@ public class KBPanel extends JPanel implements ActionListener {
    private Constants constantClass;
    private final String fontStr = "Lucida Calligraphy";
    private ArrayList<Player> players;
+   private TerrainDeck terrainDeck;
+   private ArrayList<TerrainCard> terrainCards;
    private FileCheckerBoard b1;
 
    private Boolean fileCheckDot_Switch = false;
@@ -45,8 +49,12 @@ public class KBPanel extends JPanel implements ActionListener {
       cardLay = cl;
       constantClass = new Constants();
       players = new ArrayList<>();
+      terrainDeck = new TerrainDeck();
+      terrainCards = terrainDeck.getCards();
       for(int i = 0; i < 4; i++){
          players.add(new Player(i + 1));
+         players.get(i).setCard(terrainCards.get(0));
+         terrainCards.remove(0);
       }
       //Boards setup - see ButtonQuadrant class for more details
       boards = new ButtonQuadrant[4];
@@ -209,7 +217,7 @@ public class KBPanel extends JPanel implements ActionListener {
          g2.drawImage(constantClass.getActionProcess()[1], 1135, 645, 150, 60, null);
       }
       //landscape card
-      g2.drawImage(constantClass.getLandCards()[0], 1335, 530, 130, 200, null);
+      g2.drawImage(players.get(0).getCard().image(), 1335, 530, 130, 200, null);
 
       //settlement
       //settlement icon
@@ -250,14 +258,26 @@ public class KBPanel extends JPanel implements ActionListener {
          }
       }
    }
+   public TerrainCard getCard(){
+      if(terrainDeck.isEmpty()){
+         terrainDeck = new TerrainDeck();
+         terrainCards = terrainDeck.getCards();
+         return getCard();
+      }
+      TerrainCard temp = terrainCards.get(0);
+      terrainCards.remove(0);
+      return temp;
+   }
    public void endTurn(){
       Player temp = players.get(0);
       temp.setHasPlacedSettlements(false);
       temp.setUsingActionTile(false);
       temp.setPlacingSettlements(false);
+      temp.setCard(null);
       temp.setNumSettlementsPlaced(0);
       players.remove(0);
       players.add(temp);
+      players.get(0).setCard(getCard());
    }
    /**
     * @param temp hexbutton
