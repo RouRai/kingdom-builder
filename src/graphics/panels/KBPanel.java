@@ -31,11 +31,13 @@ public class KBPanel extends JPanel implements ActionListener {
    private Graphics2D g2;
    private ArrayList <BufferedImage> boardImages;
    private ArrayList <Board> actualBoards;
+   private String [][][] boardText;
    private CardLayout cardLay;
    private Constants constantClass;
    private final String fontStr = "Lucida Calligraphy";
    private ArrayList<Player> players;
    private FileCheckerBoard b1;
+   private int [] boardIndexes;
 
    private Boolean fileCheckDot_Switch = false;
 
@@ -54,27 +56,39 @@ public class KBPanel extends JPanel implements ActionListener {
       int[] boardStartY = {6,6,365,365};
       boardImages = new ArrayList<>();
       actualBoards = new ArrayList<>();
+      boardText = new String [4][10][10];
+
+      // generating random boards
+      boardIndexes = new int[4];
       for(int i = 0; i < 4; i++){
+         String [][] temp = new String[10][10];
          int rand = 0;
          do {
             rand = (int) (Math.random() * (2 * Constants.getBoards().length));
          }while(Constants.getBoards()[rand % 8] == null);
          int boardNum = rand % 8;
+         boardIndexes [i] = boardNum;
          if(rand < Constants.getBoards().length){
             boardImages.add(Constants.getBoards()[boardNum]);
             Constants.getBoards()[boardNum] = null;
             Constants.getFlippedBoards()[boardNum] = null;
+            temp = constantClass.readNormalFile(i);
+
          } else {
             boardImages.add(Constants.getFlippedBoards()[boardNum]);
             Constants.getBoards()[boardNum] = null;
             Constants.getFlippedBoards()[boardNum] = null;
+            temp = constantClass.readFlippedFile(i);
          }
+         boardText[i] = temp;
       }
+
+      // buttons
       for (int q = 0; q < 4; q++) {
          HexagonButton[][] tempBoard = new HexagonButton[10][10];
          for (int r = 0; r < 10; r++) {
             for (int c = 0; c < 10; c++) {
-               tempBoard[r][c] = new HexagonButton(q, r, c);
+               tempBoard[r][c] = new HexagonButton(q, r, c, boardText[q][r][c]);
                setUpBoardHexes(tempBoard[r][c]);
             }
          }

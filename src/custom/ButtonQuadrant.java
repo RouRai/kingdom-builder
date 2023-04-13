@@ -9,6 +9,7 @@ import java.awt.image.BufferedImage;
 
 public class ButtonQuadrant {
    private HexagonButton[][] board;
+   private String[][] boardText;
    public int quadNumber;
    public double startX, startY;
    public BufferedImage image;

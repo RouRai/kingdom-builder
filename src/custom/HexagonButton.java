@@ -14,6 +14,7 @@ public class HexagonButton extends JButton {
     private Polygon polygon;
     private Color color;
     private BufferedImage settlement;
+    private String tileType;
     private int quadNum, row, col;
     public HexagonButton(){
         super();
@@ -29,11 +30,13 @@ public class HexagonButton extends JButton {
         setPreferredSize(size);
         setContentAreaFilled(false);
     }
-    public HexagonButton(int q, int r, int c){
+    public HexagonButton(int q, int r, int c, String type){
         this();
         quadNum = q;
         row = r;
         col = c;
+        tileType = type;
+        //System.out.println(type);
     }
 
     public void paintComponent(Graphics g) {
@@ -73,12 +76,16 @@ public class HexagonButton extends JButton {
         color = c;
     }
     public void drawHighlight(Graphics2D g, BufferedImage highlight){
-        g.drawImage(highlight, this.getX() - 40, this.getY() - 35, 120, 120, null);
+        if (tileType==null || tileType.equals("CITY")|| settlement != null) {
+            this.setEnabled(false);
+        }
+        else
+            g.drawImage(highlight, this.getX() - 40, this.getY() - 35, 120, 120, null);
     }
     public void drawSettlement(Graphics2D g){
         if(settlement != null) {
             g.drawImage(settlement, this.getX() + 8, this.getY() + 10, 30, 20, null);
-            System.out.println("Drew settlement");
+            //System.out.println("Drew settlement");
         }
     }
     public BufferedImage getSettlement(){

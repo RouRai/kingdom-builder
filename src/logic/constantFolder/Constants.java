@@ -2,6 +2,10 @@ package logic.constantFolder;
 import logic.tiles.Tile;
 
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Objects;
+import java.util.Scanner;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 public class Constants {
@@ -19,6 +23,9 @@ public class Constants {
         // Image Directory
         public static final String IMG_DIRECTORY = "/images/";
         public static Tile[] BoardTileTypes;
+
+        public static final String[] boardNames = {"beach", "farm", "paddock", "house", "oracle", "tower", "tavern"};
+
     // Gets Image from image folder
     public Constants(){
         boards = new BufferedImage [8];
@@ -30,7 +37,62 @@ public class Constants {
         actionProcess = new BufferedImage[8];
 
         readImages();
+    }
 
+    public static String [][] readNormalFile (int quadNumber) {
+        String [][]boardText = new String[10][10];
+        try {
+            File myObj = new File(Objects.requireNonNull(Constants.class.getResource("/files/textFiles/" + boardNames[quadNumber] + "")).getFile());
+            Scanner myReader = new Scanner(myObj);
+            int r = 0;
+            while (myReader.hasNext()) {
+                String data = myReader.nextLine();
+                String [] arr = data.split(" ");
+                int c = 0;
+                for (String str: arr){
+                    String temp = "*";
+                    if (str.equals("d")){
+                        temp = "DESERT";}
+                    else if (str.equals("g")) {
+                        temp = "GRASS";}
+                    else if (str.equals("f")){
+                        temp = "FOREST";}
+                    else if (str.equals("fl")){
+                        temp = "FLOWER_FIELD";}
+                    else if (str.equals("w")){
+                        temp = "WATER";}
+                    else if (str.equals("v")){
+                        temp = "CANYON";}
+                    else if (str.equals("m")){
+                        temp = "MOUNTAIN";}
+                    else if (str.equals("c")){
+                        temp = "CITY";}
+                    else if (str.equals("a")){
+                        temp = null;}
+                    boardText[r][c] = temp;
+                    c++;
+                }
+                r++;
+            }
+            //System.out.println("-----------");
+        }catch(FileNotFoundException e){
+            e.printStackTrace();
+        }
+        return boardText;
+
+    }
+
+    public static String[][] readFlippedFile (int quadNumber){
+        String [][] boardText = readNormalFile(quadNumber);
+        String [][] tempBoard = new String [10][10];
+        System.out.println();
+        for (int r = 9; r >=0; r--){
+            for (int c = 9; c>=0;c--){
+                //System.out.println(r +" "+ c + " - " +boardText[r][c]);
+                tempBoard [9-r][9-c] = boardText[r][c];
+            }
+        }
+        return tempBoard;
     }
 
     private void readImages(){
