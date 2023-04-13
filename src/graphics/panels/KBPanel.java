@@ -37,7 +37,7 @@ public class KBPanel extends JPanel implements ActionListener {
    private ArrayList<Player> players;
    private FileCheckerBoard b1;
 
-   private Boolean fileCheckDot_Switch = true;
+   private Boolean fileCheckDot_Switch = false;
 
 
    public KBPanel (CardLayout cl){
