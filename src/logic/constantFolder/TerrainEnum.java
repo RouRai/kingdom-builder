@@ -7,5 +7,5 @@ package logic.constantFolder;
  * This enum is used to represent all Terrain Types.
  */
 public enum TerrainEnum {
-    CANYON, DESERT, FLOWER, FOREST, GRASS, MOUNTAIN, WATER
+    CANYON, DESERT, FLOWER, FOREST, GRASS, MOUNTAIN, WATER, CITY
 }
