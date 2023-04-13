@@ -36,9 +36,4 @@ public class TerrainDeck extends CardDeck<TerrainCard> {
     public ArrayList<TerrainCard> getTerrainDeck () {
         return getShuffledCards();
     }
-    public TerrainCard getFirstCard(){
-        TerrainCard temp = getCards().get(0);
-        getCards().remove(0);
-        return temp;
-    }
 }
