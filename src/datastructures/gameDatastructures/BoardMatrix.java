@@ -2,6 +2,9 @@ package datastructures.gameDatastructures;
 
 import datastructures.baseDatastructures.Node;
 
+import java.io.File;
+import java.util.ArrayList;
+
 /**
  * Author: Rounak Rai <br>
  * Contributors: None <br> <br>
@@ -14,8 +17,8 @@ public class BoardMatrix {
 
     private final Node[][] boardMatrix;
 
-    public BoardMatrix (Node[][] boardMatrix) {
-        this.boardMatrix = boardMatrix;
+    public BoardMatrix (ArrayList<File> textFiles) {
+        boardMatrix = null;
     }
 
     public BoardMatrix () {

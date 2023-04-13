@@ -17,6 +17,7 @@ public class HexagonButton extends JButton {
     private int quadNum, row, col;
     public HexagonButton(){
         super();
+        settlement = null;
         n = 6;
         x = new int[n];
         y = new int [n];
@@ -48,11 +49,6 @@ public class HexagonButton extends JButton {
             x[i] = x0 + (int)Math.round((getWidth()/2)*Math.cos(v + Math.PI/2));
             y[i ] = y0 + (int)Math.round((getHeight()/2)*Math.sin(v + Math.PI/2));
         }
-        if(draw) {
-            g.fillPolygon(x, y, n);
-            g.setColor(Color.BLACK);
-            g.drawPolygon(x, y, n);
-        }
         g.drawPolygon(x, y, n);
         super.paintComponent(g);
     }
@@ -78,6 +74,15 @@ public class HexagonButton extends JButton {
     }
     public void drawHighlight(Graphics2D g, BufferedImage highlight){
         g.drawImage(highlight, this.getX() - 40, this.getY() - 35, 120, 120, null);
+    }
+    public void drawSettlement(Graphics2D g){
+        if(settlement != null) {
+            g.drawImage(settlement, this.getX() + 8, this.getY() + 10, 30, 20, null);
+            System.out.println("Drew settlement");
+        }
+    }
+    public BufferedImage getSettlement(){
+        return settlement;
     }
     public void setSettlement(BufferedImage settle){
         settlement = settle;
