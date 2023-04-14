@@ -43,9 +43,7 @@ public class BoardMatrix {
 
     private void setOneQuadrant (TerrainNode[][] quadrant, int startRow, int startColumn) {
         for(int row = startRow; row < (startRow + 10); row++) {
-            for(int column = startColumn; column < (startColumn + 10); column++) {
-                boardMatrix[row][column] = quadrant[row - startRow][column - startColumn];
-            }
+            System.arraycopy(quadrant[row - startRow], 0, boardMatrix[row], startColumn, startColumn + 10 - startColumn);
         }
     }
 
