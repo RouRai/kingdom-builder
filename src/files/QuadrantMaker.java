@@ -22,14 +22,12 @@ public class QuadrantMaker {
 
    public QuadrantMaker(int boardNumber) {
       // do not touch this is for graphics
-      File myObj = new File(Objects.requireNonNull(Constants.class.getResource("/files/textFiles/" + boardNames[boardNumber] + "")).getFile());
+      File myObj = new File(Objects.requireNonNull(Constants.class.getResource("/files/textFiles/" + boardNames[boardNumber % 8] + "")).getFile());
       this.boardNumber = boardNumber;
       tiles = new String[10][10];
       enumTiles = new TerrainEnum[10][10];
-      addStrings(boardNames[boardNumber]);
+      addStrings(boardNames[boardNumber % 8]);
       setUpEnumMatrix(boardNumber);
-      if(Math.random() > 0.5)
-         flipTerrainMatrix();
    }
 
    public void addStrings (String boardName) {
@@ -70,10 +68,13 @@ public class QuadrantMaker {
     */
    public void setUpEnumMatrix(int boardNumber) {
       try {
-         String fileURL = Objects.requireNonNull(getClass().getResource("/files/textFiles/" + boardNames[boardNumber] + "")).getFile();
+         String fileURL = Objects.requireNonNull(getClass().getResource("/files/textFiles/" + boardNames[boardNumber % 8] + "")).getFile();
          File myObj = new File(fileURL);
          Scanner myReader = new Scanner(myObj);
          createTerrainMatrix(enumTiles, myReader);
+         if (boardNumber >= Constants.getBoards().length) {
+            flipTerrainMatrix();
+         }
       }catch(FileNotFoundException e){
          e.printStackTrace();
       }catch(IndexOutOfBoundsException e) {
@@ -108,9 +109,12 @@ public class QuadrantMaker {
       System.out.println(Arrays.deepToString(enumTiles));
       TerrainEnum[][] flippedBoard = new TerrainEnum[10][10];
       for (int row = flippedBoard.length - 1; row > -1; row--) {
-         System.arraycopy(enumTiles[enumTiles.length - row - 1], 0, flippedBoard[row], 0, flippedBoard[row].length);
+         for (int column = flippedBoard[row].length - 1; column > -1; column--) {
+            flippedBoard[row][column] = enumTiles[flippedBoard.length - row - 1][flippedBoard[row].length - column - 1];
+         }
       }
       enumTiles = flippedBoard;
+      System.out.println();
       System.out.println(Arrays.deepToString(enumTiles));
    }
 
