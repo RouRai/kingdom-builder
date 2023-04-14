@@ -18,11 +18,11 @@ public class TerrainDeck extends CardDeck<TerrainCard> {
         super();
         ArrayList<TerrainCard> cards = new ArrayList<>();
         for(int i = 0; i < 5; i++){
-            cards.add(new TerrainCard(TerrainEnum.CANYON, Constants.landCards[0]));
-            cards.add(new TerrainCard(TerrainEnum.DESERT, Constants.landCards[1]));
-            cards.add(new TerrainCard(TerrainEnum.FLOWER, Constants.landCards[2]));
-            cards.add(new TerrainCard(TerrainEnum.FOREST, Constants.landCards[3]));
-            cards.add(new TerrainCard(TerrainEnum.GRASS, Constants.landCards[4]));
+            cards.add(new TerrainCard(TerrainEnum.CANYON, Constants.landCards[1], "CANYON"));
+            cards.add(new TerrainCard(TerrainEnum.DESERT, Constants.landCards[2], "DESERT"));
+            cards.add(new TerrainCard(TerrainEnum.FLOWER, Constants.landCards[3], "FLOWER_FIELD"));
+            cards.add(new TerrainCard(TerrainEnum.FOREST, Constants.landCards[4], "FOREST"));
+            cards.add(new TerrainCard(TerrainEnum.GRASS, Constants.landCards[0], "GRASS"));
         }
         // Add all the cards necessary to the ArrayList
         addCards(cards);

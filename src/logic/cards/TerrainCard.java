@@ -11,5 +11,5 @@ import java.awt.image.BufferedImage;
  * This record is used in order to store basic relevant data to Terrain Cards, mainly their type.
  * @param type
  */
-public record TerrainCard(TerrainEnum type, BufferedImage image) {}
+public record TerrainCard(TerrainEnum type, BufferedImage image, String terrainString) {}
 

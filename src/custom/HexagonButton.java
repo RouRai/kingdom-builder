@@ -1,4 +1,6 @@
 package custom;
+import logic.cards.TerrainCard;
+
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
@@ -44,7 +46,7 @@ public class HexagonButton extends JButton {
         this.setContentAreaFilled(false);
         this.setBorderPainted(false);
         //this.setAlignmentX();
-        g.setColor(color);
+        //g.setColor(color);
         int x0 = getSize().width/2;
         int y0 = getSize().height/2;
         for(int i=0; i<n; i++) {
@@ -52,8 +54,8 @@ public class HexagonButton extends JButton {
             x[i] = x0 + (int)Math.round((getWidth()/2)*Math.cos(v + Math.PI/2));
             y[i ] = y0 + (int)Math.round((getHeight()/2)*Math.sin(v + Math.PI/2));
         }
-        g.drawPolygon(x, y, n);
-        super.paintComponent(g);
+        //g.drawPolygon(x, y, n);
+        //super.paintComponent(g);
     }
     public boolean contains(int x1, int y1) {
         if (polygon == null || !polygon.getBounds().equals(getBounds())) {
@@ -68,19 +70,19 @@ public class HexagonButton extends JButton {
         }
         return polygon.contains(x1, y1);
     }
-    public void setChangeVisible(boolean b){
-        draw = b;
-    }
 
     public void setColor(Color c){
         color = c;
     }
-    public void drawHighlight(Graphics2D g, BufferedImage highlight){
-        if (tileType==null || tileType.equals("CITY")|| settlement != null) {
-            this.setEnabled(false);
+    public void drawHighlight(Graphics2D g, BufferedImage highlight, TerrainCard currentTerrain){
+        if (tileType==null || tileType.equals("CITY")|| settlement != null || tileType.equals("MOUNTAIN") || !tileType.equals(currentTerrain.terrainString())) {
+            //this.setEnabled(false);
+            return;
         }
         else
             g.drawImage(highlight, this.getX() - 40, this.getY() - 35, 120, 120, null);
+            if(this.isEnabled() == false)
+                this.setEnabled(true);
     }
     public void drawSettlement(Graphics2D g){
         if(settlement != null) {
@@ -90,6 +92,9 @@ public class HexagonButton extends JButton {
     }
     public BufferedImage getSettlement(){
         return settlement;
+    }
+    public String getTileType(){
+        return tileType;
     }
     public void setSettlement(BufferedImage settle){
         settlement = settle;
