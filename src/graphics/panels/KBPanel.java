@@ -3,11 +3,8 @@ package graphics.panels;
 import custom.ButtonQuadrant;
 import custom.HexagonButton;
 import custom.TranslucentButton;
-import logic.cards.TerrainCard;
-import logic.cards.TerrainDeck;
 import logic.constantFolder.Constants;
-import files.QuadrantMaker;
-import logic.constantFolder.TerrainEnum;
+import textFiles.FileCheckerBoard;
 import logic.gameLogic.Board;
 import logic.gameLogic.Player;
 import logic.tiles.ActionTile;
@@ -34,15 +31,11 @@ public class KBPanel extends JPanel implements ActionListener {
    private Graphics2D g2;
    private ArrayList <BufferedImage> boardImages;
    private ArrayList <Board> actualBoards;
-   private TerrainEnum[][][] boardText;
    private CardLayout cardLay;
    private Constants constantClass;
    private final String fontStr = "Lucida Calligraphy";
    private ArrayList<Player> players;
-   private TerrainDeck terrainDeck;
-   private ArrayList<TerrainCard> terrainCards;
-   private QuadrantMaker b1;
-   private int [] boardIndexes;
+   private FileCheckerBoard b1;
 
    private Boolean fileCheckDot_Switch = false;
 
@@ -52,49 +45,35 @@ public class KBPanel extends JPanel implements ActionListener {
       cardLay = cl;
       constantClass = new Constants();
       players = new ArrayList<>();
-      terrainDeck = new TerrainDeck();
-      terrainCards = terrainDeck.getTerrainDeck();
       for(int i = 0; i < 4; i++){
          players.add(new Player(i + 1));
       }
-      players.get(0).setCard(getCard());
       //Boards setup - see ButtonQuadrant class for more details
       boards = new ButtonQuadrant[4];
       int[] boardStartX = {10,423,10,423};
       int[] boardStartY = {6,6,365,365};
       boardImages = new ArrayList<>();
       actualBoards = new ArrayList<>();
-      boardText = new TerrainEnum [4][10][10];
-      // generating random boards
       for(int i = 0; i < 4; i++){
-         TerrainEnum [][] temp = new TerrainEnum[10][10];
-
          int rand = 0;
          do {
             rand = (int) (Math.random() * (2 * Constants.getBoards().length));
          }while(Constants.getBoards()[rand % 8] == null);
-         int boardNum = rand % 8;
-         QuadrantMaker boardMaker = new QuadrantMaker(rand);
          if(rand < Constants.getBoards().length){
-            boardImages.add(Constants.getBoards()[boardNum]);
-            Constants.getBoards()[boardNum] = null;
-            Constants.getFlippedBoards()[boardNum] = null;
-            temp = boardMaker.getEnumTiles();
+            boardImages.add(Constants.getBoards()[rand % 8]);
+            Constants.getBoards()[rand % 8] = null;
+            Constants.getFlippedBoards()[rand % 8] = null;
          } else {
-            boardImages.add(Constants.getFlippedBoards()[boardNum]);
-            Constants.getBoards()[boardNum] = null;
-            Constants.getFlippedBoards()[boardNum] = null;
-            temp = boardMaker.getEnumTiles();
+            boardImages.add(Constants.getFlippedBoards()[rand % 8]);
+            Constants.getBoards()[rand % 8] = null;
+            Constants.getFlippedBoards()[rand % 8] = null;
          }
-         boardText[i] = temp;
       }
-
-      // buttons
       for (int q = 0; q < 4; q++) {
          HexagonButton[][] tempBoard = new HexagonButton[10][10];
          for (int r = 0; r < 10; r++) {
             for (int c = 0; c < 10; c++) {
-               tempBoard[r][c] = new HexagonButton(q, r, c, boardText[q][r][c]);
+               tempBoard[r][c] = new HexagonButton(q, r, c);
                setUpBoardHexes(tempBoard[r][c]);
             }
          }
@@ -226,11 +205,11 @@ public class KBPanel extends JPanel implements ActionListener {
          i++;
       }
       //action tile selected
-      if (players.get(0).isUsingActionTile()){
+      if (true){
          g2.drawImage(constantClass.getActionProcess()[1], 1135, 645, 150, 60, null);
       }
       //landscape card
-      g2.drawImage(players.get(0).getCard().image(), 1335, 530, 130, 200, null);
+      g2.drawImage(constantClass.getLandCards()[0], 1335, 530, 130, 200, null);
 
       //settlement
       //settlement icon
@@ -255,15 +234,13 @@ public class KBPanel extends JPanel implements ActionListener {
             for (int c = 0; c < 10; c++) {
                //CONDITION IF HEX IS ENABLED IN MATRIX.
                if (r % 2 == 0) {
+                  //board[r][c].setColor(Color.RED);
                   board[r][c].setBounds((int) (x + c * 41.2), (int) y, 46, 46);
                } else {
+                  //board[r][c].setColor(Color.yellow);
                   board[r][c].setBounds((int) (x + 21 + c * 41.3), (int) y, 46, 46);
                }
-               //if(board[r][c].tile)
-               if(!players.get(0).isHasPlacedSettlements() && !players.get(0).isUsingActionTile()) {
-                  board[r][c].drawHighlight(g2, highlight, players.get(0).getCard());
-               }
-               board[r][c].drawSettlement(g2);
+               board[r][c].drawHighlight(g2, highlight);
 
                // this condition checks the file - JUST LEAVE IT HERE
               if (fileCheckDot_Switch) drawDotChecker(r, c, board);
@@ -272,26 +249,14 @@ public class KBPanel extends JPanel implements ActionListener {
          }
       }
    }
-   public TerrainCard getCard(){
-      if(terrainDeck.isEmpty()){
-         terrainDeck = new TerrainDeck();
-         terrainCards = terrainDeck.getTerrainDeck();
-         return getCard();
-      }
-      TerrainCard temp = terrainCards.get(0);
-      terrainCards.remove(0);
-      return temp;
-   }
    public void endTurn(){
       Player temp = players.get(0);
       temp.setHasPlacedSettlements(false);
       temp.setUsingActionTile(false);
       temp.setPlacingSettlements(false);
-      temp.setCard(null);
       temp.setNumSettlementsPlaced(0);
       players.remove(0);
       players.add(temp);
-      players.get(0).setCard(getCard());
    }
    /**
     * @param temp hexbutton
@@ -305,14 +270,15 @@ public class KBPanel extends JPanel implements ActionListener {
          @Override
          public void actionPerformed(ActionEvent e) {
             System.out.println("Hex Button clicked " + temp + "  ");
-            checkRegularSettlementPlacement(players.get(0), temp);
+            checkRegularSettlementPlacement(players.get(0));
+
             repaint();
          }
       });
    }
 
-   private void checkRegularSettlementPlacement (Player player, HexagonButton temp) {
-      if (player.isHasPlacedSettlements() || temp.getSettlement() != null || player.getSettlementsRemaining() == 0 || !temp.getTileType().equals(player.getCard().type())) {
+   private void checkRegularSettlementPlacement (Player player) {
+      if (player.isHasPlacedSettlements()) {
          return;
       }
       if(!player.isPlacingSettlements()){
@@ -320,7 +286,6 @@ public class KBPanel extends JPanel implements ActionListener {
       }
       player.setNumSettlementsPlaced(player.getNumSettlementsPlaced() + 1);
       player.getSettlement();
-      temp.setSettlement(constantClass.getSettlements()[player.getPlayerNumber() - 1]);
       if(player.getNumSettlementsPlaced() == 3) {
          player.setHasPlacedSettlements(true);
          player.setPlacingSettlements(false);
@@ -336,22 +301,12 @@ public class KBPanel extends JPanel implements ActionListener {
       if(e.getSource().equals(menuButton)){
          cardLay.show(Constants.PANEL_CONT, Constants.MENU_PANEL);
       } else if(e.getSource().equals(finishButton)){
-         if(canEndTurn()) {
-            if (players.get(0).getPlayerNumber() == 4) {
-               //make sure to check this later
-               checkEndGame();
-            }
+         if(canEndTurn())
             endTurn();
-         }
       }
       repaint();
    }
-   //make sure to check this later
-   public void checkEndGame(){
-      if(players.get(0).getSettlementsRemaining() == 0 || players.get(1).getSettlementsRemaining() == 0 || players.get(2).getSettlementsRemaining() == 0 || players.get(3).getSettlementsRemaining() == 0){
-         cardLay.show(Constants.PANEL_CONT, Constants.END_PANEL);
-      }
-   }
+
 
    /**
     * adds a mouse listener which returns the specific coordinates of a click
@@ -360,10 +315,10 @@ public class KBPanel extends JPanel implements ActionListener {
     */
    public void setUpMiscellaneous(){
 
-      String [] boardNames = {"beach", "boat", "farm", "paddock", "house", "oracle", "tower", "tavern"};
+      String [] simpName = {"beach", "boat", "farm", "paddock", "house", "oracle", "tower", "tavern"};
       // type in the board you want to check corresponding to the string array above
       int n = 7;
-      b1 = new QuadrantMaker(n);
+      b1 = new FileCheckerBoard(simpName[n],n);
       // for coordinates
       addMouseListener(new MouseAdapter() {
          @Override
@@ -375,8 +330,8 @@ public class KBPanel extends JPanel implements ActionListener {
     * draws the dots for a file checker
     * **/
    public void drawDotChecker(int r, int c, HexagonButton [][] board){
-      if (b1.getTiles()[r][c]!= null){
-         switch (b1.getTiles()[r][c]){
+      if (b1.tiles[r][c]!= null){
+         switch (b1.tiles[r][c]){
             case "CANYON": g2.setColor(new Color(100,67,81)); break;
             case "DESERT": g2.setColor(new Color(251,200,39));break;
             case "FLOWER_FIELD": g2.setColor(new Color(215,168,173));break;
