@@ -1,6 +1,7 @@
 package datastructures.gameDatastructures;
 
 import files.QuadrantMaker;
+import logic.constantFolder.DirectionEnum;
 import logic.constantFolder.TerrainEnum;
 import java.util.ArrayList;
 
@@ -85,19 +86,68 @@ public class BoardMatrix {
     }
 
     private void connectTerrainNodes () {
+        for(int row = 0; row < boardMatrix.length; row++) {
+            for (int column = 0; column < boardMatrix[row].length; column++) {
+                doRowAssignment(row, column);
+            }
+        }
+    }
 
+    private void doRowAssignment (int row, int column) {
+        if (!coordinatesInBounds(row, column)) {
+            return;
+        }
+        if (row % 2 == 0) {
+            evenRowNodeAssignment(row, column);
+            return;
+        }
+        oddRowNodeAssignment(row, column);
     }
 
     private void oddRowNodeAssignment (int row, int column) {
-
+        if (coordinatesInBounds(row, column - 1)) {
+            boardMatrix[row][column].getAdjacentNodes().put(DirectionEnum.LEFT, boardMatrix[row][column - 1]);
+        }
+        if (coordinatesInBounds(row, column + 1)) {
+            boardMatrix[row][column].getAdjacentNodes().put(DirectionEnum.RIGHT, boardMatrix[row][column + 1]);
+        }
+        if (coordinatesInBounds(row - 1, column)) {
+            boardMatrix[row][column].getAdjacentNodes().put(DirectionEnum.TOP_LEFT, boardMatrix[row - 1][column]);
+        }
+        if (coordinatesInBounds(row + 1, column)) {
+            boardMatrix[row][column].getAdjacentNodes().put(DirectionEnum.BOTTOM_LEFT, boardMatrix[row + 1][column]);
+        }
+        if (coordinatesInBounds(row - 1, column + 1)) {
+            boardMatrix[row][column].getAdjacentNodes().put(DirectionEnum.TOP_RIGHT, boardMatrix[row - 1][column + 1]);
+        }
+        if (coordinatesInBounds(row + 1, column + 1)) {
+            boardMatrix[row][column].getAdjacentNodes().put(DirectionEnum.BOTTOM_RIGHT, boardMatrix[row + 1][column + 1]);
+        }
     }
 
     private void evenRowNodeAssignment (int row, int column) {
-
+        if (coordinatesInBounds(row, column - 1)) {
+            boardMatrix[row][column].getAdjacentNodes().put(DirectionEnum.LEFT, boardMatrix[row][column - 1]);
+        }
+        if (coordinatesInBounds(row, column + 1)) {
+            boardMatrix[row][column].getAdjacentNodes().put(DirectionEnum.RIGHT, boardMatrix[row][column + 1]);
+        }
+        if (coordinatesInBounds(row - 1, column)) {
+            boardMatrix[row][column].getAdjacentNodes().put(DirectionEnum.TOP_RIGHT, boardMatrix[row - 1][column]);
+        }
+        if (coordinatesInBounds(row + 1, column)) {
+            boardMatrix[row][column].getAdjacentNodes().put(DirectionEnum.BOTTOM_RIGHT, boardMatrix[row + 1][column]);
+        }
+        if (coordinatesInBounds(row + 1, column - 1)) {
+            boardMatrix[row][column].getAdjacentNodes().put(DirectionEnum.BOTTOM_LEFT, boardMatrix[row + 1][column - 1]);
+        }
+        if (coordinatesInBounds(row - 1, column - 1)) {
+            boardMatrix[row][column].getAdjacentNodes().put(DirectionEnum.TOP_LEFT, boardMatrix[row - 1][column - 1]);
+        }
     }
 
     private boolean coordinatesInBounds (int row, int column) {
-        return row < 0 || row >= 20 || column < 0 || column >= 20;
+        return !(row < 0 || row >= 20 || column < 0 || column >= 20);
     }
     
 }

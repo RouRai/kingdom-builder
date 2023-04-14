@@ -10,7 +10,6 @@ import files.QuadrantMaker;
 import logic.gameLogic.Board;
 import logic.gameLogic.Player;
 import logic.tiles.ActionTile;
-
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -21,23 +20,26 @@ import java.awt.Color;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Iterator;
+import java.util.Objects;
 import java.util.Set;
 import javax.swing.JPanel;
+import logic.constantFolder.TerrainEnum;
 public class KBPanel extends JPanel implements ActionListener {
    //Images
 
    private BufferedImage background, highlight;
-   private TranslucentButton menuButton, finishButton;
-   private TranslucentButton[] objectivesButton;
-   private ButtonQuadrant[] boards;
+   private final TranslucentButton menuButton;
+   private final TranslucentButton finishButton;
+   private final TranslucentButton[] objectivesButton;
+   private final ButtonQuadrant[] boards;
    private Graphics2D g2;
-   private ArrayList <BufferedImage> boardImages;
+   private final ArrayList <BufferedImage> boardImages;
    private ArrayList <Board> actualBoards;
-   private String [][][] boardText;
-   private CardLayout cardLay;
-   private Constants constantClass;
+   private String[][][] boardText;
+   private final CardLayout cardLay;
+   private final Constants constantClass;
    private final String fontStr = "Lucida Calligraphy";
-   private ArrayList<Player> players;
+   private final ArrayList<Player> players;
    private TerrainDeck terrainDeck;
    private ArrayList<TerrainCard> terrainCards;
    private QuadrantMaker b1;
@@ -117,8 +119,8 @@ public class KBPanel extends JPanel implements ActionListener {
       }
       // 1 -- BACKGROUND - BOTTOM LAYER
       try{
-         background = ImageIO.read(getClass().getResource("/images/backgroundImages/game play2.png"));
-         highlight = ImageIO.read(getClass().getResource("/images/graphicsExtra/Hex.png"));
+         background = ImageIO.read(Objects.requireNonNull(getClass().getResource("/images/backgroundImages/game play2.png")));
+         highlight = ImageIO.read(Objects.requireNonNull(getClass().getResource("/images/graphicsExtra/Hex.png")));
       } catch (Exception ex) {
          System.out.println("----------------------------------------- Image Error -----------------------------------------");
       }
@@ -373,17 +375,18 @@ public class KBPanel extends JPanel implements ActionListener {
     * draws the dots for a file checker
     * **/
    public void drawDotChecker(int r, int c, HexagonButton [][] board){
-      if (b1.getTiles()[r][c]!= null){
-         switch (b1.getTiles()[r][c]){
-            case "CANYON": g2.setColor(new Color(100,67,81)); break;
-            case "DESERT": g2.setColor(new Color(251,200,39));break;
-            case "FLOWER_FIELD": g2.setColor(new Color(215,168,173));break;
-            case "FOREST": g2.setColor(new Color(29,94,40));break;
-            case "GRASS": g2.setColor(new Color(134,176,73));break;
-            case "MOUNTAIN": g2.setColor(new Color(165,170,180));break;
-            case "WATER": g2.setColor(new Color(91,139,182));break;
-            case "CITY":g2.setColor(new Color(251,10,81));break;
-         }}
+      if (b1.getEnumTiles()[r][c]!= null){
+         switch (b1.getEnumTiles()[r][c]) {
+            case CANYON -> g2.setColor(new Color(100, 67, 81));
+            case DESERT -> g2.setColor(new Color(251, 200, 39));
+            case FLOWER -> g2.setColor(new Color(215, 168, 173));
+            case FOREST -> g2.setColor(new Color(29, 94, 40));
+            case GRASS -> g2.setColor(new Color(134, 176, 73));
+            case MOUNTAIN -> g2.setColor(new Color(165, 170, 180));
+            case WATER -> g2.setColor(new Color(91, 139, 182));
+            case CITY -> g2.setColor(new Color(251, 10, 81));
+         }
+      }
       else
          g2.setColor(Color.WHITE);
       g2.fillOval(board[r][c].getX() +10,board[r][c].getY()+30,20,20);
