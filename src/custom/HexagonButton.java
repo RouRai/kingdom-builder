@@ -81,8 +81,6 @@ public class HexagonButton extends JButton {
         }
         else
             g.drawImage(highlight, this.getX() - 40, this.getY() - 35, 120, 120, null);
-            if(this.isEnabled() == false)
-                this.setEnabled(true);
     }
     public void drawSettlement(Graphics2D g){
         if(settlement != null) {

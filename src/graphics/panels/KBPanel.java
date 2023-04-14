@@ -258,7 +258,7 @@ public class KBPanel extends JPanel implements ActionListener {
                   board[r][c].setBounds((int) (x + 21 + c * 41.3), (int) y, 46, 46);
                }
                //if(board[r][c].tile)
-               if(!players.get(0).isHasPlacedSettlements()) {
+               if(!players.get(0).isHasPlacedSettlements() && !players.get(0).isUsingActionTile()) {
                   board[r][c].drawHighlight(g2, highlight, players.get(0).getCard());
                }
                board[r][c].drawSettlement(g2);
@@ -373,8 +373,8 @@ public class KBPanel extends JPanel implements ActionListener {
     * draws the dots for a file checker
     * **/
    public void drawDotChecker(int r, int c, HexagonButton [][] board){
-      if (b1.tiles[r][c]!= null){
-         switch (b1.tiles[r][c]){
+      if (b1.getTiles()[r][c]!= null){
+         switch (b1.getTiles()[r][c]){
             case "CANYON": g2.setColor(new Color(100,67,81)); break;
             case "DESERT": g2.setColor(new Color(251,200,39));break;
             case "FLOWER_FIELD": g2.setColor(new Color(215,168,173));break;
