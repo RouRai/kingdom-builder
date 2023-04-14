@@ -3,6 +3,8 @@ package graphics.panels;
 import custom.ButtonQuadrant;
 import custom.HexagonButton;
 import custom.TranslucentButton;
+import logic.cards.TerrainCard;
+import logic.cards.TerrainDeck;
 import logic.constantFolder.Constants;
 import files.FileCheckerBoard;
 import logic.gameLogic.Board;
@@ -36,6 +38,8 @@ public class KBPanel extends JPanel implements ActionListener {
    private Constants constantClass;
    private final String fontStr = "Lucida Calligraphy";
    private ArrayList<Player> players;
+   private TerrainDeck terrainDeck;
+   private ArrayList<TerrainCard> terrainCards;
    private FileCheckerBoard b1;
    private int [] boardIndexes;
 
@@ -47,9 +51,12 @@ public class KBPanel extends JPanel implements ActionListener {
       cardLay = cl;
       constantClass = new Constants();
       players = new ArrayList<>();
+      terrainDeck = new TerrainDeck();
+      terrainCards = terrainDeck.getTerrainDeck();
       for(int i = 0; i < 4; i++){
          players.add(new Player(i + 1));
       }
+      players.get(0).setCard(getCard());
       //Boards setup - see ButtonQuadrant class for more details
       boards = new ButtonQuadrant[4];
       int[] boardStartX = {10,423,10,423};
@@ -59,7 +66,6 @@ public class KBPanel extends JPanel implements ActionListener {
       boardText = new String [4][10][10];
 
       // generating random boards
-      boardIndexes = new int[4];
       for(int i = 0; i < 4; i++){
          String [][] temp = new String[10][10];
          int rand = 0;
@@ -67,18 +73,16 @@ public class KBPanel extends JPanel implements ActionListener {
             rand = (int) (Math.random() * (2 * Constants.getBoards().length));
          }while(Constants.getBoards()[rand % 8] == null);
          int boardNum = rand % 8;
-         boardIndexes [i] = boardNum;
          if(rand < Constants.getBoards().length){
             boardImages.add(Constants.getBoards()[boardNum]);
             Constants.getBoards()[boardNum] = null;
             Constants.getFlippedBoards()[boardNum] = null;
-            temp = constantClass.readNormalFile(i);
-
+            temp = constantClass.readNormalFile(boardNum);
          } else {
             boardImages.add(Constants.getFlippedBoards()[boardNum]);
             Constants.getBoards()[boardNum] = null;
             Constants.getFlippedBoards()[boardNum] = null;
-            temp = constantClass.readFlippedFile(i);
+            temp = constantClass.readFlippedFile(boardNum);
          }
          boardText[i] = temp;
       }
@@ -220,11 +224,11 @@ public class KBPanel extends JPanel implements ActionListener {
          i++;
       }
       //action tile selected
-      if (true){
+      if (players.get(0).isUsingActionTile()){
          g2.drawImage(constantClass.getActionProcess()[1], 1135, 645, 150, 60, null);
       }
       //landscape card
-      g2.drawImage(constantClass.getLandCards()[0], 1335, 530, 130, 200, null);
+      g2.drawImage(players.get(0).getCard().image(), 1335, 530, 130, 200, null);
 
       //settlement
       //settlement icon
@@ -249,10 +253,8 @@ public class KBPanel extends JPanel implements ActionListener {
             for (int c = 0; c < 10; c++) {
                //CONDITION IF HEX IS ENABLED IN MATRIX.
                if (r % 2 == 0) {
-                  //board[r][c].setColor(Color.RED);
                   board[r][c].setBounds((int) (x + c * 41.2), (int) y, 46, 46);
                } else {
-                  //board[r][c].setColor(Color.yellow);
                   board[r][c].setBounds((int) (x + 21 + c * 41.3), (int) y, 46, 46);
                }
                board[r][c].drawHighlight(g2, highlight);
@@ -265,14 +267,26 @@ public class KBPanel extends JPanel implements ActionListener {
          }
       }
    }
+   public TerrainCard getCard(){
+      if(terrainDeck.isEmpty()){
+         terrainDeck = new TerrainDeck();
+         terrainCards = terrainDeck.getTerrainDeck();
+         return getCard();
+      }
+      TerrainCard temp = terrainCards.get(0);
+      terrainCards.remove(0);
+      return temp;
+   }
    public void endTurn(){
       Player temp = players.get(0);
       temp.setHasPlacedSettlements(false);
       temp.setUsingActionTile(false);
       temp.setPlacingSettlements(false);
+      temp.setCard(null);
       temp.setNumSettlementsPlaced(0);
       players.remove(0);
       players.add(temp);
+      players.get(0).setCard(getCard());
    }
    /**
     * @param temp hexbutton
