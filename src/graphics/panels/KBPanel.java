@@ -257,7 +257,10 @@ public class KBPanel extends JPanel implements ActionListener {
                } else {
                   board[r][c].setBounds((int) (x + 21 + c * 41.3), (int) y, 46, 46);
                }
-               board[r][c].drawHighlight(g2, highlight);
+               //if(board[r][c].tile)
+               if(!players.get(0).isHasPlacedSettlements()) {
+                  board[r][c].drawHighlight(g2, highlight, players.get(0).getCard());
+               }
                board[r][c].drawSettlement(g2);
 
                // this condition checks the file - JUST LEAVE IT HERE
@@ -307,7 +310,7 @@ public class KBPanel extends JPanel implements ActionListener {
    }
 
    private void checkRegularSettlementPlacement (Player player, HexagonButton temp) {
-      if (player.isHasPlacedSettlements() || temp.getSettlement() != null || player.getSettlementsRemaining() == 0) {
+      if (player.isHasPlacedSettlements() || temp.getSettlement() != null || player.getSettlementsRemaining() == 0 || !temp.getTileType().equals(player.getCard().terrainString())) {
          return;
       }
       if(!player.isPlacingSettlements()){
@@ -315,7 +318,7 @@ public class KBPanel extends JPanel implements ActionListener {
       }
       player.setNumSettlementsPlaced(player.getNumSettlementsPlaced() + 1);
       player.getSettlement();
-      temp.setSettlement(constantClass.getSettlements()[players.get(0).getPlayerNumber() - 1]);
+      temp.setSettlement(constantClass.getSettlements()[player.getPlayerNumber() - 1]);
       if(player.getNumSettlementsPlaced() == 3) {
          player.setHasPlacedSettlements(true);
          player.setPlacingSettlements(false);
