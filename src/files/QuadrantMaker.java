@@ -20,11 +20,11 @@ public class QuadrantMaker {
    public QuadrantMaker(String boardName, int boardNumber) {
       // do not touch this is for graphics
       this.boardName = boardName;
+      this.boardNumber = boardNumber;
       tiles = new String[10][10];
       enumTiles = new TerrainEnum[10][10];
       addStrings(boardName);
       setUpEnumMatrix(boardName);
-      this.boardNumber = boardNumber;
    }
 
    public void addStrings (String boardName) {
