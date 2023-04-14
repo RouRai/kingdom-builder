@@ -1,0 +1,14 @@
+if the row is odd:
+left is c - 1
+right is c + 1
+top left is r - 1
+top right is r - 1, c + 1
+bottom left is r + 1
+bottom right is r + 1, c + 1
+if the row is even:
+left is c - 1
+right is c + 1
+top left is r - 1, c - 1
+top right is r - 1
+bottom left is r + 1, c -1
+bottom right is r + 1
