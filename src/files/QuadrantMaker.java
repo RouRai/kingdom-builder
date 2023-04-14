@@ -22,14 +22,12 @@ public class QuadrantMaker {
 
    public QuadrantMaker(int boardNumber) {
       // do not touch this is for graphics
-      File myObj = new File(Objects.requireNonNull(Constants.class.getResource("/files/textFiles/" + boardNames[boardNumber] + "")).getFile());
+      File myObj = new File(Objects.requireNonNull(Constants.class.getResource("/files/textFiles/" + boardNames[boardNumber % 8] + "")).getFile());
       this.boardNumber = boardNumber;
       tiles = new String[10][10];
       enumTiles = new TerrainEnum[10][10];
-      addStrings(boardNames[boardNumber]);
+      addStrings(boardNames[boardNumber % 8]);
       setUpEnumMatrix(boardNumber);
-      if(Math.random() > 0.5)
-         flipTerrainMatrix();
    }
 
    public void addStrings (String boardName) {
@@ -64,27 +62,39 @@ public class QuadrantMaker {
       }
    }
 
+   /**
+    * Sets up the enum matrix given a board number.
+    * @param boardNumber The number of a corresponding board.
+    */
    public void setUpEnumMatrix(int boardNumber) {
       try {
-         String fileURL = Objects.requireNonNull(getClass().getResource("/files/textFiles/" + boardNames[boardNumber] + "")).getFile();
+         String fileURL = Objects.requireNonNull(getClass().getResource("/files/textFiles/" + boardNames[boardNumber % 8] + "")).getFile();
          File myObj = new File(fileURL);
          Scanner myReader = new Scanner(myObj);
-         //if(this.boardNumber < Constants.getBoards().length)
-            createTerrainMatrix(enumTiles, myReader);
-         //else
-            //createFlippedTerrainMatrix(enumTiles, myReader);
+         createTerrainMatrix(enumTiles, myReader);
+         if (boardNumber >= Constants.getBoards().length) {
+            flipTerrainMatrix();
+         }
       }catch(FileNotFoundException e){
+         e.printStackTrace();
+      }catch(IndexOutOfBoundsException e) {
+         System.out.println("The board number given is out of bounds.");
          e.printStackTrace();
       }
    }
 
-   private void createTerrainMatrix (TerrainEnum[][] terrainMatrix, Scanner myReader) {
+   /**
+    * Creates the TerrainEnum Matrix given an empty TerrainEnum matrix and a Scanner to be used.
+    * @param terrainMatrix The empty matrix to be modified to store the board.
+    * @param fileReader The Scanner object to be used in order to read the file.
+    */
+   private void createTerrainMatrix (TerrainEnum[][] terrainMatrix, Scanner fileReader) {
       int rows = 0;
-      while (myReader.hasNext()) {
-         String data = myReader.nextLine();
-         String[] arr = data.split(" ");
+      while (fileReader.hasNext()) {
+         String data = fileReader.nextLine();
+         String[] symbols = data.split(" ");
          int columns = 0;
-         for (String symbol: arr){
+         for (String symbol: symbols){
             terrainMatrix[rows][columns] = getTerrainTypeFromSymbol(symbol);
             columns++;
          }
@@ -92,16 +102,27 @@ public class QuadrantMaker {
       }
    }
 
+   /**
+    * Flips the enumTiles matrix instance variable for flipped boards.
+    */
    private void flipTerrainMatrix(){
       System.out.println(Arrays.deepToString(enumTiles));
       TerrainEnum[][] flippedBoard = new TerrainEnum[10][10];
       for (int row = flippedBoard.length - 1; row > -1; row--) {
-         System.arraycopy(enumTiles[enumTiles.length - row - 1], 0, flippedBoard[row], 0, flippedBoard[row].length);
+         for (int column = flippedBoard[row].length - 1; column > -1; column--) {
+            flippedBoard[row][column] = enumTiles[flippedBoard.length - row - 1][flippedBoard[row].length - column - 1];
+         }
       }
       enumTiles = flippedBoard;
+      System.out.println();
       System.out.println(Arrays.deepToString(enumTiles));
    }
 
+   /**
+    * Returns the corresponding TerrainEnum to a symbol.
+    * @param symbol The symbol given in a text file.
+    * @return TerrainEnum that corresponds to the symbol.
+    */
    private TerrainEnum getTerrainTypeFromSymbol (String symbol) {
       return switch (symbol) {
          case "d" -> TerrainEnum.DESERT;
