@@ -77,7 +77,6 @@ public class HexagonButton extends JButton {
     }
     public void drawHighlight(Graphics2D g, BufferedImage highlight, TerrainCard currentTerrain){
         if (tileType==null || tileType.equals(TerrainEnum.CITY)|| settlement != null || tileType.equals(TerrainEnum.MOUNTAIN) || !tileType.equals(currentTerrain.type())) {
-            //this.setEnabled(false);
             return;
         }
         else

@@ -21,11 +21,11 @@ public class QuadrantMaker {
 
    public QuadrantMaker(int boardNumber) {
       // do not touch this is for graphics
-      File myObj = new File(Objects.requireNonNull(Constants.class.getResource("/files/textFiles/" + boardNames[boardNumber] + "")).getFile());
+      File myObj = new File(Objects.requireNonNull(Constants.class.getResource("/files/textFiles/" + boardNames[boardNumber % 8] + "")).getFile());
       this.boardNumber = boardNumber;
       tiles = new String[10][10];
       enumTiles = new TerrainEnum[10][10];
-      addStrings(boardNames[boardNumber]);
+      addStrings(boardNames[boardNumber % 8]);
       setUpEnumMatrix(boardNumber);
    }
 
@@ -63,13 +63,13 @@ public class QuadrantMaker {
 
    public void setUpEnumMatrix(int boardNumber) {
       try {
-         String fileURL = Objects.requireNonNull(getClass().getResource("/files/textFiles/" + boardNames[boardNumber] + "")).getFile();
+         String fileURL = Objects.requireNonNull(getClass().getResource("/files/textFiles/" + boardNames[boardNumber % 8] + "")).getFile();
          File myObj = new File(fileURL);
          Scanner myReader = new Scanner(myObj);
-         //if(this.boardNumber < Constants.getBoards().length)
+         if(this.boardNumber < Constants.getBoards().length)
             createTerrainMatrix(enumTiles, myReader);
-         //else
-            //createFlippedTerrainMatrix(enumTiles, myReader);
+         else
+            createFlippedTerrainMatrix(enumTiles, myReader);
       }catch(FileNotFoundException e){
          e.printStackTrace();
       }
@@ -96,7 +96,7 @@ public class QuadrantMaker {
       for (int r = 9; r >=0; r--){
          for (int c = 9; c>=0;c--){
             //System.out.println(r +" "+ c + " - " +boardText[r][c]);
-            terrainMatrix [9 - r][9 - c] = tempBoard[r][c];
+            terrainMatrix [r][c] = tempBoard[9 - r][9 - c];
          }
       }
    }

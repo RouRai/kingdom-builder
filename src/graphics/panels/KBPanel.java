@@ -74,7 +74,7 @@ public class KBPanel extends JPanel implements ActionListener {
             rand = (int) (Math.random() * (2 * Constants.getBoards().length));
          }while(Constants.getBoards()[rand % 8] == null);
          int boardNum = rand % 8;
-         QuadrantMaker boardMaker = new QuadrantMaker(boardNum);
+         QuadrantMaker boardMaker = new QuadrantMaker(rand);
          if(rand < Constants.getBoards().length){
             boardImages.add(Constants.getBoards()[boardNum]);
             Constants.getBoards()[boardNum] = null;
@@ -312,7 +312,7 @@ public class KBPanel extends JPanel implements ActionListener {
    }
 
    private void checkRegularSettlementPlacement (Player player, HexagonButton temp) {
-      if (player.isHasPlacedSettlements() || temp.getSettlement() != null || player.getSettlementsRemaining() == 0 || !temp.getTileType().equals(player.getCard())) {
+      if (player.isHasPlacedSettlements() || temp.getSettlement() != null || player.getSettlementsRemaining() == 0 || !temp.getTileType().equals(player.getCard().type())) {
          return;
       }
       if(!player.isPlacingSettlements()){
