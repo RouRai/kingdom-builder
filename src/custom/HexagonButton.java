@@ -1,5 +1,6 @@
 package custom;
 import logic.cards.TerrainCard;
+import logic.constantFolder.TerrainEnum;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -16,7 +17,7 @@ public class HexagonButton extends JButton {
     private Polygon polygon;
     private Color color;
     private BufferedImage settlement;
-    private String tileType;
+    private TerrainEnum tileType;
     private int quadNum, row, col;
     public HexagonButton(){
         super();
@@ -32,7 +33,7 @@ public class HexagonButton extends JButton {
         setPreferredSize(size);
         setContentAreaFilled(false);
     }
-    public HexagonButton(int q, int r, int c, String type){
+    public HexagonButton(int q, int r, int c, TerrainEnum type){
         this();
         quadNum = q;
         row = r;
@@ -75,7 +76,7 @@ public class HexagonButton extends JButton {
         color = c;
     }
     public void drawHighlight(Graphics2D g, BufferedImage highlight, TerrainCard currentTerrain){
-        if (tileType==null || tileType.equals("CITY")|| settlement != null || tileType.equals("MOUNTAIN") || !tileType.equals(currentTerrain.terrainString())) {
+        if (tileType==null || tileType.equals(TerrainEnum.CITY)|| settlement != null || tileType.equals(TerrainEnum.MOUNTAIN) || !tileType.equals(currentTerrain.type())) {
             //this.setEnabled(false);
             return;
         }
@@ -91,7 +92,7 @@ public class HexagonButton extends JButton {
     public BufferedImage getSettlement(){
         return settlement;
     }
-    public String getTileType(){
+    public TerrainEnum getTileType(){
         return tileType;
     }
     public void setSettlement(BufferedImage settle){

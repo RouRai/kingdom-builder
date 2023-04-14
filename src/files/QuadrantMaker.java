@@ -1,5 +1,6 @@
 package files;
 
+import logic.constantFolder.Constants;
 import logic.constantFolder.TerrainEnum;
 import logic.gameLogic.Player;
 import logic.tiles.TerrainTile;
@@ -10,21 +11,22 @@ import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Scanner;
 
+import static logic.constantFolder.Constants.boardNames;
+
 public class QuadrantMaker {
-   private final String boardName;
    private final int boardNumber;
    private final String [][] tiles;
    private final TerrainEnum[][] enumTiles;
 
 
-   public QuadrantMaker(String boardName, int boardNumber) {
+   public QuadrantMaker(int boardNumber) {
       // do not touch this is for graphics
-      this.boardName = boardName;
+      File myObj = new File(Objects.requireNonNull(Constants.class.getResource("/files/textFiles/" + boardNames[boardNumber] + "")).getFile());
       this.boardNumber = boardNumber;
       tiles = new String[10][10];
       enumTiles = new TerrainEnum[10][10];
-      addStrings(boardName);
-      setUpEnumMatrix(boardName);
+      addStrings(boardNames[boardNumber]);
+      setUpEnumMatrix(boardNumber);
    }
 
    public void addStrings (String boardName) {
@@ -59,12 +61,15 @@ public class QuadrantMaker {
       }
    }
 
-   public void setUpEnumMatrix(String fileName) {
+   public void setUpEnumMatrix(int boardNumber) {
       try {
-         String fileURL = Objects.requireNonNull(getClass().getResource("/files/textFiles/" + fileName + "")).getFile();
+         String fileURL = Objects.requireNonNull(getClass().getResource("/files/textFiles/" + boardNames[boardNumber] + "")).getFile();
          File myObj = new File(fileURL);
          Scanner myReader = new Scanner(myObj);
-         createTerrainMatrix(enumTiles, myReader);
+         //if(this.boardNumber < Constants.getBoards().length)
+            createTerrainMatrix(enumTiles, myReader);
+         //else
+            //createFlippedTerrainMatrix(enumTiles, myReader);
       }catch(FileNotFoundException e){
          e.printStackTrace();
       }
@@ -83,7 +88,18 @@ public class QuadrantMaker {
          rows++;
       }
    }
-
+   private void createFlippedTerrainMatrix (TerrainEnum[][] terrainMatrix, Scanner myReader){
+      //createTerrainMatrix(terrainMatrix, myReader);
+      TerrainEnum [][] tempBoard = new TerrainEnum [10][10];
+      createTerrainMatrix(tempBoard, myReader);
+      System.out.println();
+      for (int r = 9; r >=0; r--){
+         for (int c = 9; c>=0;c--){
+            //System.out.println(r +" "+ c + " - " +boardText[r][c]);
+            terrainMatrix [9 - r][9 - c] = tempBoard[r][c];
+         }
+      }
+   }
    private TerrainEnum getTerrainTypeFromSymbol (String symbol) {
       return switch (symbol) {
          case "d" -> TerrainEnum.DESERT;
@@ -113,9 +129,6 @@ public class QuadrantMaker {
       return enumTiles;
    }
 
-   public String getBoardName() {
-      return boardName;
-   }
 
    public int getBoardNumber() {
       return boardNumber;

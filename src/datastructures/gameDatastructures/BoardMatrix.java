@@ -37,7 +37,7 @@ public class BoardMatrix {
     private void setBoardNodes (ArrayList<String> boardNames) {
         ArrayList<QuadrantMaker> quadrants = new ArrayList<>();
         for(int i = 0; i < boardNames.size(); i++) {
-            quadrants.add(new QuadrantMaker(boardNames.get(i), i));
+            quadrants.add(new QuadrantMaker(i));
         }
         combineQuadrants(quadrants);
     }

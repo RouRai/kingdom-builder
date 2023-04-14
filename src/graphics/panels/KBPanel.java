@@ -7,6 +7,7 @@ import logic.cards.TerrainCard;
 import logic.cards.TerrainDeck;
 import logic.constantFolder.Constants;
 import files.QuadrantMaker;
+import logic.constantFolder.TerrainEnum;
 import logic.gameLogic.Board;
 import logic.gameLogic.Player;
 import logic.tiles.ActionTile;
@@ -33,7 +34,7 @@ public class KBPanel extends JPanel implements ActionListener {
    private Graphics2D g2;
    private ArrayList <BufferedImage> boardImages;
    private ArrayList <Board> actualBoards;
-   private String [][][] boardText;
+   private TerrainEnum[][][] boardText;
    private CardLayout cardLay;
    private Constants constantClass;
    private final String fontStr = "Lucida Calligraphy";
@@ -63,26 +64,27 @@ public class KBPanel extends JPanel implements ActionListener {
       int[] boardStartY = {6,6,365,365};
       boardImages = new ArrayList<>();
       actualBoards = new ArrayList<>();
-      boardText = new String [4][10][10];
-
+      boardText = new TerrainEnum [4][10][10];
       // generating random boards
       for(int i = 0; i < 4; i++){
-         String [][] temp = new String[10][10];
+         TerrainEnum [][] temp = new TerrainEnum[10][10];
+
          int rand = 0;
          do {
             rand = (int) (Math.random() * (2 * Constants.getBoards().length));
          }while(Constants.getBoards()[rand % 8] == null);
          int boardNum = rand % 8;
+         QuadrantMaker boardMaker = new QuadrantMaker(boardNum);
          if(rand < Constants.getBoards().length){
             boardImages.add(Constants.getBoards()[boardNum]);
             Constants.getBoards()[boardNum] = null;
             Constants.getFlippedBoards()[boardNum] = null;
-            temp = constantClass.readNormalFile(boardNum);
+            temp = boardMaker.getEnumTiles();
          } else {
             boardImages.add(Constants.getFlippedBoards()[boardNum]);
             Constants.getBoards()[boardNum] = null;
             Constants.getFlippedBoards()[boardNum] = null;
-            temp = constantClass.readFlippedFile(boardNum);
+            temp = boardMaker.getEnumTiles();
          }
          boardText[i] = temp;
       }
@@ -310,7 +312,7 @@ public class KBPanel extends JPanel implements ActionListener {
    }
 
    private void checkRegularSettlementPlacement (Player player, HexagonButton temp) {
-      if (player.isHasPlacedSettlements() || temp.getSettlement() != null || player.getSettlementsRemaining() == 0 || !temp.getTileType().equals(player.getCard().terrainString())) {
+      if (player.isHasPlacedSettlements() || temp.getSettlement() != null || player.getSettlementsRemaining() == 0 || !temp.getTileType().equals(player.getCard())) {
          return;
       }
       if(!player.isPlacingSettlements()){
@@ -358,10 +360,10 @@ public class KBPanel extends JPanel implements ActionListener {
     */
    public void setUpMiscellaneous(){
 
-      String [] simpName = {"beach", "boat", "farm", "paddock", "house", "oracle", "tower", "tavern"};
+      String [] boardNames = {"beach", "boat", "farm", "paddock", "house", "oracle", "tower", "tavern"};
       // type in the board you want to check corresponding to the string array above
       int n = 7;
-      b1 = new QuadrantMaker(simpName[n],n);
+      b1 = new QuadrantMaker(n);
       // for coordinates
       addMouseListener(new MouseAdapter() {
          @Override
