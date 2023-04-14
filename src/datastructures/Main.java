@@ -11,6 +11,7 @@ import logic.constantFolder.TerrainEnum;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 
 public class Main {
     public static void main(String[] args) {
@@ -24,5 +25,9 @@ public class Main {
             }
             System.out.println();
         }
+        HashMap map = boardMatrix[0][0].getAdjacentNodes();
+        TerrainNode node = (TerrainNode) map.get(DirectionEnum.RIGHT);
+        System.out.println(node.getType());
+        System.out.println(map.get(DirectionEnum.LEFT));
     }
 }

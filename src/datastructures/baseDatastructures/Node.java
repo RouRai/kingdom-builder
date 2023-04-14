@@ -1,9 +1,7 @@
 package datastructures.baseDatastructures;
 
 import logic.constantFolder.DirectionEnum;
-import logic.tiles.Tile;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 
@@ -19,7 +17,6 @@ public class Node {
 
     private final HashMap<DirectionEnum, Node> adjacentNodes;
     private Enum type;
-
     public Node () {
        adjacentNodes = new HashMap<>();
     }
