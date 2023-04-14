@@ -295,7 +295,7 @@ public class KBPanel extends JPanel implements ActionListener {
    }
    /**
     * @param temp hexbutton
-    *             send in a hex button to set up its action listener function - for every he button clicked
+    *             send in a hex button to set up its action listener function - for every hex button clicked
     *             the console will print out the quad number, the row, and the column of the hex
     */
    public void setUpBoardHexes(HexagonButton temp) {
