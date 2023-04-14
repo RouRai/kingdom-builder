@@ -18,9 +18,9 @@ public class Main {
         names.add("tavern"); names.add("farm"); names.add("house"); names.add("oracle");
         BoardMatrix bm = new BoardMatrix(names);
         TerrainNode[][] boardMatrix = bm.getBoardMatrix();
-        for (int r = 0; r < boardMatrix.length; r++) {
-            for (int c = 0; c < boardMatrix[r].length; c++) {
-                System.out.print(boardMatrix[r][c].getType() + " ");
+        for (TerrainNode[] matrix : boardMatrix) {
+            for (TerrainNode terrainNode : matrix) {
+                System.out.print(terrainNode.getType() + " ");
             }
             System.out.println();
         }

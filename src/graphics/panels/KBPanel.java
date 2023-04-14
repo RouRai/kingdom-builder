@@ -6,7 +6,7 @@ import custom.TranslucentButton;
 import logic.cards.TerrainCard;
 import logic.cards.TerrainDeck;
 import logic.constantFolder.Constants;
-import files.FileCheckerBoard;
+import files.QuadrantMaker;
 import logic.gameLogic.Board;
 import logic.gameLogic.Player;
 import logic.tiles.ActionTile;
@@ -40,7 +40,7 @@ public class KBPanel extends JPanel implements ActionListener {
    private ArrayList<Player> players;
    private TerrainDeck terrainDeck;
    private ArrayList<TerrainCard> terrainCards;
-   private FileCheckerBoard b1;
+   private QuadrantMaker b1;
    private int [] boardIndexes;
 
    private Boolean fileCheckDot_Switch = false;
@@ -358,7 +358,7 @@ public class KBPanel extends JPanel implements ActionListener {
       String [] simpName = {"beach", "boat", "farm", "paddock", "house", "oracle", "tower", "tavern"};
       // type in the board you want to check corresponding to the string array above
       int n = 7;
-      b1 = new FileCheckerBoard(simpName[n],n);
+      b1 = new QuadrantMaker(simpName[n],n);
       // for coordinates
       addMouseListener(new MouseAdapter() {
          @Override

@@ -1,6 +1,5 @@
 package files;
 
-import logic.constantFolder.ActionEnum;
 import logic.constantFolder.TerrainEnum;
 import logic.gameLogic.Player;
 import logic.tiles.TerrainTile;
@@ -11,66 +10,56 @@ import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Scanner;
 
-public class FileCheckerBoard {
+public class QuadrantMaker {
+   private final String boardName;
+   private final int boardNumber;
+   private final String [][] tiles;
+   private final TerrainEnum[][] enumTiles;
 
 
-   public String simpName;
-   public int boardNum;
-   private String enumName;
-   public String [][] tiles;
-   private TerrainEnum[][] enumTiles;
-
-
-   public FileCheckerBoard (String simpName, int i) {
+   public QuadrantMaker(String boardName, int boardNumber) {
       // do not touch this is for graphics
+      this.boardName = boardName;
       tiles = new String[10][10];
       enumTiles = new TerrainEnum[10][10];
-      addStrings(simpName);
-      getEnumMatrix(simpName);
-      boardNum = i;
+      addStrings(boardName);
+      setUpEnumMatrix(boardName);
+      this.boardNumber = boardNumber;
    }
 
-   public void addStrings (String s) {
+   public void addStrings (String boardName) {
       try {
-         File myObj = new File(Objects.requireNonNull(getClass().getResource("/files/textFiles/" + s + "")).getFile());
+         File myObj = new File(Objects.requireNonNull(getClass().getResource("/files/textFiles/" + boardName + "")).getFile());
          Scanner myReader = new Scanner(myObj);
-         int r = 0;
+         int row = 0;
          while (myReader.hasNext()) {
             String data = myReader.nextLine();
-            String [] arr = data.split(" ");
-            int c = 0;
-            for (String str: arr){
-               String temp = "*";
-               if (str.equals("d")){
-                  temp = "DESERT";}
-               else if (str.equals("g")) {
-                  temp = "GRASS";
-               }
-               else if (str.equals("f")){
-                  temp = "FOREST";}
-               else if (str.equals("fl")){
-                  temp = "FLOWER_FIELD";}
-               else if (str.equals("w")){
-                  temp = "WATER";}
-               else if (str.equals("v")){
-                  temp = "CANYON";}
-               else if (str.equals("m")){
-                  temp = "MOUNTAIN";}
-               else if (str.equals("c")){
-                  temp = "CITY";}
-               else if (str.equals("a")){temp = null;}
-               tiles[r][c] = temp;
-               c++;
+            String [] line = data.split(" ");
+            int column = 0;
+            for (String symbol: line){
+               String temporaryString = switch (symbol) {
+                  case "d" -> "DESERT";
+                  case "g" -> "GRASS";
+                  case "f" -> "FOREST";
+                  case "fl" -> "FLOWER_FIELD";
+                  case "w" -> "WATER";
+                  case "v" -> "CANYON";
+                  case "m" -> "MOUNTAIN";
+                  case "c" -> "CITY";
+                  case "a" -> null;
+                  default -> "*";
+               };
+               tiles[row][column] = temporaryString;
+               column++;
             }
-            r++;
+            row++;
          }
-         //System.out.println("-----------");
       }catch(FileNotFoundException e){
          e.printStackTrace();
       }
    }
 
-   public void getEnumMatrix (String fileName) {
+   public void setUpEnumMatrix(String fileName) {
       try {
          String fileURL = Objects.requireNonNull(getClass().getResource("/files/textFiles/" + fileName + "")).getFile();
          File myObj = new File(fileURL);
@@ -110,6 +99,11 @@ public class FileCheckerBoard {
    }
 
 
+   /**
+    * Returns the tiles a player can use.
+    * @param player The player who is to interact with these objects.
+    * @return Tiles the players can interact with.
+    */
    public ArrayList<TerrainTile> playerCanUseStrings (Player player) {
       // Returns arraylist of tiles player can use
       return null;
@@ -117,5 +111,17 @@ public class FileCheckerBoard {
 
    public TerrainEnum[][] getEnumTiles () {
       return enumTiles;
+   }
+
+   public String getBoardName() {
+      return boardName;
+   }
+
+   public int getBoardNumber() {
+      return boardNumber;
+   }
+
+   public String[][] getTiles() {
+      return tiles;
    }
 }
