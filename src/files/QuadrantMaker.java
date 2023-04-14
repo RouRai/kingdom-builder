@@ -8,6 +8,7 @@ import logic.tiles.TerrainTile;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Objects;
 import java.util.Scanner;
 
@@ -16,7 +17,7 @@ import static logic.constantFolder.Constants.boardNames;
 public class QuadrantMaker {
    private final int boardNumber;
    private final String [][] tiles;
-   private final TerrainEnum[][] enumTiles;
+   private TerrainEnum[][] enumTiles;
 
 
    public QuadrantMaker(int boardNumber) {
@@ -27,6 +28,8 @@ public class QuadrantMaker {
       enumTiles = new TerrainEnum[10][10];
       addStrings(boardNames[boardNumber]);
       setUpEnumMatrix(boardNumber);
+      if(Math.random() > 0.5)
+         flipTerrainMatrix();
    }
 
    public void addStrings (String boardName) {
@@ -88,18 +91,17 @@ public class QuadrantMaker {
          rows++;
       }
    }
-   private void createFlippedTerrainMatrix (TerrainEnum[][] terrainMatrix, Scanner myReader){
-      //createTerrainMatrix(terrainMatrix, myReader);
-      TerrainEnum [][] tempBoard = new TerrainEnum [10][10];
-      createTerrainMatrix(tempBoard, myReader);
-      System.out.println();
-      for (int r = 9; r >=0; r--){
-         for (int c = 9; c>=0;c--){
-            //System.out.println(r +" "+ c + " - " +boardText[r][c]);
-            terrainMatrix [9 - r][9 - c] = tempBoard[r][c];
-         }
+
+   private void flipTerrainMatrix(){
+      System.out.println(Arrays.deepToString(enumTiles));
+      TerrainEnum[][] flippedBoard = new TerrainEnum[10][10];
+      for (int row = flippedBoard.length - 1; row > -1; row--) {
+         System.arraycopy(enumTiles[enumTiles.length - row - 1], 0, flippedBoard[row], 0, flippedBoard[row].length);
       }
+      enumTiles = flippedBoard;
+      System.out.println(Arrays.deepToString(enumTiles));
    }
+
    private TerrainEnum getTerrainTypeFromSymbol (String symbol) {
       return switch (symbol) {
          case "d" -> TerrainEnum.DESERT;
