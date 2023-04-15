@@ -17,9 +17,15 @@ public class BoardMatrix {
 
     private final TerrainNode[][] boardMatrix;
 
-    public BoardMatrix (ArrayList<String> boardNames) {
+    public BoardMatrix (String[] boardNames) {
         boardMatrix = new TerrainNode[20][20];
         setBoardNodes(boardNames);
+        connectTerrainNodes();
+    }
+
+    public BoardMatrix (ArrayList<QuadrantMaker> quadrants) {
+        boardMatrix = new TerrainNode[20][20];
+        combineQuadrants(quadrants);
         connectTerrainNodes();
     }
 
@@ -35,9 +41,9 @@ public class BoardMatrix {
      * Sets the board's nodes without connecting them.
      * @param boardNames names of the boards to be used.
      */
-    private void setBoardNodes (ArrayList<String> boardNames) {
+    private void setBoardNodes (String[] boardNames) {
         ArrayList<QuadrantMaker> quadrants = new ArrayList<>();
-        for(int i = 0; i < boardNames.size(); i++) {
+        for(int i = 0; i < boardNames.length; i++) {
             quadrants.add(new QuadrantMaker(i));
         }
         combineQuadrants(quadrants);
