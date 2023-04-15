@@ -1,6 +1,7 @@
 package custom;
 import logic.cards.TerrainCard;
 import logic.constantFolder.TerrainEnum;
+import logic.placeables.Settlement;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -19,9 +20,11 @@ public class HexagonButton extends JButton {
     private BufferedImage settlement;
     private TerrainEnum tileType;
     private int quadNum, row, col;
+    private Settlement settle;
     public HexagonButton(){
         super();
         settlement = null;
+        settle = null;
         n = 6;
         x = new int[n];
         y = new int [n];
@@ -88,19 +91,31 @@ public class HexagonButton extends JButton {
             //System.out.println("Drew settlement");
         }
     }
-    public BufferedImage getSettlement(){
+    public BufferedImage getSettlementImage(){
         return settlement;
     }
     public TerrainEnum getTileType(){
         return tileType;
     }
-    public void setSettlement(BufferedImage settle){
+    public void setSettlementImage(BufferedImage settle){
         settlement = settle;
+    }
+    public void setSettlement(Settlement settle){
+        this.settle = settle;
     }
     public void setBoardLocation(int quad, int r, int c){
         quadNum = quad;
         row = r;
         col = c;
+    }
+    public int getquadNum(){
+        return quadNum;
+    }
+    public int getRow(){
+        return row;
+    }
+    public int getCol(){
+        return col;
     }
     public String toString (){
         return "Hex button Clicked - quad"+ this.quadNum + " ("+ this.row+ ", "+ col+ ") ";

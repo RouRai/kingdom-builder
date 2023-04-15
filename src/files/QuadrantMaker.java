@@ -1,5 +1,6 @@
 package files;
 
+import logic.constantFolder.ActionEnum;
 import logic.constantFolder.Constants;
 import logic.constantFolder.TerrainEnum;
 import logic.gameLogic.Player;
@@ -95,7 +96,7 @@ public class QuadrantMaker {
          String[] symbols = data.split(" ");
          int columns = 0;
          for (String symbol: symbols){
-            terrainMatrix[rows][columns] = getTerrainTypeFromSymbol(symbol);
+            terrainMatrix[rows][columns] = (TerrainEnum) getTerrainTypeFromSymbol(symbol);
             columns++;
          }
          rows++;
@@ -123,7 +124,7 @@ public class QuadrantMaker {
     * @param symbol The symbol given in a text file.
     * @return TerrainEnum that corresponds to the symbol.
     */
-   private TerrainEnum getTerrainTypeFromSymbol (String symbol) {
+   private Enum getTerrainTypeFromSymbol (String symbol) {
       return switch (symbol) {
          case "d" -> TerrainEnum.DESERT;
          case "g" -> TerrainEnum.GRASS;
@@ -133,6 +134,20 @@ public class QuadrantMaker {
          case "v" -> TerrainEnum.CANYON;
          case "m" -> TerrainEnum.MOUNTAIN;
          case "c" -> TerrainEnum.CITY;
+         case "ac" -> getActionTypeFromSymbol();
+         default -> null;
+      };
+   }
+   private ActionEnum getActionTypeFromSymbol(){
+      return switch (boardNumber % 8) {
+         case 0 -> ActionEnum.OASIS;
+         case 1 -> ActionEnum.HARBOR;
+         case 2 -> ActionEnum.FARM;
+         case 3 -> ActionEnum.PADDOCK;
+         case 4 -> ActionEnum.BARN;
+         case 5 -> ActionEnum.ORACLE;
+         case 6 -> ActionEnum.TOWER;
+         case 7 -> ActionEnum.TAVERN;
          default -> null;
       };
    }

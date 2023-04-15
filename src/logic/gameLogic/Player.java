@@ -39,12 +39,14 @@ public class Player {
         isUsingActionTile = false;
     }
 
-    public Settlement getSettlement () {
+    public Settlement getSettlement (int quadNum, int row, int col) {
         if(settlementsRemaining <= 0) {
             return null;
         }
         settlementsRemaining--;
-        return new Settlement(playerNumber);
+        Settlement temp = new Settlement(playerNumber, row, col, quadNum);
+        settlements.add(temp);
+        return temp;
     }
 
     public ArrayList<Settlement> getSettlements() {

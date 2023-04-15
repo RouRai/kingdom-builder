@@ -24,7 +24,7 @@ public class TerrainTile extends Tile<TerrainEnum> {
 
     public void setOwner (Player settler) {
         owner = settler;
-        settlement = new Settlement(settler.getPlayerNumber());
+        //settlement = new Settlement(settler.getPlayerNumber());
     }
 
     public void removeOwner () {
