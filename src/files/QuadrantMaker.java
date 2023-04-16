@@ -107,7 +107,6 @@ public class QuadrantMaker {
     * Flips the enumTiles matrix instance variable for flipped boards.
     */
    private void flipTerrainMatrix(){
-      System.out.println(Arrays.deepToString(enumTiles));
       TerrainEnum[][] flippedBoard = new TerrainEnum[10][10];
       for (int row = flippedBoard.length - 1; row > -1; row--) {
          for (int column = flippedBoard[row].length - 1; column > -1; column--) {
@@ -115,8 +114,6 @@ public class QuadrantMaker {
          }
       }
       enumTiles = flippedBoard;
-      System.out.println();
-      System.out.println(Arrays.deepToString(enumTiles));
    }
 
    /**
