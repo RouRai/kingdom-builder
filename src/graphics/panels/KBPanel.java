@@ -58,7 +58,8 @@ public class KBPanel extends JPanel implements ActionListener {
          players.add(new Player(i + 1));
       }
       players.get(0).setCard(getCard());
-      //Boards setup - see ButtonQuadrant class for more details
+
+
       boards = new ButtonQuadrant[4];
       int[] boardStartX = {10,423,10,423};
       int[] boardStartY = {6,6,365,365};
@@ -127,6 +128,11 @@ public class KBPanel extends JPanel implements ActionListener {
       }
       setUpMiscellaneous ();
    }
+
+   /**
+    * main paint method which calls other paint methods & sets the coordinates of some utility buttons
+    * @param g the <code>Graphics</code> object to protect
+    */
    public void paintComponent(Graphics g)
    {
       g2 = (Graphics2D)g;
@@ -152,7 +158,10 @@ public class KBPanel extends JPanel implements ActionListener {
          objectivesButton[p].setBounds(330 + p * 150, 735, 120, 100);
       }
    }
-   //draws the boards
+
+   /**draws the boards
+    * display method which paints the four boards as stated in the boar images arraylist
+    */
    public void drawLeftPanel(){
       for (int i = 0; i < 3; i++)
          g2.drawImage(constantClass.getCharCards()[0], 325+ i * 150, 735, 130, 240, null);
@@ -163,7 +172,10 @@ public class KBPanel extends JPanel implements ActionListener {
          g2.drawImage(boardImages.get(i),(int)x+2, (int)y-1,435, 369, null);
       }
    }
-   //draw the other players in the top right
+
+   /** draws the other players in the top right
+    *  no buttons or any interactions - purely display
+    */
    public void drawOtherPlayer(){
       int space_between_Players = 123;
       for (int i =0; i < 3; i++) {
@@ -228,15 +240,14 @@ public class KBPanel extends JPanel implements ActionListener {
          }
          i++;
       }
-      //action tile selected
+      //action tile selected - this part shows the hint when using the action tile
       if (players.get(0).isUsingActionTile()){
          g2.drawImage(constantClass.getActionProcess()[1], 1135, 645, 150, 60, null);
       }
-      //landscape card
+      //landscape card drawn by the current player
       g2.drawImage(players.get(0).getCard().image(), 1335, 530, 130, 200, null);
 
-      //settlement
-      //settlement icon
+      //settlement icon - based on color
       g2.drawImage(constantClass.getSettlements()[players.get(0).getPlayerNumber() - 1], 1330, 410, 120, 100, null);
       //settlement number
       g2.setFont(new Font(fontStr, Font.PLAIN, 35));
@@ -247,7 +258,7 @@ public class KBPanel extends JPanel implements ActionListener {
    }
 
    /**
-    * draws the outline for each Hexbutton with Button Quadrant
+    * draws the outline for each Hexbutton & the settlement (if applicable) with Button Quadrant
     */
    public void drawHexButtons(){
       for (ButtonQuadrant b: boards) {
@@ -275,6 +286,11 @@ public class KBPanel extends JPanel implements ActionListener {
          }
       }
    }
+
+   /**
+    * @return gets the next card
+    * question: do we need to shuffle the deck when we create it?
+    */
    public TerrainCard getCard(){
       if(terrainCards.isEmpty()){
          terrainDeck = new TerrainDeck();
@@ -314,6 +330,12 @@ public class KBPanel extends JPanel implements ActionListener {
       });
    }
 
+   /**
+    * Logic method by Sri which checks the conditions of each regular settlement placement...
+    * @param player
+    * @param temp
+    */
+
    private void checkRegularSettlementPlacement (Player player, HexagonButton temp) {
       if (player.isHasPlacedSettlements() || temp.getSettlementImage() != null || player.getSettlementsRemaining() == 0 || !temp.getTileType().equals(player.getCard().type())) {
          return;
@@ -331,7 +353,10 @@ public class KBPanel extends JPanel implements ActionListener {
       }
    }
 
-   //method that checks if current player can end their turn;
+   /**method that checks if current player can end their turn;
+    *
+    * @return
+    */
    private boolean canEndTurn(){
       return players.get(0).isHasPlacedSettlements() || players.get(0).getSettlementsRemaining() == 0;
    }
@@ -350,7 +375,10 @@ public class KBPanel extends JPanel implements ActionListener {
       }
       repaint();
    }
-   //make sure to check this later
+
+   /** make sure to check this later
+    *
+    */
    public void checkEndGame(){
       if(players.get(0).getSettlementsRemaining() == 0 || players.get(1).getSettlementsRemaining() == 0 || players.get(2).getSettlementsRemaining() == 0 || players.get(3).getSettlementsRemaining() == 0){
          cardLay.show(Constants.PANEL_CONT, Constants.END_PANEL);
@@ -375,8 +403,11 @@ public class KBPanel extends JPanel implements ActionListener {
             System.out.println("mouse clicked on coord (" +e.getX()+ ", " +e.getY()+ ")");
          }});
    }
+
    /**
-    * draws the dots for a file checker
+    * draws the dots for a file checker - not exactly necessary for the game, this method paints a
+    * colored dot on each tile based on files that were read in. The dot checker in general is an
+    * extra thing I made to check if i did the files correctly.
     * **/
    public void drawDotChecker(int r, int c, HexagonButton [][] board){
       if (b1.getTiles()[r][c]!= null){
