@@ -1,6 +1,7 @@
 package logic.gameLogic;
 
 import logic.cards.TerrainCard;
+import logic.constantFolder.TerrainEnum;
 import logic.placeables.Settlement;
 import logic.tiles.ActionTile;
 import logic.tiles.Tile;
@@ -19,7 +20,9 @@ import java.util.HashSet;
 
 public class Player {
 
+    private static Board board;
     private final ArrayList<Settlement> settlements;
+    private ArrayList<TerrainEnum> hasNotPlacedOn;
     private int settlementsRemaining;
     private final int playerNumber;
     private TerrainCard card;
@@ -37,6 +40,7 @@ public class Player {
         hasPlacedSettlements = false;
         isPlacingSettlements = false;
         isUsingActionTile = false;
+        createSettlementsNotPlacedOn();
     }
 
     public Settlement getSettlement (int quadNum, int row, int col) {
@@ -137,5 +141,26 @@ public class Player {
     }
     public int getNumSettlementsPlaced(){
         return numSettlementsPlaced;
+    }
+
+    private void createSettlementsNotPlacedOn () {
+        hasNotPlacedOn = new ArrayList<>();
+        hasNotPlacedOn.add(TerrainEnum.DESERT);
+        hasNotPlacedOn.add(TerrainEnum.FLOWER);
+        hasNotPlacedOn.add(TerrainEnum.GRASS);
+        hasNotPlacedOn.add(TerrainEnum.WATER);
+        hasNotPlacedOn.add(TerrainEnum.FOREST);
+    }
+
+    public boolean hasNotPlacedOn (TerrainEnum terrain) {
+        return hasNotPlacedOn.contains(terrain);
+    }
+
+    public void removeNewTerrain (TerrainEnum terrain) {
+        hasNotPlacedOn.remove(terrain);
+    }
+
+    public void setBoard (Board board) {
+        Player.board = board;
     }
 }

@@ -1,6 +1,8 @@
 package logic.gameLogic;
 
 import datastructures.gameDatastructures.BoardGraph;
+import datastructures.gameDatastructures.TerrainNode;
+import logic.cards.TerrainCard;
 import logic.tiles.TerrainTile;
 
 import java.io.File;
@@ -44,5 +46,18 @@ public class Board {
     public ArrayList<TerrainTile> playerCanUseTiles (Player player) {
         // Returns arraylist of tiles player can use
         return null;
+    }
+
+    public boolean canPlaceOnTile (Player player, TerrainNode node, TerrainCard card) {
+        if (!(node.getTile().getType() == card.type())) {
+            return false;
+        }
+        if (player.hasNotPlacedOn(card.type())) {
+            if (hasSettlementAdjacentToTerrain())
+        }
+    }
+
+    private boolean hasSettlementAdjacentToTerrain (Player player, TerrainNode node) {
+
     }
 }
