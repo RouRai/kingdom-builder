@@ -22,9 +22,9 @@ public class TerrainTile extends Tile<TerrainEnum> {
         return owner;
     }
 
-    public void setOwner (Player settler) {
+    public void setOwner (Player settler, Settlement settle) {
         owner = settler;
-        //settlement = new Settlement(settler.getPlayerNumber());
+        settlement = settle;
     }
 
     public void removeOwner () {

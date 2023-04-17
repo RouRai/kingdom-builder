@@ -118,6 +118,6 @@ public class HexagonButton extends JButton {
         return col;
     }
     public String toString (){
-        return "Hex button Clicked - quad"+ this.quadNum + " ("+ this.row+ ", "+ col+ ") ";
+        return "Hex button Clicked - quad"+ this.quadNum + " ("+ this.row+ ", "+ this.col+ ") ";
     }
 }

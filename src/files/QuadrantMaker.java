@@ -18,7 +18,7 @@ import static logic.constantFolder.Constants.boardNames;
 public class QuadrantMaker {
    private final int boardNumber;
    private final String [][] tiles;
-   private TerrainEnum[][] enumTiles;
+   private TerrainTile[][] terrainTiles;
 
 
    public QuadrantMaker(int boardNumber) {
@@ -26,7 +26,7 @@ public class QuadrantMaker {
       File myObj = new File(Objects.requireNonNull(Constants.class.getResource("/files/textFiles/" + boardNames[boardNumber % 8] + "")).getFile());
       this.boardNumber = boardNumber;
       tiles = new String[10][10];
-      enumTiles = new TerrainEnum[10][10];
+      terrainTiles = new TerrainTile[10][10];
       addStrings(boardNames[boardNumber % 8]);
       setUpEnumMatrix(boardNumber);
    }
@@ -72,7 +72,7 @@ public class QuadrantMaker {
          String fileURL = Objects.requireNonNull(getClass().getResource("/files/textFiles/" + boardNames[boardNumber % 8] + "")).getFile();
          File myObj = new File(fileURL);
          Scanner myReader = new Scanner(myObj);
-         createTerrainMatrix(enumTiles, myReader);
+         createTerrainMatrix(terrainTiles, myReader);
          if (boardNumber >= Constants.getBoards().length) {
             flipTerrainMatrix();
          }
@@ -89,14 +89,15 @@ public class QuadrantMaker {
     * @param terrainMatrix The empty matrix to be modified to store the board.
     * @param fileReader The Scanner object to be used in order to read the file.
     */
-   private void createTerrainMatrix (TerrainEnum[][] terrainMatrix, Scanner fileReader) {
+   private void createTerrainMatrix (TerrainTile[][] terrainMatrix, Scanner fileReader) {
       int rows = 0;
       while (fileReader.hasNext()) {
          String data = fileReader.nextLine();
          String[] symbols = data.split(" ");
          int columns = 0;
          for (String symbol: symbols){
-            terrainMatrix[rows][columns] = (TerrainEnum) getTerrainTypeFromSymbol(symbol);
+
+            terrainMatrix[rows][columns] = new TerrainTile((TerrainEnum) getTerrainTypeFromSymbol(symbol));
             columns++;
          }
          rows++;
@@ -107,16 +108,16 @@ public class QuadrantMaker {
     * Flips the enumTiles matrix instance variable for flipped boards.
     */
    private void flipTerrainMatrix(){
-      System.out.println(Arrays.deepToString(enumTiles));
-      TerrainEnum[][] flippedBoard = new TerrainEnum[10][10];
+      System.out.println(Arrays.deepToString(terrainTiles));
+      TerrainTile[][] flippedBoard = new TerrainTile[10][10];
       for (int row = flippedBoard.length - 1; row > -1; row--) {
          for (int column = flippedBoard[row].length - 1; column > -1; column--) {
-            flippedBoard[row][column] = enumTiles[flippedBoard.length - row - 1][flippedBoard[row].length - column - 1];
+            flippedBoard[row][column] = terrainTiles[flippedBoard.length - row - 1][flippedBoard[row].length - column - 1];
          }
       }
-      enumTiles = flippedBoard;
+      terrainTiles = flippedBoard;
       System.out.println();
-      System.out.println(Arrays.deepToString(enumTiles));
+      System.out.println(Arrays.deepToString(terrainTiles));
    }
 
    /**
@@ -163,8 +164,8 @@ public class QuadrantMaker {
       return null;
    }
 
-   public TerrainEnum[][] getEnumTiles () {
-      return enumTiles;
+   public TerrainTile[][] getTerrainTiles () {
+      return terrainTiles;
    }
 
 

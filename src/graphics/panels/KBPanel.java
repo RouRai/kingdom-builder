@@ -10,7 +10,9 @@ import files.QuadrantMaker;
 import logic.constantFolder.TerrainEnum;
 import logic.gameLogic.Board;
 import logic.gameLogic.Player;
+import logic.placeables.Settlement;
 import logic.tiles.ActionTile;
+import logic.tiles.TerrainTile;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -34,7 +36,7 @@ public class KBPanel extends JPanel implements ActionListener {
    private Graphics2D g2;
    private ArrayList <BufferedImage> boardImages;
    private ArrayList <Board> actualBoards;
-   private TerrainEnum[][][] boardText;
+   private TerrainTile[][][] boardText;
    private CardLayout cardLay;
    private Constants constantClass;
    private final String fontStr = "Lucida Calligraphy";
@@ -65,11 +67,10 @@ public class KBPanel extends JPanel implements ActionListener {
       int[] boardStartY = {6,6,365,365};
       boardImages = new ArrayList<>();
       actualBoards = new ArrayList<>();
-      boardText = new TerrainEnum [4][10][10];
+      boardText = new TerrainTile [4][10][10];
       // generating random boards
       for(int i = 0; i < 4; i++){
-         TerrainEnum [][] temp = new TerrainEnum[10][10];
-
+         TerrainTile [][] temp = new TerrainTile[10][10];
          int rand = 0;
          do {
             rand = (int) (Math.random() * (2 * Constants.getBoards().length));
@@ -80,12 +81,12 @@ public class KBPanel extends JPanel implements ActionListener {
             boardImages.add(Constants.getBoards()[boardNum]);
             Constants.getBoards()[boardNum] = null;
             Constants.getFlippedBoards()[boardNum] = null;
-            temp = boardMaker.getEnumTiles();
+            temp = boardMaker.getTerrainTiles();
          } else {
             boardImages.add(Constants.getFlippedBoards()[boardNum]);
             Constants.getBoards()[boardNum] = null;
             Constants.getFlippedBoards()[boardNum] = null;
-            temp = boardMaker.getEnumTiles();
+            temp = boardMaker.getTerrainTiles();
          }
          boardText[i] = temp;
       }
@@ -95,7 +96,7 @@ public class KBPanel extends JPanel implements ActionListener {
          HexagonButton[][] tempBoard = new HexagonButton[10][10];
          for (int r = 0; r < 10; r++) {
             for (int c = 0; c < 10; c++) {
-               tempBoard[r][c] = new HexagonButton(q, r, c, boardText[q][r][c]);
+               tempBoard[r][c] = new HexagonButton(q, r, c, boardText[q][r][c].getType());
                setUpBoardHexes(tempBoard[r][c]);
             }
          }
@@ -345,8 +346,9 @@ public class KBPanel extends JPanel implements ActionListener {
       }
       player.setNumSettlementsPlaced(player.getNumSettlementsPlaced() + 1);
       temp.setSettlementImage(constantClass.getSettlements()[player.getPlayerNumber() - 1]);
-
-      temp.setSettlement(player.getSettlement(temp.getquadNum(), temp.getRow(), temp.getCol()));
+      Settlement temps = player.getSettlement(temp.getquadNum(), temp.getRow(), temp.getCol());
+      temp.setSettlement(temps);
+      //boards[temp.getquadNum()][temp.getRow()][temp.getCol()];
       if(player.getNumSettlementsPlaced() == 3) {
          player.setHasPlacedSettlements(true);
          player.setPlacingSettlements(false);
