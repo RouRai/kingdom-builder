@@ -16,22 +16,21 @@ import logic.tiles.TerrainTile;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.awt.Color;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.util.Iterator;
 import java.util.Set;
 import javax.swing.JPanel;
-public class KBPanel extends JPanel implements ActionListener {
+public class KBPanel extends JPanel implements ActionListener{
    //Images
 
    private BufferedImage background, highlight;
    private TranslucentButton menuButton, finishButton;
    private TranslucentButton[] objectivesButton;
+   private BufferedImage [] objectiveCardImages;
+   private HexagonButton[] currentActions;
    private ButtonQuadrant[] boards;
    private Graphics2D g2;
    private ArrayList <BufferedImage> boardImages;
@@ -44,15 +43,16 @@ public class KBPanel extends JPanel implements ActionListener {
    private TerrainDeck terrainDeck;
    private ArrayList<TerrainCard> terrainCards;
    private QuadrantMaker b1;
-   private int [] boardIndexes;
 
    private Boolean fileCheckDot_Switch = false;
 
 
    public KBPanel (CardLayout cl){
-      //instantiates most of the variables
+
+      //card layout
       cardLay = cl;
       constantClass = new Constants();
+
       players = new ArrayList<>();
       terrainDeck = new TerrainDeck();
       terrainCards = terrainDeck.getTerrainDeck();
@@ -61,7 +61,14 @@ public class KBPanel extends JPanel implements ActionListener {
       }
       players.get(0).setCard(getCard());
 
+      currentActions = new HexagonButton[4];
+      for(int i = 0; i < 4; i++){
+         HexagonButton temp = new HexagonButton(i,-1,-1,null);
+         setUpCurrentAction(temp);
+         currentActions[i] = temp;
+      }
 
+      //BOARDS
       boards = new ButtonQuadrant[4];
       int[] boardStartX = {10,423,10,423};
       int[] boardStartY = {6,6,365,365};
@@ -108,18 +115,16 @@ public class KBPanel extends JPanel implements ActionListener {
       add(finishButton);
       menuButton.addActionListener(this);
       finishButton.addActionListener(this);
+
+      objectiveCardImages = new BufferedImage[3];
       objectivesButton = new TranslucentButton[3];
       for(int i = 0; i < 3; i++){
-         objectivesButton[i] = new TranslucentButton();
-         add(objectivesButton[i]);
-         //would be the action listener for the objectivesButton if we put that
-         objectivesButton[i].addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-            }
-         });
+         int rand = (int) (Math.random() * (Constants.getCharCards().length));
+         objectiveCardImages[i] = Constants.getCharCards()[rand];
+         objectivesButton[i] = new TranslucentButton(i);
+         setUpObjective(objectivesButton[i]);
       }
+
       // 1 -- BACKGROUND - BOTTOM LAYER
       try{
          background = ImageIO.read(getClass().getResource("/images/backgroundImages/game play2.png"));
@@ -151,12 +156,19 @@ public class KBPanel extends JPanel implements ActionListener {
       drawOtherPlayer();
       //4- drawing
 
-
       //Functionality buttons
       menuButton.setBounds(785, 770, 70, 65);
       finishButton.setBounds(1310, 745, 180, 65);
       for(int p = 0; p < 3; p++){
          objectivesButton[p].setBounds(330 + p * 150, 735, 120, 100);
+      }
+      int i = 0;
+      while(i<4) {
+         if (i % 2== 0)
+            currentActions[i].setBounds(1005+ i * 2, 515+ i * 75, 80, 85);
+         else
+            currentActions[i].setBounds(959+ i *1, 515+ i * 75, 80, 85);
+         i++;
       }
    }
 
@@ -165,7 +177,7 @@ public class KBPanel extends JPanel implements ActionListener {
     */
    public void drawLeftPanel(){
       for (int i = 0; i < 3; i++)
-         g2.drawImage(constantClass.getCharCards()[0], 325+ i * 150, 735, 130, 240, null);
+         g2.drawImage(objectiveCardImages[i], 325+ i * 150, 735, 130, 240, null);
       for (int i = 0; i < 4; i++){
          ButtonQuadrant b = boards[i];
          double x = b.startX;
@@ -330,6 +342,27 @@ public class KBPanel extends JPanel implements ActionListener {
          }
       });
    }
+   public void setUpObjective (TranslucentButton temp){
+      add(temp);
+      temp.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+              System.out.println("Objective Button clicked " + temp + "  ");
+              repaint();
+            }
+      });
+   }
+   public void setUpCurrentAction (HexagonButton temp){
+      add(temp);
+      temp.addActionListener(new ActionListener() {
+         @Override
+         public void actionPerformed(ActionEvent e) {
+            System.out.println("Current Action Tile Button clicked -" + temp + "  ");
+
+            repaint();
+         }
+      });
+   }
 
    /**
     * Logic method by Sri which checks the conditions of each regular settlement placement...
@@ -404,6 +437,17 @@ public class KBPanel extends JPanel implements ActionListener {
          public void mousePressed(MouseEvent e) {
             System.out.println("mouse clicked on coord (" +e.getX()+ ", " +e.getY()+ ")");
          }});
+
+      //doesn't work
+      addKeyListener(new KeyAdapter() {
+          @Override
+          public void keyPressed(KeyEvent e) {
+             if (e.getKeyChar() == KeyEvent.VK_ESCAPE) {
+                System.out.println("escape clicked");
+             }
+          }
+       }
+      );
    }
 
    /**
