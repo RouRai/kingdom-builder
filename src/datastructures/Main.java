@@ -15,10 +15,6 @@ import java.util.HashMap;
 
 public class Main {
     public static void main(String[] args) {
-        System.out.println(Main.method(20, 0.5, 0.5));
-    }
 
-    private static double method (double n, double a1, double r) {
-        return a1 * ((1 - Math.pow(r, n))/(1 - r));
     }
 }

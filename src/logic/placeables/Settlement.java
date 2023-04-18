@@ -19,7 +19,11 @@ public class Settlement {
         return color;
     }
 
-    private void setLocation (TerrainNode location) {
+    public void setLocation (TerrainNode location) {
         this.location = location;
+    }
+
+    public TerrainNode getLocation () {
+        return location;
     }
 }

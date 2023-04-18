@@ -12,7 +12,7 @@ import logic.tiles.ActionTile;
  * in order to move settlements or place more. This holds an ActionTile object that holds the attributes
  * common to all action tiles. The tile and its type can also be retrieved.
  */
-public class ActionNode extends Node {
+public class ActionNode extends Node<ActionNode> {
 
     private final ActionTile tile;
 
