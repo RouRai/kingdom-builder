@@ -10,7 +10,7 @@ import java.awt.event.ActionListener;
 public class TranslucentButton extends JButton {
 
    // switch this boolean onto true if you want to see the button itself
-      Boolean bool = false;
+      Boolean bool = true;
       /**
        * only for Start Game Button
        * @param
