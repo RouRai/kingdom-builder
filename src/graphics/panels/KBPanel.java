@@ -65,6 +65,7 @@ public class KBPanel extends JPanel implements ActionListener{
       for(int i = 0; i < 4; i++){
          HexagonButton temp = new HexagonButton(i,-1,-1,null);
          setUpCurrentAction(temp);
+         currentActions[i] = temp;
       }
 
       //BOARDS
@@ -120,9 +121,10 @@ public class KBPanel extends JPanel implements ActionListener{
       for(int i = 0; i < 3; i++){
          int rand = (int) (Math.random() * (Constants.getCharCards().length));
          objectiveCardImages[i] = Constants.getCharCards()[rand];
-         objectivesButton[i] = new TranslucentButton();
+         objectivesButton[i] = new TranslucentButton(i);
          setUpObjective(objectivesButton[i]);
       }
+
       // 1 -- BACKGROUND - BOTTOM LAYER
       try{
          background = ImageIO.read(getClass().getResource("/images/backgroundImages/game play2.png"));
@@ -159,6 +161,14 @@ public class KBPanel extends JPanel implements ActionListener{
       finishButton.setBounds(1310, 745, 180, 65);
       for(int p = 0; p < 3; p++){
          objectivesButton[p].setBounds(330 + p * 150, 735, 120, 100);
+      }
+      int i = 0;
+      while(i<4) {
+         if (i % 2== 0)
+            currentActions[i].setBounds(1005+ i * 2, 515+ i * 75, 80, 85);
+         else
+            currentActions[i].setBounds(959+ i *1, 515+ i * 75, 80, 85);
+         i++;
       }
    }
 
@@ -347,7 +357,8 @@ public class KBPanel extends JPanel implements ActionListener{
       temp.addActionListener(new ActionListener() {
          @Override
          public void actionPerformed(ActionEvent e) {
-            System.out.println("Current Action Tile Button clicked " + temp + "  ");
+            System.out.println("Current Action Tile Button clicked -" + temp + "  ");
+
             repaint();
          }
       });
