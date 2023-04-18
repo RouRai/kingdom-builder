@@ -3,6 +3,8 @@ package datastructures.gameDatastructures;
 import files.QuadrantMaker;
 import logic.constantFolder.DirectionEnum;
 import logic.constantFolder.TerrainEnum;
+import logic.tiles.TerrainTile;
+
 import java.util.ArrayList;
 
 /**
@@ -76,16 +78,16 @@ public class BoardMatrix {
     private ArrayList<TerrainNode[][]> getTerrainNodeMatrices (ArrayList<QuadrantMaker> quadrants) {
         ArrayList<TerrainNode[][]> nodeQuadrants = new ArrayList<>();
         for(QuadrantMaker quadrant : quadrants) {
-            nodeQuadrants.add(getTerrainNodeMatrix(quadrant.getEnumTiles()));
+            nodeQuadrants.add(getTerrainNodeMatrix(quadrant.getTerrainTiles()));
         }
         return nodeQuadrants;
     }
 
-    private TerrainNode[][] getTerrainNodeMatrix (TerrainEnum[][] terrainEnumMatrix) {
+    private TerrainNode[][] getTerrainNodeMatrix (TerrainTile[][] terrainEnumMatrix) {
         TerrainNode[][] nodeMatrix = new TerrainNode[10][10];
         for (int row = 0; row < terrainEnumMatrix.length; row++) {
             for(int column = 0; column < terrainEnumMatrix[row].length; column++) {
-                nodeMatrix[row][column] = new TerrainNode(terrainEnumMatrix[row][column]);
+                nodeMatrix[row][column] = new TerrainNode(terrainEnumMatrix[row][column].getType());
             }
         }
         return nodeMatrix;
