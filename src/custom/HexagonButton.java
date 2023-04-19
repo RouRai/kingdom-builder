@@ -87,7 +87,7 @@ public class HexagonButton extends JButton {
     }
     public void drawSettlement(Graphics2D g){
         if(settlement != null) {
-            g.drawImage(settlement, this.getX() + 8, this.getY() + 10, 30, 30, null);
+            g.drawImage(settlement, this.getX() + 8, this.getY() + 10, 30, 20, null);
             //System.out.println("Drew settlement");
         }
     }
