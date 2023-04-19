@@ -43,6 +43,7 @@ public class KBPanel extends JPanel implements ActionListener{
    private TerrainDeck terrainDeck;
    private ArrayList<TerrainCard> terrainCards;
    private QuadrantMaker b1;
+   private Board board;
 
    private Boolean fileCheckDot_Switch = false;
 
@@ -78,22 +79,23 @@ public class KBPanel extends JPanel implements ActionListener{
       // generating random boards
       for(int i = 0; i < 4; i++){
          TerrainTile [][] temp = new TerrainTile[10][10];
+         ArrayList<QuadrantMaker> boardMaker = new ArrayList<>();
          int rand = 0;
          do {
             rand = (int) (Math.random() * (2 * Constants.getBoards().length));
          }while(Constants.getBoards()[rand % 8] == null);
+         boardMaker.add(new QuadrantMaker(rand));
          int boardNum = rand % 8;
-         QuadrantMaker boardMaker = new QuadrantMaker(rand);
          if(rand < Constants.getBoards().length){
             boardImages.add(Constants.getBoards()[boardNum]);
             Constants.getBoards()[boardNum] = null;
             Constants.getFlippedBoards()[boardNum] = null;
-            temp = boardMaker.getTerrainTiles();
+            temp = boardMaker.get(i).getTerrainTiles();
          } else {
             boardImages.add(Constants.getFlippedBoards()[boardNum]);
             Constants.getBoards()[boardNum] = null;
             Constants.getFlippedBoards()[boardNum] = null;
-            temp = boardMaker.getTerrainTiles();
+            temp = boardMaker.get(i).getTerrainTiles();
          }
          boardText[i] = temp;
       }
