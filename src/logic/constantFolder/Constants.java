@@ -10,9 +10,15 @@ import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 public class Constants {
     // Images
-        public static BufferedImage[] boards, flippedBoards, actionTiles, charCards, landCards, settlements, actionProcess;
+        public static BufferedImage[] boards = new BufferedImage[8];
+        public static BufferedImage[] flippedBoards = new BufferedImage[16];
+        public static BufferedImage[] actionTiles = new BufferedImage[8];
+        public static BufferedImage[] charCards = new BufferedImage[10];
+        public static BufferedImage[] landCards = new BufferedImage [6];
+        public static BufferedImage[] settlements = new BufferedImage[4];
+        public static BufferedImage[] actionProcess = new BufferedImage[8];
     // Screen dimensions
-         public static final int WIDTH = 1536;
+        public static final int WIDTH = 1536;
         public static final int HEIGHT = 864;
     // Panel Constants
         public static final JPanel PANEL_CONT = new JPanel();
@@ -22,7 +28,7 @@ public class Constants {
         public static final String MENU_PANEL = "menuPanel";
         // Image Directory
         public static final String IMG_DIRECTORY = "/images/";
-        public static Tile[] BoardTileTypes;
+        public static Tile<?>[] boardTileTypes;
 
         public static final String[] boardNames = {"beach", "boat","farm", "paddock", "house", "oracle", "tower", "tavern"};
 
@@ -36,7 +42,6 @@ public class Constants {
         charCards = new BufferedImage [10];
         actionTiles = new BufferedImage[8];
         actionProcess = new BufferedImage[8];
-
         readImages();
     }
 

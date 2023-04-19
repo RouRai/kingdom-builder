@@ -33,4 +33,12 @@ public class TerrainTile extends Tile<TerrainEnum> {
     }
 
     public String toString (){return ""+getType();}
+
+    public Settlement getSettlement() {
+        return settlement;
+    }
+
+    public void setSettlement(Settlement settlement) {
+        this.settlement = settlement;
+    }
 }

@@ -3,12 +3,9 @@ package files;
 import logic.constantFolder.ActionEnum;
 import logic.constantFolder.Constants;
 import logic.constantFolder.TerrainEnum;
-import logic.gameLogic.Player;
 import logic.tiles.TerrainTile;
-
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Objects;
 import java.util.Scanner;
@@ -23,44 +20,11 @@ public class QuadrantMaker {
 
    public QuadrantMaker(int boardNumber) {
       // do not touch this is for graphics
-      File myObj = new File(Objects.requireNonNull(Constants.class.getResource("/files/textFiles/" + boardNames[boardNumber % 8] + "")).getFile());
+      //File myObj = new File(Objects.requireNonNull(Constants.class.getResource("/files/textFiles/" + boardNames[boardNumber % 8] + "")).getFile());
       this.boardNumber = boardNumber;
       tiles = new String[10][10];
       terrainTiles = new TerrainTile[10][10];
-      addStrings(boardNames[boardNumber % 8]);
       setUpEnumMatrix(boardNumber);
-   }
-
-   public void addStrings (String boardName) {
-      try {
-         File myObj = new File(Objects.requireNonNull(getClass().getResource("/files/textFiles/" + boardName + "")).getFile());
-         Scanner myReader = new Scanner(myObj);
-         int row = 0;
-         while (myReader.hasNext()) {
-            String data = myReader.nextLine();
-            String [] line = data.split(" ");
-            int column = 0;
-            for (String symbol: line){
-               String temporaryString = switch (symbol) {
-                  case "d" -> "DESERT";
-                  case "g" -> "GRASS";
-                  case "f" -> "FOREST";
-                  case "fl" -> "FLOWER_FIELD";
-                  case "w" -> "WATER";
-                  case "v" -> "CANYON";
-                  case "m" -> "MOUNTAIN";
-                  case "c" -> "CITY";
-                  case "a" -> null;
-                  default -> "*";
-               };
-               tiles[row][column] = temporaryString;
-               column++;
-            }
-            row++;
-         }
-      }catch(FileNotFoundException e){
-         e.printStackTrace();
-      }
    }
 
    /**
@@ -108,7 +72,6 @@ public class QuadrantMaker {
     * Flips the enumTiles matrix instance variable for flipped boards.
     */
    private void flipTerrainMatrix(){
-      System.out.println(Arrays.deepToString(terrainTiles));
       TerrainTile[][] flippedBoard = new TerrainTile[10][10];
       for (int row = flippedBoard.length - 1; row > -1; row--) {
          for (int column = flippedBoard[row].length - 1; column > -1; column--) {
@@ -116,8 +79,6 @@ public class QuadrantMaker {
          }
       }
       terrainTiles = flippedBoard;
-      System.out.println();
-      System.out.println(Arrays.deepToString(terrainTiles));
    }
 
    /**
@@ -125,7 +86,7 @@ public class QuadrantMaker {
     * @param symbol The symbol given in a text file.
     * @return TerrainEnum that corresponds to the symbol.
     */
-   private Enum getTerrainTypeFromSymbol (String symbol) {
+   private Enum<?> getTerrainTypeFromSymbol (String symbol) {
       return switch (symbol) {
          case "d" -> TerrainEnum.DESERT;
          case "g" -> TerrainEnum.GRASS;
@@ -151,17 +112,6 @@ public class QuadrantMaker {
          case 7 -> ActionEnum.TAVERN;
          default -> null;
       };
-   }
-
-
-   /**
-    * Returns the tiles a player can use.
-    * @param player The player who is to interact with these objects.
-    * @return Tiles the players can interact with.
-    */
-   public ArrayList<TerrainTile> playerCanUseStrings (Player player) {
-      // Returns arraylist of tiles player can use
-      return null;
    }
 
    public TerrainTile[][] getTerrainTiles () {

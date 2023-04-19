@@ -1,7 +1,5 @@
 package logic.tiles;
 
-import logic.constantFolder.ActionEnum;
-
 /**
  * Author: Rounak Rai <br>
  * Contributors: None <br> <br>
@@ -10,7 +8,7 @@ import logic.constantFolder.ActionEnum;
  * @param <T>
  */
 
-public class Tile<T extends Enum> {
+public class Tile<T extends Enum<?>> {
     private final T type;
 
     public Tile (T type) {

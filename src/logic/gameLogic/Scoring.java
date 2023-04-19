@@ -15,9 +15,9 @@ import java.util.ArrayList;
 
 public class Scoring {
 
-    private ArrayList<Player> players;
-    private BoardGraph board;
-    private ArrayList<ObjectiveCard> objectives;
+    private final ArrayList<Player> players;
+    private final BoardGraph board;
+    private final ArrayList<ObjectiveCard> objectives;
 
     public Scoring (ArrayList<Player> players, BoardGraph board, ArrayList<ObjectiveCard> objectives) {
         this.players = players;
@@ -38,5 +38,17 @@ public class Scoring {
      */
     private void scorePlayer (Player player) {
         //calculate score of specific player and store it
+    }
+
+    public ArrayList<Player> getPlayers() {
+        return players;
+    }
+
+    public BoardGraph getBoard() {
+        return board;
+    }
+
+    public ArrayList<ObjectiveCard> getObjectives() {
+        return objectives;
     }
 }
