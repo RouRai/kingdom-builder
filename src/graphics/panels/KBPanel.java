@@ -34,7 +34,6 @@ public class KBPanel extends JPanel implements ActionListener{
    private ButtonQuadrant[] boards;
    private Graphics2D g2;
    private ArrayList <BufferedImage> boardImages;
-   private ArrayList <Board> actualBoards;
    private TerrainTile[][][] boardText;
    private CardLayout cardLay;
    private Constants constantClass;
@@ -50,91 +49,90 @@ public class KBPanel extends JPanel implements ActionListener{
 
    public KBPanel (CardLayout cl){
 
-      //card layout
-      cardLay = cl;
-      constantClass = new Constants();
+      //1 - card layout
+            cardLay = cl;
+            constantClass = new Constants();
 
-      players = new ArrayList<>();
-      terrainDeck = new TerrainDeck();
-      terrainCards = terrainDeck.getTerrainDeck();
-      for(int i = 0; i < 4; i++){
-         players.add(new Player(i + 1));
-      }
-      players.get(0).setCard(getCard());
-
-      currentActions = new HexagonButton[4];
-      for(int i = 0; i < 4; i++){
-         HexagonButton temp = new HexagonButton(i,-1,-1,null);
-         setUpCurrentAction(temp);
-         currentActions[i] = temp;
-      }
-
-      //BOARDS
-      boards = new ButtonQuadrant[4];
-      int[] boardStartX = {10,423,10,423};
-      int[] boardStartY = {6,6,365,365};
-      boardImages = new ArrayList<>();
-      actualBoards = new ArrayList<>();
-      boardText = new TerrainTile [4][10][10];
-      // generating random boards
-      for(int i = 0; i < 4; i++){
-         TerrainTile [][] temp = new TerrainTile[10][10];
-         ArrayList<QuadrantMaker> boardMaker = new ArrayList<>();
-         int rand = 0;
-         do {
-            rand = (int) (Math.random() * (2 * Constants.getBoards().length));
-         }while(Constants.getBoards()[rand % 8] == null);
-         boardMaker.add(new QuadrantMaker(rand));
-         int boardNum = rand % 8;
-         if(rand < Constants.getBoards().length){
-            boardImages.add(Constants.getBoards()[boardNum]);
-            Constants.getBoards()[boardNum] = null;
-            Constants.getFlippedBoards()[boardNum] = null;
-            temp = boardMaker.get(i).getTerrainTiles();
-         } else {
-            boardImages.add(Constants.getFlippedBoards()[boardNum]);
-            Constants.getBoards()[boardNum] = null;
-            Constants.getFlippedBoards()[boardNum] = null;
-            temp = boardMaker.get(i).getTerrainTiles();
-         }
-         boardText[i] = temp;
-      }
-
-      //Creates the buttons
-      for (int q = 0; q < 4; q++) {
-         HexagonButton[][] tempBoard = new HexagonButton[10][10];
-         for (int r = 0; r < 10; r++) {
-            for (int c = 0; c < 10; c++) {
-               tempBoard[r][c] = new HexagonButton(q, r, c, boardText[q][r][c].getType());
-               setUpBoardHexes(tempBoard[r][c]);
+      //2- Game Essentials
+            players = new ArrayList<>();
+            terrainDeck = new TerrainDeck();
+            terrainCards = terrainDeck.getTerrainDeck();
+            for(int i = 0; i < 4; i++){
+               players.add(new Player(i + 1));
             }
-         }
-         boards[q] = new ButtonQuadrant(q,tempBoard, boardStartX[q],boardStartY[q]);
-      }
-      menuButton = new TranslucentButton();
-      finishButton = new TranslucentButton();
-      add(menuButton);
-      add(finishButton);
-      menuButton.addActionListener(this);
-      finishButton.addActionListener(this);
+            players.get(0).setCard(getCard());
 
-      objectiveCardImages = new BufferedImage[3];
-      objectivesButton = new TranslucentButton[3];
-      for(int i = 0; i < 3; i++){
-         int rand = (int) (Math.random() * (Constants.getCharCards().length));
-         objectiveCardImages[i] = Constants.getCharCards()[rand];
-         objectivesButton[i] = new TranslucentButton(i);
-         setUpObjective(objectivesButton[i]);
-      }
+      //3 - Board
+            boards = new ButtonQuadrant[4];
+            boardImages = new ArrayList<>();
+            boardText = new TerrainTile [4][10][10];
+            // generating random boards
+            ArrayList<QuadrantMaker> boardMaker = new ArrayList<>();
+            for(int i = 0; i < 4; i++){
+               TerrainTile [][] temp = new TerrainTile[10][10];
+               int rand = 0;
+               do {
+                  rand = (int) (Math.random() * (2 * Constants.getBoards().length));
+               }while(Constants.getBoards()[rand % 8] == null);
+               boardMaker.add(new QuadrantMaker(rand));
+               int boardNum = rand % 8;
+               if(rand < Constants.getBoards().length){
+                  boardImages.add(Constants.getBoards()[boardNum]);
+                  Constants.getBoards()[boardNum] = null;
+                  Constants.getFlippedBoards()[boardNum] = null;
+                  temp = boardMaker.get(i).getTerrainTiles();
+               } else {
+                  boardImages.add(Constants.getFlippedBoards()[boardNum]);
+                  Constants.getBoards()[boardNum] = null;
+                  Constants.getFlippedBoards()[boardNum] = null;
+                  temp = boardMaker.get(i).getTerrainTiles();
+               }
+               boardText[i] = temp;
+            }
 
-      // 1 -- BACKGROUND - BOTTOM LAYER
-      try{
-         background = ImageIO.read(getClass().getResource("/images/backgroundImages/game play2.png"));
-         highlight = ImageIO.read(getClass().getResource("/images/graphicsExtra/Hex.png"));
-      } catch (Exception ex) {
-         System.out.println("----------------------------------------- Image Error -----------------------------------------");
-      }
-      setUpMiscellaneous ();
+      //4 Buttons
+         //1 - Current Player's Action Tiles Buttons
+               currentActions = new HexagonButton[4];
+               for(int i = 0; i < 4; i++){
+                  HexagonButton temp = new HexagonButton(i,-1,-1,null);
+                  setUpCurrentAction(temp);
+                  currentActions[i] = temp;
+               }
+         //2 - Hexagon Buttons
+               int[] boardStartX = {10,423,10,423};
+               int[] boardStartY = {6,6,365,365};
+               for (int q = 0; q < 4; q++) {
+                  HexagonButton[][] tempBoard = new HexagonButton[10][10];
+                  for (int r = 0; r < 10; r++) {
+                     for (int c = 0; c < 10; c++) {
+                        tempBoard[r][c] = new HexagonButton(q, r, c, boardText[q][r][c].getType());
+                        setUpBoardHexes(tempBoard[r][c]);
+                     }
+                  }
+                  boards[q] = new ButtonQuadrant(q,tempBoard, boardStartX[q],boardStartY[q]);
+               }
+         //3 - Menu Buttons
+            menuButton = new TranslucentButton();
+            add(menuButton);
+            menuButton.addActionListener(this);
+
+         //4 - Finish Button
+            finishButton = new TranslucentButton();
+            add(finishButton);
+            finishButton.addActionListener(this);
+
+         //5 - Objective Buttons
+            objectiveCardImages = new BufferedImage[3];
+            objectivesButton = new TranslucentButton[3];
+            for(int i = 0; i < 3; i++){
+               int rand = (int) (Math.random() * (Constants.getCharCards().length));
+               objectiveCardImages[i] = Constants.getCharCards()[rand];
+               objectivesButton[i] = new TranslucentButton(i);
+               setUpObjective(objectivesButton[i]);
+            }
+
+         // OTHER STUFF
+               setUpMiscellaneous ();
    }
 
    /**
@@ -428,6 +426,12 @@ public class KBPanel extends JPanel implements ActionListener{
     *    change the number "n" if you want to check a specific file
     */
    public void setUpMiscellaneous(){
+      try{
+         background = ImageIO.read(getClass().getResource("/images/backgroundImages/game play2.png"));
+         highlight = ImageIO.read(getClass().getResource("/images/graphicsExtra/Hex.png"));
+      } catch (Exception ex) {
+         System.out.println("----------------------------------------- Image Error -----------------------------------------");
+      }
 
       String [] boardNames = {"beach", "boat", "farm", "paddock", "house", "oracle", "tower", "tavern"};
       // type in the board you want to check corresponding to the string array above
