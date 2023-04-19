@@ -25,9 +25,9 @@ public class BoardMatrix {
         connectTerrainNodes();
     }
 
-    public BoardMatrix (ArrayList<QuadrantMaker> quadrants) {
+    public BoardMatrix (ArrayList<QuadrantMaker> terrainQuadrants) {
         boardMatrix = new TerrainNode[20][20];
-        combineQuadrants(quadrants);
+        combineQuadrants(terrainQuadrants);
         connectTerrainNodes();
     }
 

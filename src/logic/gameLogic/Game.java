@@ -1,18 +1,16 @@
-package logic.game;
+package logic.gameLogic;
 
 import logic.cards.*;
-import logic.gameLogic.Board;
-import logic.gameLogic.Player;
 
 import java.util.ArrayList;
 
 public class Game {
    public ArrayList<Player> allPlayers;
-   public TerrainDeck terDeck;
-   public ObjectiveDeck objDeck;
-   public ArrayList <Board> allBoards;
+   public TerrainDeck terrainDeck;
+   public ObjectiveDeck objectiveDeck;
+   public ArrayList<Board> allBoards;
 
-   public Game (){
+   /*public Game (){
       terDeck = new TerrainDeck();
       objDeck = new ObjectiveDeck();
       
@@ -29,5 +27,5 @@ public class Game {
          allPlayers.add(temp);
       }
       
-   }
+   }*/
 }

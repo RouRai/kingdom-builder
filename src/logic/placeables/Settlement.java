@@ -26,4 +26,16 @@ public class Settlement {
     public TerrainNode getLocation () {
         return location;
     }
+
+    public int getRow() {
+        return row;
+    }
+
+    public int getColumn() {
+        return column;
+    }
+
+    public int getQuadrantNumber() {
+        return quadrantNumber;
+    }
 }

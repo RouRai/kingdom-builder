@@ -1,17 +1,13 @@
 package logic.gameLogic;
 
-import datastructures.gameDatastructures.BoardGraph;
 import datastructures.gameDatastructures.BoardMatrix;
 import datastructures.gameDatastructures.TerrainNode;
 import files.QuadrantMaker;
 import logic.cards.TerrainCard;
 import logic.constantFolder.TerrainEnum;
 import logic.placeables.Settlement;
-import logic.tiles.TerrainTile;
-
-import java.io.File;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.HashSet;
 
 /**
  * Author: Rounak Rai <br>
@@ -20,66 +16,80 @@ import java.util.ArrayList;
  * This is the high-level class mainly used to perform operations upon the Kingdom Builder Board.
  */
 public class Board {
-
-    private final BoardGraph board;
-    private final BoardMatrix boardMatrix;
+    private final BoardMatrix board;
 
     public Board (ArrayList<QuadrantMaker> quadrants) {
-        board = new BoardGraph(null);
-        boardMatrix = new BoardMatrix(quadrants);
+        board = new BoardMatrix(quadrants);
     }
 
     /**
      * Returns the graph of the current game board
      * @return BoardGraph board
      */
-    public BoardGraph getBoard () {
+    public BoardMatrix getBoard () {
         return board;
     }
 
     /**
-     * Adds tiles to the graph given text files
-     * @param files Text files to be parsed and to be used in order to add nodes
+     * Returns the tiles a specific player can use.
+     * @param player <code>Player</code> whose available tiles are to be returned.
+     * @param currentCard <code>TerrainCard</code> that contains the current type.
+     * @return ArrayList of <code>TerrainNodes</code> that this specific player can use.
      */
-    public void addTiles (ArrayList<File> files) {
-        // Add tiles using txt files
+    public ArrayList<TerrainNode> regularCanUseTiles(Player player, TerrainCard currentCard) {
+        ArrayList<TerrainNode> validNodes = new ArrayList<>();
+        for (TerrainNode[] row : board.getBoardMatrix()) {
+            for (TerrainNode node : row) {
+                if (canPlaceOnTile(player, node, currentCard)) {
+                    validNodes.add(node);
+                }
+            }
+        }
+        return validNodes;
     }
 
     /**
-     * Returns the tiles a specific player can use.
-     * @param player Player whose available tiles are to be returned.
-     * @return ArrayList of Terrain Tiles that this specific player can use.
+     * Returns a boolean value if a player can place a settlement on a specific node in the Board.
+     * @param player The <code>Player</code> that is trying to place the settlement.
+     * @param node The <code>TerrainNode</code> that is to be placed on.
+     * @param card The current <code>TerrainCard</code> being used
+     * @return <code>boolean</code> of whether a player can place a settlement on a specific node.
      */
-    public ArrayList<TerrainTile> playerCanUseTiles (Player player) {
-        // Returns arraylist of tiles player can use
-        return null;
-    }
-
     private boolean canPlaceOnTile (Player player, TerrainNode node, TerrainCard card) {
         if (!(node.getTile().getType() == card.type())) {
             return false;
         }
-        ArrayList<TerrainNode> settlementsAdjacentToTerrain = hasSettlementAdjacentToTerrain(player, card);
+        HashSet<TerrainNode> settlementsAdjacentToTerrain = hasSettlementAdjacentToTerrain(player, card);
         boolean needToUseSettlementAdjacentToTerrain = !(settlementsAdjacentToTerrain.size() == 0);
         boolean nodeChosenIsAdjacentToSettlementAdjacentToTerrain = settlementsAdjacentToTerrain.contains(node);
-        if (needToUseSettlementAdjacentToTerrain && !nodeChosenIsAdjacentToSettlementAdjacentToTerrain) {
-            return false;
-        }
-        return true;
+        return !needToUseSettlementAdjacentToTerrain || nodeChosenIsAdjacentToSettlementAdjacentToTerrain;
     }
 
-    private ArrayList<TerrainNode> hasSettlementAdjacentToTerrain (Player player, TerrainCard card) {
-        ArrayList<TerrainNode> validNodes = new ArrayList<>();
+
+    /**
+     * Returns the settlements of this player that are adjacent to the current terrain type.
+     * @param player The <code>Player</code> whose settlements are to be examined.
+     * @param card The current <code>TerrainCard</code> that holds the current terrain type.
+     * @return <code>HashSet</code> of TerrainNodes that have settlements adjacent to that specific terrain.
+     */
+    private HashSet<TerrainNode> hasSettlementAdjacentToTerrain (Player player, TerrainCard card) {
+        HashSet<TerrainNode> validNodes = new HashSet<>();
         for (Settlement settlement : player.getSettlements()) {
             TerrainNode settlementNode = settlement.getLocation();
-            ArrayList<TerrainNode> validAdjacentToSettlement = tilesAdjacentToTerrain(settlementNode, card.type());
+            HashSet<TerrainNode> validAdjacentToSettlement = tilesAdjacentToTerrain(settlementNode, card.type());
             validNodes.addAll(validAdjacentToSettlement);
         }
         return validNodes;
     }
 
-    private ArrayList<TerrainNode> tilesAdjacentToTerrain(TerrainNode node, TerrainEnum type) {
-        ArrayList<TerrainNode> validSettlements = new ArrayList<>();
+    /**
+     * Returns the valid placements adjacent to a single <code>Node</code>
+     * @param node <code>TerrainNode</code> that contains the adjacent tiles.
+     * @param type <code>TerrainEnum</code> that has the current type to be tested.
+     * @return <code>HashSet</code> of <code>TerrainNodes</code> that are valid settlement placements.
+     */
+    private HashSet<TerrainNode> tilesAdjacentToTerrain(TerrainNode node, TerrainEnum type) {
+        HashSet<TerrainNode> validSettlements = new HashSet<>();
         for (TerrainNode terrainNode : node.getAdjacentNodes().values()) {
             if (terrainNode.getType() == type) {
                 validSettlements.add(terrainNode);
