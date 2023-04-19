@@ -10,7 +10,7 @@ import logic.tiles.TerrainTile;
  *
  * This node is used in order to store data related to Terrain Tiles. It stores nodes adjacent to it as well.
  */
-public class TerrainNode extends Node {
+public class TerrainNode extends Node<TerrainNode> {
     private final TerrainTile tile;
 
     public TerrainNode(TerrainEnum type) {

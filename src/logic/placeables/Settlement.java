@@ -1,20 +1,29 @@
 package logic.placeables;
 
-import java.awt.*;
-import java.awt.image.BufferedImage;
+import datastructures.gameDatastructures.TerrainNode;
 
 public class Settlement {
 
     private final int color;
-    private int row, col, quadNum;
-    public Settlement (int color, int r, int c, int q) {
+    private final int row, column, quadrantNumber;
+    private TerrainNode location;
+
+    public Settlement (int color, int row, int column, int quadrantNumber) {
         this.color = color;
-        row = r;
-        col = c;
-        quadNum = q;
+        this.row = row;
+        this.column = column;
+        this.quadrantNumber = quadrantNumber;
     }
 
-    public int getImage () {
+    public int getColor() {
         return color;
+    }
+
+    public void setLocation (TerrainNode location) {
+        this.location = location;
+    }
+
+    public TerrainNode getLocation () {
+        return location;
     }
 }
