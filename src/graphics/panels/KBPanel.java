@@ -3,14 +3,11 @@ package graphics.panels;
 import custom.ButtonQuadrant;
 import custom.HexagonButton;
 import custom.TranslucentButton;
-import logic.cards.TerrainCard;
-import logic.cards.TerrainDeck;
 import logic.constantFolder.Constants;
 import files.QuadrantMaker;
-import logic.constantFolder.TerrainEnum;
 import logic.gameLogic.Board;
+import logic.gameLogic.Game;
 import logic.gameLogic.Player;
-import logic.placeables.Settlement;
 import logic.tiles.ActionTile;
 import logic.tiles.TerrainTile;
 
@@ -31,110 +28,111 @@ public class KBPanel extends JPanel implements ActionListener{
    private TranslucentButton[] objectivesButton;
    private BufferedImage [] objectiveCardImages;
    private HexagonButton[] currentActions;
-   private ButtonQuadrant[] boards;
+   private ButtonQuadrant[] buttonBoards;
    private Graphics2D g2;
    private ArrayList <BufferedImage> boardImages;
-   private ArrayList <Board> actualBoards;
    private TerrainTile[][][] boardText;
    private CardLayout cardLay;
    private Constants constantClass;
    private final String fontStr = "Lucida Calligraphy";
-   private ArrayList<Player> players;
-   private TerrainDeck terrainDeck;
-   private ArrayList<TerrainCard> terrainCards;
    private QuadrantMaker b1;
    private Board board;
+   private Game game;
 
    private Boolean fileCheckDot_Switch = false;
 
 
    public KBPanel (CardLayout cl){
 
-      //card layout
-      cardLay = cl;
-      constantClass = new Constants();
+      //1 - card layout
+            cardLay = cl;
+            constantClass = new Constants();
 
-      players = new ArrayList<>();
-      terrainDeck = new TerrainDeck();
-      terrainCards = terrainDeck.getTerrainDeck();
-      for(int i = 0; i < 4; i++){
-         players.add(new Player(i + 1));
-      }
-      players.get(0).setCard(getCard());
+      /*2- Game Essentials
+            players = new ArrayList<>();
+            terrainDeck = new TerrainDeck();
+            terrainCards = terrainDeck.getTerrainDeck();
+            for(int i = 0; i < 4; i++)
+               players.add(new Player(i + 1));
+               */
+       
 
-      currentActions = new HexagonButton[4];
-      for(int i = 0; i < 4; i++){
-         HexagonButton temp = new HexagonButton(i,-1,-1,null);
-         setUpCurrentAction(temp);
-         currentActions[i] = temp;
-      }
-
-      //BOARDS
-      boards = new ButtonQuadrant[4];
-      int[] boardStartX = {10,423,10,423};
-      int[] boardStartY = {6,6,365,365};
-      boardImages = new ArrayList<>();
-      actualBoards = new ArrayList<>();
-      boardText = new TerrainTile [4][10][10];
-      ArrayList<QuadrantMaker> boardMaker = new ArrayList<>();
-      // generating random boards
-      for(int i = 0; i < 4; i++){
-         TerrainTile [][] temp = new TerrainTile[10][10];
-         int rand = 0;
-         do {
-            rand = (int) (Math.random() * (2 * Constants.getBoards().length));
-         }while(Constants.getBoards()[rand % 8] == null);
-         boardMaker.add(new QuadrantMaker(rand));
-         int boardNum = rand % 8;
-         if(rand < Constants.getBoards().length){
-            boardImages.add(Constants.getBoards()[boardNum]);
-            Constants.getBoards()[boardNum] = null;
-            Constants.getFlippedBoards()[boardNum] = null;
-            temp = boardMaker.get(i).getTerrainTiles();
-         } else {
-            boardImages.add(Constants.getFlippedBoards()[boardNum]);
-            Constants.getBoards()[boardNum] = null;
-            Constants.getFlippedBoards()[boardNum] = null;
-            temp = boardMaker.get(i).getTerrainTiles();
-         }
-         boardText[i] = temp;
-      }
-
-      //Creates the buttons
-      for (int q = 0; q < 4; q++) {
-         HexagonButton[][] tempBoard = new HexagonButton[10][10];
-         for (int r = 0; r < 10; r++) {
-            for (int c = 0; c < 10; c++) {
-               tempBoard[r][c] = new HexagonButton(q, r, c, boardText[q][r][c].getType());
-               setUpBoardHexes(tempBoard[r][c]);
+      //3 - Board
+            buttonBoards = new ButtonQuadrant[4];
+            boardImages = new ArrayList<>();
+            boardText = new TerrainTile [4][10][10];
+            // generating random boards
+            int [] boardNumbers = new int [4];
+            ArrayList<QuadrantMaker> boardMaker = new ArrayList<>();
+            for(int i = 0; i < 4; i++){
+               TerrainTile [][] temp = new TerrainTile[10][10];
+               int rand = 0;
+               do {
+                  rand = (int) (Math.random() * (2 * Constants.getBoards().length));
+                  boardNumbers[i] = rand;
+               }while(Constants.getBoards()[rand % 8] == null);
+               boardMaker.add(new QuadrantMaker(rand));
+               int boardNum = rand % 8;
+               if(rand < Constants.getBoards().length){
+                  boardImages.add(Constants.getBoards()[boardNum]);
+                  Constants.getBoards()[boardNum] = null;
+                  Constants.getFlippedBoards()[boardNum] = null;
+                  temp = boardMaker.get(i).getTerrainTiles();
+               } else {
+                  boardImages.add(Constants.getFlippedBoards()[boardNum]);
+                  Constants.getBoards()[boardNum] = null;
+                  Constants.getFlippedBoards()[boardNum] = null;
+                  temp = boardMaker.get(i).getTerrainTiles();
+               }
+               boardText[i] = temp;
             }
-         }
-         boards[q] = new ButtonQuadrant(q,tempBoard, boardStartX[q],boardStartY[q]);
-      }
-      menuButton = new TranslucentButton();
-      finishButton = new TranslucentButton();
-      add(menuButton);
-      add(finishButton);
-      menuButton.addActionListener(this);
-      finishButton.addActionListener(this);
 
-      objectiveCardImages = new BufferedImage[3];
-      objectivesButton = new TranslucentButton[3];
-      for(int i = 0; i < 3; i++){
-         int rand = (int) (Math.random() * (Constants.getCharCards().length));
-         objectiveCardImages[i] = Constants.getCharCards()[rand];
-         objectivesButton[i] = new TranslucentButton(i);
-         setUpObjective(objectivesButton[i]);
-      }
+      //4 Buttons
+         //1 - Current Player's Action Tiles Buttons
+               currentActions = new HexagonButton[4];
+               for(int i = 0; i < 4; i++){
+                  HexagonButton temp = new HexagonButton(i,-1,-1,null);
+                  setUpCurrentAction(temp);
+                  currentActions[i] = temp;
+               }
+         //2 - Hexagon Buttons
+               int[] boardStartX = {10,423,10,423};
+               int[] boardStartY = {6,6,365,365};
+               for (int q = 0; q < 4; q++) {
+                  HexagonButton[][] tempBoard = new HexagonButton[10][10];
+                  for (int r = 0; r < 10; r++) {
+                     for (int c = 0; c < 10; c++) {
+                        tempBoard[r][c] = new HexagonButton(q, r, c, boardText[q][r][c].getType());
+                        setUpBoardHexes(tempBoard[r][c]);
+                     }
+                  }
+                  buttonBoards[q] = new ButtonQuadrant(q,tempBoard, boardStartX[q],boardStartY[q]);
+               }
+         //3 - Menu Buttons
+            menuButton = new TranslucentButton();
+            add(menuButton);
+            menuButton.addActionListener(this);
 
-      // 1 -- BACKGROUND - BOTTOM LAYER
-      try{
-         background = ImageIO.read(getClass().getResource("/images/backgroundImages/game play2.png"));
-         highlight = ImageIO.read(getClass().getResource("/images/graphicsExtra/Hex.png"));
-      } catch (Exception ex) {
-         System.out.println("----------------------------------------- Image Error -----------------------------------------");
-      }
-      setUpMiscellaneous ();
+         //4 - Finish Button
+            finishButton = new TranslucentButton();
+            add(finishButton);
+            finishButton.addActionListener(this);
+
+         //5 - Objective Buttons
+            objectiveCardImages = new BufferedImage[3];
+            objectivesButton = new TranslucentButton[3];
+            for(int i = 0; i < 3; i++){
+               int rand = (int) (Math.random() * (Constants.getCharCards().length));
+               objectiveCardImages[i] = Constants.getCharCards()[rand];
+               objectivesButton[i] = new TranslucentButton(i);
+               setUpObjective(objectivesButton[i]);
+            }
+
+         //6 - GAME
+               game = new Game (boardNumbers);
+
+         // OTHER STUFF
+               setUpMiscellaneous ();
    }
 
    /**
@@ -181,7 +179,7 @@ public class KBPanel extends JPanel implements ActionListener{
       for (int i = 0; i < 3; i++)
          g2.drawImage(objectiveCardImages[i], 325+ i * 150, 735, 130, 240, null);
       for (int i = 0; i < 4; i++){
-         ButtonQuadrant b = boards[i];
+         ButtonQuadrant b = buttonBoards[i];
          double x = b.startX;
          double y = b.startY;
          g2.drawImage(boardImages.get(i),(int)x+2, (int)y-1,435, 369, null);
@@ -193,6 +191,7 @@ public class KBPanel extends JPanel implements ActionListener{
     */
    public void drawOtherPlayer(){
       int space_between_Players = 123;
+      ArrayList <Player> players = game.getAllPlayers();
       for (int i =0; i < 3; i++) {
          //Player p = player example array [i];
          //number
@@ -235,12 +234,12 @@ public class KBPanel extends JPanel implements ActionListener{
       //number
       g2.setColor(Color.black);
       g2.setFont(new Font(fontStr, Font.PLAIN, 50));
-      g2.drawString("" + players.get(0).getPlayerNumber(),1185,460);
+      g2.drawString("" + game.getCurrentPlayer().getPlayerNumber(),1185,460);
 
       //action tiles
       g2.setFont(new Font(fontStr, Font.PLAIN, 20));
       g2.setColor(Color.white);
-      Set tiles = players.get(0).getActionTiles().keySet();
+      Set tiles = game.getCurrentPlayer().getActionTiles().keySet();
       Iterator<ActionTile> iter = tiles.iterator();
       int i = 0;
       while(iter.hasNext()) {
@@ -256,27 +255,27 @@ public class KBPanel extends JPanel implements ActionListener{
          i++;
       }
       //action tile selected - this part shows the hint when using the action tile
-      if (players.get(0).isUsingActionTile()){
+      if (game.getCurrentPlayer().isUsingActionTile()){
          g2.drawImage(constantClass.getActionProcess()[1], 1135, 645, 150, 60, null);
       }
       //landscape card drawn by the current player
-      g2.drawImage(players.get(0).getCard().image(), 1335, 530, 130, 200, null);
+      g2.drawImage(game.getCurrentPlayer().getCard().image(), 1335, 530, 130, 200, null);
 
       //settlement icon - based on color
-      g2.drawImage(constantClass.getSettlements()[players.get(0).getPlayerNumber() - 1], 1330, 410, 120, 100, null);
+      g2.drawImage(constantClass.getSettlements()[game.getCurrentPlayer().getPlayerNumber() - 1], 1330, 410, 120, 100, null);
       //settlement number
       g2.setFont(new Font(fontStr, Font.PLAIN, 35));
-      if(players.get(0).getPlayerNumber() == 4){
+      if(game.getCurrentPlayer().getPlayerNumber() == 4){
          g2.setColor(Color.BLACK);
       }
-      g2.drawString("" + players.get(0).getSettlementsRemaining(),1365,480);
+      g2.drawString("" + game.getCurrentPlayer().getSettlementsRemaining(),1365,480);
    }
 
    /**
     * draws the outline for each Hexbutton & the settlement (if applicable) with Button Quadrant
     */
    public void drawHexButtons(){
-      for (ButtonQuadrant b: boards) {
+      for (ButtonQuadrant b: buttonBoards) {
          double x = b.startX;
          double y = b.startY;
          HexagonButton [][] board = b.getBoard();
@@ -289,8 +288,8 @@ public class KBPanel extends JPanel implements ActionListener{
                   board[r][c].setBounds((int) (x + 21 + c * 41.3), (int) y, 46, 46);
                }
                //if(board[r][c].tile)
-               if(!players.get(0).isHasPlacedSettlements() && !players.get(0).isUsingActionTile() && !(players.get(0).getSettlementsRemaining() == 0)) {
-                  board[r][c].drawHighlight(g2, highlight, players.get(0).getCard());
+               if(!game.getCurrentPlayer().isHasPlacedSettlements() && !game.getCurrentPlayer().isUsingActionTile() && !(game.getCurrentPlayer().getSettlementsRemaining() == 0)) {
+                  board[r][c].drawHighlight(g2, highlight, game.getCurrentPlayer().getCard());
                }
                board[r][c].drawSettlement(g2);
 
@@ -303,31 +302,6 @@ public class KBPanel extends JPanel implements ActionListener{
    }
 
    /**
-    * @return gets the next card
-    * question: do we need to shuffle the deck when we create it?
-    */
-   public TerrainCard getCard(){
-      if(terrainCards.isEmpty()){
-         terrainDeck = new TerrainDeck();
-         terrainCards = terrainDeck.getTerrainDeck();
-         return getCard();
-      }
-      TerrainCard temp = terrainCards.get(0);
-      terrainCards.remove(0);
-      return temp;
-   }
-   public void endTurn(){
-      Player temp = players.get(0);
-      temp.setHasPlacedSettlements(false);
-      temp.setUsingActionTile(false);
-      temp.setPlacingSettlements(false);
-      temp.setCard(null);
-      temp.setNumSettlementsPlaced(0);
-      players.remove(0);
-      players.add(temp);
-      players.get(0).setCard(getCard());
-   }
-   /**
     * @param temp hexbutton
     *             send in a hex button to set up its action listener function - for every hex button clicked
     *             the console will print out the quad number, the row, and the column of the hex
@@ -339,10 +313,59 @@ public class KBPanel extends JPanel implements ActionListener{
          @Override
          public void actionPerformed(ActionEvent e) {
             System.out.println("Hex Button clicked " + temp + "  ");
-            checkRegularSettlementPlacement(players.get(0), temp);
+            game.checkRegularSettlementPlacement(game.getCurrentPlayer(), temp);
+
+            if (game.getCurrentPlayer().getNumSettlementsPlaced()!=3){
+               System.out.println("player has started regular settlement");
+               setRegularAdjacent(game.getCurrentPlayer(), temp);
+            }
+
             repaint();
          }
       });
+   }
+   //git iogkjsdifghsdfgnijadfng
+   private void setRegularAdjacent(Player player, HexagonButton button){
+      // right, right bottom, left bottom, left, left top, right top
+      int [] rowOp = {0,1,1,0,-1,-1};
+      int [] colOp = {1,1,0,-1,0,1};
+
+      int q = button.getquadNum();
+      int r = button.getRow();
+      int c = button.getCol();
+      Boolean []arr = new Boolean[6];
+      System.out.println(" Player has "+ player.getCard().type());
+      for (int i = 0; i<6; i++){
+         Boolean bool = false;
+         int checkedR = r+rowOp[i];
+         int checkedC = c+colOp[i];
+         if (q > 1)
+            checkedR+= 10;
+         if (q == 1 || q == 3)
+            checkedC+= 10;
+
+            bool = (checkedR < 20 && checkedR >=0 && checkedC < 20 && checkedC >=0) ;
+            Boolean type = player.getCard().type().toString().equals(game.getBoard().getBoard().getBoardMatrix()[checkedR][checkedC].getType().toString());
+         System.out.println(player.getCard().type().toString() + " vs. "+ game.getBoard().getBoard().getBoardMatrix()[checkedR][checkedC].getType().toString());
+         System.out.println(""+ " - ("+ checkedR + " , " + checkedC + ") to "+" "+bool + " " + type);
+         if (bool && type){
+            int R = checkedR;
+            int C = checkedC;
+            int Q = 0;
+            if (checkedR >=10){
+               R-=10;
+               Q+=2;
+            }
+            if (checkedC >=10){
+               C-=10;
+               Q+=1;
+            }
+            buttonBoards[Q].getBoard()[R][C].canClick = true;
+            System.out.println("setting" + Q + " - ("+ R + " , " + C + ") to "+ bool);
+         }
+         arr[i]= bool;
+      }
+      button.setAdjacents(arr);
    }
    public void setUpObjective (TranslucentButton temp){
       add(temp);
@@ -360,66 +383,34 @@ public class KBPanel extends JPanel implements ActionListener{
          @Override
          public void actionPerformed(ActionEvent e) {
             System.out.println("Current Action Tile Button clicked -" + temp + "  ");
-
+            game.getCurrentPlayer().setUsingActionTile(true);
+            game.getCurrentPlayer().setPlacingRegSettlements(false);
             repaint();
          }
       });
    }
 
-   /**
-    * Logic method by Sri which checks the conditions of each regular settlement placement...
-    * @param player
-    * @param temp
-    */
 
-   private void checkRegularSettlementPlacement (Player player, HexagonButton temp) {
-      if (player.isHasPlacedSettlements() || temp.getSettlementImage() != null || player.getSettlementsRemaining() == 0 || !temp.getTileType().equals(player.getCard().type())) {
-         return;
-      }
-      if(!player.isPlacingSettlements()){
-         player.setPlacingSettlements(true);
-      }
-      player.setNumSettlementsPlaced(player.getNumSettlementsPlaced() + 1);
-      temp.setSettlementImage(constantClass.getSettlements()[player.getPlayerNumber() - 1]);
-      Settlement temps = player.getSettlement(temp.getquadNum(), temp.getRow(), temp.getCol());
-      temp.setSettlement(temps);
-      //boards[temp.getquadNum()][temp.getRow()][temp.getCol()];
-      if(player.getNumSettlementsPlaced() == 3) {
-         player.setHasPlacedSettlements(true);
-         player.setPlacingSettlements(false);
-      }
-   }
 
    /**method that checks if current player can end their turn;
     *
     * @return
     */
-   private boolean canEndTurn(){
-      return players.get(0).isHasPlacedSettlements() || players.get(0).getSettlementsRemaining() == 0;
-   }
    @Override
    public void actionPerformed(ActionEvent e) {
       if(e.getSource().equals(menuButton)){
          cardLay.show(Constants.PANEL_CONT, Constants.MENU_PANEL);
       } else if(e.getSource().equals(finishButton)){
-         if(canEndTurn()) {
-            if (players.get(0).getPlayerNumber() == 4) {
+         if(game.canEndTurn()) {
+            if (game.getCurrentPlayer().getPlayerNumber() == 4) {
                //make sure to check this later
-               checkEndGame();
+               if (game.checkEndGame())
+                  cardLay.show(Constants.PANEL_CONT, Constants.END_PANEL);
             }
-            endTurn();
+            game.endTurn();
          }
       }
       repaint();
-   }
-
-   /** make sure to check this later
-    *
-    */
-   public void checkEndGame(){
-      if(players.get(0).getSettlementsRemaining() == 0 || players.get(1).getSettlementsRemaining() == 0 || players.get(2).getSettlementsRemaining() == 0 || players.get(3).getSettlementsRemaining() == 0){
-         cardLay.show(Constants.PANEL_CONT, Constants.END_PANEL);
-      }
    }
 
    /**
@@ -428,6 +419,12 @@ public class KBPanel extends JPanel implements ActionListener{
     *    change the number "n" if you want to check a specific file
     */
    public void setUpMiscellaneous(){
+      try{
+         background = ImageIO.read(getClass().getResource("/images/backgroundImages/game play2.png"));
+         highlight = ImageIO.read(getClass().getResource("/images/graphicsExtra/Hex.png"));
+      } catch (Exception ex) {
+         System.out.println("----------------------------------------- Image Error -----------------------------------------");
+      }
 
       String [] boardNames = {"beach", "boat", "farm", "paddock", "house", "oracle", "tower", "tavern"};
       // type in the board you want to check corresponding to the string array above
