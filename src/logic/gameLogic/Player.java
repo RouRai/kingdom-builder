@@ -1,10 +1,9 @@
 package logic.gameLogic;
 
 import logic.cards.TerrainCard;
-import logic.constantFolder.TerrainEnum;
 import logic.placeables.Settlement;
 import logic.tiles.ActionTile;
-import logic.tiles.Tile;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -22,7 +21,7 @@ public class Player {
     private TerrainCard card;
     private final HashMap<ActionTile, Integer> actionTiles;
     private int points, numSettlementsPlaced;
-    private boolean hasPlacedSettlements, isPlacingSettlements, isUsingActionTile;
+    private boolean hasPlacedSettlements, isPlacingRegSettlements, isUsingActionTile;
 
     public Player (int playerNumber) {
         settlements = new ArrayList<>();
@@ -32,7 +31,7 @@ public class Player {
         points = 0;
         numSettlementsPlaced = 0;
         hasPlacedSettlements = false;
-        isPlacingSettlements = false;
+        isPlacingRegSettlements = false;
         isUsingActionTile = false;
     }
 
@@ -109,8 +108,8 @@ public class Player {
         points = Math.max(points - pointsToRemove, 0);
     }
 
-    public boolean isPlacingSettlements() {
-        return isPlacingSettlements;
+    public boolean isPlacingRegSettlements() {
+        return isPlacingRegSettlements;
     }
 
     public boolean isHasPlacedSettlements() {
@@ -125,8 +124,8 @@ public class Player {
         this.hasPlacedSettlements = hasPlacedSettlements;
     }
 
-    public void setPlacingSettlements(boolean placingSettlements) {
-        isPlacingSettlements = placingSettlements;
+    public void setPlacingRegSettlements(boolean placingRegSettlements) {
+        isPlacingRegSettlements = placingRegSettlements;
     }
 
     public void setUsingActionTile(boolean usingActionTile) {

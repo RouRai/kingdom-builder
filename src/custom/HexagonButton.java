@@ -20,9 +20,12 @@ public class HexagonButton extends JButton {
     private BufferedImage settlement;
     private TerrainEnum tileType;
     private int quadNum, row, col;
+    private Boolean[] adjacents;
+    public Boolean canClick;
     private Settlement settle;
     public HexagonButton(){
         super();
+        canClick = true;
         settlement = null;
         settle = null;
         n = 6;
@@ -31,6 +34,7 @@ public class HexagonButton extends JButton {
         angle = 2*Math.PI/n;
         draw = false;
         //border = BorderFactory.createLineBorder(new Color(90, 219, 181), 10);
+        adjacents = new Boolean[6];
         Dimension size = getPreferredSize();
         size.width = size.height = Math.max(size.width, size.height);
         setPreferredSize(size);
@@ -117,6 +121,11 @@ public class HexagonButton extends JButton {
     public int getCol(){
         return col;
     }
+
+    public void setAdjacents(Boolean[] adjacents) {
+        this.adjacents = adjacents;
+    }
+
     public String toString (){
         return "Hex button Clicked - quad"+ this.quadNum + " ("+ this.row+ ", "+ this.col+ ") ";
     }
