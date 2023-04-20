@@ -107,6 +107,7 @@ public class Game {
          player.setPlacingRegSettlements(false);
       }
    }
+   //skjfgkhjdsfhgkdsjfgouijsed
    private void setRegularAdjacent(Player player, HexagonButton button){
       // right, right bottom, left bottom, left, left top, right top
       int [] rowOp = {0,1,1,0,-1,-1};

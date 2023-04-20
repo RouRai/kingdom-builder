@@ -324,6 +324,7 @@ public class KBPanel extends JPanel implements ActionListener{
          }
       });
    }
+   //git iogkjsdifghsdfgnijadfng
    private void setRegularAdjacent(Player player, HexagonButton button){
       // right, right bottom, left bottom, left, left top, right top
       int [] rowOp = {0,1,1,0,-1,-1};
