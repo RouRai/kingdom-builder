@@ -3,8 +3,11 @@ package graphics.panels;
 import custom.ButtonQuadrant;
 import custom.HexagonButton;
 import custom.TranslucentButton;
+import datastructures.gameDatastructures.BoardMatrix;
+import datastructures.gameDatastructures.TerrainNode;
 import logic.constantFolder.Constants;
 import files.QuadrantMaker;
+import logic.constantFolder.TerrainEnum;
 import logic.gameLogic.Board;
 import logic.gameLogic.Game;
 import logic.gameLogic.Player;
@@ -24,6 +27,7 @@ public class KBPanel extends JPanel implements ActionListener{
    //Images
 
    private BufferedImage background, highlight;
+   private ArrayList<TerrainNode> legalPlaces;
    private TranslucentButton menuButton, finishButton;
    private TranslucentButton[] objectivesButton;
    private BufferedImage [] objectiveCardImages;
@@ -135,6 +139,7 @@ public class KBPanel extends JPanel implements ActionListener{
 
          // OTHER STUFF
                setUpMiscellaneous ();
+               legalPlaces = game.getLegalPlaces();
    }
 
    /**
@@ -277,6 +282,7 @@ public class KBPanel extends JPanel implements ActionListener{
     * draws the outline for each Hexbutton & the settlement (if applicable) with Button Quadrant
     */
    public void drawHexButtons(){
+      int quad = 0;
       for (ButtonQuadrant b: buttonBoards) {
          double x = b.startX;
          double y = b.startY;
@@ -290,8 +296,16 @@ public class KBPanel extends JPanel implements ActionListener{
                   } else {
                      board[r][c].setBounds((int) (x + 21 + c * 41.3), (int) y, 46, 46);
                   }
+                  int tempr = r;
+                  int tempc = c;
+                  if(quad == 2 || quad == 3){
+                     tempr = r + 10;
+                  }
+                  if(quad == 1 || quad == 3){
+                     tempc = c + 10;
+                  }
                   //if(board[r][c].tile)
-                  if(!game.getCurrentPlayer().hasPlacedSettlements() && !game.getCurrentPlayer().isUsingActionTile() && !(game.getCurrentPlayer().getSettlementsRemaining() == 0)) {
+                  if(legalPlaces.contains(game.getBoard().getBoard().getBoardMatrix()[tempr][tempc])) {
                      board[r][c].drawHighlight(g2, highlight, game.getCurrentPlayer().getCard());
                   }
                   board[r][c].drawSettlement(g2);
@@ -302,6 +316,7 @@ public class KBPanel extends JPanel implements ActionListener{
             }
             y += 35.5;
          }
+         quad++;
       }
    }
 
@@ -324,7 +339,7 @@ public class KBPanel extends JPanel implements ActionListener{
 
             if (game.getCurrentPlayer().getNumSettlementsPlaced()!=3){
                System.out.println("player has started regular settlement");
-
+               //game.checkRegularSettlementPlacement(game.getCurrentPlayer(), , game.getCurrentPlayer().getCard());
                //setRegularAdjacent(game.getCurrentPlayer(), temp);
             }
 

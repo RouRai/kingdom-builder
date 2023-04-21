@@ -57,6 +57,9 @@ public class Board {
      * @return <code>boolean</code> of whether a player can place a settlement on a specific node.
      */
     private boolean canPlaceOnTile (Player player, TerrainNode node, TerrainCard card) {
+        if(node == null){
+            return false;
+        }
         if (player.getSettlementsRemaining() < 1) {
             return false;
         }

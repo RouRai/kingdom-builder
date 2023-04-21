@@ -1,6 +1,7 @@
 package logic.gameLogic;
 
 import custom.HexagonButton;
+import datastructures.gameDatastructures.TerrainNode;
 import files.QuadrantMaker;
 import logic.cards.*;
 import logic.constantFolder.Constants;
@@ -162,5 +163,8 @@ public class Game {
 
    public Board getBoard() {
       return board;
+   }
+   public ArrayList<TerrainNode> getLegalPlaces(){
+      return board.regularCanUseTiles(allPlayers.get(0), allPlayers.get(0).getCard());
    }
 }
