@@ -3,8 +3,11 @@ package graphics.panels;
 import custom.ButtonQuadrant;
 import custom.HexagonButton;
 import custom.TranslucentButton;
+import datastructures.gameDatastructures.BoardMatrix;
+import datastructures.gameDatastructures.TerrainNode;
 import logic.constantFolder.Constants;
 import files.QuadrantMaker;
+import logic.constantFolder.TerrainEnum;
 import logic.gameLogic.Board;
 import logic.gameLogic.Game;
 import logic.gameLogic.Player;
@@ -24,6 +27,7 @@ public class KBPanel extends JPanel implements ActionListener{
    //Images
 
    private BufferedImage background, highlight;
+   private ArrayList<TerrainNode> legalPlaces;
    private TranslucentButton menuButton, finishButton;
    private TranslucentButton[] objectivesButton;
    private BufferedImage [] objectiveCardImages;
@@ -277,6 +281,7 @@ public class KBPanel extends JPanel implements ActionListener{
     * draws the outline for each Hexbutton & the settlement (if applicable) with Button Quadrant
     */
    public void drawHexButtons(){
+      int quad = 0;
       for (ButtonQuadrant b: buttonBoards) {
          double x = b.startX;
          double y = b.startY;
@@ -290,8 +295,19 @@ public class KBPanel extends JPanel implements ActionListener{
                   } else {
                      board[r][c].setBounds((int) (x + 21 + c * 41.3), (int) y, 46, 46);
                   }
+                  int tempr = r;
+                  int tempc = c;
+                  if(quad == 2 || quad == 3){
+                     tempr = r + 10;
+                  }
+                  if(quad == 1 || quad == 3){
+                     tempc = c + 10;
+                  }
                   //if(board[r][c].tile)
-                  if(!game.getCurrentPlayer().hasPlacedSettlements() && !game.getCurrentPlayer().isUsingActionTile() && !(game.getCurrentPlayer().getSettlementsRemaining() == 0)) {
+                   while(legalPlaces == null && !game.getCurrentPlayer().hasPlacedSettlements()){
+                       legalPlaces = game.getLegalPlaces();
+                   }
+                  if(legalPlaces.contains(game.getBoard().getBoard().getTerrainBoardMatrix()[tempr][tempc]) && !game.getCurrentPlayer().hasPlacedSettlements()) {
                      board[r][c].drawHighlight(g2, highlight, game.getCurrentPlayer().getCard());
                   }
                   board[r][c].drawSettlement(g2);
@@ -302,6 +318,7 @@ public class KBPanel extends JPanel implements ActionListener{
             }
             y += 35.5;
          }
+         quad++;
       }
    }
 
@@ -320,14 +337,24 @@ public class KBPanel extends JPanel implements ActionListener{
          @Override
          public void actionPerformed(ActionEvent e) {
             System.out.println("Hex Button clicked " + temp + "  ");
-            game.checkRegularSettlementPlacement(game.getCurrentPlayer(), temp);
+             int quad = temp.getquadNum();
+             int tempr = temp.getRow();
+             int tempc = temp.getCol();
+             if(quad == 2 || quad == 3){
+                 tempr = temp.getRow() + 10;
+             }
+             if(quad == 1 || quad == 3){
+                 tempc = temp.getCol() + 10;
+             }
+            if(legalPlaces.contains(game.getBoard().getBoard().getTerrainBoardMatrix()[tempr][tempc]))
+                game.checkRegularSettlementPlacement(game.getCurrentPlayer(), temp);
 
             if (game.getCurrentPlayer().getNumSettlementsPlaced()!=3){
                System.out.println("player has started regular settlement");
-
+               //game.checkRegularSettlementPlacement(game.getCurrentPlayer(), , game.getCurrentPlayer().getCard());
                //setRegularAdjacent(game.getCurrentPlayer(), temp);
             }
-
+            legalPlaces = game.getLegalPlaces();
             repaint();
          }
       });
@@ -353,8 +380,8 @@ public class KBPanel extends JPanel implements ActionListener{
             checkedC+= 10;
 
             bool = (checkedR < 20 && checkedR >=0 && checkedC < 20 && checkedC >=0) ;
-            Boolean type = player.getCard().type().toString().equals(game.getBoard().getBoard().getBoardMatrix()[checkedR][checkedC].getType().toString());
-         System.out.println(player.getCard().type().toString() + " vs. "+ game.getBoard().getBoard().getBoardMatrix()[checkedR][checkedC].getType().toString());
+            Boolean type = player.getCard().type().toString().equals(game.getBoard().getBoard().getTerrainBoardMatrix()[checkedR][checkedC].getType().toString());
+         System.out.println(player.getCard().type().toString() + " vs. "+ game.getBoard().getBoard().getTerrainBoardMatrix()[checkedR][checkedC].getType().toString());
          System.out.println(""+ " - ("+ checkedR + " , " + checkedC + ") to "+" "+bool + " " + type);
          if (bool && type){
             int R = checkedR;
@@ -416,6 +443,7 @@ public class KBPanel extends JPanel implements ActionListener{
                   cardLay.show(Constants.PANEL_CONT, Constants.END_PANEL);
             }
             game.endTurn();
+            legalPlaces = game.getLegalPlaces();
          }
       }
       repaint();
