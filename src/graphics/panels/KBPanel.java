@@ -288,7 +288,7 @@ public class KBPanel extends JPanel implements ActionListener{
                   board[r][c].setBounds((int) (x + 21 + c * 41.3), (int) y, 46, 46);
                }
                //if(board[r][c].tile)
-               if(!game.getCurrentPlayer().isHasPlacedSettlements() && !game.getCurrentPlayer().isUsingActionTile() && !(game.getCurrentPlayer().getSettlementsRemaining() == 0)) {
+               if(!game.getCurrentPlayer().hasPlacedSettlements() && !game.getCurrentPlayer().isUsingActionTile() && !(game.getCurrentPlayer().getSettlementsRemaining() == 0)) {
                   board[r][c].drawHighlight(g2, highlight, game.getCurrentPlayer().getCard());
                }
                board[r][c].drawSettlement(g2);

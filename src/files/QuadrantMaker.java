@@ -3,6 +3,8 @@ package files;
 import logic.constantFolder.ActionEnum;
 import logic.constantFolder.Constants;
 import logic.constantFolder.TerrainEnum;
+import logic.tiles.ActionTile;
+import logic.tiles.CityTile;
 import logic.tiles.TerrainTile;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -16,6 +18,9 @@ public class QuadrantMaker {
    private final int boardNumber;
    private final String [][] tiles;
    private TerrainTile[][] terrainTiles;
+   private ActionTile[][] actionTiles;
+   private CityTile[][] cityTiles;
+
 
 
    public QuadrantMaker(int boardNumber) {
@@ -60,8 +65,7 @@ public class QuadrantMaker {
          String[] symbols = data.split(" ");
          int columns = 0;
          for (String symbol: symbols){
-
-            terrainMatrix[rows][columns] = new TerrainTile((TerrainEnum) getTerrainTypeFromSymbol(symbol));
+            setTypeFromSymbol(symbol, rows, columns);
             columns++;
          }
          rows++;
@@ -100,6 +104,20 @@ public class QuadrantMaker {
          default -> null;
       };
    }
+
+   private void setTypeFromSymbol (String symbol, int row, int column) {
+      switch (symbol) {
+         case "d" -> terrainTiles[row][column] = new TerrainTile(TerrainEnum.DESERT);
+         case "g" -> terrainTiles[row][column] = new TerrainTile(TerrainEnum.GRASS);
+         case "f" -> terrainTiles[row][column] = new TerrainTile(TerrainEnum.FOREST);
+         case "fl" -> terrainTiles[row][column] = new TerrainTile(TerrainEnum.FLOWER);
+         case "w" -> terrainTiles[row][column] = new TerrainTile(TerrainEnum.WATER);
+         case "v" -> terrainTiles[row][column] = new TerrainTile(TerrainEnum.CANYON);
+         case "m" -> terrainTiles[row][column] = new TerrainTile(TerrainEnum.MOUNTAIN);
+         case "c" -> cityTiles[row][column] = new CityTile();
+         case "ac" -> setActionTypeFromSymbol(row, column);
+      };
+   }
    private ActionEnum getActionTypeFromSymbol(){
       return switch (boardNumber % 8) {
          case 0 -> ActionEnum.OASIS;
@@ -111,6 +129,19 @@ public class QuadrantMaker {
          case 6 -> ActionEnum.TOWER;
          case 7 -> ActionEnum.TAVERN;
          default -> null;
+      };
+   }
+
+   private void setActionTypeFromSymbol (int row, int column) {
+      switch (boardNumber % 8) {
+         case 0 -> actionTiles[row][column] = new ActionTile(ActionEnum.OASIS);
+         case 1 -> actionTiles[row][column] = new ActionTile(ActionEnum.HARBOR);
+         case 2 -> actionTiles[row][column] = new ActionTile(ActionEnum.FARM);
+         case 3 -> actionTiles[row][column] = new ActionTile(ActionEnum.PADDOCK);
+         case 4 -> actionTiles[row][column] = new ActionTile(ActionEnum.BARN);
+         case 5 -> actionTiles[row][column] = new ActionTile(ActionEnum.ORACLE);
+         case 6 -> actionTiles[row][column] = new ActionTile(ActionEnum.TOWER);
+         case 7 -> actionTiles[row][column] = new ActionTile(ActionEnum.TAVERN);
       };
    }
 

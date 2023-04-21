@@ -112,7 +112,7 @@ public class Player {
         return isPlacingRegSettlements;
     }
 
-    public boolean isHasPlacedSettlements() {
+    public boolean hasPlacedSettlements() {
         return hasPlacedSettlements;
     }
 
