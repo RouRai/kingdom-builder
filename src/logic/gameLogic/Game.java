@@ -60,7 +60,7 @@ public class Game {
     *
     */
    public boolean canEndTurn(){
-      return allPlayers.get(0).isHasPlacedSettlements() || allPlayers.get(0).getSettlementsRemaining() == 0;
+      return allPlayers.get(0).hasPlacedSettlements() || allPlayers.get(0).getSettlementsRemaining() == 0;
    }
    public boolean checkEndGame(){
       return allPlayers.get(0).getSettlementsRemaining() == 0 || allPlayers.get(1).getSettlementsRemaining() == 0 || allPlayers.get(2).getSettlementsRemaining() == 0 || allPlayers.get(3).getSettlementsRemaining() == 0;
@@ -76,7 +76,7 @@ public class Game {
          return;
       }
       //regular
-         if (player.isHasPlacedSettlements() || button.getSettlementImage() != null || player.getSettlementsRemaining() == 0 || !button.getTileType().equals(player.getCard().type()))
+         if (player.hasPlacedSettlements() || button.getSettlementImage() != null || player.getSettlementsRemaining() == 0 || !button.getTileType().equals(player.getCard().type()))
             return;
          if (button.canClick) {
             System.out.println("-------------can click");

@@ -37,6 +37,7 @@ public class Board {
      * @return ArrayList of <code>TerrainNodes</code> that this specific player can use.
      */
     public ArrayList<TerrainNode> regularCanUseTiles(Player player, TerrainCard currentCard) {
+        if (player.hasPlacedSettlements()) return null;
         ArrayList<TerrainNode> validNodes = new ArrayList<>();
         for (TerrainNode[] row : board.getBoardMatrix()) {
             for (TerrainNode node : row) {
@@ -56,7 +57,13 @@ public class Board {
      * @return <code>boolean</code> of whether a player can place a settlement on a specific node.
      */
     private boolean canPlaceOnTile (Player player, TerrainNode node, TerrainCard card) {
+        if (player.getSettlementsRemaining() < 1) {
+            return false;
+        }
         if (!(node.getTile().getType() == card.type())) {
+            return false;
+        }
+        if (node.getTile().getSettlement() != null) {
             return false;
         }
         HashSet<TerrainNode> settlementsAdjacentToTerrain = hasSettlementAdjacentToTerrain(player, card);
