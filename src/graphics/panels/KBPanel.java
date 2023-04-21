@@ -368,8 +368,8 @@ public class KBPanel extends JPanel implements ActionListener{
             checkedC+= 10;
 
             bool = (checkedR < 20 && checkedR >=0 && checkedC < 20 && checkedC >=0) ;
-            Boolean type = player.getCard().type().toString().equals(game.getBoard().getBoard().getBoardMatrix()[checkedR][checkedC].getType().toString());
-         System.out.println(player.getCard().type().toString() + " vs. "+ game.getBoard().getBoard().getBoardMatrix()[checkedR][checkedC].getType().toString());
+            Boolean type = player.getCard().type().toString().equals(game.getBoard().getBoard().getTerrainBoardMatrix()[checkedR][checkedC].getType().toString());
+         System.out.println(player.getCard().type().toString() + " vs. "+ game.getBoard().getBoard().getTerrainBoardMatrix()[checkedR][checkedC].getType().toString());
          System.out.println(""+ " - ("+ checkedR + " , " + checkedC + ") to "+" "+bool + " " + type);
          if (bool && type){
             int R = checkedR;

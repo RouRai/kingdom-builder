@@ -128,7 +128,7 @@ public class Game {
                checkedC+= 10;
 
          if (checkedR < 20 && checkedR >=0 && checkedC < 20 && checkedC >=0){
-            bool = player.getCard().equals(board.getBoard().getBoardMatrix()[checkedR][checkedC]);
+            bool = player.getCard().equals(board.getBoard().getTerrainBoardMatrix()[checkedR][checkedC]);
          }
          arr[i]= bool;
       }

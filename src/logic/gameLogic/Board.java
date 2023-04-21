@@ -39,7 +39,7 @@ public class Board {
     public ArrayList<TerrainNode> regularCanUseTiles(Player player, TerrainCard currentCard) {
         if (player.hasPlacedSettlements()) return null;
         ArrayList<TerrainNode> validNodes = new ArrayList<>();
-        for (TerrainNode[] row : board.getBoardMatrix()) {
+        for (TerrainNode[] row : board.getTerrainBoardMatrix()) {
             for (TerrainNode node : row) {
                 if (canPlaceOnTile(player, node, currentCard)) {
                     validNodes.add(node);
