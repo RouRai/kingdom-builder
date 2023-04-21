@@ -29,6 +29,8 @@ public class QuadrantMaker {
       this.boardNumber = boardNumber;
       tiles = new String[10][10];
       terrainTiles = new TerrainTile[10][10];
+      actionTiles = new ActionTile[10][10];
+      cityTiles = new CityTile[10][10];
       setUpEnumMatrix(boardNumber);
    }
 
@@ -115,7 +117,7 @@ public class QuadrantMaker {
          case "v" -> terrainTiles[row][column] = new TerrainTile(TerrainEnum.CANYON);
          case "m" -> terrainTiles[row][column] = new TerrainTile(TerrainEnum.MOUNTAIN);
          case "c" -> cityTiles[row][column] = new CityTile();
-         case "ac" -> setActionTypeFromSymbol(row, column);
+         case "a" -> setActionTypeFromSymbol(row, column);
       };
    }
    private ActionEnum getActionTypeFromSymbol(){

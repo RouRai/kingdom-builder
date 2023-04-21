@@ -102,7 +102,9 @@ public class KBPanel extends JPanel implements ActionListener{
                   HexagonButton[][] tempBoard = new HexagonButton[10][10];
                   for (int r = 0; r < 10; r++) {
                      for (int c = 0; c < 10; c++) {
-                        tempBoard[r][c] = new HexagonButton(q, r, c, boardText[q][r][c].getType());
+                        if(boardText[q][r][c] != null){
+                           tempBoard[r][c] = new HexagonButton(q, r, c, boardText[q][r][c].getType());
+                        }
                         setUpBoardHexes(tempBoard[r][c]);
                      }
                   }
@@ -282,19 +284,21 @@ public class KBPanel extends JPanel implements ActionListener{
          for (int r = 0; r < 10; r++) {
             for (int c = 0; c < 10; c++) {
                //CONDITION IF HEX IS ENABLED IN MATRIX.
-               if (r % 2 == 0) {
-                  board[r][c].setBounds((int) (x + c * 41.2), (int) y, 46, 46);
-               } else {
-                  board[r][c].setBounds((int) (x + 21 + c * 41.3), (int) y, 46, 46);
-               }
-               //if(board[r][c].tile)
-               if(!game.getCurrentPlayer().hasPlacedSettlements() && !game.getCurrentPlayer().isUsingActionTile() && !(game.getCurrentPlayer().getSettlementsRemaining() == 0)) {
-                  board[r][c].drawHighlight(g2, highlight, game.getCurrentPlayer().getCard());
-               }
-               board[r][c].drawSettlement(g2);
+               if(board[r][c] != null){
+                  if (r % 2 == 0) {
+                     board[r][c].setBounds((int) (x + c * 41.2), (int) y, 46, 46);
+                  } else {
+                     board[r][c].setBounds((int) (x + 21 + c * 41.3), (int) y, 46, 46);
+                  }
+                  //if(board[r][c].tile)
+                  if(!game.getCurrentPlayer().hasPlacedSettlements() && !game.getCurrentPlayer().isUsingActionTile() && !(game.getCurrentPlayer().getSettlementsRemaining() == 0)) {
+                     board[r][c].drawHighlight(g2, highlight, game.getCurrentPlayer().getCard());
+                  }
+                  board[r][c].drawSettlement(g2);
 
-               // this condition checks the file - JUST LEAVE IT HERE
-               if (fileCheckDot_Switch) drawDotChecker(r, c, board);
+                  // this condition checks the file - JUST LEAVE IT HERE
+                  if (fileCheckDot_Switch) drawDotChecker(r, c, board);
+               }
             }
             y += 35.5;
          }
@@ -307,6 +311,9 @@ public class KBPanel extends JPanel implements ActionListener{
     *             the console will print out the quad number, the row, and the column of the hex
     */
    public void setUpBoardHexes(HexagonButton temp) {
+      if(temp == null){
+         return;
+      }
       add(temp);
       // cl.show(Constants.PANEL_CONT, Constants.GAME_PANEL);
       temp.addActionListener(new ActionListener() {
@@ -317,7 +324,8 @@ public class KBPanel extends JPanel implements ActionListener{
 
             if (game.getCurrentPlayer().getNumSettlementsPlaced()!=3){
                System.out.println("player has started regular settlement");
-               setRegularAdjacent(game.getCurrentPlayer(), temp);
+
+               //setRegularAdjacent(game.getCurrentPlayer(), temp);
             }
 
             repaint();

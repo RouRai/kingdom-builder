@@ -18,7 +18,7 @@ public class HexagonButton extends JButton {
     private Polygon polygon;
     private Color color;
     private BufferedImage settlement;
-    private TerrainEnum tileType;
+    private Enum tileType;
     private int quadNum, row, col;
     private Boolean[] adjacents;
     public Boolean canClick;
@@ -40,7 +40,7 @@ public class HexagonButton extends JButton {
         setPreferredSize(size);
         setContentAreaFilled(false);
     }
-    public HexagonButton(int q, int r, int c, TerrainEnum type){
+    public HexagonButton(int q, int r, int c, Enum type){
         this();
         quadNum = q;
         row = r;
@@ -98,7 +98,7 @@ public class HexagonButton extends JButton {
     public BufferedImage getSettlementImage(){
         return settlement;
     }
-    public TerrainEnum getTileType(){
+    public Enum getTileType(){
         return tileType;
     }
     public void setSettlementImage(BufferedImage settle){
