@@ -40,6 +40,7 @@ public class KBPanel extends JPanel implements ActionListener{
    private QuadrantMaker b1;
    private Board board;
    private Game game;
+   private int currentAction = 0;
 
 
    public KBPanel (CardLayout cl){
@@ -236,7 +237,7 @@ public class KBPanel extends JPanel implements ActionListener{
       }
       //action tile selected - this part shows the hint when using the action tile
       if (game.getCurrentPlayer().isUsingActionTile()){
-         g2.drawImage(constantClass.getActionProcess()[1], 1135, 645, 150, 60, null);
+         g2.drawImage(constantClass.getActionProcess()[currentAction], 1135, 645, 150, 50, null);
       }
       //landscape card drawn by the current player
       g2.drawImage(game.getCurrentPlayer().getCard().image(), 1335, 530, 130, 200, null);
@@ -392,6 +393,7 @@ public class KBPanel extends JPanel implements ActionListener{
          public void actionPerformed(ActionEvent e) {
             System.out.println("Current Action Tile Button clicked -" + temp + "  ");
             game.getCurrentPlayer().setUsingActionTile(true);
+            currentAction = boardIDNumbers.get(temp.getquadNum());
             game.getCurrentPlayer().setPlacingRegSettlements(false);
             repaint();
          }
