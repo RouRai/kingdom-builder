@@ -4,6 +4,7 @@ import logic.tiles.Tile;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Scanner;
 import javax.imageio.ImageIO;
@@ -17,6 +18,7 @@ public class Constants {
         public static BufferedImage[] landCards = new BufferedImage [6];
         public static BufferedImage[] settlements = new BufferedImage[4];
         public static BufferedImage[] actionProcess = new BufferedImage[8];
+
     // Screen dimensions
         public static final int WIDTH = 1536;
         public static final int HEIGHT = 864;
@@ -35,13 +37,6 @@ public class Constants {
     // Gets Image from image folder
     //srgusdfgh
     public Constants(){
-        boards = new BufferedImage [8];
-        flippedBoards = new BufferedImage [16];
-        settlements = new BufferedImage [4];
-        landCards = new BufferedImage [6];
-        charCards = new BufferedImage [10];
-        actionTiles = new BufferedImage[8];
-        actionProcess = new BufferedImage[8];
         readImages();
     }
 
@@ -187,6 +182,7 @@ public class Constants {
         } catch (Exception ex5) {
             System.out.println("landscape error");
         }
+
     }
     public static BufferedImage getImage(String name) {
         try{
