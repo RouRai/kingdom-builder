@@ -31,6 +31,7 @@ public class KBPanel extends JPanel implements ActionListener{
    private HexagonButton[] currentActions;
    private ButtonQuadrant[] buttonBoards;
    private Graphics2D g2;
+   private ArrayList<Integer> boardIDNumbers;
    private ArrayList <BufferedImage> boardImages;
    private TerrainTile[][][] boardText;
    private CardLayout cardLay;
@@ -47,6 +48,7 @@ public class KBPanel extends JPanel implements ActionListener{
 
       buttonBoards = new ButtonQuadrant[4];
       boardImages = new ArrayList<>();
+      boardIDNumbers = new ArrayList<>();
       boardText = new TerrainTile [4][10][10];
       int [] boardNumbers = new int [4];
       for(int i = 0; i < 4; i++){
@@ -187,7 +189,7 @@ public class KBPanel extends JPanel implements ActionListener{
          for (int j = 0; j < 4; j++) {
             int x = 1230;
             int y = 35;
-            g2.drawImage(constantClass.getActionTiles()[j], x-25+j *68, y-5 + i * space_between_Players, 60, 60, null);
+            g2.drawImage(constantClass.getActionTiles()[boardIDNumbers.get(j)], x-25+j *68, y-5 + i * space_between_Players, 60, 60, null);
             if (i%2 ==0)
                g2.drawString("0", x+j *65,  y+80+i  * space_between_Players);
             else
@@ -220,16 +222,14 @@ public class KBPanel extends JPanel implements ActionListener{
       g2.setFont(new Font(fontStr, Font.PLAIN, 20));
       g2.setColor(Color.white);
       Set tiles = game.getCurrentPlayer().getActionTiles().keySet();
-      Iterator<ActionTile> iter = tiles.iterator();
       int i = 0;
-      while(iter.hasNext()) {
-         ActionTile temp = iter.next();
+      while(i<4) {
          if (i % 2== 0) {
-            g2.drawImage(constantClass.getActionTiles()[0], 1005+ i * 2, 515+ i * 75, 80, 85 , null);
+            g2.drawImage(constantClass.getActionTiles()[boardIDNumbers.get(i)], 1005+ i * 2, 515+ i * 75, 80, 85 , null);
             g2.drawString("0",980,560+ i * 75);
          }
          else{
-            g2.drawImage(constantClass.getActionTiles()[0], 959+ i *1, 515+ i * 75, 80, 85 , null);
+            g2.drawImage(constantClass.getActionTiles()[boardIDNumbers.get(i)], 959+ i *1, 515+ i * 75, 80, 85 , null);
             g2.drawString("0",1055,560+ i * 75);
          }
          i++;
@@ -460,11 +460,13 @@ public class KBPanel extends JPanel implements ActionListener{
       int rand = 0;
       do {
          rand = (int) (Math.random() * (2 * Constants.getBoards().length));
-      }while(Constants.getBoards()[rand % 8] == null);
+      } while(Constants.getBoards()[rand % 8] == null);
       int boardNum = rand % 8;
+      boardIDNumbers.add(boardNum);
       if(rand < Constants.getBoards().length){
          boardImages.add(Constants.getBoards()[boardNum]);
-      } else {
+      }
+      else {
          boardImages.add(Constants.getFlippedBoards()[boardNum]);
       }
       Constants.getBoards()[boardNum] = null;
