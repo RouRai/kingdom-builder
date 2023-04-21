@@ -2,7 +2,8 @@ package datastructures.gameDatastructures;
 
 import files.QuadrantMaker;
 import logic.constantFolder.DirectionEnum;
-import logic.constantFolder.TerrainEnum;
+import logic.tiles.ActionTile;
+import logic.tiles.CityTile;
 import logic.tiles.TerrainTile;
 
 import java.util.ArrayList;
@@ -17,16 +18,22 @@ import java.util.ArrayList;
  */
 public class BoardMatrix {
 
-    private final TerrainNode[][] boardMatrix;
+    private final TerrainNode[][] terrainBoardMatrix;
+    private final CityNode[][] cityBoardMatrix;
+    private final ActionNode[][] actionBoardMatrix;
 
     public BoardMatrix (String[] boardNames) {
-        boardMatrix = new TerrainNode[20][20];
+        terrainBoardMatrix = new TerrainNode[20][20];
+        cityBoardMatrix = new CityNode[20][20];
+        actionBoardMatrix = new ActionNode[20][20];
         setBoardNodes(boardNames);
         connectTerrainNodes();
     }
 
     public BoardMatrix (ArrayList<QuadrantMaker> terrainQuadrants) {
-        boardMatrix = new TerrainNode[20][20];
+        terrainBoardMatrix = new TerrainNode[20][20];
+        cityBoardMatrix = new CityNode[20][20];
+        actionBoardMatrix = new ActionNode[20][20];
         combineQuadrants(terrainQuadrants);
         connectTerrainNodes();
     }
@@ -35,8 +42,8 @@ public class BoardMatrix {
      * Returns the board matrix with all nodes connected.
      * @return boardMatrix
      */
-    public TerrainNode[][] getBoardMatrix() {
-        return boardMatrix;
+    public TerrainNode[][] getTerrainBoardMatrix() {
+        return terrainBoardMatrix;
     }
 
     /**
@@ -71,7 +78,7 @@ public class BoardMatrix {
      */
     private void setOneQuadrant (TerrainNode[][] quadrant, int startRow, int startColumn) {
         for(int row = startRow; row < (startRow + quadrant.length); row++) {
-            System.arraycopy(quadrant[row - startRow], 0, boardMatrix[row], startColumn, quadrant.length);
+            System.arraycopy(quadrant[row - startRow], 0, terrainBoardMatrix[row], startColumn, quadrant.length);
         }
     }
 
@@ -83,20 +90,61 @@ public class BoardMatrix {
         return nodeQuadrants;
     }
 
+    private ArrayList<CityNode[][]> getCityNodeMatrices (ArrayList<QuadrantMaker> quadrants) {
+        ArrayList<CityNode[][]> nodeQuadrants = new ArrayList<>();
+        for(QuadrantMaker quadrant : quadrants) {
+            nodeQuadrants.add(getCityNodeMatrix(quadrant.getCityTiles()));
+        }
+        return nodeQuadrants;
+    }
+
+    private ArrayList<ActionNode[][]> getActionNodeMatrices (ArrayList<QuadrantMaker> quadrants) {
+        ArrayList<ActionNode[][]> nodeQuadrants = new ArrayList<>();
+        for(QuadrantMaker quadrant : quadrants) {
+            nodeQuadrants.add(getActionNodeMatrix(quadrant.getActionTiles()));
+        }
+        return nodeQuadrants;
+    }
+
     private TerrainNode[][] getTerrainNodeMatrix (TerrainTile[][] terrainEnumMatrix) {
         TerrainNode[][] nodeMatrix = new TerrainNode[10][10];
         for (int row = 0; row < terrainEnumMatrix.length; row++) {
             for(int column = 0; column < terrainEnumMatrix[row].length; column++) {
-                if(terrainEnumMatrix[row][column] != null)
+                if(terrainEnumMatrix[row][column] != null) {
                     nodeMatrix[row][column] = new TerrainNode(terrainEnumMatrix[row][column].getType());
+                }
+            }
+        }
+        return nodeMatrix;
+    }
+
+    private CityNode[][] getCityNodeMatrix (CityTile[][] cityEnumMatrix) {
+        CityNode[][] nodeMatrix = new CityNode[10][10];
+        for (int row = 0; row < cityEnumMatrix.length; row++) {
+            for(int column = 0; column < cityEnumMatrix[row].length; column++) {
+                if (cityEnumMatrix[row][column] != null) {
+                    nodeMatrix[row][column] = new CityNode();
+                }
+            }
+        }
+        return nodeMatrix;
+    }
+
+    private ActionNode[][] getActionNodeMatrix (ActionTile[][] actionEnumMatrix) {
+        ActionNode[][] nodeMatrix = new ActionNode[10][10];
+        for (int row = 0; row < actionEnumMatrix.length; row++) {
+            for(int column = 0; column < actionEnumMatrix[row].length; column++) {
+                if(actionEnumMatrix[row][column] != null) {
+                    nodeMatrix[row][column] = new ActionNode(actionEnumMatrix[row][column].getType());
+                }
             }
         }
         return nodeMatrix;
     }
 
     private void connectTerrainNodes () {
-        for(int row = 0; row < boardMatrix.length; row++) {
-            for (int column = 0; column < boardMatrix[row].length; column++) {
+        for(int row = 0; row < terrainBoardMatrix.length; row++) {
+            for (int column = 0; column < terrainBoardMatrix[row].length; column++) {
                 doRowAssignment(row, column);
             }
         }
@@ -115,55 +163,55 @@ public class BoardMatrix {
 
     private void oddRowNodeAssignment (int row, int column) {
         if (coordinatesInBounds(row, column - 1)) {
-            if(boardMatrix[row][column - 1] != null && boardMatrix[row][column] != null)
-                boardMatrix[row][column].getAdjacentNodes().put(DirectionEnum.LEFT, boardMatrix[row][column - 1]);
+            if(terrainBoardMatrix[row][column - 1] != null && terrainBoardMatrix[row][column] != null)
+                terrainBoardMatrix[row][column].getAdjacentNodes().put(DirectionEnum.LEFT, terrainBoardMatrix[row][column - 1]);
         }
         if (coordinatesInBounds(row, column + 1)) {
-            if(boardMatrix[row][column + 1] != null && boardMatrix[row][column] != null)
-                boardMatrix[row][column].getAdjacentNodes().put(DirectionEnum.RIGHT, boardMatrix[row][column + 1]);
+            if(terrainBoardMatrix[row][column + 1] != null && terrainBoardMatrix[row][column] != null)
+                terrainBoardMatrix[row][column].getAdjacentNodes().put(DirectionEnum.RIGHT, terrainBoardMatrix[row][column + 1]);
         }
         if (coordinatesInBounds(row - 1, column)) {
-            if(boardMatrix[row - 1][column] != null && boardMatrix[row][column] != null)
-                boardMatrix[row][column].getAdjacentNodes().put(DirectionEnum.TOP_LEFT, boardMatrix[row - 1][column]);
+            if(terrainBoardMatrix[row - 1][column] != null && terrainBoardMatrix[row][column] != null)
+                terrainBoardMatrix[row][column].getAdjacentNodes().put(DirectionEnum.TOP_LEFT, terrainBoardMatrix[row - 1][column]);
         }
         if (coordinatesInBounds(row + 1, column)) {
-            if(boardMatrix[row + 1][column] != null && boardMatrix[row][column] != null)
-                boardMatrix[row][column].getAdjacentNodes().put(DirectionEnum.BOTTOM_LEFT, boardMatrix[row + 1][column]);
+            if(terrainBoardMatrix[row + 1][column] != null && terrainBoardMatrix[row][column] != null)
+                terrainBoardMatrix[row][column].getAdjacentNodes().put(DirectionEnum.BOTTOM_LEFT, terrainBoardMatrix[row + 1][column]);
         }
         if (coordinatesInBounds(row - 1, column + 1)) {
-            if(boardMatrix[row - 1][column + 1] != null && boardMatrix[row][column] != null)
-                boardMatrix[row][column].getAdjacentNodes().put(DirectionEnum.TOP_RIGHT, boardMatrix[row - 1][column + 1]);
+            if(terrainBoardMatrix[row - 1][column + 1] != null && terrainBoardMatrix[row][column] != null)
+                terrainBoardMatrix[row][column].getAdjacentNodes().put(DirectionEnum.TOP_RIGHT, terrainBoardMatrix[row - 1][column + 1]);
         }
         if (coordinatesInBounds(row + 1, column + 1)) {
-            if(boardMatrix[row + 1][column + 1] != null && boardMatrix[row][column] != null)
-                boardMatrix[row][column].getAdjacentNodes().put(DirectionEnum.BOTTOM_RIGHT, boardMatrix[row + 1][column + 1]);
+            if(terrainBoardMatrix[row + 1][column + 1] != null && terrainBoardMatrix[row][column] != null)
+                terrainBoardMatrix[row][column].getAdjacentNodes().put(DirectionEnum.BOTTOM_RIGHT, terrainBoardMatrix[row + 1][column + 1]);
         }
     }
 
     private void evenRowNodeAssignment (int row, int column) {
         if (coordinatesInBounds(row, column - 1)) {
-            if(boardMatrix[row][column - 1] != null && boardMatrix[row][column] != null)
-                boardMatrix[row][column].getAdjacentNodes().put(DirectionEnum.LEFT, boardMatrix[row][column - 1]);
+            if(terrainBoardMatrix[row][column - 1] != null && terrainBoardMatrix[row][column] != null)
+                terrainBoardMatrix[row][column].getAdjacentNodes().put(DirectionEnum.LEFT, terrainBoardMatrix[row][column - 1]);
         }
         if (coordinatesInBounds(row, column + 1)) {
-            if(boardMatrix[row][column + 1] != null && boardMatrix[row][column] != null)
-                boardMatrix[row][column].getAdjacentNodes().put(DirectionEnum.RIGHT, boardMatrix[row][column + 1]);
+            if(terrainBoardMatrix[row][column + 1] != null && terrainBoardMatrix[row][column] != null)
+                terrainBoardMatrix[row][column].getAdjacentNodes().put(DirectionEnum.RIGHT, terrainBoardMatrix[row][column + 1]);
         }
         if (coordinatesInBounds(row - 1, column)) {
-            if(boardMatrix[row - 1][column] != null && boardMatrix[row][column] != null)
-                boardMatrix[row][column].getAdjacentNodes().put(DirectionEnum.TOP_RIGHT, boardMatrix[row - 1][column]);
+            if(terrainBoardMatrix[row - 1][column] != null && terrainBoardMatrix[row][column] != null)
+                terrainBoardMatrix[row][column].getAdjacentNodes().put(DirectionEnum.TOP_RIGHT, terrainBoardMatrix[row - 1][column]);
         }
         if (coordinatesInBounds(row + 1, column)) {
-            if(boardMatrix[row + 1][column] != null && boardMatrix[row][column] != null)
-                boardMatrix[row][column].getAdjacentNodes().put(DirectionEnum.BOTTOM_RIGHT, boardMatrix[row + 1][column]);
+            if(terrainBoardMatrix[row + 1][column] != null && terrainBoardMatrix[row][column] != null)
+                terrainBoardMatrix[row][column].getAdjacentNodes().put(DirectionEnum.BOTTOM_RIGHT, terrainBoardMatrix[row + 1][column]);
         }
         if (coordinatesInBounds(row + 1, column - 1)) {
-            if(boardMatrix[row + 1][column - 1] != null && boardMatrix[row][column] != null)
-            boardMatrix[row][column].getAdjacentNodes().put(DirectionEnum.BOTTOM_LEFT, boardMatrix[row + 1][column - 1]);
+            if(terrainBoardMatrix[row + 1][column - 1] != null && terrainBoardMatrix[row][column] != null)
+            terrainBoardMatrix[row][column].getAdjacentNodes().put(DirectionEnum.BOTTOM_LEFT, terrainBoardMatrix[row + 1][column - 1]);
         }
         if (coordinatesInBounds(row - 1, column - 1)) {
-            if(boardMatrix[row - 1][column - 1] != null && boardMatrix[row][column] != null)
-                boardMatrix[row][column].getAdjacentNodes().put(DirectionEnum.TOP_LEFT, boardMatrix[row - 1][column - 1]);
+            if(terrainBoardMatrix[row - 1][column - 1] != null && terrainBoardMatrix[row][column] != null)
+                terrainBoardMatrix[row][column].getAdjacentNodes().put(DirectionEnum.TOP_LEFT, terrainBoardMatrix[row - 1][column - 1]);
         }
     }
 

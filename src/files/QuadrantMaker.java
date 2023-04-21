@@ -6,9 +6,10 @@ import logic.constantFolder.TerrainEnum;
 import logic.tiles.ActionTile;
 import logic.tiles.CityTile;
 import logic.tiles.TerrainTile;
+import logic.tiles.Tile;
+
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.Arrays;
 import java.util.Objects;
 import java.util.Scanner;
 
@@ -43,7 +44,7 @@ public class QuadrantMaker {
          String fileURL = Objects.requireNonNull(getClass().getResource("/files/textFiles/" + boardNames[boardNumber % 8] + "")).getFile();
          File myObj = new File(fileURL);
          Scanner myReader = new Scanner(myObj);
-         createTerrainMatrix(terrainTiles, myReader);
+         createTerrainMatrix(myReader);
          if (boardNumber >= Constants.getBoards().length) {
             flipTerrainMatrix();
          }
@@ -57,10 +58,9 @@ public class QuadrantMaker {
 
    /**
     * Creates the TerrainEnum Matrix given an empty TerrainEnum matrix and a Scanner to be used.
-    * @param terrainMatrix The empty matrix to be modified to store the board.
     * @param fileReader The Scanner object to be used in order to read the file.
     */
-   private void createTerrainMatrix (TerrainTile[][] terrainMatrix, Scanner fileReader) {
+   private void createTerrainMatrix (Scanner fileReader) {
       int rows = 0;
       while (fileReader.hasNext()) {
          String data = fileReader.nextLine();
@@ -78,33 +78,21 @@ public class QuadrantMaker {
     * Flips the enumTiles matrix instance variable for flipped boards.
     */
    private void flipTerrainMatrix(){
-      TerrainTile[][] flippedBoard = new TerrainTile[10][10];
-      for (int row = flippedBoard.length - 1; row > -1; row--) {
-         for (int column = flippedBoard[row].length - 1; column > -1; column--) {
-            flippedBoard[row][column] = terrainTiles[flippedBoard.length - row - 1][flippedBoard[row].length - column - 1];
-         }
-      }
-      terrainTiles = flippedBoard;
+      TerrainTile[][] flippedTerrainTiles = new TerrainTile[10][10];
+      CityTile[][] flippedCityTiles = new CityTile[10][10];
+      ActionTile[][] flippedActionTiles = new ActionTile[10][10];
+      terrainTiles = (TerrainTile[][]) actualFlip(terrainTiles, flippedTerrainTiles);
+      cityTiles = (CityTile[][]) actualFlip(cityTiles, flippedCityTiles);
+      actionTiles = (ActionTile[][]) actualFlip(actionTiles, flippedActionTiles);
    }
 
-   /**
-    * Returns the corresponding TerrainEnum to a symbol.
-    * @param symbol The symbol given in a text file.
-    * @return TerrainEnum that corresponds to the symbol.
-    */
-   private Enum<?> getTerrainTypeFromSymbol (String symbol) {
-      return switch (symbol) {
-         case "d" -> TerrainEnum.DESERT;
-         case "g" -> TerrainEnum.GRASS;
-         case "f" -> TerrainEnum.FOREST;
-         case "fl" -> TerrainEnum.FLOWER;
-         case "w" -> TerrainEnum.WATER;
-         case "v" -> TerrainEnum.CANYON;
-         case "m" -> TerrainEnum.MOUNTAIN;
-         case "c" -> TerrainEnum.CITY;
-         case "ac" -> getActionTypeFromSymbol();
-         default -> null;
-      };
+   private Tile<?>[][] actualFlip (Tile<?>[][] source, Tile<?>[][] destination) {
+      for (int row = destination.length - 1; row > -1; row--) {
+         for (int column = destination[row].length - 1; column > -1; column--) {
+            destination[row][column] = source[destination.length - row - 1][destination[row].length - column - 1];
+         }
+      }
+      return destination;
    }
 
    private void setTypeFromSymbol (String symbol, int row, int column) {
@@ -117,21 +105,8 @@ public class QuadrantMaker {
          case "v" -> terrainTiles[row][column] = new TerrainTile(TerrainEnum.CANYON);
          case "m" -> terrainTiles[row][column] = new TerrainTile(TerrainEnum.MOUNTAIN);
          case "c" -> cityTiles[row][column] = new CityTile();
-         case "a" -> setActionTypeFromSymbol(row, column);
-      };
-   }
-   private ActionEnum getActionTypeFromSymbol(){
-      return switch (boardNumber % 8) {
-         case 0 -> ActionEnum.OASIS;
-         case 1 -> ActionEnum.HARBOR;
-         case 2 -> ActionEnum.FARM;
-         case 3 -> ActionEnum.PADDOCK;
-         case 4 -> ActionEnum.BARN;
-         case 5 -> ActionEnum.ORACLE;
-         case 6 -> ActionEnum.TOWER;
-         case 7 -> ActionEnum.TAVERN;
-         default -> null;
-      };
+         case "ac" -> setActionTypeFromSymbol(row, column);
+      }
    }
 
    private void setActionTypeFromSymbol (int row, int column) {
@@ -144,7 +119,7 @@ public class QuadrantMaker {
          case 5 -> actionTiles[row][column] = new ActionTile(ActionEnum.ORACLE);
          case 6 -> actionTiles[row][column] = new ActionTile(ActionEnum.TOWER);
          case 7 -> actionTiles[row][column] = new ActionTile(ActionEnum.TAVERN);
-      };
+      }
    }
 
    public TerrainTile[][] getTerrainTiles () {
@@ -158,5 +133,13 @@ public class QuadrantMaker {
 
    public String[][] getTiles() {
       return tiles;
+   }
+
+   public ActionTile[][] getActionTiles() {
+      return actionTiles;
+   }
+
+   public CityTile[][] getCityTiles() {
+      return cityTiles;
    }
 }
