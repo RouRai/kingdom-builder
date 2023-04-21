@@ -139,7 +139,6 @@ public class KBPanel extends JPanel implements ActionListener{
 
          // OTHER STUFF
                setUpMiscellaneous ();
-               legalPlaces = game.getLegalPlaces();
    }
 
    /**
@@ -305,7 +304,10 @@ public class KBPanel extends JPanel implements ActionListener{
                      tempc = c + 10;
                   }
                   //if(board[r][c].tile)
-                  if(legalPlaces.contains(game.getBoard().getBoard().getBoardMatrix()[tempr][tempc])) {
+                   while(legalPlaces == null && !game.getCurrentPlayer().hasPlacedSettlements()){
+                       legalPlaces = game.getLegalPlaces();
+                   }
+                  if(legalPlaces.contains(game.getBoard().getBoard().getTerrainBoardMatrix()[tempr][tempc]) && !game.getCurrentPlayer().hasPlacedSettlements()) {
                      board[r][c].drawHighlight(g2, highlight, game.getCurrentPlayer().getCard());
                   }
                   board[r][c].drawSettlement(g2);
@@ -335,14 +337,24 @@ public class KBPanel extends JPanel implements ActionListener{
          @Override
          public void actionPerformed(ActionEvent e) {
             System.out.println("Hex Button clicked " + temp + "  ");
-            game.checkRegularSettlementPlacement(game.getCurrentPlayer(), temp);
+             int quad = temp.getquadNum();
+             int tempr = temp.getRow();
+             int tempc = temp.getCol();
+             if(quad == 2 || quad == 3){
+                 tempr = temp.getRow() + 10;
+             }
+             if(quad == 1 || quad == 3){
+                 tempc = temp.getCol() + 10;
+             }
+            if(legalPlaces.contains(game.getBoard().getBoard().getTerrainBoardMatrix()[tempr][tempc]))
+                game.checkRegularSettlementPlacement(game.getCurrentPlayer(), temp);
 
             if (game.getCurrentPlayer().getNumSettlementsPlaced()!=3){
                System.out.println("player has started regular settlement");
                //game.checkRegularSettlementPlacement(game.getCurrentPlayer(), , game.getCurrentPlayer().getCard());
                //setRegularAdjacent(game.getCurrentPlayer(), temp);
             }
-
+            legalPlaces = game.getLegalPlaces();
             repaint();
          }
       });
@@ -431,6 +443,7 @@ public class KBPanel extends JPanel implements ActionListener{
                   cardLay.show(Constants.PANEL_CONT, Constants.END_PANEL);
             }
             game.endTurn();
+            legalPlaces = game.getLegalPlaces();
          }
       }
       repaint();

@@ -6,6 +6,7 @@ public class Settlement {
 
     private final int color;
     private final int row, column, quadrantNumber;
+    private int trueRow, trueColumn;
     private TerrainNode location;
 
     public Settlement (int color, int row, int column, int quadrantNumber) {
@@ -13,6 +14,14 @@ public class Settlement {
         this.row = row;
         this.column = column;
         this.quadrantNumber = quadrantNumber;
+        trueRow = row;
+        trueColumn = column;
+        if(quadrantNumber == 2 || quadrantNumber == 3){
+            trueRow = row +10;
+        }
+        if(quadrantNumber == 3 || quadrantNumber == 1){
+            trueColumn = column + 10;
+        }
     }
 
     public int getColor() {
@@ -33,6 +42,12 @@ public class Settlement {
 
     public int getColumn() {
         return column;
+    }
+    public int getTrueRow(){
+        return trueRow;
+    }
+    public int getTrueColumn(){
+        return  trueColumn;
     }
 
     public int getQuadrantNumber() {

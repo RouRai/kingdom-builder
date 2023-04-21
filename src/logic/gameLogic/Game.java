@@ -72,17 +72,21 @@ public class Game {
     * @param button
     */
    public void checkRegularSettlementPlacement (Player player, HexagonButton button) {
+      if(player.hasPlacedSettlements()){
+         return;
+      }
+
       if (player.isUsingActionTile()) {
          checkActionTilePlacement(player,button);
          return;
       }
       //regular
-         if (player.hasPlacedSettlements() || button.getSettlementImage() != null || player.getSettlementsRemaining() == 0 || !button.getTileType().equals(player.getCard().type()))
-            return;
-         if (button.canClick) {
+         /*if (player.hasPlacedSettlements() || button.getSettlementImage() != null || player.getSettlementsRemaining() == 0 || !button.getTileType().equals(player.getCard().type()))
+            return;*/
+         /*if (button.canClick) {
             System.out.println("-------------can click");
             return;
-         }
+         }*/
 
          //we set the boolean is placing reg settlement true b/c we know its true now
          if(!player.isPlacingRegSettlements())
@@ -91,16 +95,14 @@ public class Game {
          //when the current player have already settled somewhere
          if (player.getNumSettlementsPlaced()<3){
             //if (button.canClick)
+            button.setSettlementImage(constantClass.getSettlements()[player.getPlayerNumber() - 1]);
+            Settlement temps = player.getSettlement(button.getquadNum(), button.getRow(), button.getCol());
+            temps.setLocation(board.getBoard().getTerrainBoardMatrix()[temps.getTrueRow()][temps.getTrueColumn()]);
+            button.setSettlement(temps);
+            player.setNumSettlementsPlaced(player.getNumSettlementsPlaced() + 1);
          }
-         else {
-
-         }
-         player.setNumSettlementsPlaced(player.getNumSettlementsPlaced() + 1);
 
       //giving the tile / button TO the current player's settlement
-         button.setSettlementImage(constantClass.getSettlements()[player.getPlayerNumber() - 1]);
-         Settlement temps = player.getSettlement(button.getquadNum(), button.getRow(), button.getCol());
-         button.setSettlement(temps);
 
       //player regular settlement is over
       if(player.getNumSettlementsPlaced() == 3) {

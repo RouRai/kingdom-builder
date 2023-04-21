@@ -37,7 +37,6 @@ public class Board {
      * @return ArrayList of <code>TerrainNodes</code> that this specific player can use.
      */
     public ArrayList<TerrainNode> regularCanUseTiles(Player player, TerrainCard currentCard) {
-        if (player.hasPlacedSettlements()) return null;
         ArrayList<TerrainNode> validNodes = new ArrayList<>();
         for (TerrainNode[] row : board.getTerrainBoardMatrix()) {
             for (TerrainNode node : row) {
