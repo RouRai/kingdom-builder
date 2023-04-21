@@ -1,5 +1,8 @@
-package datastructures.gameDatastructures;
+package datastructures.gameDatastructures.boardMatrices;
 
+import datastructures.gameDatastructures.boardNodes.ActionNode;
+import datastructures.gameDatastructures.boardNodes.CityNode;
+import datastructures.gameDatastructures.boardNodes.TerrainNode;
 import files.QuadrantMaker;
 import logic.constantFolder.DirectionEnum;
 import logic.tiles.ActionTile;
@@ -207,7 +210,7 @@ public class BoardMatrix {
         }
         if (coordinatesInBounds(row + 1, column - 1)) {
             if(terrainBoardMatrix[row + 1][column - 1] != null && terrainBoardMatrix[row][column] != null)
-            terrainBoardMatrix[row][column].getAdjacentNodes().put(DirectionEnum.BOTTOM_LEFT, terrainBoardMatrix[row + 1][column - 1]);
+                terrainBoardMatrix[row][column].getAdjacentNodes().put(DirectionEnum.BOTTOM_LEFT, terrainBoardMatrix[row + 1][column - 1]);
         }
         if (coordinatesInBounds(row - 1, column - 1)) {
             if(terrainBoardMatrix[row - 1][column - 1] != null && terrainBoardMatrix[row][column] != null)

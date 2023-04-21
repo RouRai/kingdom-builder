@@ -1,6 +1,6 @@
 package logic.placeables;
 
-import datastructures.gameDatastructures.TerrainNode;
+import datastructures.gameDatastructures.boardNodes.TerrainNode;
 
 public class Settlement {
 

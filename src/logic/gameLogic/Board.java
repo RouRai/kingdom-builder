@@ -1,7 +1,7 @@
 package logic.gameLogic;
 
-import datastructures.gameDatastructures.BoardMatrix;
-import datastructures.gameDatastructures.TerrainNode;
+import datastructures.gameDatastructures.boardMatrices.BoardMatrix;
+import datastructures.gameDatastructures.boardNodes.TerrainNode;
 import files.QuadrantMaker;
 import logic.cards.TerrainCard;
 import logic.constantFolder.TerrainEnum;

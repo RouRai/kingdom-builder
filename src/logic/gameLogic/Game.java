@@ -1,7 +1,7 @@
 package logic.gameLogic;
 
 import custom.HexagonButton;
-import datastructures.gameDatastructures.TerrainNode;
+import datastructures.gameDatastructures.boardNodes.TerrainNode;
 import files.QuadrantMaker;
 import logic.cards.*;
 import logic.constantFolder.Constants;

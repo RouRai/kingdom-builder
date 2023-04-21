@@ -1,4 +1,4 @@
-package datastructures.gameDatastructures;
+package datastructures.gameDatastructures.boardNodes;
 
 import datastructures.baseDatastructures.Node;
 import logic.constantFolder.ActionEnum;
