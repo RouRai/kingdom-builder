@@ -3,17 +3,14 @@ package graphics.panels;
 import custom.ButtonQuadrant;
 import custom.HexagonButton;
 import custom.TranslucentButton;
-import datastructures.gameDatastructures.BoardMatrix;
 import datastructures.gameDatastructures.TerrainNode;
 import logic.constantFolder.Constants;
 import files.QuadrantMaker;
-import logic.constantFolder.TerrainEnum;
 import logic.gameLogic.Board;
 import logic.gameLogic.Game;
 import logic.gameLogic.Player;
 import logic.tiles.ActionTile;
 import logic.tiles.TerrainTile;
-
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.event.*;
@@ -43,102 +40,79 @@ public class KBPanel extends JPanel implements ActionListener{
    private Board board;
    private Game game;
 
-   private Boolean fileCheckDot_Switch = false;
-
 
    public KBPanel (CardLayout cl){
+      cardLay = cl;
+      constantClass = new Constants();
 
-      //1 - card layout
-            cardLay = cl;
-            constantClass = new Constants();
+      buttonBoards = new ButtonQuadrant[4];
+      boardImages = new ArrayList<>();
+      boardText = new TerrainTile [4][10][10];
+      int [] boardNumbers = new int [4];
+      for(int i = 0; i < 4; i++){
+         boardNumbers[i] = setUpBoardImages();
+         setUpBoardValues(boardText, boardNumbers[i], i);
+      }
 
-      /*2- Game Essentials
-            players = new ArrayList<>();
-            terrainDeck = new TerrainDeck();
-            terrainCards = terrainDeck.getTerrainDeck();
-            for(int i = 0; i < 4; i++)
-               players.add(new Player(i + 1));
-               */
-       
+      setUpActionTileHexagonButtons();
+      int[] boardStartX = {10,423,10,423};
+      int[] boardStartY = {6,6,365,365};
+      assignToAllButtonQuadrants(boardStartX, boardStartY);
 
-      //3 - Board
-            buttonBoards = new ButtonQuadrant[4];
-            boardImages = new ArrayList<>();
-            boardText = new TerrainTile [4][10][10];
-            // generating random boards
-            int [] boardNumbers = new int [4];
-            ArrayList<QuadrantMaker> boardMaker = new ArrayList<>();
-            for(int i = 0; i < 4; i++){
-               TerrainTile [][] temp = new TerrainTile[10][10];
-               int rand = 0;
-               do {
-                  rand = (int) (Math.random() * (2 * Constants.getBoards().length));
-                  boardNumbers[i] = rand;
-               }while(Constants.getBoards()[rand % 8] == null);
-               boardMaker.add(new QuadrantMaker(rand));
-               int boardNum = rand % 8;
-               if(rand < Constants.getBoards().length){
-                  boardImages.add(Constants.getBoards()[boardNum]);
-                  Constants.getBoards()[boardNum] = null;
-                  Constants.getFlippedBoards()[boardNum] = null;
-                  temp = boardMaker.get(i).getTerrainTiles();
-               } else {
-                  boardImages.add(Constants.getFlippedBoards()[boardNum]);
-                  Constants.getBoards()[boardNum] = null;
-                  Constants.getFlippedBoards()[boardNum] = null;
-                  temp = boardMaker.get(i).getTerrainTiles();
-               }
-               boardText[i] = temp;
-            }
+      menuButton = new TranslucentButton();
+      add(menuButton);
+      menuButton.addActionListener(this);
 
-      //4 Buttons
-         //1 - Current Player's Action Tiles Buttons
-               currentActions = new HexagonButton[4];
-               for(int i = 0; i < 4; i++){
-                  HexagonButton temp = new HexagonButton(i,-1,-1,null);
-                  setUpCurrentAction(temp);
-                  currentActions[i] = temp;
-               }
-         //2 - Hexagon Buttons
-               int[] boardStartX = {10,423,10,423};
-               int[] boardStartY = {6,6,365,365};
-               for (int q = 0; q < 4; q++) {
-                  HexagonButton[][] tempBoard = new HexagonButton[10][10];
-                  for (int r = 0; r < 10; r++) {
-                     for (int c = 0; c < 10; c++) {
-                        if(boardText[q][r][c] != null){
-                           tempBoard[r][c] = new HexagonButton(q, r, c, boardText[q][r][c].getType());
-                        }
-                        setUpBoardHexes(tempBoard[r][c]);
-                     }
-                  }
-                  buttonBoards[q] = new ButtonQuadrant(q,tempBoard, boardStartX[q],boardStartY[q]);
-               }
-         //3 - Menu Buttons
-            menuButton = new TranslucentButton();
-            add(menuButton);
-            menuButton.addActionListener(this);
+      finishButton = new TranslucentButton();
+      add(finishButton);
+      finishButton.addActionListener(this);
 
-         //4 - Finish Button
-            finishButton = new TranslucentButton();
-            add(finishButton);
-            finishButton.addActionListener(this);
+      setUpObjectiveButtons();
 
-         //5 - Objective Buttons
-            objectiveCardImages = new BufferedImage[3];
-            objectivesButton = new TranslucentButton[3];
-            for(int i = 0; i < 3; i++){
-               int rand = (int) (Math.random() * (Constants.getCharCards().length));
-               objectiveCardImages[i] = Constants.getCharCards()[rand];
-               objectivesButton[i] = new TranslucentButton(i);
-               setUpObjective(objectivesButton[i]);
-            }
+      game = new Game (boardNumbers);
 
-         //6 - GAME
-               game = new Game (boardNumbers);
+      setUpMiscellaneous ();
+   }
 
-         // OTHER STUFF
-               setUpMiscellaneous ();
+   /**
+    * Sets up both the images and buttons for the objective buttons
+    */
+   private void setUpObjectiveButtons() {
+      objectiveCardImages = new BufferedImage[3];
+      objectivesButton = new TranslucentButton[3];
+      for(int i = 0; i < 3; i++){
+         int rand = 0;
+         do {
+            rand = (int) (Math.random() * (Constants.getCharCards().length));
+         }while(Constants.getCharCards()[rand] == null);
+         objectiveCardImages[i] = Constants.getCharCards()[rand];
+         Constants.getCharCards()[rand] = null;
+         objectivesButton[i] = new TranslucentButton(i);
+         setUpObjective(objectivesButton[i]);
+      }
+   }
+
+   /**
+    * Sets up the <code>HexagonButton</code> that let the player use actionTiles
+    */
+   private void setUpActionTileHexagonButtons() {
+      currentActions = new HexagonButton[4];
+      for(int i = 0; i < 4; i++){
+         HexagonButton temp = new HexagonButton(i,-1,-1,null);
+         setUpCurrentAction(temp);
+         currentActions[i] = temp;
+      }
+   }
+
+   /**
+    * Sets up the board values in <code>TerrainNode</code>
+    * @param boardText Where the values for the boards will be set
+    * @param boardNumber board number out of 8
+    * @param i index
+    */
+   private void setUpBoardValues(TerrainTile[][][] boardText, int boardNumber, int i) {
+      QuadrantMaker temp = new QuadrantMaker(boardNumber);
+      boardText[i] = temp.getTerrainTiles();
    }
 
    /**
@@ -313,7 +287,6 @@ public class KBPanel extends JPanel implements ActionListener{
                   board[r][c].drawSettlement(g2);
 
                   // this condition checks the file - JUST LEAVE IT HERE
-                  if (fileCheckDot_Switch) drawDotChecker(r, c, board);
                }
             }
             y += 35.5;
@@ -447,6 +420,56 @@ public class KBPanel extends JPanel implements ActionListener{
          }
       }
       repaint();
+   }
+
+   /**
+    * Assigns the <code>HexagonButton</code> for a single quadrant
+    * @param quadrantButtons Empty <code>HexagonButton</code> matrix to assign buttons to the quadrant
+    * @param quadrantNumber Number for quadrant
+    */
+   private void assignButtonsToQuadrant(HexagonButton[][] quadrantButtons, int quadrantNumber){
+      for (int r = 0; r < 10; r++) {
+         for (int c = 0; c < 10; c++) {
+            if(boardText[quadrantNumber][r][c] != null){
+               quadrantButtons[r][c] = new HexagonButton(quadrantNumber, r, c, boardText[quadrantNumber][r][c].getType());
+            }
+            setUpBoardHexes(quadrantButtons[r][c]);
+         }
+      }
+   }
+
+   /**
+    * Assigns the <code>HexagonButton</code> for all quadrants
+    * @param boardStartX Array of the starting x-positions for all quadrants
+    * @param boardStartY Array of the starting y-positions for all quadrants
+    */
+
+   private void assignToAllButtonQuadrants(int[] boardStartX, int[] boardStartY){
+      for (int q = 0; q < 4; q++) {
+         HexagonButton[][] tempBoard = new HexagonButton[10][10];
+         assignButtonsToQuadrant(tempBoard, q);
+         buttonBoards[q] = new ButtonQuadrant(q,tempBoard, boardStartX[q],boardStartY[q]);
+      }
+   }
+
+   /**
+    * Sets up the images for a board
+    * @returns the board number out of 16 to set up the values of the board
+    */
+   private int setUpBoardImages(){
+      int rand = 0;
+      do {
+         rand = (int) (Math.random() * (2 * Constants.getBoards().length));
+      }while(Constants.getBoards()[rand % 8] == null);
+      int boardNum = rand % 8;
+      if(rand < Constants.getBoards().length){
+         boardImages.add(Constants.getBoards()[boardNum]);
+      } else {
+         boardImages.add(Constants.getFlippedBoards()[boardNum]);
+      }
+      Constants.getBoards()[boardNum] = null;
+      Constants.getFlippedBoards()[boardNum] = null;
+      return rand;
    }
 
    /**
