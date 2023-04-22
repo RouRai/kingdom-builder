@@ -25,7 +25,7 @@ public class KBPanel extends JPanel implements ActionListener{
 
    private BufferedImage background, highlight;
    private ArrayList<TerrainNode> legalPlaces;
-   private TranslucentButton menuButton, finishButton;
+   private TranslucentButton menuButton, finishButton, endGameScreen;
    private TranslucentButton[] objectivesButton;
    private BufferedImage [] objectiveCardImages;
    private HexagonButton[] currentActions;
@@ -69,6 +69,10 @@ public class KBPanel extends JPanel implements ActionListener{
       finishButton = new TranslucentButton();
       add(finishButton);
       finishButton.addActionListener(this);
+
+      endGameScreen = new TranslucentButton();
+      add(endGameScreen);
+      endGameScreen.addActionListener(this);
 
       setUpObjectiveButtons();
 
@@ -142,6 +146,7 @@ public class KBPanel extends JPanel implements ActionListener{
       //Functionality buttons
       menuButton.setBounds(785, 770, 70, 65);
       finishButton.setBounds(1310, 745, 180, 65);
+      endGameScreen.setBounds(1100, 745, 90, 65);
       for(int p = 0; p < 3; p++){
          objectivesButton[p].setBounds(330 + p * 150, 735, 120, 100);
       }
@@ -286,8 +291,6 @@ public class KBPanel extends JPanel implements ActionListener{
                      board[r][c].drawHighlight(g2, highlight, game.getCurrentPlayer().getCard());
                   }
                   board[r][c].drawSettlement(g2);
-
-                  // this condition checks the file - JUST LEAVE IT HERE
                }
             }
             y += 35.5;
@@ -408,9 +411,10 @@ public class KBPanel extends JPanel implements ActionListener{
     */
    @Override
    public void actionPerformed(ActionEvent e) {
-      if(e.getSource().equals(menuButton)){
+      if(e.getSource().equals(menuButton))
          cardLay.show(Constants.PANEL_CONT, Constants.MENU_PANEL);
-      } else if(e.getSource().equals(finishButton)){
+
+      else if(e.getSource().equals(finishButton)){
          if(game.canEndTurn()) {
             if (game.getCurrentPlayer().getPlayerNumber() == 4) {
                //make sure to check this later
@@ -420,6 +424,9 @@ public class KBPanel extends JPanel implements ActionListener{
             game.endTurn();
             legalPlaces = game.getLegalPlaces();
          }
+      }
+      else if(e.getSource().equals(endGameScreen)){
+         cardLay.show(Constants.PANEL_CONT, Constants.END_PANEL);
       }
       repaint();
    }
