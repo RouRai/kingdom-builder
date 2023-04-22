@@ -1,6 +1,5 @@
 package custom;
 
-import java.awt.image.BufferedImage;
 
 /**
  * This class functions as a Graphics version of a game board holder of: hex buttons and the location attributes
@@ -8,22 +7,19 @@ import java.awt.image.BufferedImage;
  */
 
 public class ButtonQuadrant {
-   private HexagonButton[][] board;
-   private String[][] boardText;
+   private final HexagonButton[][] board;
    public int quadNumber;
    public double startX, startY;
-   public BufferedImage image;
+
 
    public ButtonQuadrant(int id, HexagonButton[][] b, int x, int y) {
-      board = new HexagonButton[10][10];
+      //board = new HexagonButton[10][10];
       quadNumber = id;
       board = b;
       startX = x;
       startY = y;
       for (int r = 0; r < 10; r++) {
-         for (int co = 0; co < 10; co++) {
-            board[r][co] = b[r][co];
-         }
+         System.arraycopy(b[r], 0, board[r], 0, 10);
       }
    }
 

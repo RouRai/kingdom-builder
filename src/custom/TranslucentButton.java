@@ -1,11 +1,8 @@
 package custom;
 
-import javax.swing.*;
 import javax.swing.BorderFactory;
 
 import javax.swing.JButton;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class TranslucentButton extends JButton {
 
@@ -14,7 +11,6 @@ public class TranslucentButton extends JButton {
       int ID;
       /**
        * only for Start Game Button
-       * @param
        */
       public TranslucentButton (){
          setBorder(BorderFactory.createBevelBorder(10));
@@ -30,9 +26,6 @@ public class TranslucentButton extends JButton {
          setContentAreaFilled(bool);
          setOpaque(bool);
          ID = id;
-      }
-      public int getID(){
-         return ID;
       }
 
    @Override

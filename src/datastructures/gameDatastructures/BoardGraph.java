@@ -2,7 +2,6 @@ package datastructures.gameDatastructures;
 
 import datastructures.baseDatastructures.Graph;
 import datastructures.baseDatastructures.Node;
-import logic.constantFolder.TerrainEnum;
 import logic.gameLogic.Board;
 
 import java.io.File;

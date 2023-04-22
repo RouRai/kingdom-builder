@@ -18,7 +18,7 @@ public class CityNode {
     private final HashMap<Player, Boolean> gotPoints;
 
     public CityNode () {
-        gotPoints = new HashMap<Player, Boolean>();
+        gotPoints = new HashMap<>();
     }
 
     public boolean playerIsAdjacent (Player p) {

@@ -104,10 +104,6 @@ public class Player {
         points = Math.min(points + pointsToAdd, 100);
     }
 
-    public void removePoints (int pointsToRemove) {
-        points = Math.max(points - pointsToRemove, 0);
-    }
-
     public boolean isPlacingRegSettlements() {
         return isPlacingRegSettlements;
     }

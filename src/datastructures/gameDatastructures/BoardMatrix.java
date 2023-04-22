@@ -207,7 +207,7 @@ public class BoardMatrix {
         }
         if (coordinatesInBounds(row + 1, column - 1)) {
             if(terrainBoardMatrix[row + 1][column - 1] != null && terrainBoardMatrix[row][column] != null)
-            terrainBoardMatrix[row][column].getAdjacentNodes().put(DirectionEnum.BOTTOM_LEFT, terrainBoardMatrix[row + 1][column - 1]);
+                terrainBoardMatrix[row][column].getAdjacentNodes().put(DirectionEnum.BOTTOM_LEFT, terrainBoardMatrix[row + 1][column - 1]);
         }
         if (coordinatesInBounds(row - 1, column - 1)) {
             if(terrainBoardMatrix[row - 1][column - 1] != null && terrainBoardMatrix[row][column] != null)

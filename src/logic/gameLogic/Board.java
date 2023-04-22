@@ -100,7 +100,7 @@ public class Board {
     private HashSet<TerrainNode> tilesAdjacentToTerrain(TerrainNode node, TerrainEnum type) {
         HashSet<TerrainNode> validSettlements = new HashSet<>();
         for (TerrainNode terrainNode : node.getAdjacentNodes().values()) {
-            if (terrainNode.getType() == type) {
+            if (terrainNode.getType() == type && terrainNode.getTile().getSettlement() == null) {
                 validSettlements.add(terrainNode);
             }
         }
