@@ -38,6 +38,8 @@ public class KBPanel extends JPanel implements ActionListener{
    private final String fontStr = "Lucida Calligraphy";
    private Game game;
    private int currentAction = 0;
+   private Boolean clickedOnActionOnBoard = false;
+   private int quadClicked = 0;
 
 
    public KBPanel (CardLayout cl){
@@ -238,7 +240,12 @@ public class KBPanel extends JPanel implements ActionListener{
       }
       //action tile selected - this part shows the hint when using the action tile
       if (game.getCurrentPlayer().isUsingActionTile()){
-         g2.drawImage(Constants.getActionProcess()[1], 1135, 645, 150, 60, null);
+         g2.drawImage(Constants.getActionProcess()[boardIDNumbers.get(currentAction)], 1135, 645, 150, 60, null);
+      }
+      else if(clickedOnActionOnBoard){
+         g2.drawImage(Constants.getActionTiles()[boardIDNumbers.get(quadClicked)],1165,600,80,85,null);
+         g2.drawString("Has "+ 2 + " Tiles",1150,730);
+         clickedOnActionOnBoard = false;
       }
       //landscape card drawn by the current player
       g2.drawImage(game.getCurrentPlayer().getCard().image(), 1335, 530, 130, 200, null);
@@ -305,7 +312,7 @@ public class KBPanel extends JPanel implements ActionListener{
          return;
       }
       add(temp);
-      // cl.show(Constants.PANEL_CONT, Constants.GAME_PANEL);
+
       temp.addActionListener(e -> {
          System.out.println("Hex Button clicked " + temp + "  ");
           int quad = temp.getquadNum();
@@ -329,6 +336,26 @@ public class KBPanel extends JPanel implements ActionListener{
          repaint();
       });
    }
+   public void setUpActionHexes(HexagonButton temp) {
+      if(temp == null){
+         return;
+      }
+      add(temp);
+      temp.addActionListener(e -> {
+         System.out.println("Action Button clicked " + temp + "  ");
+         int quad = temp.getquadNum();
+         int tempr = temp.getRow();
+         int tempc = temp.getCol();
+         if(quad == 2 || quad == 3)
+            tempr = temp.getRow() + 10;
+         if(quad == 1 || quad == 3)
+            tempc = temp.getCol() + 10;
+         clickedOnActionOnBoard = true;
+         quadClicked = quad;
+         repaint();
+
+      });
+   }
    public void setUpObjective (TranslucentButton temp){
       add(temp);
       temp.addActionListener(e -> {
@@ -340,6 +367,7 @@ public class KBPanel extends JPanel implements ActionListener{
       add(temp);
       temp.addActionListener(e -> {
          System.out.println("Current Action Tile Button clicked -" + temp + "  ");
+         currentAction = temp.getquadNum();
          game.getCurrentPlayer().setUsingActionTile(true);
          game.getCurrentPlayer().setPlacingRegSettlements(false);
          repaint();
@@ -381,10 +409,15 @@ public class KBPanel extends JPanel implements ActionListener{
    private void assignButtonsToQuadrant(HexagonButton[][] quadrantButtons, int quadrantNumber){
       for (int r = 0; r < 10; r++) {
          for (int c = 0; c < 10; c++) {
-            if(boardText[quadrantNumber][r][c] != null){
+            System.out.println(boardText[quadrantNumber][r][c]);
+            if(boardText[quadrantNumber][r][c] != null) {
                quadrantButtons[r][c] = new HexagonButton(quadrantNumber, r, c, boardText[quadrantNumber][r][c]);
+               setUpBoardHexes(quadrantButtons[r][c]);
             }
-            setUpBoardHexes(quadrantButtons[r][c]);
+            else {
+               quadrantButtons[r][c] = new HexagonButton(quadrantNumber, r, c, boardText[quadrantNumber][r][c]);
+               setUpActionHexes(quadrantButtons[r][c]);
+            }
          }
       }
    }
