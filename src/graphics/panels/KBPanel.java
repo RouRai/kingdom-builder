@@ -382,12 +382,13 @@ public class KBPanel extends JPanel implements ActionListener{
       for (int r = 0; r < 10; r++) {
          for (int c = 0; c < 10; c++) {
             if(boardText[quadrantNumber][r][c] != null){
-               quadrantButtons[r][c] = new HexagonButton(quadrantNumber, r, c, boardText[quadrantNumber][r][c].getType());
+               quadrantButtons[r][c] = new HexagonButton(quadrantNumber, r, c, boardText[quadrantNumber][r][c]);
             }
             setUpBoardHexes(quadrantButtons[r][c]);
          }
       }
    }
+   //fdgsdfg
 
    /**
     * Assigns the <code>HexagonButton</code> for all quadrants

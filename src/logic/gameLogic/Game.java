@@ -69,6 +69,8 @@ public class Game {
     * @param button hexagon button which was clicked
     */
    public void checkRegularSettlementPlacement (Player player, HexagonButton button) {
+
+      System.out.println(button + " --------------");
       if(player.hasPlacedSettlements()){
          return;
       }
@@ -86,11 +88,14 @@ public class Game {
          if (player.getNumSettlementsPlaced()<3 && button.getSettlement() == null){
             //if (button.canClick)
             button.setSettlementImage(Constants.getSettlements()[player.getPlayerNumber() - 1]);
-            Settlement temps = player.getSettlement(button.getquadNum(), button.getRow(), button.getCol());
-            temps.setLocation(board.getBoard().getTerrainBoardMatrix()[temps.getTrueRow()][temps.getTrueColumn()]);
+            Settlement tempSettlement = player.getSettlement(button.getquadNum(), button.getRow(), button.getCol());
+            System.out.println("what is the settlement? "+ tempSettlement.getLocation());
+            tempSettlement.setLocation(board.getBoard().getTerrainBoardMatrix()[tempSettlement.getTrueRow()][tempSettlement.getTrueColumn()]);
             TerrainTile temp = (TerrainTile)button.getTileType();
-            temp.setOwner(getCurrentPlayer(), temps);
+            temp.setOwner(getCurrentPlayer(), tempSettlement);
             player.setNumSettlementsPlaced(player.getNumSettlementsPlaced() + 1);
+
+            getBoard().getBoard().getTerrainBoardMatrix()[tempSettlement.getTrueRow()][tempSettlement.getTrueColumn()].getTile().setOwner(player,tempSettlement);
          }
 
       //giving the tile / button TO the current player's settlement

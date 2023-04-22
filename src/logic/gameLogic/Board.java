@@ -38,13 +38,16 @@ public class Board {
      */
     public ArrayList<TerrainNode> regularCanUseTiles(Player player, TerrainCard currentCard) {
         ArrayList<TerrainNode> validNodes = new ArrayList<>();
-        for (TerrainNode[] row : board.getTerrainBoardMatrix()) {
-            for (TerrainNode node : row) {
+        for (int c = 0; c < board.getTerrainBoardMatrix().length; c++) {
+            for (int r = 0; r < board.getTerrainBoardMatrix()[c].length; r++) {
+                TerrainNode node = board.getTerrainBoardMatrix()[r][c];
                 if (canPlaceOnTile(player, node, currentCard)) {
                     validNodes.add(node);
+                    System.out.print(node.getType() + " "+ r + " "+ c+ " settlement: "+node.getTile().getSettlement());
                 }
             }
         }
+        System.out.println();
         return validNodes;
     }
 
@@ -65,11 +68,18 @@ public class Board {
         if (!(node.getTile().getType() == card.type())) {
             return false;
         }
+        System.out.println(node.getTile().getSettlement());
         if (node.getTile().getSettlement() != null) {
+            System.out.println( "has settlement");
             return false;
         }
         HashSet<TerrainNode> settlementsAdjacentToTerrain = hasSettlementAdjacentToTerrain(player, card);
         boolean needToUseSettlementAdjacentToTerrain = !(settlementsAdjacentToTerrain.size() == 0);
+        if (needToUseSettlementAdjacentToTerrain && settlementsAdjacentToTerrain.size() < 3 && !tilesAdjacentToTerrain(node, card.type()).isEmpty()){
+            for (TerrainNode n : settlementsAdjacentToTerrain){
+                System.out.println(n.getTile().getSettlement()+ " -------+++++");
+            }
+        }
         boolean nodeChosenIsAdjacentToSettlementAdjacentToTerrain = settlementsAdjacentToTerrain.contains(node);
         return !needToUseSettlementAdjacentToTerrain || nodeChosenIsAdjacentToSettlementAdjacentToTerrain;
     }
