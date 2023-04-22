@@ -45,14 +45,17 @@ public class EndPanel extends JPanel implements ActionListener {
     }
     public void drawSettlements(){
         int space_between_Players = 123;
+        g2.setFont(new Font(fontStr, Font.PLAIN, 40));
+
         for (int i = 0; i<4; i++){
             //settlement icon
             g2.drawImage(constantClass.getSettlements()[i], 1020+i * space_between_Players, 150, 100, 80, null);
-            /*settlement number
-            if(players.get(i + 1).getPlayerNumber() == 4){
+            if(i == 3)
                 g2.setColor(Color.BLACK);
-            }
-            g2.drawString("" + players.get(i + 1).getSettlementsRemaining(), 1125, 90 + i * space_between_Players);*/
+            else
+                g2.setColor(Color.WHITE);
+            // players.get(i + 1).getSettlementsRemaining()
+            g2.drawString("" + 0, 1050+i * space_between_Players, 210);
         }
 
     }
@@ -66,8 +69,12 @@ public class EndPanel extends JPanel implements ActionListener {
         g2.setColor(Color.WHITE);
         g2.setFont(new Font(fontStr, Font.PLAIN, 40));
 
+        for (int i = 0; i<3; i++)
+        g2.drawImage(Constants.getCharCards()[0], 930, 350+i * space_between_Players,80,105,null);
+
+
         int startX = 1040;
-        int startY = 290;
+        int startY = 305;
 
         int r = 0;
         //city scores
@@ -76,7 +83,8 @@ public class EndPanel extends JPanel implements ActionListener {
         //card 1 scores
         r++;
         for (int i = 0; i<4; i++)
-            g2.drawString(String.format("%3d", 0), startX+i * space_between_Players, startY+r * space_between_Players);
+            g2.drawString(String.format("%3d", 0), startX + i * space_between_Players, startY + r * space_between_Players);
+
         //card 2 scores
         r++;
         for (int i = 0; i<4; i++)
@@ -90,7 +98,6 @@ public class EndPanel extends JPanel implements ActionListener {
         r++;
         for (int i = 0; i<4; i++)
             g2.drawString(String.format("%3d", 0), startX+i * space_between_Players, startY+r * space_between_Players);
-
 
     }
     public void setUpMiscellaneous(){
