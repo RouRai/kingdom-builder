@@ -9,6 +9,7 @@ import files.QuadrantMaker;
 import logic.gameLogic.Game;
 import logic.gameLogic.Player;
 import logic.tiles.ActionTile;
+import logic.tiles.CityTile;
 import logic.tiles.TerrainTile;
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -16,7 +17,6 @@ import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.awt.Color;
-import java.util.Objects;
 import java.util.Objects;
 import java.util.Set;
 import javax.swing.JPanel;
@@ -33,7 +33,9 @@ public class KBPanel extends JPanel implements ActionListener{
    private Graphics2D g2;
    private final ArrayList<Integer> boardIDNumbers;
    private final ArrayList <BufferedImage> boardImages;
-   private final TerrainTile[][][] boardText;
+   private final TerrainTile[][][] terrainTiles;
+   private final CityTile[][][] cityTiles;
+   private final ActionTile[][][] actionTiles;
    private final CardLayout cardLay;
    private final String fontStr = "Lucida Calligraphy";
    private Game game;
@@ -48,11 +50,14 @@ public class KBPanel extends JPanel implements ActionListener{
       buttonBoards = new ButtonQuadrant[4];
       boardImages = new ArrayList<>();
       boardIDNumbers = new ArrayList<>();
-      boardText = new TerrainTile [4][10][10];
+      terrainTiles = new TerrainTile [4][10][10];
+      cityTiles = new CityTile[4][10][10];
+      actionTiles = new ActionTile[4][10][10];
+
       int [] boardNumbers = new int [4];
       for(int i = 0; i < 4; i++){
          boardNumbers[i] = setUpBoardImages();
-         setUpBoardValues(boardText, boardNumbers[i], i);
+         setUpBoardValues(boardNumbers[i], i);
       }
 
       setUpActionTileHexagonButtons();
@@ -111,13 +116,14 @@ public class KBPanel extends JPanel implements ActionListener{
 
    /**
     * Sets up the board values in <code>TerrainNode</code>
-    * @param boardText Where the values for the boards will be set
     * @param boardNumber board number out of 8
     * @param i index
     */
-   private void setUpBoardValues(TerrainTile[][][] boardText, int boardNumber, int i) {
+   private void setUpBoardValues(int boardNumber, int i) {
       QuadrantMaker temp = new QuadrantMaker(boardNumber);
-      boardText[i] = temp.getTerrainTiles();
+      terrainTiles[i] = temp.getTerrainTiles();
+      cityTiles[i] = temp.getCityTiles();
+      actionTiles[i] = temp.getActionTiles();
    }
 
    /**
@@ -409,19 +415,18 @@ public class KBPanel extends JPanel implements ActionListener{
    private void assignButtonsToQuadrant(HexagonButton[][] quadrantButtons, int quadrantNumber){
       for (int r = 0; r < 10; r++) {
          for (int c = 0; c < 10; c++) {
-            System.out.println(boardText[quadrantNumber][r][c]);
-            if(boardText[quadrantNumber][r][c] != null) {
-               quadrantButtons[r][c] = new HexagonButton(quadrantNumber, r, c, boardText[quadrantNumber][r][c]);
+            System.out.println(terrainTiles[quadrantNumber][r][c]);
+            if(terrainTiles[quadrantNumber][r][c] != null) {
+               quadrantButtons[r][c] = new HexagonButton(quadrantNumber, r, c, terrainTiles[quadrantNumber][r][c]);
                setUpBoardHexes(quadrantButtons[r][c]);
             }
-            else {
-               quadrantButtons[r][c] = new HexagonButton(quadrantNumber, r, c, boardText[quadrantNumber][r][c]);
+            else if (actionTiles[quadrantNumber][r][c]!= null){
+               quadrantButtons[r][c] = new HexagonButton(quadrantNumber, r, c, terrainTiles[quadrantNumber][r][c]);
                setUpActionHexes(quadrantButtons[r][c]);
             }
          }
       }
    }
-   //fdgsdfg
 
    /**
     * Assigns the <code>HexagonButton</code> for all quadrants

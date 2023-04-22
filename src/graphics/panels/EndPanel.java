@@ -55,7 +55,7 @@ public class EndPanel extends JPanel implements ActionListener {
             else
                 g2.setColor(Color.WHITE);
             // players.get(i + 1).getSettlementsRemaining()
-            g2.drawString("" + 0, 1050+i * space_between_Players, 210);
+            g2.drawString("" + 0, 1055+i * space_between_Players, 210);
         }
 
     }
@@ -73,7 +73,7 @@ public class EndPanel extends JPanel implements ActionListener {
         g2.drawImage(Constants.getCharCards()[0], 930, 350+i * space_between_Players,80,105,null);
 
 
-        int startX = 1040;
+        int startX = 1030;
         int startY = 305;
 
         int r = 0;
