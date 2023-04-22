@@ -13,10 +13,9 @@ import java.util.HashMap;
  * in the Direction Enum, found in the directory "logic/constantFolder/DirectionEnum". This Node also does not
  * hold its own data, and requires for it to be extended through another class in order to do so.
  */
-public class Node<T extends Node> {
+public class Node<T extends Node<T>> {
 
     private final HashMap<DirectionEnum, T> adjacentNodes;
-    private Enum type;
     public Node () {
        adjacentNodes = new HashMap<>();
     }
