@@ -84,20 +84,11 @@ public class KBPanel extends JPanel implements ActionListener{
       objectiveCardImages = new BufferedImage[3];
       objectivesButton = new TranslucentButton[3];
 
-      //List of boards we can use for the ease of action tiles 
-      ArrayList <Integer> listOfEasiestActions = new ArrayList<>();
-      //{5, 3, 2, 0};
-         listOfEasiestActions.add(5);
-         listOfEasiestActions.add(3);
-         listOfEasiestActions.add(2);
-         listOfEasiestActions.add(0);
-      Collections.shuffle(listOfEasiestActions);
-
       for(int i = 0; i < 3; i++){
-         int rand = listOfEasiestActions.get(0);
-         /*do {
+         int rand;
+         do {
             rand = (int) (Math.random() * (Constants.getCharCards().length));
-         }while(Constants.getCharCards()[rand] == null);*/
+         }while(Constants.getCharCards()[rand] == null);
 
          objectiveCardImages[i] = Constants.getCharCards()[rand];
          Constants.getCharCards()[rand] = null;
