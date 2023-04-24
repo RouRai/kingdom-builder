@@ -25,7 +25,6 @@ public class HexagonButton extends JButton {
         x = new int[n];
         y = new int [n];
         angle = 2*Math.PI/n;
-        //border = BorderFactory.createLineBorder(new Color(90, 219, 181), 10);
         Dimension size = getPreferredSize();
         size.width = size.height = Math.max(size.width, size.height);
         setPreferredSize(size);

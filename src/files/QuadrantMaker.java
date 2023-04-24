@@ -105,7 +105,7 @@ public class QuadrantMaker {
          case "v" -> terrainTiles[row][column] = new TerrainTile(TerrainEnum.CANYON);
          case "m" -> terrainTiles[row][column] = new TerrainTile(TerrainEnum.MOUNTAIN);
          case "c" -> cityTiles[row][column] = new CityTile();
-         case "ac" -> setActionTypeFromSymbol(row, column);
+         case "a" -> setActionTypeFromSymbol(row, column);
       }
    }
 

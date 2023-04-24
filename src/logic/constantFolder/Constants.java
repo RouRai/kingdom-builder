@@ -46,10 +46,7 @@ public class Constants {
             actionProcess[5] = ImageIO.read(requireNonNull(getClass().getResource("/images/actionProcess/Oracle.png")));
             actionProcess[6] = ImageIO.read(requireNonNull(getClass().getResource("/images/actionProcess/Tower.png")));
             actionProcess[7] = ImageIO.read(requireNonNull(getClass().getResource("/images/actionProcess/Tavern.png")));
-        } catch (Exception ex) {
-            System.out.println(" actionProcess error");}
-        try{
-            // 2 -- BOARDS
+
             boards[0] = ImageIO.read(requireNonNull(getClass().getResource("/images/boards/beach.png")));
             boards[1] = ImageIO.read(requireNonNull(getClass().getResource("/images/boards/boat.png")));
             boards[2] = ImageIO.read(requireNonNull(getClass().getResource("/images/boards/farm.png")));
@@ -58,10 +55,7 @@ public class Constants {
             boards[5] = ImageIO.read(requireNonNull(getClass().getResource("/images/boards/stone.png")));
             boards[6] = ImageIO.read(requireNonNull(getClass().getResource("/images/boards/tower.png")));
             boards[7] = ImageIO.read(requireNonNull(getClass().getResource("/images/boards/Tavern.png")));
-        } catch (Exception ex) {
-            System.out.println("board error");}
-        try{
-            // 2.5 -- FLIPPED BOARDS
+
              flippedBoards[0] = ImageIO.read(requireNonNull(getClass().getResource("/images/boards/beach_flipped.png")));
              flippedBoards[1] = ImageIO.read(requireNonNull(getClass().getResource("/images/boards/boat_flipped.png")));
              flippedBoards[2] = ImageIO.read(requireNonNull(getClass().getResource("/images/boards/farm_flipped.png")));
@@ -70,33 +64,21 @@ public class Constants {
              flippedBoards[5] = ImageIO.read(requireNonNull(getClass().getResource("/images/boards/oracle_flipped.png")));
              flippedBoards[6] = ImageIO.read(requireNonNull(getClass().getResource("/images/boards/tower_flipped.png")));
              flippedBoards[7] = ImageIO.read(requireNonNull(getClass().getResource("/images/boards/tavern_flipped.png")));
-        } catch (Exception ex1) {
-            System.out.println("board flipped error");}
 
-        try{
-            // 3 -- SETTLEMENTS
             settlements[0] = ImageIO.read(requireNonNull(getClass().getResource("/images/settlementIcons/Black_Settlement - Copy.png")));
             settlements[1] = ImageIO.read(requireNonNull(getClass().getResource("/images/settlementIcons/Blue_Settlement - Copy.png")));
             settlements[2] = ImageIO.read(requireNonNull(getClass().getResource("/images/settlementIcons/Red_Settlement - Copy.png")));
             settlements[3] = ImageIO.read(requireNonNull(getClass().getResource("/images/settlementIcons/White_Settlement - Copy.png")));
-        }
-        catch (Exception ex2) {
-            System.out.println("settlement error");}
 
-        try{
-            // 4 - ACTION TILES
-            actionTiles[0] = ImageIO.read(requireNonNull(getClass().getResource("/images/actionTiles/barn_Tile.png")));
-            actionTiles[1] = ImageIO.read(requireNonNull(getClass().getResource("/images/actionTiles/farm_Tile.png")));
-            actionTiles[2] = ImageIO.read(requireNonNull(getClass().getResource("/images/actionTiles/harbor_Tile.png")));
-            actionTiles[3] = ImageIO.read(requireNonNull(getClass().getResource("/images/actionTiles/oasis_Tile.png")));
-            actionTiles[4] = ImageIO.read(requireNonNull(getClass().getResource("/images/actionTiles/oracle_Tile.png")));
-            actionTiles[5] = ImageIO.read(requireNonNull(getClass().getResource("/images/actionTiles/paddock_Tile.png")));
-            actionTiles[6] = ImageIO.read(requireNonNull(getClass().getResource("/images/actionTiles/tavern_Tile.png")));
-            actionTiles[7] = ImageIO.read(requireNonNull(getClass().getResource("/images/actionTiles/tower_Tile.png")));
-        }
-        catch (Exception ex3) {
-            System.out.println("actionTile error");}
-        try{
+            actionTiles[0] = ImageIO.read(requireNonNull(getClass().getResource("/images/actionTiles/oasis_Tile.png")));
+            actionTiles[1] = ImageIO.read(requireNonNull(getClass().getResource("/images/actionTiles/harbor_Tile.png")));
+            actionTiles[2] = ImageIO.read(requireNonNull(getClass().getResource("/images/actionTiles/farm_Tile.png")));
+            actionTiles[3] = ImageIO.read(requireNonNull(getClass().getResource("/images/actionTiles/paddock_Tile.png")));
+            actionTiles[4] = ImageIO.read(requireNonNull(getClass().getResource("/images/actionTiles/barn_Tile.png")));
+            actionTiles[5] = ImageIO.read(requireNonNull(getClass().getResource("/images/actionTiles/oracle_Tile.png")));
+            actionTiles[6] = ImageIO.read(requireNonNull(getClass().getResource("/images/actionTiles/tower_Tile.png")));
+            actionTiles[7] = ImageIO.read(requireNonNull(getClass().getResource("/images/actionTiles/tavern_Tile.png")));
+
             // 4 - charCards
             charCards[0] = ImageIO.read(requireNonNull(getClass().getResource("/images/characterCards/Citizen.png")));
             charCards[1] = ImageIO.read(requireNonNull(getClass().getResource("/images/characterCards/Discoverers.png")));
@@ -108,10 +90,8 @@ public class Constants {
             charCards[7] = ImageIO.read(requireNonNull(getClass().getResource("/images/characterCards/Workers.png")));
             charCards[8] = ImageIO.read(requireNonNull(getClass().getResource("/images/characterCards/Lords.png")));
             charCards[9] = ImageIO.read(requireNonNull(getClass().getResource("/images/characterCards/Hermits.png")));
-        }
-        catch (Exception ex4) {
-            System.out.println("char card error");}
-        try{  //5- landCards
+
+          //5- landCards
             landCards[5] = ImageIO.read(requireNonNull(getClass().getResource("/images/landscapeCards/KB-Card-Back.png")));
             landCards[1] = ImageIO.read(requireNonNull(getClass().getResource("/images/landscapeCards/KB-Card-Canyon.png")));
             landCards[2] = ImageIO.read(requireNonNull(getClass().getResource("/images/landscapeCards/KB-Card-Desert.png")));
@@ -119,7 +99,7 @@ public class Constants {
             landCards[4] = ImageIO.read(requireNonNull(getClass().getResource("/images/landscapeCards/KB-Card-Forest.png")));
             landCards[0] = ImageIO.read(requireNonNull(getClass().getResource("/images/landscapeCards/KB-Card-Meadow.png")));
         } catch (Exception ex5) {
-            System.out.println("landscape error");
+            System.out.println("image error");
         }
 
     }

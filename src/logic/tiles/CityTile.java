@@ -8,5 +8,4 @@ public class CityTile extends Tile<TerrainEnum> {
         super(TerrainEnum.CITY);
     }
 
-
 }
