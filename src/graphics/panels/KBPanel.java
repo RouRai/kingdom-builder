@@ -16,11 +16,9 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
-import java.util.ArrayList;
+import java.util.*;
 import java.awt.Color;
 import java.util.Objects;
-import java.util.Objects;
-import java.util.Set;
 import javax.swing.JPanel;
 public class KBPanel extends JPanel implements ActionListener{
    //Images
@@ -85,11 +83,22 @@ public class KBPanel extends JPanel implements ActionListener{
    private void setUpObjectiveButtons() {
       objectiveCardImages = new BufferedImage[3];
       objectivesButton = new TranslucentButton[3];
+
+      //List of boards we can use for the ease of action tiles 
+      ArrayList <Integer> listOfEasiestActions = new ArrayList<>();
+      //{5, 3, 2, 0};
+         listOfEasiestActions.add(5);
+         listOfEasiestActions.add(3);
+         listOfEasiestActions.add(2);
+         listOfEasiestActions.add(0);
+      Collections.shuffle(listOfEasiestActions);
+
       for(int i = 0; i < 3; i++){
-         int rand;
-         do {
+         int rand = listOfEasiestActions.get(0);
+         /*do {
             rand = (int) (Math.random() * (Constants.getCharCards().length));
-         }while(Constants.getCharCards()[rand] == null);
+         }while(Constants.getCharCards()[rand] == null);*/
+
          objectiveCardImages[i] = Constants.getCharCards()[rand];
          Constants.getCharCards()[rand] = null;
          objectivesButton[i] = new TranslucentButton(i);
@@ -316,11 +325,14 @@ public class KBPanel extends JPanel implements ActionListener{
           if(quad == 2 || quad == 3){
               tempr = temp.getRow() + 10;
           }
-          if(quad == 1 || quad == 3){
+          if(quad == 1 || quad == 3)
               tempc = temp.getCol() + 10;
-          }
+
+          //regular
          if(legalPlaces.contains(game.getBoard().getBoard().getTerrainBoardMatrix()[tempr][tempc]))
              game.checkRegularSettlementPlacement(game.getCurrentPlayer(), temp);
+
+         //if the placement is adjacent to the
 
          if (game.getCurrentPlayer().getNumSettlementsPlaced()!=3){
             //System.out.println("player has started regular settlement");
@@ -338,6 +350,7 @@ public class KBPanel extends JPanel implements ActionListener{
         repaint();
       });
    }
+   //HERE
    public void setUpCurrentAction (ActionButton temp){
       add(temp);
       temp.addActionListener(e -> {
