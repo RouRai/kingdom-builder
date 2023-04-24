@@ -1,6 +1,7 @@
 package logic.gameLogic;
 
 import logic.cards.TerrainCard;
+import logic.constantFolder.ActionEnum;
 import logic.placeables.Settlement;
 import logic.tiles.ActionTile;
 
@@ -19,7 +20,7 @@ public class Player {
     private int settlementsRemaining;
     private final int playerNumber;
     private TerrainCard card;
-    private final HashMap<ActionTile, Integer> actionTiles;
+    private final HashMap<ActionEnum, Integer> actionTiles;
     private int points, numSettlementsPlaced;
     private boolean hasPlacedSettlements, isPlacingRegSettlements, isUsingActionTile;
 
@@ -33,6 +34,9 @@ public class Player {
         hasPlacedSettlements = false;
         isPlacingRegSettlements = false;
         isUsingActionTile = false;
+    }
+    public void addToHashMap(ActionEnum type){
+        actionTiles.put(type, 0);
     }
 
     public Settlement getSettlement (int quadNum, int row, int col) {
@@ -77,15 +81,15 @@ public class Player {
         this.card = card;
     }
 
-    public void giveActionTile (ActionTile tile) {
-        if(actionTiles.containsKey(tile)){
+    public void giveActionTile (ActionEnum tile) {
+        if(actionTiles.get(tile) == 1){
             actionTiles.put(tile, 2);
             return;
         }
         actionTiles.put(tile, 1);
     }
 
-    public void removeActionTile (ActionTile tile) {
+    public void removeActionTile (ActionEnum tile) {
         if(!actionTiles.containsKey(tile)){
             return;
         }
@@ -93,10 +97,10 @@ public class Player {
             actionTiles.put(tile, 1);
             return;
         }
-        actionTiles.remove(tile);
+        actionTiles.put(tile, 0);
     }
 
-    public HashMap<ActionTile, Integer> getActionTiles () {
+    public HashMap<ActionEnum, Integer> getActionTiles () {
         return actionTiles;
     }
 

@@ -16,9 +16,13 @@ public class ActionButton extends HexagonButton{
     private BufferedImage front, back, process;
     private boolean canUse;
     private int numUses;
+    private int numTiles;
     private ActionEnum type;
     public ActionButton(int boardNum){
         super();
+        numTiles = 0;
+        numUses = 0;
+        canUse = false;
         setUP(boardNum);
     }
     private void setUP(int symbol){
@@ -53,5 +57,19 @@ public class ActionButton extends HexagonButton{
     }
     public BufferedImage getProcess(){
         return process;
+    }
+    //method to return number of action tiles of that type the player has
+    public int getNumTiles(){
+        return numTiles;
+    }
+    //method to check if the current action tile is usable
+    public boolean isCanUse(){
+        return canUse;
+    }
+    public ActionEnum getType(){
+        return type;
+    }
+    public void setNumTiles(int num){
+        numTiles = num;
     }
 }
