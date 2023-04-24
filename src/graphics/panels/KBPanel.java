@@ -54,7 +54,6 @@ public class KBPanel extends JPanel implements ActionListener{
          setUpBoardValues(boardText, boardNumbers[i], i);
       }
 
-      setUpActionTileHexagonButtons();
       int[] boardStartX = {10,423,10,423};
       int[] boardStartY = {6,6,365,365};
       assignToAllButtonQuadrants(boardStartX, boardStartY);
@@ -76,6 +75,7 @@ public class KBPanel extends JPanel implements ActionListener{
       game = new Game (boardNumbers);
 
       setUpMiscellaneous ();
+      setUpActionTileHexagonButtons();
    }
 
    /**
@@ -105,6 +105,9 @@ public class KBPanel extends JPanel implements ActionListener{
          ActionButton temp = new ActionButton(boardIDNumbers.get(i));
          setUpCurrentAction(temp);
          currentActions[i] = temp;
+         for(int q = 0; q < 4; q++){
+            game.getAllPlayers().get(q).addToHashMap(currentActions[i].getType());
+         }
       }
    }
 
@@ -192,11 +195,11 @@ public class KBPanel extends JPanel implements ActionListener{
          for (int j = 0; j < 4; j++) {
             int x = 1230;
             int y = 35;
-            g2.drawImage(Constants.getActionTiles()[boardIDNumbers.get(j)], x-25+j *68, y-5 + i * space_between_Players, 60, 60, null);
+            g2.drawImage(currentActions[j].getFront(), x-25+j *68, y-5 + i * space_between_Players, 60, 60, null);
             if (i%2 ==0)
-               g2.drawString("0", x+j *65,  y+80+i  * space_between_Players);
+               g2.drawString("" + players.get(i + 1).getActionTiles().get(currentActions[j].getType()), x+j *65,  y+80+i  * space_between_Players);
             else
-               g2.drawString("0", x+j *65,  y+80+i  * (space_between_Players+8));
+               g2.drawString("" + players.get(i + 1).getActionTiles().get(currentActions[j].getType()), x+j *65,  y+80+i  * (space_between_Players+8));
 
          }
          //settlement
@@ -224,16 +227,15 @@ public class KBPanel extends JPanel implements ActionListener{
       //action tiles
       g2.setFont(new Font(fontStr, Font.PLAIN, 20));
       g2.setColor(Color.white);
-      Set<ActionTile> tiles = game.getCurrentPlayer().getActionTiles().keySet();
       int i = 0;
       while(i<4) {
          if (i % 2== 0) {
             g2.drawImage(currentActions[i].getFront(), 1005+ i * 2, 515+ i * 75, 80, 85 , null);
-            g2.drawString("0",980,560+ i * 75);
+            g2.drawString("" + currentActions[i].getNumTiles(),980,560+ i * 75);
          }
          else{
             g2.drawImage(currentActions[i].getFront(), 959+ i, 515+ i * 75, 80, 85 , null);
-            g2.drawString("0",1055,560+ i * 75);
+            g2.drawString("" + currentActions[i].getNumTiles(),1055,560+ i * 75);
          }
          i++;
       }
@@ -368,6 +370,9 @@ public class KBPanel extends JPanel implements ActionListener{
                   cardLay.show(Constants.PANEL_CONT, Constants.END_PANEL);
             }
             game.endTurn();
+            for(int i = 0; i < 4; i++){
+               currentActions[i].setNumTiles(game.getCurrentPlayer().getActionTiles().get(currentActions[i].getType()));
+            }
             legalPlaces = game.getLegalPlaces();
          }
       }
