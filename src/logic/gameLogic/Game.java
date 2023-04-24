@@ -94,7 +94,6 @@ public class Game {
             TerrainTile temp = (TerrainTile)button.getTileType();
             temp.setOwner(getCurrentPlayer(), tempSettlement);
             player.setNumSettlementsPlaced(player.getNumSettlementsPlaced() + 1);
-
             getBoard().getBoard().getTerrainBoardMatrix()[tempSettlement.getTrueRow()][tempSettlement.getTrueColumn()].getTile().setOwner(player,tempSettlement);
          }
 

@@ -1,5 +1,6 @@
 package graphics.panels;
 
+import custom.ActionButton;
 import custom.ButtonQuadrant;
 import custom.HexagonButton;
 import custom.TranslucentButton;
@@ -28,7 +29,7 @@ public class KBPanel extends JPanel implements ActionListener{
    private TranslucentButton menuButton, finishButton,endGameScreen;
    private TranslucentButton[] objectivesButton;
    private BufferedImage [] objectiveCardImages;
-   private HexagonButton[] currentActions;
+   private ActionButton[] currentActions;
    private final ButtonQuadrant[] buttonBoards;
    private Graphics2D g2;
    private final ArrayList<Integer> boardIDNumbers;
@@ -38,7 +39,7 @@ public class KBPanel extends JPanel implements ActionListener{
    private final String fontStr = "Lucida Calligraphy";
    private Game game;
    private int currentAction = 0;
-
+   private ActionButton inUse;
 
    public KBPanel (CardLayout cl){
       cardLay = cl;
@@ -99,9 +100,9 @@ public class KBPanel extends JPanel implements ActionListener{
     * Sets up the <code>HexagonButton</code> that let the player use actionTiles
     */
    private void setUpActionTileHexagonButtons() {
-      currentActions = new HexagonButton[4];
+      currentActions = new ActionButton[4];
       for(int i = 0; i < 4; i++){
-         HexagonButton temp = new HexagonButton(i,-1,-1,null);
+         ActionButton temp = new ActionButton(boardIDNumbers.get(i));
          setUpCurrentAction(temp);
          currentActions[i] = temp;
       }
@@ -110,7 +111,7 @@ public class KBPanel extends JPanel implements ActionListener{
    /**
     * Sets up the board values in <code>TerrainNode</code>
     * @param boardText Where the values for the boards will be set
-    * @param boardNumber board number out of 8
+    * @param boardNumber board number out of 16
     * @param i index
     */
    private void setUpBoardValues(TerrainTile[][][] boardText, int boardNumber, int i) {
@@ -227,18 +228,18 @@ public class KBPanel extends JPanel implements ActionListener{
       int i = 0;
       while(i<4) {
          if (i % 2== 0) {
-            g2.drawImage(Constants.getActionTiles()[boardIDNumbers.get(i)], 1005+ i * 2, 515+ i * 75, 80, 85 , null);
+            g2.drawImage(currentActions[i].getFront(), 1005+ i * 2, 515+ i * 75, 80, 85 , null);
             g2.drawString("0",980,560+ i * 75);
          }
          else{
-            g2.drawImage(Constants.getActionTiles()[boardIDNumbers.get(i)], 959+ i, 515+ i * 75, 80, 85 , null);
+            g2.drawImage(currentActions[i].getFront(), 959+ i, 515+ i * 75, 80, 85 , null);
             g2.drawString("0",1055,560+ i * 75);
          }
          i++;
       }
       //action tile selected - this part shows the hint when using the action tile
       if (game.getCurrentPlayer().isUsingActionTile()){
-         g2.drawImage(Constants.getActionProcess()[1], 1135, 645, 150, 60, null);
+         g2.drawImage(inUse.getProcess(), 1135, 645, 150, 60, null);
       }
       //landscape card drawn by the current player
       g2.drawImage(game.getCurrentPlayer().getCard().image(), 1335, 530, 130, 200, null);
@@ -321,7 +322,7 @@ public class KBPanel extends JPanel implements ActionListener{
              game.checkRegularSettlementPlacement(game.getCurrentPlayer(), temp);
 
          if (game.getCurrentPlayer().getNumSettlementsPlaced()!=3){
-            System.out.println("player has started regular settlement");
+            //System.out.println("player has started regular settlement");
             //game.checkRegularSettlementPlacement(game.getCurrentPlayer(), , game.getCurrentPlayer().getCard());
             //setRegularAdjacent(game.getCurrentPlayer(), temp);
          }
@@ -336,12 +337,15 @@ public class KBPanel extends JPanel implements ActionListener{
         repaint();
       });
    }
-   public void setUpCurrentAction (HexagonButton temp){
+   public void setUpCurrentAction (ActionButton temp){
       add(temp);
       temp.addActionListener(e -> {
          System.out.println("Current Action Tile Button clicked -" + temp + "  ");
-         game.getCurrentPlayer().setUsingActionTile(true);
-         game.getCurrentPlayer().setPlacingRegSettlements(false);
+         if(!game.getCurrentPlayer().isPlacingRegSettlements()){
+            game.getCurrentPlayer().setUsingActionTile(true);
+            game.getCurrentPlayer().setPlacingRegSettlements(false);
+            inUse = temp;
+         }
          repaint();
       });
    }
