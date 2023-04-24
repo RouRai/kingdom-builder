@@ -1,5 +1,6 @@
 package graphics.panels;
 
+import custom.ActionButton;
 import custom.ButtonQuadrant;
 import custom.HexagonButton;
 import custom.TranslucentButton;
@@ -10,7 +11,6 @@ import files.QuadrantMaker;
 import logic.gameLogic.Game;
 import logic.gameLogic.Player;
 import logic.tiles.ActionTile;
-import logic.tiles.CityTile;
 import logic.tiles.TerrainTile;
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -18,6 +18,7 @@ import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.awt.Color;
+import java.util.Objects;
 import java.util.Objects;
 import java.util.Set;
 import javax.swing.JPanel;
@@ -29,21 +30,17 @@ public class KBPanel extends JPanel implements ActionListener{
    private TranslucentButton menuButton, finishButton,endGameScreen;
    private TranslucentButton[] objectivesButton;
    private BufferedImage [] objectiveCardImages;
-   private HexagonButton[] currentActions;
+   private ActionButton[] currentActions;
    private final ButtonQuadrant[] buttonBoards;
    private Graphics2D g2;
    private final ArrayList<Integer> boardIDNumbers;
    private final ArrayList <BufferedImage> boardImages;
-   private final TerrainTile[][][] terrainTiles;
-   private final CityTile[][][] cityTiles;
-   private final ActionTile[][][] actionTiles;
+   private final TerrainTile[][][] boardText;
    private final CardLayout cardLay;
    private final String fontStr = "Lucida Calligraphy";
    private Game game;
    private int currentAction = 0;
-   private Boolean clickedOnActionOnBoard = false;
-   private int quadClicked = 0;
-
+   private ActionButton inUse;
 
    public KBPanel (CardLayout cl){
       cardLay = cl;
@@ -51,14 +48,11 @@ public class KBPanel extends JPanel implements ActionListener{
       buttonBoards = new ButtonQuadrant[4];
       boardImages = new ArrayList<>();
       boardIDNumbers = new ArrayList<>();
-      terrainTiles = new TerrainTile [4][10][10];
-      cityTiles = new CityTile[4][10][10];
-      actionTiles = new ActionTile[4][10][10];
-
+      boardText = new TerrainTile [4][10][10];
       int [] boardNumbers = new int [4];
       for(int i = 0; i < 4; i++){
          boardNumbers[i] = setUpBoardImages();
-         setUpBoardValues(boardNumbers[i], i);
+         setUpBoardValues(boardText, boardNumbers[i], i);
       }
 
       setUpActionTileHexagonButtons();
@@ -107,9 +101,9 @@ public class KBPanel extends JPanel implements ActionListener{
     * Sets up the <code>HexagonButton</code> that let the player use actionTiles
     */
    private void setUpActionTileHexagonButtons() {
-      currentActions = new HexagonButton[4];
+      currentActions = new ActionButton[4];
       for(int i = 0; i < 4; i++){
-         HexagonButton temp = new HexagonButton(i,-1,-1,null);
+         ActionButton temp = new ActionButton(boardIDNumbers.get(i));
          setUpCurrentAction(temp);
          currentActions[i] = temp;
       }
@@ -117,14 +111,13 @@ public class KBPanel extends JPanel implements ActionListener{
 
    /**
     * Sets up the board values in <code>TerrainNode</code>
-    * @param boardNumber board number out of 8
+    * @param boardText Where the values for the boards will be set
+    * @param boardNumber board number out of 16
     * @param i index
     */
-   private void setUpBoardValues(int boardNumber, int i) {
+   private void setUpBoardValues(TerrainTile[][][] boardText, int boardNumber, int i) {
       QuadrantMaker temp = new QuadrantMaker(boardNumber);
-      terrainTiles[i] = temp.getTerrainTiles();
-      cityTiles[i] = temp.getCityTiles();
-      actionTiles[i] = temp.getActionTiles();
+      boardText[i] = temp.getTerrainTiles();
    }
 
    /**
@@ -236,23 +229,18 @@ public class KBPanel extends JPanel implements ActionListener{
       int i = 0;
       while(i<4) {
          if (i % 2== 0) {
-            g2.drawImage(Constants.getActionTiles()[boardIDNumbers.get(i)], 1005+ i * 2, 515+ i * 75, 80, 85 , null);
+            g2.drawImage(currentActions[i].getFront(), 1005+ i * 2, 515+ i * 75, 80, 85 , null);
             g2.drawString("0",980,560+ i * 75);
          }
          else{
-            g2.drawImage(Constants.getActionTiles()[boardIDNumbers.get(i)], 959+ i, 515+ i * 75, 80, 85 , null);
+            g2.drawImage(currentActions[i].getFront(), 959+ i, 515+ i * 75, 80, 85 , null);
             g2.drawString("0",1055,560+ i * 75);
          }
          i++;
       }
       //action tile selected - this part shows the hint when using the action tile
       if (game.getCurrentPlayer().isUsingActionTile()){
-         g2.drawImage(Constants.getActionProcess()[boardIDNumbers.get(currentAction)], 1135, 645, 150, 60, null);
-      }
-      else if(clickedOnActionOnBoard){
-         g2.drawImage(Constants.getActionTiles()[boardIDNumbers.get(quadClicked)],1165,600,80,85,null);
-         g2.drawString("Has "+ 2 + " Tiles",1150,730);
-         clickedOnActionOnBoard = false;
+         g2.drawImage(inUse.getProcess(), 1135, 645, 150, 60, null);
       }
       //landscape card drawn by the current player
       g2.drawImage(game.getCurrentPlayer().getCard().image(), 1335, 530, 130, 200, null);
@@ -319,7 +307,7 @@ public class KBPanel extends JPanel implements ActionListener{
          return;
       }
       add(temp);
-
+      // cl.show(Constants.PANEL_CONT, Constants.GAME_PANEL);
       temp.addActionListener(e -> {
          System.out.println("Hex Button clicked " + temp + "  ");
           int quad = temp.getquadNum();
@@ -335,32 +323,12 @@ public class KBPanel extends JPanel implements ActionListener{
              game.checkRegularSettlementPlacement(game.getCurrentPlayer(), temp);
 
          if (game.getCurrentPlayer().getNumSettlementsPlaced()!=3){
-            System.out.println("player has started regular settlement");
+            //System.out.println("player has started regular settlement");
             //game.checkRegularSettlementPlacement(game.getCurrentPlayer(), , game.getCurrentPlayer().getCard());
             //setRegularAdjacent(game.getCurrentPlayer(), temp);
          }
          legalPlaces = game.getLegalPlaces();
          repaint();
-      });
-   }
-   public void setUpActionHexes(HexagonButton temp) {
-      if(temp == null){
-         return;
-      }
-      add(temp);
-      temp.addActionListener(e -> {
-         System.out.println("Action Button clicked " + temp + "  ");
-         int quad = temp.getquadNum();
-         int tempr = temp.getRow();
-         int tempc = temp.getCol();
-         if(quad == 2 || quad == 3)
-            tempr = temp.getRow() + 10;
-         if(quad == 1 || quad == 3)
-            tempc = temp.getCol() + 10;
-         clickedOnActionOnBoard = true;
-         quadClicked = quad;
-         repaint();
-
       });
    }
    public void setUpObjective (TranslucentButton temp){
@@ -370,13 +338,15 @@ public class KBPanel extends JPanel implements ActionListener{
         repaint();
       });
    }
-   public void setUpCurrentAction (HexagonButton temp){
+   public void setUpCurrentAction (ActionButton temp){
       add(temp);
       temp.addActionListener(e -> {
          System.out.println("Current Action Tile Button clicked -" + temp + "  ");
-         currentAction = temp.getquadNum();
-         game.getCurrentPlayer().setUsingActionTile(true);
-         game.getCurrentPlayer().setPlacingRegSettlements(false);
+         if(!game.getCurrentPlayer().isPlacingRegSettlements()){
+            game.getCurrentPlayer().setUsingActionTile(true);
+            game.getCurrentPlayer().setPlacingRegSettlements(false);
+            inUse = temp;
+         }
          repaint();
       });
    }
@@ -417,18 +387,14 @@ public class KBPanel extends JPanel implements ActionListener{
    private void assignButtonsToQuadrant(HexagonButton[][] quadrantButtons, int quadrantNumber){
       for (int r = 0; r < 10; r++) {
          for (int c = 0; c < 10; c++) {
-            System.out.println(terrainTiles[quadrantNumber][r][c]);
-            if(terrainTiles[quadrantNumber][r][c] != null) {
-               quadrantButtons[r][c] = new HexagonButton(quadrantNumber, r, c, terrainTiles[quadrantNumber][r][c]);
-               setUpBoardHexes(quadrantButtons[r][c]);
+            if(boardText[quadrantNumber][r][c] != null){
+               quadrantButtons[r][c] = new HexagonButton(quadrantNumber, r, c, boardText[quadrantNumber][r][c]);
             }
-            else if (actionTiles[quadrantNumber][r][c]!= null){
-               quadrantButtons[r][c] = new HexagonButton(quadrantNumber, r, c, terrainTiles[quadrantNumber][r][c]);
-               setUpActionHexes(quadrantButtons[r][c]);
-            }
+            setUpBoardHexes(quadrantButtons[r][c]);
          }
       }
    }
+   //fdgsdfg
 
    /**
     * Assigns the <code>HexagonButton</code> for all quadrants
