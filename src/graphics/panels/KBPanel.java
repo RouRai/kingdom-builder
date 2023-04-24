@@ -4,6 +4,7 @@ import custom.ButtonQuadrant;
 import custom.HexagonButton;
 import custom.TranslucentButton;
 import datastructures.gameDatastructures.TerrainNode;
+import graphics.frames.KBWindow;
 import logic.constantFolder.Constants;
 import files.QuadrantMaker;
 import logic.gameLogic.Game;
@@ -394,8 +395,9 @@ public class KBPanel extends JPanel implements ActionListener{
          if(game.canEndTurn()) {
             if (game.getCurrentPlayer().getPlayerNumber() == 4) {
                //make sure to check this later
-               if (game.checkEndGame())
+               if (game.checkEndGame()) {
                   cardLay.show(Constants.PANEL_CONT, Constants.END_PANEL);
+               }
             }
             game.endTurn();
             legalPlaces = game.getLegalPlaces();

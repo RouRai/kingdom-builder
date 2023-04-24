@@ -5,6 +5,7 @@ import graphics.panels.KBPanel;
 import graphics.panels.MenuPanel;
 import graphics.panels.StartPanel;
 import logic.constantFolder.Constants;
+import logic.gameLogic.Board;
 
 import javax.swing.*;
 import java.awt.*;
@@ -46,7 +47,7 @@ public class KBWindow extends JFrame {
       Constants.PANEL_CONT.add(panels.get(Constants.END_PANEL), Constants.END_PANEL);
       cl.show(Constants.PANEL_CONT, Constants.GAME_PANEL);
    }
-   public static void terminate(){
+   public static void terminate(Board board){
       Constants.PANEL_CONT.remove(panels.get(Constants.END_PANEL));
       panels.remove(Constants.END_PANEL);
       Constants.PANEL_CONT.remove(panels.get(Constants.GAME_PANEL));

@@ -3,6 +3,7 @@ package graphics.panels;
 import custom.TranslucentButton;
 import files.QuadrantMaker;
 import logic.constantFolder.Constants;
+import logic.gameLogic.Game;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
