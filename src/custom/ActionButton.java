@@ -27,16 +27,7 @@ public class ActionButton extends HexagonButton{
         setType(symbol);
     }
     private void setFront(int symbol){
-        switch(symbol){
-            case 0 -> front = Constants.getActionTiles()[3];
-            case 1 -> front = Constants.getActionTiles()[2];
-            case 2 -> front = Constants.getActionTiles()[1];
-            case 3 -> front = Constants.getActionTiles()[5];
-            case 4 -> front = Constants.getActionTiles()[0];
-            case 5 -> front = Constants.getActionTiles()[4];
-            case 6 -> front = Constants.getActionTiles()[7];
-            case 7 -> front = Constants.getActionTiles()[6];
-        }
+        front = Constants.getActionTiles()[symbol];
     }
     private void setProcess(int symbol){
         process = Constants.getActionProcess()[symbol];
