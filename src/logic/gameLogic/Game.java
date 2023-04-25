@@ -15,9 +15,8 @@ public class Game {
    private ArrayList<TerrainCard> terrainCards;
 
    public Board board;
-   private Constants constantClass;
+   private final Constants constantClass;
    public Game (int [] boardNumbers){
-
       //basics
                constantClass = new Constants();
       //Cards
@@ -97,7 +96,7 @@ public class Game {
             //if (button.canClick)
             button.setSettlementImage(constantClass.getSettlements()[player.getPlayerNumber() - 1]);
             Settlement temps = player.getSettlement(button.getquadNum(), button.getRow(), button.getCol());
-            temps.setLocation(board.getBoard().getTerrainBoardMatrix()[temps.getTrueRow()][temps.getTrueColumn()]);
+            temps.setLocation(board.getBoard().getBoardMatrix()[temps.getTrueRow()][temps.getTrueColumn()]);
             button.setSettlement(temps);
             player.setNumSettlementsPlaced(player.getNumSettlementsPlaced() + 1);
          }
@@ -130,7 +129,7 @@ public class Game {
                checkedC+= 10;
 
          if (checkedR < 20 && checkedR >=0 && checkedC < 20 && checkedC >=0){
-            bool = player.getCard().equals(board.getBoard().getTerrainBoardMatrix()[checkedR][checkedC]);
+            bool = player.getCard().equals(board.getBoard().getBoardMatrix()[checkedR][checkedC]);
          }
          arr[i]= bool;
       }

@@ -1,6 +1,5 @@
 package logic.gameLogic;
 
-import datastructures.gameDatastructures.boardMatrices.BoardMatrix;
 import datastructures.gameDatastructures.boardNodes.TerrainNode;
 import files.QuadrantMaker;
 import logic.cards.TerrainCard;
@@ -38,7 +37,7 @@ public class Board {
      */
     public ArrayList<TerrainNode> regularCanUseTiles(Player player, TerrainCard currentCard) {
         ArrayList<TerrainNode> validNodes = new ArrayList<>();
-        for (TerrainNode[] row : board.getTerrainBoardMatrix()) {
+        for (TerrainNode[] row : board.getBoardMatrix()) {
             for (TerrainNode node : row) {
                 if (canPlaceOnTile(player, node, currentCard)) {
                     validNodes.add(node);

@@ -13,7 +13,8 @@ import logic.tiles.TerrainTile;
 public class TerrainNode extends Node<TerrainNode> {
     private final TerrainTile tile;
 
-    public TerrainNode(TerrainEnum type) {
+    public TerrainNode(TerrainEnum type, int row, int column) {
+        super(row, column);
         tile = new TerrainTile(type);
     }
 

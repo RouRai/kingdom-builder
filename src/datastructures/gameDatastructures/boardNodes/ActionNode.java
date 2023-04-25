@@ -16,7 +16,8 @@ public class ActionNode extends Node<ActionNode> {
 
     private final ActionTile tile;
 
-    public ActionNode (ActionEnum type) {
+    public ActionNode (ActionEnum type, int row, int column) {
+        super(row, column);
         tile = new ActionTile(type);
     }
 

@@ -79,12 +79,12 @@ public class KBPanel extends JPanel implements ActionListener{
                   boardImages.add(Constants.getBoards()[boardNum]);
                   Constants.getBoards()[boardNum] = null;
                   Constants.getFlippedBoards()[boardNum] = null;
-                  temp = boardMaker.get(i).getTerrainTiles();
+                  temp = boardMaker.get(i).getBoardTiles();
                } else {
                   boardImages.add(Constants.getFlippedBoards()[boardNum]);
                   Constants.getBoards()[boardNum] = null;
                   Constants.getFlippedBoards()[boardNum] = null;
-                  temp = boardMaker.get(i).getTerrainTiles();
+                  temp = boardMaker.get(i).getBoardTiles();
                }
                boardText[i] = temp;
             }
@@ -305,7 +305,7 @@ public class KBPanel extends JPanel implements ActionListener{
                    while(legalPlaces == null && !game.getCurrentPlayer().hasPlacedSettlements()){
                        legalPlaces = game.getLegalPlaces();
                    }
-                  if(legalPlaces.contains(game.getBoard().getBoard().getTerrainBoardMatrix()[tempr][tempc]) && !game.getCurrentPlayer().hasPlacedSettlements()) {
+                  if(legalPlaces.contains(game.getBoard().getBoard().getBoardMatrix()[tempr][tempc]) && !game.getCurrentPlayer().hasPlacedSettlements()) {
                      board[r][c].drawHighlight(g2, highlight, game.getCurrentPlayer().getCard());
                   }
                   board[r][c].drawSettlement(g2);
@@ -344,7 +344,7 @@ public class KBPanel extends JPanel implements ActionListener{
              if(quad == 1 || quad == 3){
                  tempc = temp.getCol() + 10;
              }
-            if(legalPlaces.contains(game.getBoard().getBoard().getTerrainBoardMatrix()[tempr][tempc]))
+            if(legalPlaces.contains(game.getBoard().getBoard().getBoardMatrix()[tempr][tempc]))
                 game.checkRegularSettlementPlacement(game.getCurrentPlayer(), temp);
 
             if (game.getCurrentPlayer().getNumSettlementsPlaced()!=3){
@@ -378,8 +378,8 @@ public class KBPanel extends JPanel implements ActionListener{
             checkedC+= 10;
 
             bool = (checkedR < 20 && checkedR >=0 && checkedC < 20 && checkedC >=0) ;
-            Boolean type = player.getCard().type().toString().equals(game.getBoard().getBoard().getTerrainBoardMatrix()[checkedR][checkedC].getType().toString());
-         System.out.println(player.getCard().type().toString() + " vs. "+ game.getBoard().getBoard().getTerrainBoardMatrix()[checkedR][checkedC].getType().toString());
+            Boolean type = player.getCard().type().toString().equals(game.getBoard().getBoard().getBoardMatrix()[checkedR][checkedC].getType().toString());
+         System.out.println(player.getCard().type().toString() + " vs. "+ game.getBoard().getBoard().getBoardMatrix()[checkedR][checkedC].getType().toString());
          System.out.println(""+ " - ("+ checkedR + " , " + checkedC + ") to "+" "+bool + " " + type);
          if (bool && type){
             int R = checkedR;

@@ -1,6 +1,8 @@
 package datastructures.gameDatastructures.boardNodes;
 
+import datastructures.baseDatastructures.Node;
 import logic.gameLogic.Player;
+import logic.tiles.CityTile;
 
 import java.util.HashMap;
 
@@ -13,15 +15,16 @@ import java.util.HashMap;
  * their points.
  */
 
-public class CityNode {
+public class CityNode extends Node<CityNode> {
 
     private final HashMap<Player, Boolean> gotPoints;
 
-    public CityNode () {
-        gotPoints = new HashMap<Player, Boolean>();
+    public CityNode (int row, int column) {
+        super(row, column);
+        gotPoints = new HashMap<>();
     }
 
-    public boolean playerIsAdjacent (Player p) {
-        return gotPoints.get(p);
+    public boolean playerIsAdjacent (Player player) {
+        return gotPoints.get(player);
     }
 }
