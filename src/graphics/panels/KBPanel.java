@@ -1,6 +1,6 @@
 package graphics.panels;
 
-import custom.ActionButton;
+import custom.ActionProcessButton;
 import custom.ButtonQuadrant;
 import custom.HexagonButton;
 import custom.TranslucentButton;
@@ -9,7 +9,6 @@ import logic.constantFolder.Constants;
 import files.QuadrantMaker;
 import logic.gameLogic.Game;
 import logic.gameLogic.Player;
-import logic.tiles.ActionTile;
 import logic.tiles.TerrainTile;
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -18,8 +17,6 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.awt.Color;
 import java.util.Objects;
-import java.util.Objects;
-import java.util.Set;
 import javax.swing.JPanel;
 public class KBPanel extends JPanel implements ActionListener{
    //Images
@@ -29,7 +26,7 @@ public class KBPanel extends JPanel implements ActionListener{
    private TranslucentButton menuButton, finishButton,endGameScreen;
    private TranslucentButton[] objectivesButton;
    private BufferedImage [] objectiveCardImages;
-   private ActionButton[] currentActions;
+   private ActionProcessButton[] currentActions;
    private final ButtonQuadrant[] buttonBoards;
    private Graphics2D g2;
    private final ArrayList<Integer> boardIDNumbers;
@@ -39,7 +36,7 @@ public class KBPanel extends JPanel implements ActionListener{
    private final String fontStr = "Lucida Calligraphy";
    private Game game;
    private int currentAction = 0;
-   private ActionButton inUse;
+   private ActionProcessButton inUse;
 
    public KBPanel (CardLayout cl){
       cardLay = cl;
@@ -100,9 +97,9 @@ public class KBPanel extends JPanel implements ActionListener{
     * Sets up the <code>HexagonButton</code> that let the player use actionTiles
     */
    private void setUpActionTileHexagonButtons() {
-      currentActions = new ActionButton[4];
+      currentActions = new ActionProcessButton[4];
       for(int i = 0; i < 4; i++){
-         ActionButton temp = new ActionButton(boardIDNumbers.get(i));
+         ActionProcessButton temp = new ActionProcessButton(boardIDNumbers.get(i));
          setUpCurrentAction(temp);
          currentActions[i] = temp;
          for(int q = 0; q < 4; q++){
@@ -283,8 +280,13 @@ public class KBPanel extends JPanel implements ActionListener{
                      tempc = c + 10;
                   }
                   //if(board[r][c].tile)
+                  int i = 0;
                    while(legalPlaces == null && !game.getCurrentPlayer().hasPlacedSettlements()){
+                      if(i > 3){
+                         game.getCurrentPlayer().setCard(game.getCard());
+                      }
                        legalPlaces = game.getLegalPlaces();
+                       i++;
                    }
                   if(legalPlaces.contains(game.getBoard().getBoard().getTerrainBoardMatrix()[tempr][tempc]) && !game.getCurrentPlayer().hasPlacedSettlements()) {
                      board[r][c].drawHighlight(g2, highlight, game.getCurrentPlayer().getCard());
@@ -339,7 +341,7 @@ public class KBPanel extends JPanel implements ActionListener{
         repaint();
       });
    }
-   public void setUpCurrentAction (ActionButton temp){
+   public void setUpCurrentAction (ActionProcessButton temp){
       add(temp);
       temp.addActionListener(e -> {
          System.out.println("Current Action Tile Button clicked -" + temp + "  ");

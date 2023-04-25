@@ -2,22 +2,18 @@ package custom;
 
 import logic.constantFolder.ActionEnum;
 import logic.constantFolder.Constants;
-import logic.constantFolder.TerrainEnum;
-import logic.tiles.CityTile;
-import logic.tiles.TerrainTile;
 
-import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
 import static java.util.Objects.requireNonNull;
 
-public class ActionButton extends HexagonButton{
+public class ActionProcessButton extends HexagonButton{
     private BufferedImage front, process;
     private int numUses;
     private int numTiles;
     private ActionEnum type;
-    public ActionButton(int boardNum){
+    public ActionProcessButton(int boardNum){
         super();
         numTiles = 0;
         numUses = 0;
