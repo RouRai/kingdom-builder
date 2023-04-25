@@ -1,8 +1,11 @@
 package logic.gameLogic;
 
 import custom.HexagonButton;
-import datastructures.gameDatastructures.TerrainNode;
+import datastructures.gameDatastructures.boardNodes.TerrainNode;
 import files.QuadrantMaker;
+import files.mainMakers.ActionMaker;
+import files.mainMakers.CityMaker;
+import files.mainMakers.TerrainMaker;
 import logic.cards.*;
 import logic.constantFolder.Constants;
 import logic.placeables.Settlement;
@@ -27,12 +30,15 @@ public class Game {
 
       //Boards
             //Quadrant maker
-               ArrayList<QuadrantMaker> boardMaker = new ArrayList<>();
-               for(int i = 0; i < 4; i++) {
-                  QuadrantMaker tempQM = new QuadrantMaker(boardNumbers[i]);
-                  boardMaker.add(tempQM);
+               ArrayList<TerrainMaker> terrainQuadrants = new ArrayList<>();
+               ArrayList<ActionMaker> actionQuadrants = new ArrayList<>();
+               ArrayList<CityMaker> cityQuadrants = new ArrayList<>();
+               for(int boardNumber : boardNumbers) {
+                  terrainQuadrants.add(new TerrainMaker(boardNumber));
+                  actionQuadrants.add(new ActionMaker(boardNumber));
+                  cityQuadrants.add(new CityMaker(boardNumber));
                }
-               board = new Board (boardMaker);
+               board = new Board (terrainQuadrants, cityQuadrants, actionQuadrants);
 
       //Players
                allPlayers = new ArrayList<>();
@@ -90,11 +96,11 @@ public class Game {
             button.setSettlementImage(Constants.getSettlements()[player.getPlayerNumber() - 1]);
             Settlement tempSettlement = player.getSettlement(button.getquadNum(), button.getRow(), button.getCol());
             System.out.println("what is the settlement? "+ tempSettlement.getLocation());
-            tempSettlement.setLocation(board.getBoard().getTerrainBoardMatrix()[tempSettlement.getTrueRow()][tempSettlement.getTrueColumn()]);
+            tempSettlement.setLocation(board.getTerrainBoard().getBoardMatrix()[tempSettlement.getTrueRow()][tempSettlement.getTrueColumn()]);
             TerrainTile temp = (TerrainTile)button.getTileType();
             temp.setOwner(getCurrentPlayer(), tempSettlement);
             player.setNumSettlementsPlaced(player.getNumSettlementsPlaced() + 1);
-            getBoard().getBoard().getTerrainBoardMatrix()[tempSettlement.getTrueRow()][tempSettlement.getTrueColumn()].getTile().setOwner(player,tempSettlement);
+            getBoard().getTerrainBoard().getBoardMatrix()[tempSettlement.getTrueRow()][tempSettlement.getTrueColumn()].getTile().setOwner(player,tempSettlement);
          }
 
       //giving the tile / button TO the current player's settlement

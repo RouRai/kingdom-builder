@@ -125,4 +125,8 @@ public class CityMatrix {
     private boolean coordinatesInBounds (int row, int column) {
         return !(row < 0 || row >= 20 || column < 0 || column >= 20);
     }
+
+    public CityNode[][] getBoardMatrix() {
+        return boardMatrix;
+    }
 }

@@ -122,4 +122,8 @@ public class TerrainMatrix {
     private boolean coordinatesInBounds (int row, int column) {
         return !(row < 0 || row >= 20 || column < 0 || column >= 20);
     }
+
+    public TerrainNode[][] getBoardMatrix() {
+        return boardMatrix;
+    }
 }

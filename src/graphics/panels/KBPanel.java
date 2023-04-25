@@ -4,7 +4,10 @@ import custom.ActionProcessButton;
 import custom.ButtonQuadrant;
 import custom.HexagonButton;
 import custom.TranslucentButton;
-import datastructures.gameDatastructures.TerrainNode;
+import datastructures.gameDatastructures.boardNodes.TerrainNode;
+import files.mainMakers.ActionMaker;
+import files.mainMakers.CityMaker;
+import files.mainMakers.TerrainMaker;
 import logic.constantFolder.Constants;
 import files.QuadrantMaker;
 import logic.gameLogic.Game;
@@ -48,7 +51,6 @@ public class KBPanel extends JPanel implements ActionListener{
       int [] boardNumbers = new int [4];
       for(int i = 0; i < 4; i++){
          boardNumbers[i] = setUpBoardImages();
-         setUpBoardValues(boardText, boardNumbers[i], i);
       }
 
       int[] boardStartX = {10,423,10,423};
@@ -108,16 +110,6 @@ public class KBPanel extends JPanel implements ActionListener{
       }
    }
 
-   /**
-    * Sets up the board values in <code>TerrainNode</code>
-    * @param boardText Where the values for the boards will be set
-    * @param boardNumber board number out of 16
-    * @param i index
-    */
-   private void setUpBoardValues(TerrainTile[][][] boardText, int boardNumber, int i) {
-      QuadrantMaker temp = new QuadrantMaker(boardNumber);
-      boardText[i] = temp.getTerrainTiles();
-   }
 
    /**
     * main paint method which calls other paint methods & sets the coordinates of some utility buttons
@@ -288,7 +280,7 @@ public class KBPanel extends JPanel implements ActionListener{
                        legalPlaces = game.getLegalPlaces();
                        i++;
                    }
-                  if(legalPlaces.contains(game.getBoard().getBoard().getTerrainBoardMatrix()[tempr][tempc]) && !game.getCurrentPlayer().hasPlacedSettlements()) {
+                  if(legalPlaces.contains(game.getBoard().getTerrainBoard().getBoardMatrix()[tempr][tempc]) && !game.getCurrentPlayer().hasPlacedSettlements()) {
                      board[r][c].drawHighlight(g2, highlight, game.getCurrentPlayer().getCard());
                   }
                   board[r][c].drawSettlement(g2);
@@ -322,7 +314,7 @@ public class KBPanel extends JPanel implements ActionListener{
           if(quad == 1 || quad == 3){
               tempc = temp.getCol() + 10;
           }
-         if(legalPlaces.contains(game.getBoard().getBoard().getTerrainBoardMatrix()[tempr][tempc]))
+         if(legalPlaces.contains(game.getBoard().getTerrainBoard().getBoardMatrix()[tempr][tempc]))
              game.checkRegularSettlementPlacement(game.getCurrentPlayer(), temp);
 
          if (game.getCurrentPlayer().getNumSettlementsPlaced()!=3){

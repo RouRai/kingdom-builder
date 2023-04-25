@@ -1,8 +1,12 @@
 package logic.gameLogic;
 
-import datastructures.gameDatastructures.BoardMatrix;
-import datastructures.gameDatastructures.TerrainNode;
-import files.QuadrantMaker;
+import datastructures.gameDatastructures.boardMatrices.ActionMatrix;
+import datastructures.gameDatastructures.boardMatrices.CityMatrix;
+import datastructures.gameDatastructures.boardMatrices.TerrainMatrix;
+import datastructures.gameDatastructures.boardNodes.TerrainNode;
+import files.mainMakers.ActionMaker;
+import files.mainMakers.CityMaker;
+import files.mainMakers.TerrainMaker;
 import logic.cards.TerrainCard;
 import logic.constantFolder.TerrainEnum;
 import logic.placeables.Settlement;
@@ -16,18 +20,14 @@ import java.util.HashSet;
  * This is the high-level class mainly used to perform operations upon the Kingdom Builder Board.
  */
 public class Board {
-    private final BoardMatrix board;
+    private final TerrainMatrix terrainBoard;
+    private final CityMatrix cityBoard;
+    private final ActionMatrix actionBoard;
 
-    public Board (ArrayList<QuadrantMaker> quadrants) {
-        board = new BoardMatrix(quadrants);
-    }
-
-    /**
-     * Returns the graph of the current game board
-     * @return BoardGraph board
-     */
-    public BoardMatrix getBoard () {
-        return board;
+    public Board (ArrayList<TerrainMaker> terrainQuadrants, ArrayList<CityMaker> cityQuadrants, ArrayList<ActionMaker> actionQuadrants) {
+        terrainBoard = new TerrainMatrix(terrainQuadrants);
+        cityBoard = new CityMatrix(cityQuadrants);
+        actionBoard = new ActionMatrix(actionQuadrants);
     }
 
     /**
@@ -38,16 +38,14 @@ public class Board {
      */
     public ArrayList<TerrainNode> regularCanUseTiles(Player player, TerrainCard currentCard) {
         ArrayList<TerrainNode> validNodes = new ArrayList<>();
-        for (int c = 0; c < board.getTerrainBoardMatrix().length; c++) {
-            for (int r = 0; r < board.getTerrainBoardMatrix()[c].length; r++) {
-                TerrainNode node = board.getTerrainBoardMatrix()[r][c];
+        for (int row = 0; row < terrainBoard.getBoardMatrix().length; row++) {
+            for (int column = 0; column < terrainBoard.getBoardMatrix()[row].length; column++) {
+                TerrainNode node = terrainBoard.getBoardMatrix()[row][column];
                 if (canPlaceOnTile(player, node, currentCard)) {
                     validNodes.add(node);
-                    System.out.print(node.getType() + " "+ r + " "+ c+ " settlement: "+node.getTile().getSettlement());
                 }
             }
         }
-        System.out.println();
         return validNodes;
     }
 
@@ -116,5 +114,18 @@ public class Board {
         }
         return validSettlements;
     }
+
+    public TerrainMatrix getTerrainBoard() {
+        return terrainBoard;
+    }
+
+    public CityMatrix getCityBoard() {
+        return cityBoard;
+    }
+
+    public ActionMatrix getActionBoard() {
+        return actionBoard;
+    }
+
 
 }
