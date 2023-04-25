@@ -2,15 +2,55 @@ package files.mainMakers;
 
 import files.QuadrantMaker;
 import logic.constantFolder.ActionEnum;
+import logic.constantFolder.Constants;
 import logic.tiles.ActionTile;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Objects;
+import java.util.Scanner;
+
+import static logic.constantFolder.Constants.boardNames;
 
 public class ActionMaker extends QuadrantMaker<ActionTile> {
 
     public ActionMaker(int boardNumber) {
         super(boardNumber);
+        setUpEnumMatrix(boardNumber);
     }
 
-    public void flipMatrix() {
+    public void setUpEnumMatrix(int boardNumber) {
+        try {
+            String fileURL = Objects.requireNonNull(getClass().getResource("/files/textFiles/" + boardNames[boardNumber % 8] + "")).getFile();
+            File myObj = new File(fileURL);
+            Scanner myReader = new Scanner(myObj);
+            createMatrix(myReader);
+            if (boardNumber >= Constants.getBoards().length) {
+                flipMatrix();
+            }
+        }catch(FileNotFoundException e){
+            e.printStackTrace();
+        }catch(IndexOutOfBoundsException e) {
+            System.out.println("The board number given is out of bounds.");
+            e.printStackTrace();
+        }
+    }
+
+    protected void createMatrix(Scanner fileReader) {
+        int rows = 0;
+        while (fileReader.hasNext()) {
+            String data = fileReader.nextLine();
+            String[] symbols = data.split(" ");
+            int columns = 0;
+            for (String symbol: symbols){
+                boardTiles[rows][columns] = getTypeFromSymbol();
+                columns++;
+            }
+            rows++;
+        }
+    }
+
+    protected void flipMatrix() {
         ActionTile[][] destination = new ActionTile[10][10];
         for (int row = destination.length - 1; row > -1; row--) {
             for (int column = destination[row].length - 1; column > -1; column--) {
@@ -20,7 +60,7 @@ public class ActionMaker extends QuadrantMaker<ActionTile> {
         boardTiles = destination;
     }
 
-    public ActionTile getTypeFromSymbol(String symbol) {
+    protected ActionTile getTypeFromSymbol() {
         return switch (boardNumber % 8) {
             case 0 -> new ActionTile(ActionEnum.OASIS);
             case 1 -> new ActionTile(ActionEnum.HARBOR);

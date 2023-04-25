@@ -4,6 +4,7 @@ import custom.ButtonQuadrant;
 import custom.HexagonButton;
 import custom.TranslucentButton;
 import datastructures.gameDatastructures.boardNodes.TerrainNode;
+import files.mainMakers.TerrainMaker;
 import logic.constantFolder.Constants;
 import files.QuadrantMaker;
 import logic.gameLogic.Board;
@@ -65,7 +66,9 @@ public class KBPanel extends JPanel implements ActionListener{
             boardText = new TerrainTile [4][10][10];
             // generating random boards
             int [] boardNumbers = new int [4];
-            ArrayList<QuadrantMaker> boardMaker = new ArrayList<>();
+            ArrayList<TerrainMaker> terrainBoardMaker = new ArrayList<>();
+            ArrayList<TerrainMaker> terrainBoardMaker = new ArrayList<>();
+            ArrayList<TerrainMaker> terrainBoardMaker = new ArrayList<>();
             for(int i = 0; i < 4; i++){
                TerrainTile [][] temp = new TerrainTile[10][10];
                int rand = 0;
@@ -73,18 +76,18 @@ public class KBPanel extends JPanel implements ActionListener{
                   rand = (int) (Math.random() * (2 * Constants.getBoards().length));
                   boardNumbers[i] = rand;
                }while(Constants.getBoards()[rand % 8] == null);
-               boardMaker.add(new QuadrantMaker(rand));
+               terrainBoardMaker.add(new QuadrantMaker(rand));
                int boardNum = rand % 8;
                if(rand < Constants.getBoards().length){
                   boardImages.add(Constants.getBoards()[boardNum]);
                   Constants.getBoards()[boardNum] = null;
                   Constants.getFlippedBoards()[boardNum] = null;
-                  temp = boardMaker.get(i).getBoardTiles();
+                  temp = terrainBoardMaker.get(i).getBoardTiles();
                } else {
                   boardImages.add(Constants.getFlippedBoards()[boardNum]);
                   Constants.getBoards()[boardNum] = null;
                   Constants.getFlippedBoards()[boardNum] = null;
-                  temp = boardMaker.get(i).getBoardTiles();
+                  temp = terrainBoardMaker.get(i).getBoardTiles();
                }
                boardText[i] = temp;
             }
