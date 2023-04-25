@@ -372,6 +372,7 @@ public class KBPanel extends JPanel implements ActionListener{
             game.endTurn();
             for(int i = 0; i < 4; i++){
                currentActions[i].setNumTiles(game.getCurrentPlayer().getActionTiles().get(currentActions[i].getType()));
+               currentActions[i].resetNumUses();
             }
             legalPlaces = game.getLegalPlaces();
          }

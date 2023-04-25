@@ -13,8 +13,7 @@ import java.awt.image.BufferedImage;
 import static java.util.Objects.requireNonNull;
 
 public class ActionButton extends HexagonButton{
-    private BufferedImage front, back, process;
-    private boolean canUse;
+    private BufferedImage front, process;
     private int numUses;
     private int numTiles;
     private ActionEnum type;
@@ -22,7 +21,6 @@ public class ActionButton extends HexagonButton{
         super();
         numTiles = 0;
         numUses = 0;
-        canUse = false;
         setUP(boardNum);
     }
     private void setUP(int symbol){
@@ -63,13 +61,19 @@ public class ActionButton extends HexagonButton{
         return numTiles;
     }
     //method to check if the current action tile is usable
-    public boolean isCanUse(){
-        return canUse;
+    public boolean canUse(){
+        if(numUses < numTiles){
+            return true;
+        }
+        return false;
     }
     public ActionEnum getType(){
         return type;
     }
     public void setNumTiles(int num){
         numTiles = num;
+    }
+    public void resetNumUses(){
+        numUses = numTiles;
     }
 }
