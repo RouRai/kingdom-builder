@@ -38,7 +38,4 @@ public class TerrainTile extends Tile<TerrainEnum> {
         return settlement;
     }
 
-    public void setSettlement(Settlement settlement) {
-        this.settlement = settlement;
-    }
 }

@@ -53,4 +53,17 @@ public class Settlement {
     public int getQuadrantNumber() {
         return quadrantNumber;
     }
+
+    @Override
+    public String toString() {
+        return "Settlement{" +
+              "color=" + color +
+              ", row=" + row +
+              ", column=" + column +
+              ", quadrantNumber=" + quadrantNumber +
+              ", trueRow=" + trueRow +
+              ", trueColumn=" + trueColumn +
+              ", location=" + location +
+              '}';
+    }
 }

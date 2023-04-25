@@ -13,7 +13,6 @@ import java.awt.image.BufferedImage;
 
 public class ActionTile extends Tile<ActionEnum> {
     private int count;
-    private BufferedImage front, back;
 
     public ActionTile (ActionEnum type) {
         super(type);
@@ -27,4 +26,5 @@ public class ActionTile extends Tile<ActionEnum> {
     public void takeTile () {
         count--;
     }
+    
 }
