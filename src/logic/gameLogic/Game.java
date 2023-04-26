@@ -1,6 +1,8 @@
 package logic.gameLogic;
 
 import custom.HexagonButton;
+import datastructures.gameDatastructures.boardNodes.ActionNode;
+import datastructures.gameDatastructures.boardNodes.CityNode;
 import datastructures.gameDatastructures.boardNodes.TerrainNode;
 import files.QuadrantMaker;
 import files.mainMakers.ActionMaker;
@@ -19,10 +21,7 @@ public class Game {
    private ArrayList<TerrainCard> terrainCards;
 
    public Board board;
-   //public ArrayList<TerrainNode> legalPlacements;
-   public Game (int [] boardNumbers){
-
-      //basics
+   public Game (ArrayList<Integer>boardNumbers, ArrayList<Integer>objectiveNumbers){
       //Cards
             //Terrain Card Deck
                terrainDeck = new TerrainDeck();
@@ -47,7 +46,6 @@ public class Game {
                   allPlayers.add(temp);
                }
                allPlayers.get(0).setCard(getCard());
-               //legalPlacements = new ArrayList<>();
    }
    public void endTurn(){
       Player temp = allPlayers.get(0);
@@ -76,7 +74,7 @@ public class Game {
     */
    public void checkRegularSettlementPlacement (Player player, HexagonButton button) {
 
-      System.out.println(button + " --------------");
+      //System.out.println(button + " --------------");
       if(player.hasPlacedSettlements()){
          return;
       }
@@ -95,7 +93,7 @@ public class Game {
             //if (button.canClick)
             button.setSettlementImage(Constants.getSettlements()[player.getPlayerNumber() - 1]);
             Settlement tempSettlement = player.getSettlement(button.getquadNum(), button.getRow(), button.getCol());
-            System.out.println("what is the settlement? "+ tempSettlement.getLocation());
+            //System.out.println("what is the settlement? "+ tempSettlement.getLocation());
             tempSettlement.setLocation(board.getTerrainBoard().getBoardMatrix()[tempSettlement.getTrueRow()][tempSettlement.getTrueColumn()]);
             TerrainTile temp = (TerrainTile)button.getTileType();
             temp.setOwner(getCurrentPlayer(), tempSettlement);
@@ -137,6 +135,9 @@ public class Game {
    public Board getBoard() {
       return board;
    }
+   public TerrainNode[][] getTerrainMaxtrix (){return getBoard().getTerrainBoard().getBoardMatrix();}
+   public ActionNode[][] getActionMaxtrix (){return getBoard().getActionBoard().getBoardMatrix();}
+   public CityNode[][] getCityMaxtrix (){return getBoard().getCityBoard().getBoardMatrix();}
    public ArrayList<TerrainNode> getLegalPlaces(){
       return board.regularCanUseTiles(allPlayers.get(0), allPlayers.get(0).getCard());
    }

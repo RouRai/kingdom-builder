@@ -66,16 +66,16 @@ public class Board {
         if (!(node.getTile().getType() == card.type())) {
             return false;
         }
-        System.out.println(node.getTile().getSettlement());
+        //System.out.println(node.getTile().getSettlement());
         if (node.getTile().getSettlement() != null) {
-            System.out.println( "has settlement");
+           // System.out.println( "has settlement");
             return false;
         }
         HashSet<TerrainNode> settlementsAdjacentToTerrain = hasSettlementAdjacentToTerrain(player, card);
         boolean needToUseSettlementAdjacentToTerrain = !(settlementsAdjacentToTerrain.size() == 0);
         if (needToUseSettlementAdjacentToTerrain && settlementsAdjacentToTerrain.size() < 3 && !tilesAdjacentToTerrain(node, card.type()).isEmpty()){
             for (TerrainNode n : settlementsAdjacentToTerrain){
-                System.out.println(n.getTile().getSettlement()+ " -------+++++");
+                //System.out.println(n.getTile().getSettlement()+ " -------+++++");
             }
         }
         boolean nodeChosenIsAdjacentToSettlementAdjacentToTerrain = settlementsAdjacentToTerrain.contains(node);

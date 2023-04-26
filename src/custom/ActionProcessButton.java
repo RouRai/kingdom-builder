@@ -25,10 +25,10 @@ public class ActionProcessButton extends HexagonButton{
         setType(symbol);
     }
     private void setFront(int symbol){
-        front = Constants.getActionTiles()[symbol];
+        front = Constants.getActionTiles()[symbol%8];
     }
     private void setProcess(int symbol){
-        process = Constants.getActionProcess()[symbol];
+        process = Constants.getActionProcess()[symbol%8];
     }
     private void setType(int symbol){
         switch(symbol){
