@@ -213,7 +213,7 @@ public class KBPanel extends JPanel implements ActionListener{
          g2.drawImage(inUse.getProcess(), 1135, 645, 150, 60, null);
       }
       else if(clickedOnActionOnBoard){
-         g2.drawImage(Constants.getActionTiles()[boardNumbers[actionClicked.getquadNum()]],1165,600,80,85,null);
+         g2.drawImage(Constants.getActionTiles()[boardNumbers[actionClicked.getquadNum()] % 8],1165,600,80,85,null);
          ActionTile tile  = game.getBoard().getActionBoard().getBoardMatrix()[actionClicked.getRow()][actionClicked.getCol()].getTile();
          g2.drawString("Has "+ tile.getCount() + " Tiles",1150,730);
          clickedOnActionOnBoard = false;

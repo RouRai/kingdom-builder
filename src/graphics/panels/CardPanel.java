@@ -52,9 +52,9 @@ public class CardPanel extends JPanel {
       int w = 333;
       for (int i = 0; i<3; i++) {
          if (i == 2)
-            g2.drawImage(objectiveCards[i], 240 + i * (w + 55), 195, w, 480, null);
+            g2.drawImage(objectiveCards[i], 240 + i * (w + 47), 195, w, 480, null);
          else
-            g2.drawImage(objectiveCards[i], 240 + i * (w + 50), 195, w, 480, null);
+            g2.drawImage(objectiveCards[i], 240 + i * (w + 53), 195, w, 480, null);
       }
 
       Resume.setBounds(510,720,240,100);
