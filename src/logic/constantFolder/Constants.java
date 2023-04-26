@@ -24,6 +24,7 @@ public class Constants {
         public static final String START_PANEL = "startPanel";
         public static final String GAME_PANEL = "gamePanel";
         public static final String END_PANEL = "endPanel";
+        public static final String CARD_PANEL = "cardPanel";
         public static final String MENU_PANEL = "menuPanel";
         // Image Directory
         public static final String IMG_DIRECTORY = "/images/";

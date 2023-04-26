@@ -1,25 +1,27 @@
 package graphics.frames;
 
-import graphics.panels.EndPanel;
-import graphics.panels.KBPanel;
-import graphics.panels.MenuPanel;
-import graphics.panels.StartPanel;
+import graphics.panels.*;
 import logic.constantFolder.Constants;
 import logic.gameLogic.Board;
+import logic.gameLogic.Game;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 
 public class KBWindow extends JFrame {
 
    private static CardLayout cl;
    private static HashMap<String,JPanel> panels;
+   private Game game;
    public KBWindow (){
       super("Kingdom Builder");
       pack();
       cl = new CardLayout();
       panels = new HashMap<>();
+      System.out.println();
       init();
       add(Constants.PANEL_CONT);
       setResizable(false);
@@ -27,12 +29,28 @@ public class KBWindow extends JFrame {
       setSize(Constants.WIDTH,Constants.HEIGHT);
       setVisible(true);
    }
+
+   private int[] getboardNumbers() {
+      HashSet<Integer> boardNumbers = new HashSet<Integer>();
+      for(int i = 0; i < 4; i++) {
+         int rand;
+         do {
+            rand = (int) (Math.random() * (2 * Constants.getBoards().length));
+         } while (boardNumbers.size() <= i+1);
+
+         boardNumbers.add(rand);
+      }
+      return null;
+   }
+
    private void init(){
       panels.put(Constants.START_PANEL, new StartPanel(cl));
       panels.put(Constants.MENU_PANEL, new MenuPanel(cl));
+      panels.put(Constants.CARD_PANEL, new CardPanel(cl));
       Constants.PANEL_CONT.setLayout(cl);
       Constants.PANEL_CONT.add(panels.get(Constants.START_PANEL), Constants.START_PANEL);
       Constants.PANEL_CONT.add(panels.get(Constants.MENU_PANEL), Constants.MENU_PANEL);
+      Constants.PANEL_CONT.add(panels.get(Constants.CARD_PANEL), Constants.CARD_PANEL);
       //remove the part below later
       panels.put(Constants.GAME_PANEL, new KBPanel(cl));
       Constants.PANEL_CONT.add(panels.get(Constants.GAME_PANEL), Constants.GAME_PANEL);

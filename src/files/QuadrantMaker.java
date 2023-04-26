@@ -23,7 +23,7 @@ public class QuadrantMaker<T extends Tile<?>> {
 
    public QuadrantMaker(int boardNumber) {
       this.boardNumber = boardNumber;
-      boardTiles = (T[][]) new Object[10][10];
+      boardTiles = (T[][]) new Tile[10][10];
       setUpEnumMatrix(boardNumber);
    }
 
