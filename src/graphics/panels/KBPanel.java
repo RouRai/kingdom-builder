@@ -353,6 +353,7 @@ public class KBPanel extends JPanel implements ActionListener{
             //setRegularAdjacent(game.getCurrentPlayer(), temp);
          }
          legalPlaces = game.getLegalPlaces();
+         reassignActionButtonNumTiles();
          repaint();
       });
    }
@@ -394,8 +395,8 @@ public class KBPanel extends JPanel implements ActionListener{
                   cardLay.show(Constants.PANEL_CONT, Constants.END_PANEL);
             }
             game.endTurn();
+            reassignActionButtonNumTiles();
             for(int i = 0; i < 4; i++){
-               currentActions[i].setNumTiles(game.getCurrentPlayer().getActionTiles().get(currentActions[i].getType()));
                currentActions[i].resetNumUses();
             }
             legalPlaces = game.getLegalPlaces();
@@ -406,7 +407,11 @@ public class KBPanel extends JPanel implements ActionListener{
       }
       repaint();
    }
-
+   private void reassignActionButtonNumTiles(){
+      for(int i = 0; i < 4; i++){
+         currentActions[i].setNumTiles(game.getCurrentPlayer().getActionTiles().get(currentActions[i].getType()));
+      }
+   }
    /**
     * Assigns the <code>HexagonButton</code> for a single quadrant
     * @param quadrantButtons Empty <code>HexagonButton</code> matrix to assign buttons to the quadrant
