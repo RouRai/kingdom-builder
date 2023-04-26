@@ -3,6 +3,7 @@ package graphics.panels;
 import custom.TranslucentButton;
 import graphics.frames.KBWindow;
 import logic.constantFolder.Constants;
+import logic.gameLogic.Game;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -22,7 +23,7 @@ public class MenuPanel extends JPanel {
     private Graphics2D g2;
     private Constants constantClass;
     private BufferedImage ruleBookPage;
-    public MenuPanel(CardLayout c){
+    public MenuPanel(CardLayout c, Game g ){
 
         pageNumber = 1;
         cl = c;

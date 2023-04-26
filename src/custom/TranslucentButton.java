@@ -7,7 +7,7 @@ import javax.swing.JButton;
 public class TranslucentButton extends JButton {
 
    // switch this boolean onto true if you want to see the button itself
-      Boolean bool = true;
+      Boolean bool = false;
       int ID;
       /**
        * only for Start Game Button
