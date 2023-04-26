@@ -1,6 +1,7 @@
 package custom;
 import logic.cards.TerrainCard;
 import logic.constantFolder.TerrainEnum;
+import logic.tiles.TerrainTile;
 import logic.tiles.Tile;
 
 import javax.swing.*;
@@ -14,7 +15,7 @@ public class HexagonButton extends JButton {
     private final double angle;
     private Polygon polygon;
     private BufferedImage settlement;
-    private Tile<?> tileType;
+    private TerrainTile tileType;
     private int quadNum, row, col;
     public Boolean canClick;
     public HexagonButton(){
@@ -30,7 +31,7 @@ public class HexagonButton extends JButton {
         setPreferredSize(size);
         setContentAreaFilled(false);
     }
-    public HexagonButton(int q, int r, int c, Tile type){
+    public HexagonButton(int q, int r, int c, TerrainTile type){
         this();
         quadNum = q;
         row = r;
@@ -66,9 +67,9 @@ public class HexagonButton extends JButton {
     }
 
     public void drawHighlight(Graphics2D g, BufferedImage highlight, TerrainCard currentTerrain){
-        if (tileType == null || tileType.getType().equals(TerrainEnum.CITY)|| settlement != null || tileType.getType().equals(TerrainEnum.MOUNTAIN) || !tileType.getType().equals(currentTerrain.type())) {
+        /*if (tileType == null || tileType.getType().equals(TerrainEnum.CITY)|| settlement != null || tileType.getType().equals(TerrainEnum.MOUNTAIN) || !tileType.getType().equals(currentTerrain.type())) {
             return;
-        }
+        }*/
         g.drawImage(highlight, this.getX() - 40, this.getY() - 40, 120, 133, null);
     }
     public void drawSettlement(Graphics2D g){

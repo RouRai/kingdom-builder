@@ -129,4 +129,5 @@ public class CityMatrix {
     public CityNode[][] getBoardMatrix() {
         return boardMatrix;
     }
+
 }

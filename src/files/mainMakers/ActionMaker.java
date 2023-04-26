@@ -12,10 +12,13 @@ import java.util.Scanner;
 
 import static logic.constantFolder.Constants.boardNames;
 
-public class ActionMaker extends QuadrantMaker<ActionTile> {
+public class ActionMaker{
+    private final int boardNumber;
+    private ActionTile[][] boardTiles;
 
     public ActionMaker(int boardNumber) {
-        super(boardNumber);
+        this.boardNumber = boardNumber;
+        boardTiles = new ActionTile[10][10];
         setUpEnumMatrix(boardNumber);
     }
 
@@ -72,5 +75,9 @@ public class ActionMaker extends QuadrantMaker<ActionTile> {
             case 7 -> new ActionTile(ActionEnum.TAVERN);
             default -> null;
         };
+    }
+
+    public ActionTile[][] getBoardTiles() {
+        return boardTiles;
     }
 }

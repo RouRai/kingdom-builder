@@ -53,6 +53,8 @@ public class KBPanel extends JPanel implements ActionListener{
          boardNumbers[i] = setUpBoardImages();
       }
 
+      game = new Game (boardNumbers);
+
       int[] boardStartX = {10,423,10,423};
       int[] boardStartY = {6,6,365,365};
       assignToAllButtonQuadrants(boardStartX, boardStartY);
@@ -70,8 +72,6 @@ public class KBPanel extends JPanel implements ActionListener{
       endGameScreen.addActionListener(this);
 
       setUpObjectiveButtons();
-
-      game = new Game (boardNumbers);
 
       setUpMiscellaneous ();
       setUpActionTileHexagonButtons();
@@ -275,6 +275,7 @@ public class KBPanel extends JPanel implements ActionListener{
                   int i = 0;
                    while(legalPlaces == null && !game.getCurrentPlayer().hasPlacedSettlements()){
                       if(i > 3){
+                         i = 0;
                          game.getCurrentPlayer().setCard(game.getCard());
                       }
                        legalPlaces = game.getLegalPlaces();
@@ -383,10 +384,18 @@ public class KBPanel extends JPanel implements ActionListener{
     * @param quadrantNumber Number for quadrant
     */
    private void assignButtonsToQuadrant(HexagonButton[][] quadrantButtons, int quadrantNumber){
+      int tempr = 0;
+      int tempc = 0;
+      if(quadrantNumber == 2 || quadrantNumber == 3){
+         tempr = 10;
+      }
+      if(quadrantNumber == 1 || quadrantNumber == 3){
+         tempc = 10;
+      }
       for (int r = 0; r < 10; r++) {
          for (int c = 0; c < 10; c++) {
-            if(boardText[quadrantNumber][r][c] != null){
-               quadrantButtons[r][c] = new HexagonButton(quadrantNumber, r, c, boardText[quadrantNumber][r][c]);
+            if(game.getBoard().getTerrainBoard().getBoardMatrix()[tempr + r][tempc + c] != null){
+               quadrantButtons[r][c] = new HexagonButton(quadrantNumber, r, c, game.getBoard().getTerrainBoard().getBoardMatrix()[tempr + r][tempc + c].getTile());
             }
             setUpBoardHexes(quadrantButtons[r][c]);
          }

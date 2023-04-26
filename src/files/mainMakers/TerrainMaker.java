@@ -3,6 +3,7 @@ package files.mainMakers;
 import files.QuadrantMaker;
 import logic.constantFolder.Constants;
 import logic.constantFolder.TerrainEnum;
+import logic.tiles.ActionTile;
 import logic.tiles.TerrainTile;
 
 import java.io.File;
@@ -12,10 +13,13 @@ import java.util.Scanner;
 
 import static logic.constantFolder.Constants.boardNames;
 
-public class TerrainMaker extends QuadrantMaker<TerrainTile> {
+public class TerrainMaker {
+    private final int boardNumber;
+    private TerrainTile[][] boardTiles;
 
     public TerrainMaker(int boardNumber) {
-        super(boardNumber);
+        this.boardNumber = boardNumber;
+        boardTiles = new TerrainTile[10][10];
         setUpEnumMatrix(boardNumber);
     }
 
@@ -71,5 +75,9 @@ public class TerrainMaker extends QuadrantMaker<TerrainTile> {
             case "m" -> new TerrainTile(TerrainEnum.MOUNTAIN);
             default -> null;
         };
+    }
+
+    public TerrainTile[][] getBoardTiles() {
+        return boardTiles;
     }
 }

@@ -2,6 +2,7 @@ package files.mainMakers;
 
 import files.QuadrantMaker;
 import logic.constantFolder.Constants;
+import logic.tiles.ActionTile;
 import logic.tiles.CityTile;
 
 import java.io.File;
@@ -11,10 +12,13 @@ import java.util.Scanner;
 
 import static logic.constantFolder.Constants.boardNames;
 
-public class CityMaker extends QuadrantMaker<CityTile> {
+public class CityMaker {
+    private final int boardNumber;
+    private CityTile[][] boardTiles;
 
     public CityMaker(int boardNumber) {
-        super(boardNumber);
+        this.boardNumber = boardNumber;
+        boardTiles = new CityTile[10][10];
         setUpEnumMatrix(boardNumber);
     }
 
@@ -64,5 +68,9 @@ public class CityMaker extends QuadrantMaker<CityTile> {
             return new CityTile();
         }
         return null;
+    }
+
+    public CityTile[][] getBoardTiles() {
+        return boardTiles;
     }
 }
