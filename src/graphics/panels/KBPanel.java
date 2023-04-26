@@ -12,6 +12,7 @@ import logic.constantFolder.Constants;
 import files.QuadrantMaker;
 import logic.gameLogic.Game;
 import logic.gameLogic.Player;
+import logic.tiles.ActionTile;
 import logic.tiles.TerrainTile;
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -40,6 +41,8 @@ public class KBPanel extends JPanel implements ActionListener{
    private Game game;
    private int currentAction = 0;
    private ActionProcessButton inUse;
+   private Boolean clickedOnActionOnBoard = false;
+   private HexagonButton actionClicked;
 
    public KBPanel (CardLayout cl){
       cardLay = cl;
@@ -229,8 +232,14 @@ public class KBPanel extends JPanel implements ActionListener{
          i++;
       }
       //action tile selected - this part shows the hint when using the action tile
-      if (game.getCurrentPlayer().isUsingActionTile()){
+      if (game.getCurrentPlayer().isUsingActionTile()) {
          g2.drawImage(inUse.getProcess(), 1135, 645, 150, 60, null);
+      }
+      else if(clickedOnActionOnBoard){
+         g2.drawImage(Constants.getActionTiles()[boardIDNumbers.get(actionClicked.getquadNum())],1165,600,80,85,null);
+         ActionTile tile  = game.getBoard().getActionBoard().getBoardMatrix()[actionClicked.getRow()][actionClicked.getCol()].getTile();
+         g2.drawString("Has "+ tile.getCount() + " Tiles",1150,730);
+         clickedOnActionOnBoard = false;
       }
       //landscape card drawn by the current player
       g2.drawImage(game.getCurrentPlayer().getCard().image(), 1335, 530, 130, 200, null);
@@ -243,6 +252,26 @@ public class KBPanel extends JPanel implements ActionListener{
          g2.setColor(Color.BLACK);
       }
       g2.drawString("" + game.getCurrentPlayer().getSettlementsRemaining(),1365,480);
+   }
+   public void setUpActionHexes(HexagonButton temp) {
+      if(temp == null){
+         return;
+      }
+      add(temp);
+      temp.addActionListener(e -> {
+         System.out.println("Action Button clicked " + temp + "  ");
+         int quad = temp.getquadNum();
+         int tempr = temp.getRow();
+         int tempc = temp.getCol();
+         if(quad == 2 || quad == 3)
+            tempr = temp.getRow() + 10;
+         if(quad == 1 || quad == 3)
+            tempc = temp.getCol() + 10;
+         clickedOnActionOnBoard = true;
+         actionClicked = temp;
+         repaint();
+
+      });
    }
 
    /**
@@ -394,14 +423,19 @@ public class KBPanel extends JPanel implements ActionListener{
       }
       for (int r = 0; r < 10; r++) {
          for (int c = 0; c < 10; c++) {
-            if(game.getBoard().getTerrainBoard().getBoardMatrix()[tempr + r][tempc + c] != null){
-               quadrantButtons[r][c] = new HexagonButton(quadrantNumber, r, c, game.getBoard().getTerrainBoard().getBoardMatrix()[tempr + r][tempc + c].getTile());
+            System.out.println(boardText[quadrantNumber][r][c]);
+            if(boardText[quadrantNumber][r][c] != null) {
+               quadrantButtons[r][c] = new HexagonButton(quadrantNumber, r, c, boardText[quadrantNumber][r][c]);
+               setUpBoardHexes(quadrantButtons[r][c]);
             }
-            setUpBoardHexes(quadrantButtons[r][c]);
+            else {
+               quadrantButtons[r][c] = new HexagonButton(quadrantNumber, r, c, boardText[quadrantNumber][r][c]);
+               setUpActionHexes(quadrantButtons[r][c]);
+            }
          }
       }
    }
-   //fdgsdfg
+
 
    /**
     * Assigns the <code>HexagonButton</code> for all quadrants
