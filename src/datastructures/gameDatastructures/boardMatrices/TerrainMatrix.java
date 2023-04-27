@@ -45,6 +45,8 @@ public class TerrainMatrix {
             for(int column = 0; column < terrainEnumMatrix[row].length; column++) {
                 if(terrainEnumMatrix[row][column] != null) {
                     nodeMatrix[row][column] = new TerrainNode(terrainEnumMatrix[row][column].getType(), row, column);
+                } else {
+                    nodeMatrix[row][column] = new TerrainNode(null, row, column);
                 }
             }
         }
