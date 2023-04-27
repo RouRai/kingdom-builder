@@ -5,6 +5,7 @@ import files.QuadrantMaker;
 import logic.constantFolder.Constants;
 import logic.gameLogic.Game;
 import logic.gameLogic.Player;
+import logic.gameLogic.Scoring;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -16,17 +17,18 @@ import java.util.ArrayList;
 public class EndPanel extends JPanel{
     private CardLayout cl;
     private static Game game;
+    private Scoring score;
     private BufferedImage background;
     private ArrayList<Player> players;
     private Graphics2D g2;
     private Constants constantClass;
-    private Game game;
     private final String fontStr = "Lucida Calligraphy";
     public EndPanel(CardLayout c, Game g){
 
         cl = c;
         constantClass = new Constants();
         game = g;
+
 
         setUpMiscellaneous();
 
