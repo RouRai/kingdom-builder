@@ -31,7 +31,7 @@ public class ActionProcessButton extends HexagonButton{
         process = Constants.getActionProcess()[symbol%8];
     }
     private void setType(int symbol){
-        switch(symbol){
+        switch(symbol % 8){
             case 0 -> type = ActionEnum.OASIS;
             case 1 -> type = ActionEnum.HARBOR;
             case 2 -> type = ActionEnum.FARM;

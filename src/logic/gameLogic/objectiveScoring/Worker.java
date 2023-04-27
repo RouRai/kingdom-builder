@@ -1,21 +1,17 @@
 package logic.gameLogic.objectiveScoring;
 
-import datastructures.baseDatastructures.Node;
-import datastructures.gameDatastructures.boardNodes.ActionNode;
 import datastructures.gameDatastructures.boardNodes.CityNode;
 import datastructures.gameDatastructures.boardNodes.TerrainNode;
 import logic.gameLogic.Board;
 import logic.gameLogic.Player;
 import logic.placeables.Settlement;
 
-import java.util.ArrayList;
-
 public class Worker implements Objective{
     @Override
     public int scoreObjective(Player player, Board board) {
         int score = 0;
         for(Settlement settle : player.getSettlements()){
-            checkAdjacencyToCityTile(player, settle.getLocation(), board);
+            score += checkAdjacencyToCityTile(player, settle.getLocation(), board);
         }
         return score;
     }
@@ -32,11 +28,12 @@ public class Worker implements Objective{
 
         return analyzeAdjacentNodesForCityTile(player, rows, columns, board);
     }
-    private int analyzeAdjacentNodesForCityTile (Player player, int rows[], int columns[], Board board) {
+
+    private int analyzeAdjacentNodesForCityTile (Player player, int[] rows, int[] columns, Board board) {
         int score = 0;
         for (int index = 0; index < rows.length; index++) {
             CityNode adjacentCityNode = board.getCityBoard().getBoardMatrix()[rows[index]][columns[index]];
-            boolean terrainAdjacentToCityNode = board.getCityBoard().getBoardMatrix()[rows[index]][columns[index]] == null && adjacentCityNode != null;
+            boolean terrainAdjacentToCityNode = adjacentCityNode != null;
             if (terrainAdjacentToCityNode) {
                 score++;
             }

@@ -24,6 +24,6 @@ public class Farmer implements Objective {
                 quad3.add(settle);
             }
         }
-        return Math.min(Math.min(quad0.size(), quad1.size()), Math.min(quad2.size(), quad3.size()));
+        return 3 * Math.min(Math.min(quad0.size(), quad1.size()), Math.min(quad2.size(), quad3.size()));
     }
 }
