@@ -3,6 +3,7 @@ package graphics.panels;
 import custom.TranslucentButton;
 import graphics.frames.KBWindow;
 import logic.constantFolder.Constants;
+import logic.gameLogic.Game;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -23,6 +24,10 @@ public class CardPanel extends JPanel {
       cl = c;
       Resume = new TranslucentButton();
       Menu = new TranslucentButton();
+      objectiveCards = new BufferedImage[3];
+      for (int i = 0; i < 3; i++)
+         objectiveCards[i] = Constants.getCharCards()[g.getObjectiveNumbers()[i]];
+
       setUpLeft();
       setUpRight();
       addMouseListener(new MouseAdapter() {
@@ -44,10 +49,16 @@ public class CardPanel extends JPanel {
       super.paintComponent(g2);
       // 1 -- BACKGROUND
       g2.drawImage(background, 0, 0, Constants.WIDTH, Constants.HEIGHT - 8, null);
-      g2.drawImage(objectiveCards[0], 700, 22, 605, 800, null);
+      int w = 333;
+      for (int i = 0; i<3; i++) {
+         if (i == 2)
+            g2.drawImage(objectiveCards[i], 240 + i * (w + 47), 195, w, 480, null);
+         else
+            g2.drawImage(objectiveCards[i], 240 + i * (w + 53), 195, w, 480, null);
+      }
 
-      Resume.setBounds(660,395,310,100);
-      Menu.setBounds(1305,405,310,100);
+      Resume.setBounds(510,720,240,100);
+      Menu.setBounds(790,720,240,100);
    }
    private void setUpLeft(){
       add(Resume);
