@@ -34,21 +34,24 @@ public class KBWindow extends JFrame {
    }
 
    private int[] getboardNumbers() {
-      HashSet<Integer> boardNumbers = new HashSet<Integer>();
-      for(int i = 0; i < 4; i++) {
-
-         int rand;
-         do {
-            rand = (int) (Math.random() * (2 * Constants.getBoards().length));
-            boardNumbers.add(rand);
-         } while (boardNumbers.size() <= i+1);
-      }
+      ArrayList<Integer> boardNumbers = new ArrayList<>();
+      for (int i = 0; i < 8; i++)
+         boardNumbers.add(i);
       int [] arr = new int[4];
       for(int i = 0; i < 4; i++) {
-         arr[i] = (int) boardNumbers.toArray()[i];
-         //System.out.println(arr[i]);
+         int rand;
+            rand = (int) (Math.random() * (boardNumbers.size()));
+            int flipped = (int) (Math.random() * 2);
+         System.out.println(flipped + "_");
+            if (flipped ==1)
+               arr[i]=boardNumbers.get(rand);
+            else
+               arr[i]= boardNumbers.get(rand)+8;
+            boardNumbers.remove(rand);
       }
-      //System.out.println("asoiuhiuoshguihdsfgihudsf");
+      for(int i = 0; i < 4; i++) {
+         System.out.println(arr[i]);
+      }
       return arr;
    }
    private int[] getobjectiveNumbers() {
