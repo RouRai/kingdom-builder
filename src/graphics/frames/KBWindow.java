@@ -42,7 +42,7 @@ public class KBWindow extends JFrame {
          int rand;
             rand = (int) (Math.random() * (boardNumbers.size()));
             int flipped = (int) (Math.random() * 2);
-         System.out.println(flipped + "_");
+         //System.out.println(flipped + "_");
             if (flipped ==1)
                arr[i]=boardNumbers.get(rand);
             else
@@ -55,12 +55,19 @@ public class KBWindow extends JFrame {
       return arr;
    }
    private int[] getobjectiveNumbers() {
+      ArrayList<Integer> pool = new ArrayList<>();
+      pool.add(1); // discoveror
+      pool.add(2); // farmers
+      pool.add(3); //fish
+      pool.add(4); //knights
+      pool.add(8); //lords
+      pool.add(6); //miners
       HashSet<Integer> boardNumbers = new HashSet<Integer>();
       for(int i = 0; i < 3; i++){
          int rand;
          do {
-            rand = (int) (Math.random() * (Constants.getCharCards().length));
-            boardNumbers.add(rand);
+            rand = (int) (Math.random() * (pool.size()));
+            boardNumbers.add(pool.remove(rand));
          } while (boardNumbers.size() <= i+1);
       }
       int [] arr = new int[3];
