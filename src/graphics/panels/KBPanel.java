@@ -219,7 +219,7 @@ public class KBPanel extends JPanel implements ActionListener{
          clickedOnActionOnBoard = false;
       }
       //landscape card drawn by the current player
-      System.out.println(game.getCurrentPlayer().getCard());
+      //System.out.println(game.getCurrentPlayer().getCard());
       g2.drawImage(game.getCurrentPlayer().getCard().image(), 1335, 530, 130, 200, null);
 
       //settlement icon - based on color
@@ -414,7 +414,7 @@ public class KBPanel extends JPanel implements ActionListener{
                setUpBoardHexes(quadrantButtons[r][c]);
             }
             else  if (game.getTerrainMaxtrix()[tempr][tempc]== null && game.getCityMaxtrix()[tempr][tempc]== null){
-               System.out.println(game.getBoard().getActionBoard().getBoardMatrix()[tempr][tempc].getTile() + " --------+++++");
+               //System.out.println(game.getBoard().getActionBoard().getBoardMatrix()[tempr][tempc].getTile() + " --------+++++");
                quadrantButtons[r][c] = new HexagonButton(quadrantNumber, r, c,game.getBoard().getActionBoard().getBoardMatrix()[tempr][tempc].getTile());
                setUpActionHexes(quadrantButtons[r][c]);
             }
