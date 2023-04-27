@@ -1,7 +1,6 @@
 package graphics.panels;
 
 import custom.TranslucentButton;
-import files.QuadrantMaker;
 import logic.constantFolder.Constants;
 import logic.gameLogic.Game;
 import logic.gameLogic.Player;

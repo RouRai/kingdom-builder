@@ -105,11 +105,27 @@ public class HexagonButton extends JButton {
     public int getCol(){
         return col;
     }
-
+    public int getTrueRow(){
+        if(quadNum == 2 || quadNum == 3){
+            return 10 + row;
+        }
+        return row;
+    }
+    public int getTrueCol(){
+        if(quadNum == 1 || quadNum == 3){
+            return 10 + col;
+        }
+        return col;
+    }
     public BufferedImage getSettlement(){
         return settlement;
     }
     public String toString (){
         return "Hex button Clicked - quad"+ this.quadNum + " ("+ this.row+ ", "+ this.col+ ") ";
     }
+
+    public ActionTile getActiontileType() {
+        return actiontileType;
+    }
+
 }

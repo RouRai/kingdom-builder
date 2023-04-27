@@ -212,9 +212,9 @@ public class KBPanel extends JPanel implements ActionListener{
       if (game.getCurrentPlayer().isUsingActionTile()) {
          g2.drawImage(inUse.getProcess(), 1135, 645, 150, 60, null);
       }
-      else if(clickedOnActionOnBoard){
+      else if(clickedOnActionOnBoard && game.getBoard().getActionBoard().getBoardMatrix()[actionClicked.getTrueRow()][actionClicked.getTrueCol()] != null){
          g2.drawImage(Constants.getActionTiles()[boardNumbers[actionClicked.getquadNum()] % 8],1165,600,80,85,null);
-         ActionTile tile  = game.getBoard().getActionBoard().getBoardMatrix()[actionClicked.getRow()][actionClicked.getCol()].getTile();
+         ActionTile tile  = game.getBoard().getActionBoard().getBoardMatrix()[actionClicked.getTrueRow()][actionClicked.getTrueCol()].getTile();
          g2.drawString("Has "+ tile.getCount() + " Tiles",1150,730);
          clickedOnActionOnBoard = false;
       }
@@ -238,14 +238,7 @@ public class KBPanel extends JPanel implements ActionListener{
       add(temp);
       temp.addActionListener(e -> {
          System.out.println("=========        Action Button clicked " + temp + "  ");
-         int quad = temp.getquadNum();
-         int tempr = temp.getRow();
-         int tempc = temp.getCol();
-         if(quad == 2 || quad == 3)
-            tempr = temp.getRow() + 10;
-         if(quad == 1 || quad == 3)
-            tempc = temp.getCol() + 10;
-         clickedOnActionOnBoard = true;
+         clickedOnActionOnBoard = !clickedOnActionOnBoard;
          actionClicked = temp;
          repaint();
 
@@ -409,13 +402,13 @@ public class KBPanel extends JPanel implements ActionListener{
 
             if(quad == 1 || quad == 3)
                tempc += 10;
-            if(game.getTerrainMaxtrix()[tempr][tempc]!= null) {
+            if(game.getTerrainMaxtrix()[tempr][tempc] != null) {
                quadrantButtons[r][c] = new HexagonButton(quadrantNumber, r, c, game.getTerrainMaxtrix()[tempr][tempc].getTile());
                setUpBoardHexes(quadrantButtons[r][c]);
             }
-            else  if (game.getTerrainMaxtrix()[tempr][tempc]== null && game.getCityMaxtrix()[tempr][tempc]== null){
+            else  if (game.getActionMaxtrix()[tempr][tempc] != null){
                //System.out.println(game.getBoard().getActionBoard().getBoardMatrix()[tempr][tempc].getTile() + " --------+++++");
-               quadrantButtons[r][c] = new HexagonButton(quadrantNumber, r, c,game.getBoard().getActionBoard().getBoardMatrix()[tempr][tempc].getTile());
+               quadrantButtons[r][c] = new HexagonButton(quadrantNumber, r, c, game.getBoard().getActionBoard().getBoardMatrix()[tempr][tempc].getTile());
                setUpActionHexes(quadrantButtons[r][c]);
             }
          }
