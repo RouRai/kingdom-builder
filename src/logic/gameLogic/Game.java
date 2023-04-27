@@ -2,7 +2,6 @@ package logic.gameLogic;
 
 import custom.HexagonButton;
 import datastructures.gameDatastructures.boardNodes.TerrainNode;
-import files.QuadrantMaker;
 import files.mainMakers.ActionMaker;
 import files.mainMakers.CityMaker;
 import files.mainMakers.TerrainMaker;
@@ -101,6 +100,7 @@ public class Game {
             temp.setOwner(getCurrentPlayer(), tempSettlement);
             player.setNumSettlementsPlaced(player.getNumSettlementsPlaced() + 1);
             getBoard().getTerrainBoard().getBoardMatrix()[tempSettlement.getTrueRow()][tempSettlement.getTrueColumn()].getTile().setOwner(player,tempSettlement);
+            getBoard().checkAdjacencyToActionTile(player, tempSettlement.getTrueRow(), tempSettlement.getTrueColumn());
          }
 
       //giving the tile / button TO the current player's settlement

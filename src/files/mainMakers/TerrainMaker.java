@@ -1,9 +1,7 @@
 package files.mainMakers;
 
-import files.QuadrantMaker;
 import logic.constantFolder.Constants;
 import logic.constantFolder.TerrainEnum;
-import logic.tiles.ActionTile;
 import logic.tiles.TerrainTile;
 
 import java.io.File;

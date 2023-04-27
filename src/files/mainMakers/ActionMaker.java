@@ -1,6 +1,5 @@
 package files.mainMakers;
 
-import files.QuadrantMaker;
 import logic.constantFolder.ActionEnum;
 import logic.constantFolder.Constants;
 import logic.tiles.ActionTile;
@@ -46,7 +45,8 @@ public class ActionMaker{
             String[] symbols = data.split(" ");
             int columns = 0;
             for (String symbol: symbols){
-                boardTiles[rows][columns] = getTypeFromSymbol();
+                if(symbol.equals("a"))
+                    boardTiles[rows][columns] = getTypeFromSymbol();
                 columns++;
             }
             rows++;

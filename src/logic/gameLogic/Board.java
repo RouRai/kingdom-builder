@@ -3,6 +3,7 @@ package logic.gameLogic;
 import datastructures.gameDatastructures.boardMatrices.ActionMatrix;
 import datastructures.gameDatastructures.boardMatrices.CityMatrix;
 import datastructures.gameDatastructures.boardMatrices.TerrainMatrix;
+import datastructures.gameDatastructures.boardNodes.ActionNode;
 import datastructures.gameDatastructures.boardNodes.TerrainNode;
 import files.mainMakers.ActionMaker;
 import files.mainMakers.CityMaker;
@@ -127,5 +128,30 @@ public class Board {
         return actionBoard;
     }
 
+    public void checkAdjacencyToActionTile (Player player, int row, int column) {
+        checkAdjacencyToActionTile(player, terrainBoard.getBoardMatrix()[row][column]);
+    }
+    private void checkAdjacencyToActionTile (Player player, TerrainNode terrainNode) {
+        int[] rows = new int[6];
+        int[] columns = new int[6];
 
+        int index = 0;
+        for (TerrainNode adjacentNode : terrainNode.getAdjacentNodes().values()) {
+            rows[index] = adjacentNode.getTrueRow();
+            columns[index] = adjacentNode.getTrueColumn();
+            index++;
+        }
+
+        analyzeAdjacentNodesForActionTile(player, rows, columns);
+    }
+
+    private void analyzeAdjacentNodesForActionTile (Player player, int rows[], int columns[]) {
+        for (int index = 0; index < rows.length; index++) {
+            ActionNode adjacentActionNode = actionBoard.getBoardMatrix()[rows[index]][columns[index]];
+            boolean terrainAdjacentToActionNode = terrainBoard.getBoardMatrix()[rows[index]][columns[index]] == null && adjacentActionNode != null;
+            if (terrainAdjacentToActionNode) {
+                player.giveActionTile(adjacentActionNode.getType());
+            }
+        }
+    }
 }

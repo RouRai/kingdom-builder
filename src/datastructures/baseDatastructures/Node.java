@@ -17,6 +17,7 @@ public class Node<T extends Node<?>> {
 
     private final HashMap<DirectionEnum, T> adjacentNodes;
     private final int row, column;
+    private int trueRow, trueColumn;
 
     public Node (int row, int column) {
         adjacentNodes = new HashMap<>();
@@ -46,5 +47,21 @@ public class Node<T extends Node<?>> {
 
     public int getColumn() {
         return column;
+    }
+
+    public int getTrueRow() {
+        return trueRow;
+    }
+
+    public int getTrueColumn() {
+        return trueColumn;
+    }
+
+    public void setTrueRow(int trueRow) {
+        this.trueRow = trueRow;
+    }
+
+    public void setTrueColumn(int trueColumn) {
+        this.trueColumn = trueColumn;
     }
 }

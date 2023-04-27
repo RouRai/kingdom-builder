@@ -1,8 +1,6 @@
 package files.mainMakers;
 
-import files.QuadrantMaker;
 import logic.constantFolder.Constants;
-import logic.tiles.ActionTile;
 import logic.tiles.CityTile;
 
 import java.io.File;

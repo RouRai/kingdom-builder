@@ -17,6 +17,7 @@ public class CityMatrix {
         boardMatrix = new CityNode[20][20];
         combineQuadrants(quadrants);
         connectNodes();
+        reAssignRowsAndColumns();
     }
 
     private void combineQuadrants (ArrayList<CityMaker> quadrants) {
@@ -128,6 +129,17 @@ public class CityMatrix {
 
     public CityNode[][] getBoardMatrix() {
         return boardMatrix;
+    }
+
+    private void reAssignRowsAndColumns () {
+        for (int rows = 0; rows < boardMatrix.length; rows++) {
+            for (int columns = 0; columns < boardMatrix[rows].length; columns++) {
+                if (boardMatrix[rows][columns] != null) {
+                    boardMatrix[rows][columns].setTrueRow(rows);
+                    boardMatrix[rows][columns].setTrueColumn(columns);
+                }
+            }
+        }
     }
 
 }
