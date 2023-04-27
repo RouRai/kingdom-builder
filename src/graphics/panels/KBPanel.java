@@ -408,7 +408,7 @@ public class KBPanel extends JPanel implements ActionListener{
                setUpBoardHexes(quadrantButtons[r][c]);
             }
             else  if (game.getTerrainMaxtrix()[tempr][tempc]== null && game.getCityMaxtrix()[tempr][tempc]== null){
-               System.out.println(game.getBoard().getActionBoard().getBoardMatrix()[tempr][tempc].getTile() + " --------+++++");
+               //System.out.println(game.getBoard().getActionBoard().getBoardMatrix()[tempr][tempc].getTile() + " --------+++++");
                quadrantButtons[r][c] = new HexagonButton(quadrantNumber, r, c,game.getBoard().getActionBoard().getBoardMatrix()[tempr][tempc].getTile());
                setUpActionHexes(quadrantButtons[r][c]);
             }

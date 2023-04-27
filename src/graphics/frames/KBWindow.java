@@ -46,9 +46,9 @@ public class KBWindow extends JFrame {
       int [] arr = new int[4];
       for(int i = 0; i < 4; i++) {
          arr[i] = (int) boardNumbers.toArray()[i];
-         System.out.println(arr[i]);
+         //System.out.println(arr[i]);
       }
-      System.out.println("asoiuhiuoshguihdsfgihudsf");
+      //System.out.println("asoiuhiuoshguihdsfgihudsf");
       return arr;
    }
    private int[] getobjectiveNumbers() {
@@ -63,7 +63,7 @@ public class KBWindow extends JFrame {
       int [] arr = new int[3];
       for(int i = 0; i < 3; i++) {
          arr[i] = (int) boardNumbers.toArray()[i];
-         System.out.println(arr[i]);
+         //System.out.println(arr[i]);
       }
       return arr;
    }

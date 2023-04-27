@@ -11,10 +11,9 @@ import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
 
-public class EndPanel extends JPanel implements ActionListener {
+public class EndPanel extends JPanel{
     private CardLayout cl;
     private BufferedImage background;
-    private TranslucentButton menuButton;
     private Graphics2D g2;
     private Constants constantClass;
     private BufferedImage bg;
@@ -23,10 +22,6 @@ public class EndPanel extends JPanel implements ActionListener {
 
         cl = c;
         constantClass = new Constants();
-
-        menuButton = new TranslucentButton();
-        add(menuButton);
-        menuButton.addActionListener(this);
 
         setUpMiscellaneous();
 
@@ -41,8 +36,6 @@ public class EndPanel extends JPanel implements ActionListener {
         drawSettlements();
         drawScoreComponents();
         drawWinnerString();
-
-        menuButton.setBounds(785, 770, 70, 65);
     }
     public void drawSettlements(){
         int space_between_Players = 123;
@@ -120,10 +113,4 @@ public class EndPanel extends JPanel implements ActionListener {
             }});
     }
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        if(e.getSource().equals(menuButton))
-            cl.show(Constants.PANEL_CONT, Constants.MENU_PANEL);
-
-    }
 }
