@@ -24,6 +24,7 @@ public class Constants {
         public static final String START_PANEL = "startPanel";
         public static final String GAME_PANEL = "gamePanel";
         public static final String END_PANEL = "endPanel";
+        public static final String CARD_PANEL = "cardPanel";
         public static final String MENU_PANEL = "menuPanel";
         // Image Directory
         public static final String IMG_DIRECTORY = "/images/";
@@ -101,6 +102,8 @@ public class Constants {
         } catch (Exception ex5) {
             System.out.println("image error");
         }
+        /*for (BufferedImage i: landCards)
+            System.out.println(i);*/
 
     }
     public static BufferedImage getImage(String name) {
@@ -122,6 +125,9 @@ public class Constants {
     }
     public static BufferedImage[] getCharCards(){
         return charCards;
+    }
+    public static BufferedImage[] getLandCardsCards(){
+        return landCards;
     }
 
     public static BufferedImage[] getSettlements() {

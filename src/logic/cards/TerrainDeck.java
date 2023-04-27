@@ -16,13 +16,14 @@ public class TerrainDeck extends CardDeck<TerrainCard> {
 
     public TerrainDeck () {
         super();
+        Constants c = new Constants ();
         ArrayList<TerrainCard> cards = new ArrayList<>();
         for(int i = 0; i < 5; i++){
-            cards.add(new TerrainCard(TerrainEnum.CANYON, Constants.landCards[1]));
-            cards.add(new TerrainCard(TerrainEnum.DESERT, Constants.landCards[2]));
-            cards.add(new TerrainCard(TerrainEnum.FLOWER, Constants.landCards[3]));
-            cards.add(new TerrainCard(TerrainEnum.FOREST, Constants.landCards[4]));
-            cards.add(new TerrainCard(TerrainEnum.GRASS, Constants.landCards[0]));
+            cards.add(new TerrainCard(TerrainEnum.CANYON, Constants.getLandCardsCards()[1]));
+            cards.add(new TerrainCard(TerrainEnum.DESERT, Constants.getLandCardsCards()[2]));
+            cards.add(new TerrainCard(TerrainEnum.FLOWER, Constants.getLandCardsCards()[3]));
+            cards.add(new TerrainCard(TerrainEnum.FOREST, Constants.getLandCardsCards()[4]));
+            cards.add(new TerrainCard(TerrainEnum.GRASS, Constants.getLandCardsCards()[0]));
         }
         // Add all the cards necessary to the ArrayList
         addCards(cards);

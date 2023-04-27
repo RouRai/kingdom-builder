@@ -1,7 +1,11 @@
 package logic.gameLogic;
 
 import logic.cards.ObjectiveCard;
+import logic.constantFolder.ObjectiveEnum;
+import logic.placeables.Settlement;
+
 import java.util.ArrayList;
+import java.util.HashSet;
 
 /**
  * Author: Rounak Rai <br>
@@ -15,10 +19,12 @@ public class Scoring {
 
     private final ArrayList<Player> players;
     private final ArrayList<ObjectiveCard> objectives;
+    private final Board board;
 
-    public Scoring (ArrayList<Player> players, ArrayList<ObjectiveCard> objectives) {
+    public Scoring (ArrayList<Player> players, ArrayList<ObjectiveCard> objectives, Board board) {
         this.players = players;
         this.objectives = objectives;
+        this.board = board;
     }
 
     /**
@@ -32,9 +38,22 @@ public class Scoring {
      * Scores each player individually and updates their score
      * @param player Player whose score is to be updated
      */
-    private void scorePlayer (Player player) {
-        //calculate score of specific player and store it
+    private int scoreCard (Player player, ObjectiveCard card) {
+        int score = 0;
+        if (card.type().equals(ObjectiveEnum.FISHERMAN)){
+
+        }
+        else if (card.type().equals(ObjectiveEnum.FISHERMAN)){
+
+        }
+        return score;
     }
+    // checking the number of connected
+    private HashSet<Settlement> numConnected (Player player, Settlement origin){
+
+        return null;
+    }
+
 
     public ArrayList<Player> getPlayers() {
         return players;

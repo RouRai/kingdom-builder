@@ -2,8 +2,19 @@ package logic.gameLogic.objectiveScoring;
 
 import logic.gameLogic.Board;
 import logic.gameLogic.Player;
+import logic.placeables.Settlement;
+
+import java.util.ArrayList;
+import java.util.HashSet;
 
 public class Discoverer implements Objective{
     @Override
-    public void scoreObjective(Player player, Board board) {}
+    public int scoreObjective(Player player, Board board) {
+        HashSet<Integer> rows = new HashSet<>();
+        ArrayList<Settlement> settlements = player.getSettlements();
+        for(Settlement settle : settlements){
+            rows.add(settle.getTrueRow());
+        }
+        return rows.size();
+    }
 }

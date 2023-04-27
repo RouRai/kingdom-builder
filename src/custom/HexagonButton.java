@@ -1,6 +1,7 @@
 package custom;
 import logic.cards.TerrainCard;
 import logic.constantFolder.TerrainEnum;
+import logic.tiles.ActionTile;
 import logic.tiles.TerrainTile;
 import logic.tiles.Tile;
 
@@ -16,6 +17,7 @@ public class HexagonButton extends JButton {
     private Polygon polygon;
     private BufferedImage settlement;
     private TerrainTile tileType;
+    private ActionTile actiontileType;
     private int quadNum, row, col;
     public Boolean canClick;
     public HexagonButton(){
@@ -37,6 +39,14 @@ public class HexagonButton extends JButton {
         row = r;
         col = c;
         tileType = type;
+        //System.out.println(type);
+    }
+    public HexagonButton(int q, int r, int c, ActionTile type){
+        this();
+        quadNum = q;
+        row = r;
+        col = c;
+        actiontileType = type;
         //System.out.println(type);
     }
 
