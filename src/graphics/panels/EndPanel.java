@@ -4,17 +4,21 @@ import custom.TranslucentButton;
 import files.QuadrantMaker;
 import logic.constantFolder.Constants;
 import logic.gameLogic.Game;
+import logic.gameLogic.Player;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
 public class EndPanel extends JPanel implements ActionListener {
     private CardLayout cl;
+    private static Game game;
     private BufferedImage background;
     private TranslucentButton menuButton;
+    private ArrayList<Player> players;
     private Graphics2D g2;
     private Constants constantClass;
     private BufferedImage bg;
@@ -23,7 +27,6 @@ public class EndPanel extends JPanel implements ActionListener {
 
         cl = c;
         constantClass = new Constants();
-
         menuButton = new TranslucentButton();
         add(menuButton);
         menuButton.addActionListener(this);
@@ -125,5 +128,8 @@ public class EndPanel extends JPanel implements ActionListener {
         if(e.getSource().equals(menuButton))
             cl.show(Constants.PANEL_CONT, Constants.MENU_PANEL);
 
+    }
+    public static void setGame(Game g){
+        game = g;
     }
 }

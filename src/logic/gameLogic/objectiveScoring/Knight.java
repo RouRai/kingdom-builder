@@ -5,5 +5,7 @@ import logic.gameLogic.Player;
 
 public class Knight implements Objective{
     @Override
-    public void scoreObjective(Player player, Board board) {}
+    public int scoreObjective(Player player, Board board) {
+        return 0;
+    }
 }

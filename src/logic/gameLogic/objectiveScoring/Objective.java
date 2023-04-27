@@ -10,5 +10,5 @@ public interface Objective {
      * @param player The player whose score is to be updated.
      * @param board The game board
      */
-    void scoreObjective (Player player, Board board);
+    int scoreObjective (Player player, Board board);
 }
