@@ -145,7 +145,7 @@ public class Board {
         analyzeAdjacentNodesForActionTile(player, rows, columns);
     }
 
-    private void analyzeAdjacentNodesForActionTile (Player player, int rows[], int columns[]) {
+    private void analyzeAdjacentNodesForActionTile (Player player, int[] rows, int[] columns) {
         for (int index = 0; index < rows.length; index++) {
             ActionNode adjacentActionNode = actionBoard.getBoardMatrix()[rows[index]][columns[index]];
             boolean terrainAdjacentToActionNode = /*terrainBoard.getBoardMatrix()[rows[index]][columns[index]] == null && */adjacentActionNode != null;

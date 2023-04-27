@@ -1,9 +1,6 @@
 package logic.tiles;
 
 import logic.constantFolder.ActionEnum;
-
-import java.awt.image.BufferedImage;
-
 /**
  * Author: Rounak Rai <br>
  * Contributors: None <br> <br>
