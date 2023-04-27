@@ -71,7 +71,6 @@ public class EndPanel extends JPanel{
         for (int i = 0; i<3; i++)
         g2.drawImage(Constants.getCharCards()[game.getObjectiveNumbers()[i]], 930, 350+i * space_between_Players,80,105,null);
 
-
         int startX = 1030;
         int startY = 305;
 

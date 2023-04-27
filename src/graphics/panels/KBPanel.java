@@ -159,9 +159,9 @@ public class KBPanel extends JPanel implements ActionListener{
          g2.setColor(Color.black);
          g2.setFont(new Font(fontStr, Font.PLAIN, 40));
          if (i%2 ==0)
-            g2.drawString("" + players.get(i + 1).getPlayerNumber(), 1040, 85+space_between_Players*i);
+            g2.drawString("" + game.getAllPlayers().get(i + 1).getPlayerNumber(), 1040, 85+space_between_Players*i);
          else
-            g2.drawString("" + players.get(i + 1).getPlayerNumber(), 1040, 90+space_between_Players*i);
+            g2.drawString("" + game.getAllPlayers().get(i + 1).getPlayerNumber(), 1040, 90+space_between_Players*i);
          //action tiles
          g2.setFont(new Font(fontStr, Font.PLAIN, 20));
          g2.setColor(Color.white);
@@ -170,9 +170,9 @@ public class KBPanel extends JPanel implements ActionListener{
             int y = 35;
             g2.drawImage(currentActions[j].getFront(), x-25+j *68, y-5 + i * space_between_Players, 60, 60, null);
             if (i%2 ==0)
-               g2.drawString("" + players.get(i + 1).getActionTiles().get(currentActions[j].getType()), x+j *65,  y+80+i  * space_between_Players);
+               g2.drawString("" + game.getAllPlayers().get(i + 1).getActionTiles().get(currentActions[j].getType()), x+j *65,  y+80+i  * space_between_Players);
             else
-               g2.drawString("" + players.get(i + 1).getActionTiles().get(currentActions[j].getType()), x+j *65,  y+80+i  * (space_between_Players+8));
+               g2.drawString("" + game.getAllPlayers().get(i + 1).getActionTiles().get(currentActions[j].getType()), x+j *65,  y+80+i  * (space_between_Players+8));
 
          }
          //settlement
