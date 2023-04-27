@@ -24,5 +24,6 @@ public class Fisherman implements Objective {
                 return 1;
             }
         }
+        return 0;
     }
 }

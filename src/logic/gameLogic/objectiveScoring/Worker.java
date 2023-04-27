@@ -11,6 +11,6 @@ import java.util.ArrayList;
 public class Worker implements Objective{
     @Override
     public int scoreObjective(Player player, Board board) {
-
+        return 0;
     }
 }
