@@ -219,6 +219,7 @@ public class KBPanel extends JPanel implements ActionListener{
          clickedOnActionOnBoard = false;
       }
       //landscape card drawn by the current player
+      System.out.println(game.getCurrentPlayer().getCard());
       g2.drawImage(game.getCurrentPlayer().getCard().image(), 1335, 530, 130, 200, null);
 
       //settlement icon - based on color

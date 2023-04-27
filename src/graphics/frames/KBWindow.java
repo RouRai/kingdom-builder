@@ -36,6 +36,7 @@ public class KBWindow extends JFrame {
    private int[] getboardNumbers() {
       HashSet<Integer> boardNumbers = new HashSet<Integer>();
       for(int i = 0; i < 4; i++) {
+
          int rand;
          do {
             rand = (int) (Math.random() * (2 * Constants.getBoards().length));
@@ -47,6 +48,7 @@ public class KBWindow extends JFrame {
          arr[i] = (int) boardNumbers.toArray()[i];
          System.out.println(arr[i]);
       }
+      System.out.println("asoiuhiuoshguihdsfgihudsf");
       return arr;
    }
    private int[] getobjectiveNumbers() {

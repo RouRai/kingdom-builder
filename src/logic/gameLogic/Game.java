@@ -19,10 +19,10 @@ public class Game {
    public ArrayList<Player> allPlayers;
    private TerrainDeck terrainDeck;
    private ArrayList<TerrainCard> terrainCards;
-   private int []boardNumbers,objectiveNumbers;
+   private int [] boardNumbers,objectiveNumbers;
 
    public Board board;
-   public Game (int []boardNumbers, int[] objectiveNumbers){
+   public Game (int [] boardNumbers, int[] objectiveNumbers){
       //Cards
             //Terrain Card Deck
                terrainDeck = new TerrainDeck();
@@ -46,6 +46,7 @@ public class Game {
                allPlayers = new ArrayList<>();
                for (int i = 0; i< 4; i++){
                   Player temp = new Player (i+1);
+                  temp.setCard(getCard());
                   allPlayers.add(temp);
                }
                allPlayers.get(0).setCard(getCard());
