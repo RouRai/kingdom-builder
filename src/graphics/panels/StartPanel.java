@@ -4,6 +4,7 @@ import custom.HexagonButton;
 import custom.TranslucentButton;
 import graphics.frames.KBWindow;
 import logic.constantFolder.Constants;
+import logic.gameLogic.Game;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;

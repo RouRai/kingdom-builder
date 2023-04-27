@@ -20,7 +20,7 @@ public class CardPanel extends JPanel {
    private BufferedImage[] objectiveCards;
    private TranslucentButton Resume, Menu;
    private Graphics2D g2;
-   public CardPanel(CardLayout c) {
+   public CardPanel(CardLayout c, Game g ) {
       cl = c;
       Resume = new TranslucentButton();
       Menu = new TranslucentButton();

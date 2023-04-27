@@ -19,14 +19,17 @@ public class Game {
    public ArrayList<Player> allPlayers;
    private TerrainDeck terrainDeck;
    private ArrayList<TerrainCard> terrainCards;
+   private int []boardNumbers,objectiveNumbers;
 
    public Board board;
-   public Game (ArrayList<Integer>boardNumbers, ArrayList<Integer>objectiveNumbers){
+   public Game (int []boardNumbers, int[] objectiveNumbers){
       //Cards
             //Terrain Card Deck
                terrainDeck = new TerrainDeck();
                terrainCards = terrainDeck.getTerrainDeck();
 
+      this.objectiveNumbers = objectiveNumbers;
+      this.boardNumbers = boardNumbers;
       //Boards
             //Quadrant maker
                ArrayList<TerrainMaker> terrainQuadrants = new ArrayList<>();
@@ -140,5 +143,13 @@ public class Game {
    public CityNode[][] getCityMaxtrix (){return getBoard().getCityBoard().getBoardMatrix();}
    public ArrayList<TerrainNode> getLegalPlaces(){
       return board.regularCanUseTiles(allPlayers.get(0), allPlayers.get(0).getCard());
+   }
+
+   public int[] getObjectiveNumbers() {
+      return objectiveNumbers;
+   }
+
+   public int[] getBoardNumbers() {
+      return boardNumbers;
    }
 }
