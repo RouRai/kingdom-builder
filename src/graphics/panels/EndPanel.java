@@ -23,7 +23,7 @@ public class EndPanel extends JPanel implements ActionListener {
     private Constants constantClass;
     private BufferedImage bg;
     private final String fontStr = "Lucida Calligraphy";
-    public EndPanel(CardLayout c){
+    public EndPanel(CardLayout c, Game g ){
 
         cl = c;
         constantClass = new Constants();

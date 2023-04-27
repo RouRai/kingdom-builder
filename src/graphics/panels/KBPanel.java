@@ -30,7 +30,7 @@ public class KBPanel extends JPanel implements ActionListener{
    private ActionProcessButton[] currentActions;
    private final ButtonQuadrant[] buttonBoards;
    private Graphics2D g2;
-   private ArrayList<Integer> boardNumbers, objectiveNumbers;
+   private int [] boardNumbers, objectiveNumbers;
    private final ArrayList <BufferedImage> boardImages, objectiveCardImages;
    private final CardLayout cardLay;
    private final String fontStr = "Lucida Calligraphy";
@@ -40,18 +40,17 @@ public class KBPanel extends JPanel implements ActionListener{
    private HexagonButton actionClicked;
    private int currentAction;
 
-   public KBPanel (CardLayout cl){
+   public KBPanel (CardLayout cl, Game g ){
       cardLay = cl;
+      game = g;
 
       buttonBoards = new ButtonQuadrant[4];
       boardImages = new ArrayList<>();
       objectiveCardImages = new ArrayList<>();
-      boardNumbers = new ArrayList<>();
-      objectiveNumbers = new ArrayList<>();
-      for(int i = 0; i < 4; i++)
-         setUpBoardImages();
+      boardNumbers = g.getBoardNumbers();
+      objectiveNumbers = g.getObjectiveNumbers();
 
-      game = new Game (boardNumbers,objectiveNumbers);
+      setUpBoardImages();
 
       int[] boardStartX = {10,423,10,423};
       int[] boardStartY = {6,6,365,365};
@@ -75,21 +74,14 @@ public class KBPanel extends JPanel implements ActionListener{
       setUpActionTileHexagonButtons();
    }
    private void setUpBoardImages(){
-      int rand;
-      do {
-         rand = (int) (Math.random() * (2 * Constants.getBoards().length));
-      } while(Constants.getBoards()[rand % 8] == null);
-      int boardNum = rand % 8;
-      boardNumbers.add(rand);
-
-      if(rand < Constants.getBoards().length)
-         boardImages.add(Constants.getBoards()[boardNum]);
-
-      else
-         boardImages.add(Constants.getFlippedBoards()[boardNum]);
-
-      Constants.getBoards()[boardNum] = null;
-      Constants.getFlippedBoards()[boardNum] = null;
+      for(int i = 0; i < 4; i++) {
+         int rand = boardNumbers[i];
+         int boardNum = rand % 8;
+         if (rand < Constants.getBoards().length)
+            boardImages.add(Constants.getBoards()[boardNum]);
+         else
+            boardImages.add(Constants.getFlippedBoards()[boardNum]);
+      }
    }
 
    /**
@@ -98,11 +90,7 @@ public class KBPanel extends JPanel implements ActionListener{
    private void setUpObjectiveButtons() {
       objectivesButton = new TranslucentButton[3];
       for(int i = 0; i < 3; i++){
-         int rand;
-         do {
-            rand = (int) (Math.random() * (Constants.getCharCards().length));
-         }while(Constants.getCharCards()[rand] == null);
-         objectiveNumbers.add(rand);
+         int rand = objectiveNumbers[i];
          objectiveCardImages.add(Constants.getCharCards()[rand]);
          Constants.getCharCards()[rand] = null;
          objectivesButton[i] = new TranslucentButton(i);
@@ -116,7 +104,7 @@ public class KBPanel extends JPanel implements ActionListener{
    private void setUpActionTileHexagonButtons() {
       currentActions = new ActionProcessButton[4];
       for(int i = 0; i < 4; i++){
-         ActionProcessButton temp = new ActionProcessButton(boardNumbers.get(i%8));
+         ActionProcessButton temp = new ActionProcessButton(boardNumbers[i]);
          setUpCurrentAction(temp);
          currentActions[i] = temp;
          for(int q = 0; q < 4; q++){
@@ -225,12 +213,13 @@ public class KBPanel extends JPanel implements ActionListener{
          g2.drawImage(inUse.getProcess(), 1135, 645, 150, 60, null);
       }
       else if(clickedOnActionOnBoard){
-         g2.drawImage(Constants.getActionTiles()[boardNumbers.get(actionClicked.getquadNum())%8],1165,600,80,85,null);
+         g2.drawImage(Constants.getActionTiles()[boardNumbers[actionClicked.getquadNum()] % 8],1165,600,80,85,null);
          ActionTile tile  = game.getBoard().getActionBoard().getBoardMatrix()[actionClicked.getRow()][actionClicked.getCol()].getTile();
          g2.drawString("Has "+ tile.getCount() + " Tiles",1150,730);
          clickedOnActionOnBoard = false;
       }
       //landscape card drawn by the current player
+      System.out.println(game.getCurrentPlayer().getCard());
       g2.drawImage(game.getCurrentPlayer().getCard().image(), 1335, 530, 130, 200, null);
 
       //settlement icon - based on color
@@ -350,6 +339,7 @@ public class KBPanel extends JPanel implements ActionListener{
       add(temp);
       temp.addActionListener(e -> {
         System.out.println("Objective Button clicked " + temp + "  ");
+         cardLay.show(Constants.PANEL_CONT, Constants.CARD_PANEL);
         repaint();
       });
    }

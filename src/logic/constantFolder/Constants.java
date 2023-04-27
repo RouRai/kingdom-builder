@@ -102,6 +102,8 @@ public class Constants {
         } catch (Exception ex5) {
             System.out.println("image error");
         }
+        /*for (BufferedImage i: landCards)
+            System.out.println(i);*/
 
     }
     public static BufferedImage getImage(String name) {
@@ -123,6 +125,9 @@ public class Constants {
     }
     public static BufferedImage[] getCharCards(){
         return charCards;
+    }
+    public static BufferedImage[] getLandCardsCards(){
+        return landCards;
     }
 
     public static BufferedImage[] getSettlements() {
