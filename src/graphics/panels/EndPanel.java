@@ -1,6 +1,5 @@
 package graphics.panels;
 
-import custom.TranslucentButton;
 import logic.constantFolder.Constants;
 import logic.gameLogic.Game;
 import logic.gameLogic.Player;
@@ -12,9 +11,10 @@ import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class EndPanel extends JPanel{
-    private CardLayout cl;
+    private final CardLayout cardLayout;
     private static Game game;
     private Scoring score;
     private BufferedImage background;
@@ -24,7 +24,7 @@ public class EndPanel extends JPanel{
     private final String fontStr = "Lucida Calligraphy";
     public EndPanel(CardLayout c, Game g){
 
-        cl = c;
+        cardLayout = c;
         constantClass = new Constants();
         game = g;
         //score = new Scoring(game.getAllPlayers(),game.getObjectiveNumbers(),game.board);
@@ -48,7 +48,7 @@ public class EndPanel extends JPanel{
 
         for (int i = 0; i<4; i++){
             //settlement icon
-            g2.drawImage(constantClass.getSettlements()[i], 1020+i * space_between_Players, 150, 100, 80, null);
+            g2.drawImage(Constants.getSettlements()[i], 1020+i * space_between_Players, 150, 100, 80, null);
             if(i == 3)
                 g2.setColor(Color.BLACK);
             else
@@ -69,7 +69,7 @@ public class EndPanel extends JPanel{
         g2.setFont(new Font(fontStr, Font.PLAIN, 40));
 
         for (int i = 0; i<3; i++)
-        g2.drawImage(Constants.getCharCards()[game.getObjectiveNumbers()[i]], 930, 350+i * space_between_Players,80,105,null);
+            g2.drawImage(Constants.getCharCards()[game.getObjectiveNumbers()[i]], 930, 350+i * space_between_Players,80,105,null);
 
         int startX = 1030;
         int startY = 305;
@@ -101,7 +101,7 @@ public class EndPanel extends JPanel{
     public void setUpMiscellaneous(){
         try{
             // 1 -- BACKGROUND - BOTTOM LAYER
-            background = ImageIO.read(getClass().getResource("/images/backgroundImages/EndGame.png"));
+            background = ImageIO.read(Objects.requireNonNull(getClass().getResource("/images/backgroundImages/EndGame.png")));
         } catch (Exception ex) {
             System.out.println("----------------------------------------- Image Error -----------------------------------------");
         }

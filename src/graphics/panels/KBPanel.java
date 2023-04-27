@@ -135,7 +135,7 @@ public class KBPanel extends JPanel implements ActionListener{
          if (i % 2== 0)
             currentActions[i].setBounds(1005+ i * 2, 515+ i * 75, 80, 85);
          else
-            currentActions[i].setBounds(959+ i *1, 515+ i * 75, 80, 85);
+            currentActions[i].setBounds(959+ i, 515+ i * 75, 80, 85);
          i++;
       }
    }
@@ -387,27 +387,20 @@ public class KBPanel extends JPanel implements ActionListener{
     * @param quadrantNumber Number for quadrant
     */
    private void assignButtonsToQuadrant(HexagonButton[][] quadrantButtons, int quadrantNumber){
-      /* for (CityNode[] t: game.getBoard().getCityBoard().getBoardMatrix())
-         for (CityNode n: t) {
-            System.out.print(n + " ");
-         }
-      System.out.println();*/
       for (int r = 0; r < 10; r++) {
          for (int c = 0; c < 10; c++) {
-            int quad = quadrantNumber;
             int tempr = r;
             int tempc = c;
-            if(quad == 2 || quad == 3)
+            if(quadrantNumber == 2 || quadrantNumber == 3)
                tempr += 10;
 
-            if(quad == 1 || quad == 3)
+            if(quadrantNumber == 1 || quadrantNumber == 3)
                tempc += 10;
-            if(game.getTerrainMaxtrix()[tempr][tempc] != null) {
-               quadrantButtons[r][c] = new HexagonButton(quadrantNumber, r, c, game.getTerrainMaxtrix()[tempr][tempc].getTile());
+            if(game.getTerrainMatrix()[tempr][tempc] != null) {
+               quadrantButtons[r][c] = new HexagonButton(quadrantNumber, r, c, game.getTerrainMatrix()[tempr][tempc].getTile());
                setUpBoardHexes(quadrantButtons[r][c]);
             }
-            if (game.getActionMaxtrix()[tempr][tempc] != null){
-               //System.out.println(game.getBoard().getActionBoard().getBoardMatrix()[tempr][tempc].getTile() + " --------+++++");
+            if (game.getActionMatrix()[tempr][tempc] != null){
                quadrantButtons[r][c] = new HexagonButton(quadrantNumber, r, c, game.getBoard().getActionBoard().getBoardMatrix()[tempr][tempc].getTile());
                setUpActionHexes(quadrantButtons[r][c]);
             }
