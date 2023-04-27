@@ -40,10 +40,10 @@ public class Scoring {
      */
     private int scoreCard (Player player, ObjectiveCard card) {
         int score = 0;
-        if (card.type().equals(ObjectiveEnum.FISHERMAN)){
+        if (card.type() == ObjectiveEnum.FISHERMAN){
 
         }
-        else if (card.type().equals(ObjectiveEnum.FISHERMAN)){
+        else if (card.type() ==  ObjectiveEnum.CITIZEN){
 
         }
         return score;

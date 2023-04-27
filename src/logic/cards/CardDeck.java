@@ -41,11 +41,9 @@ public class CardDeck<T> {
      * @return The first "count" number of cards in the shuffled deck
      */
     public ArrayList<T> getShuffledCards (int count) {
-        //ArrayList<T> copy = (ArrayList<T>) cards.clone();
-        ArrayList<T> copy = new ArrayList<T>();
-        copy.addAll(cards);
-        ArrayList<T> temp = new ArrayList<T>();
-        int rand = 0;
+        ArrayList<T> copy = new ArrayList<>(cards);
+        ArrayList<T> temp = new ArrayList<>();
+        int rand;
         for(int i = copy.size() - 1; i >= 0; i--){
             rand = (int)(Math.random() * copy.size());
             temp.add(copy.get(rand));
