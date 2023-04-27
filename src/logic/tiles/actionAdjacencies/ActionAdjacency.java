@@ -1,6 +1,5 @@
 package logic.tiles.actionAdjacencies;
 
-import datastructures.baseDatastructures.Node;
 import datastructures.gameDatastructures.boardNodes.TerrainNode;
 import logic.gameLogic.Board;
 import logic.gameLogic.Player;

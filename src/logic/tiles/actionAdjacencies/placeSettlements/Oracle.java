@@ -1,12 +1,13 @@
-package logic.tiles.actionAdjacencies;
+package logic.tiles.actionAdjacencies.placeSettlements;
 
 import datastructures.gameDatastructures.boardNodes.TerrainNode;
 import logic.gameLogic.Board;
 import logic.gameLogic.Player;
+import logic.tiles.actionAdjacencies.ActionAdjacency;
 
 import java.util.ArrayList;
 
-public class Oasis implements ActionAdjacency {
+public class Oracle implements ActionAdjacency {
     /**
      * Returns the valid nodes for settlement placement when using an Action Tile.
      * @param board  The current game board.
