@@ -28,8 +28,7 @@ public class EndPanel extends JPanel{
         cl = c;
         constantClass = new Constants();
         game = g;
-
-
+        //score = new Scoring(game.getAllPlayers(),game.getObjectiveNumbers(),game.board);
         setUpMiscellaneous();
 
     }
