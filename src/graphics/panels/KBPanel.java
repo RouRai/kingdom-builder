@@ -4,8 +4,6 @@ import custom.ActionProcessButton;
 import custom.ButtonQuadrant;
 import custom.HexagonButton;
 import custom.TranslucentButton;
-import datastructures.gameDatastructures.boardNodes.ActionNode;
-import datastructures.gameDatastructures.boardNodes.CityNode;
 import datastructures.gameDatastructures.boardNodes.TerrainNode;
 import logic.cards.TerrainCard;
 import logic.constantFolder.Constants;
@@ -276,12 +274,12 @@ public class KBPanel extends JPanel implements ActionListener{
                   }
                   //if(board[r][c].tile)
                   int i = 0;
-                   while(legalPlaces == null && !game.getCurrentPlayer().hasPlacedSettlements()){
+                  while(legalPlaces == null && !game.getCurrentPlayer().hasPlacedSettlements()){
                       if(i > 3){
                          i = 0;
                          game.getCurrentPlayer().setCard(game.getCard());
                       }
-                       legalPlaces = game.getLegalPlaces();
+                       legalPlaces = game.getLegalRegularPlaces();
                        i++;
                    }
                   if(legalPlaces.contains(game.getBoard().getTerrainBoard().getBoardMatrix()[tempr][tempc]) && !game.getCurrentPlayer().hasPlacedSettlements()) {
@@ -322,11 +320,15 @@ public class KBPanel extends JPanel implements ActionListener{
              game.checkRegularSettlementPlacement(game.getCurrentPlayer(), temp);
 
          if (game.getCurrentPlayer().getNumSettlementsPlaced()!=3){
-            //System.out.println("player has started regular settlement");
-            //game.checkRegularSettlementPlacement(game.getCurrentPlayer(), , game.getCurrentPlayer().getCard());
-            //setRegularAdjacent(game.getCurrentPlayer(), temp);
+            System.out.println("player has started regular settlement");
+            game.getCurrentPlayer().setUsingActionTile(false);
          }
-         legalPlaces = game.getLegalPlaces();
+         //action tile processes
+         else if (game.getCurrentPlayer().isUsingActionTile()){
+            game.getCurrentPlayer().setPlacingRegSettlements(false);
+         }
+         game.setButtonBoard(buttonBoards);
+         legalPlaces = game.getLegalRegularPlaces();
          reassignActionButtonNumTiles();
          repaint();
       });
@@ -349,7 +351,9 @@ public class KBPanel extends JPanel implements ActionListener{
             game.getCurrentPlayer().setPlacingRegSettlements(false);
             inUse = temp;
             temp.reduceNumUses();
+           // game.checkActionTilePlacement(game.getCurrentPlayer(), temp);
          }
+
          repaint();
       });
    }
@@ -373,7 +377,7 @@ public class KBPanel extends JPanel implements ActionListener{
             for(int i = 0; i < 4; i++){
                currentActions[i].resetNumUses();
             }
-            legalPlaces = game.getLegalPlaces();
+            legalPlaces = game.getLegalRegularPlaces();
          }
       }
       else if(e.getSource().equals(endGameScreen)){

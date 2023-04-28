@@ -1,5 +1,7 @@
 package logic.gameLogic;
 
+import custom.ActionProcessButton;
+import custom.ButtonQuadrant;
 import custom.HexagonButton;
 import datastructures.gameDatastructures.boardNodes.ActionNode;
 import datastructures.gameDatastructures.boardNodes.CityNode;
@@ -11,6 +13,8 @@ import logic.cards.*;
 import logic.constantFolder.Constants;
 import logic.placeables.Settlement;
 import logic.tiles.TerrainTile;
+import logic.tiles.actionAdjacencies.ActionAdjacency;
+import logic.tiles.actionAdjacencies.placeSettlements.Oracle;
 
 import java.util.ArrayList;
 
@@ -19,7 +23,7 @@ public class Game {
    private TerrainDeck terrainDeck;
    private ArrayList<TerrainCard> terrainCards;
    private final int[] boardNumbers,objectiveNumbers;
-
+   private ButtonQuadrant[] buttonBoard;
    public Board board;
    public Game (int [] boardNumbers, int[] objectiveNumbers){
       terrainDeck = new TerrainDeck();
@@ -55,14 +59,8 @@ public class Game {
     * @param button hexagon button which was clicked
     */
    public void checkRegularSettlementPlacement (Player player, HexagonButton button) {
-      if(player.hasPlacedSettlements()){
+      if(player.hasPlacedSettlements())
          return;
-      }
-
-      if (player.isUsingActionTile()) {
-         checkActionTilePlacement(player,button);
-         return;
-      }
 
       //we set the boolean is placing reg settlement true b/c we know its true now
       if(!player.isPlacingRegSettlements()) {
@@ -73,7 +71,6 @@ public class Game {
       if (player.getNumSettlementsPlaced() < 3 && button.getSettlement() == null){
          placeSettlement(player, button);
       }
-
       //giving the tile / button TO the current player's settlement
 
       //player regular settlement is over
@@ -84,6 +81,13 @@ public class Game {
    }
 
    public void checkActionTilePlacement(Player player, HexagonButton button) {
+      if(!player.getActionTiles().containsKey(button.getTileType()))
+         return;
+      //when the current player have already settled somewhere
+      if (player.getNumSettlementsPlaced() < 1 && button.getSettlement() == null){
+         placeSettlement(player, button);
+      }
+      System.out.println();
 
    }
 
@@ -106,6 +110,13 @@ public class Game {
       return allPlayers;
    }
 
+   public ButtonQuadrant[] getButtonBoard() {
+      return buttonBoard;
+   }
+
+   public void setButtonBoard(ButtonQuadrant[] buttonBoard) {
+      this.buttonBoard = buttonBoard;
+   }
 
    public Board getBoard() {
       return board;
@@ -113,8 +124,17 @@ public class Game {
    public TerrainNode[][] getTerrainMatrix(){return getBoard().getTerrainBoard().getBoardMatrix();}
    public ActionNode[][] getActionMatrix(){return getBoard().getActionBoard().getBoardMatrix();}
    public CityNode[][] getCityMatrix(){return getBoard().getCityBoard().getBoardMatrix();}
-   public ArrayList<TerrainNode> getLegalPlaces(){
+   public ArrayList<TerrainNode> getLegalRegularPlaces(){
       return board.regularCanUseTiles(allPlayers.get(0), allPlayers.get(0).getCard());
+   }
+   public ArrayList<TerrainNode> getLegalActionPlaces(ActionNode node){
+      ActionAdjacency checker = null;
+      switch(node.getType()){
+         case ORACLE -> { checker = new Oracle(getBoard(), getCurrentPlayer());     }
+      }
+      if (checker != null)
+         return checker.getValidNodes();
+      else return null;
    }
 
    public int[] getObjectiveNumbers() {
