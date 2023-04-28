@@ -58,7 +58,7 @@ public class ActionProcessButton extends HexagonButton{
     }
     //method to check if the current action tile is usable
     public boolean canUse(){
-        if(numUses < numTiles){
+        if(numUses > 0){
             return true;
         }
         return false;
@@ -71,5 +71,11 @@ public class ActionProcessButton extends HexagonButton{
     }
     public void resetNumUses(){
         numUses = numTiles;
+    }
+    public int getNumUses(){
+        return numUses;
+    }
+    public void reduceNumUses(){
+        numUses--;
     }
 }

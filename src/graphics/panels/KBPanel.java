@@ -343,11 +343,12 @@ public class KBPanel extends JPanel implements ActionListener{
       add(temp);
       temp.addActionListener(e -> {
          System.out.println("Current Action Tile Button clicked -" + temp + "  ");
-         if(!game.getCurrentPlayer().isPlacingRegSettlements()){
+         if(!game.getCurrentPlayer().isPlacingRegSettlements() && temp.getNumUses() > 0){
             currentAction = temp.getquadNum();
             game.getCurrentPlayer().setUsingActionTile(true);
             game.getCurrentPlayer().setPlacingRegSettlements(false);
             inUse = temp;
+            temp.reduceNumUses();
          }
          repaint();
       });

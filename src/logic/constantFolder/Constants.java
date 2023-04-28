@@ -36,7 +36,7 @@ public class Constants {
         readImages();
     }
 
-    private void readImages(){
+    public void readImages(){
         try{
             // 2 -- BOARDS
             actionProcess[0] = ImageIO.read(requireNonNull(getClass().getResource("/images/actionProcess/Oasis.png")));
