@@ -10,11 +10,11 @@ import logic.tiles.actionAdjacencies.ActionAdjacency;
 
 import java.util.ArrayList;
 
-public class Oasis implements ActionAdjacency {
+public class Farm implements ActionAdjacency {
     private final Board board;
     private final Player player;
 
-    public Oasis(Board board, Player player) {
+    public Farm(Board board, Player player) {
         this.board = board;
         this.player = player;
     }
@@ -25,6 +25,6 @@ public class Oasis implements ActionAdjacency {
      */
     @Override
     public ArrayList<TerrainNode> getValidNodes() {
-        return board.regularCanUseTiles(player, new TerrainCard(TerrainEnum.DESERT, Constants.getImage("landscapeCards/KB-Card-Desert.png")));
+        return board.regularCanUseTiles(player, new TerrainCard(TerrainEnum.DESERT, Constants.getImage("landscapeCards/KB-Card-Meadow.png")));
     }
 }
