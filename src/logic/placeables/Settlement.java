@@ -1,6 +1,7 @@
 package logic.placeables;
 
 import datastructures.gameDatastructures.boardNodes.TerrainNode;
+import logic.gameLogic.Player;
 
 public class Settlement {
 
@@ -8,13 +9,15 @@ public class Settlement {
     private final int row, column, quadrantNumber;
     private int trueRow, trueColumn;
     private TerrainNode location;
+    private final Player player;
 
-    public Settlement (int color, int row, int column, int quadrantNumber) {
+    public Settlement (int color, int row, int column, int quadrantNumber, Player p) {
         this.color = color;
         this.row = row;
         this.column = column;
         this.quadrantNumber = quadrantNumber;
         trueRow = row;
+        player = p;
         trueColumn = column;
         if(quadrantNumber == 2 || quadrantNumber == 3){
             trueRow = row +10;
@@ -65,5 +68,8 @@ public class Settlement {
               ", trueColumn=" + trueColumn +
               ", location=" + location +
               '}';
+    }
+    public Player getPlayer(){
+        return player;
     }
 }

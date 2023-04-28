@@ -43,7 +43,7 @@ public class Player {
             return null;
         }
         settlementsRemaining--;
-        Settlement temp = new Settlement(playerNumber, row, col, quadNum);
+        Settlement temp = new Settlement(playerNumber, row, col, quadNum, this);
         settlements.add(temp);
         return temp;
     }

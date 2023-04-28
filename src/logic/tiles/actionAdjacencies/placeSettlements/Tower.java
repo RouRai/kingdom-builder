@@ -6,6 +6,7 @@ import logic.tiles.actionAdjacencies.ActionAdjacency;
 import java.util.ArrayList;
 
 public class Tower implements ActionAdjacency {
+
     /**
      * Returns the valid nodes for settlement placement when using an Action Tile.
      *
