@@ -7,6 +7,7 @@ import custom.TranslucentButton;
 import datastructures.gameDatastructures.boardNodes.ActionNode;
 import datastructures.gameDatastructures.boardNodes.CityNode;
 import datastructures.gameDatastructures.boardNodes.TerrainNode;
+import logic.cards.TerrainCard;
 import logic.constantFolder.Constants;
 import logic.gameLogic.Game;
 import logic.gameLogic.Player;
@@ -220,6 +221,8 @@ public class KBPanel extends JPanel implements ActionListener{
       }
       //landscape card drawn by the current player
       //System.out.println(game.getCurrentPlayer().getCard());
+      TerrainCard tempc = game.getCurrentPlayer().getCard();
+      BufferedImage temp = game.getCurrentPlayer().getCard().image();
       g2.drawImage(game.getCurrentPlayer().getCard().image(), 1335, 530, 130, 200, null);
 
       //settlement icon - based on color
@@ -359,9 +362,10 @@ public class KBPanel extends JPanel implements ActionListener{
          if(game.canEndTurn()) {
             if (game.getCurrentPlayer().getPlayerNumber() == 4) {
                //make sure to check this later
-               if (game.checkEndGame())
+               if (game.checkEndGame()){
                   EndPanel.setGame(game);
                   cardLay.show(Constants.PANEL_CONT, Constants.END_PANEL);
+               }
             }
             game.endTurn();
             reassignActionButtonNumTiles();
