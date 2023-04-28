@@ -1,7 +1,9 @@
 package graphics.panels;
 
+import custom.ActionProcessButton;
 import custom.ButtonQuadrant;
 import custom.HexagonButton;
+import logic.cards.ObjectiveCard;
 import logic.constantFolder.Constants;
 import logic.gameLogic.Game;
 import logic.gameLogic.Player;
@@ -29,7 +31,6 @@ public class EndPanel extends JPanel{
         cardLayout = c;
         constantClass = new Constants();
         game = g;
-        //score = new Scoring(game.getAllPlayers(),game.getObjectiveNumbers(),game.board);
         setUpMiscellaneous();
 
     }
@@ -98,6 +99,12 @@ public class EndPanel extends JPanel{
         g2.drawString("1", 550,810);
     }
     public void drawScoreComponents(){
+
+        ArrayList<ObjectiveCard> cards = new ArrayList<>();
+        for (int i: game.getObjectiveNumbers())
+            cards.add(new ObjectiveCard(Constants.getObjectiveType(i)));
+        score = new Scoring(game.getAllPlayers(),cards,game.board);
+
         int space_between_Players = 123;
         g2.setColor(Color.WHITE);
         g2.setFont(new Font(fontStr, Font.PLAIN, 40));
@@ -108,28 +115,17 @@ public class EndPanel extends JPanel{
         int startX = 1030;
         int startY = 305;
 
-        int r = 0;
         //city scores
         for (int i = 0; i<4; i++)
             g2.drawString(String.format("%3d", 0), startX+i * space_between_Players, startY);
         //card 1 scores
-        r++;
-        for (int i = 0; i<4; i++)
-            g2.drawString(String.format("%3d", 0), startX + i * space_between_Players, startY + r * space_between_Players);
-
-        //card 2 scores
-        r++;
-        for (int i = 0; i<4; i++)
-            g2.drawString(String.format("%3d", 0), startX+i * space_between_Players, startY+r * space_between_Players);
-        //card 3 scores
-        r++;
-        for (int i = 0; i<4; i++)
-            g2.drawString(String.format("%3d", 0), startX+i * space_between_Players, startY+r * space_between_Players);
-
+        for (int r = 0; r < 3; r++) {
+            for (int i = 0; i < 4; i++)
+                g2.drawString(String.format("%3d", game.getAllPlayers().get(i).getScores().get(r)), startX + i * space_between_Players, startY + (r+1) * space_between_Players);
+        }
         //Total scores
-        r++;
         for (int i = 0; i<4; i++)
-            g2.drawString(String.format("%3d", 0), startX+i * space_between_Players, startY+r * space_between_Players);
+            g2.drawString(String.format("%3d", 0), startX+i * space_between_Players, startY+4 * space_between_Players);
 
     }
     public void setUpMiscellaneous(){

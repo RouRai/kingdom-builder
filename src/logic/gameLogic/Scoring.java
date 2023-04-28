@@ -1,7 +1,9 @@
 package logic.gameLogic;
 
 import logic.cards.ObjectiveCard;
+import logic.constantFolder.Constants;
 import logic.constantFolder.ObjectiveEnum;
+import logic.gameLogic.objectiveScoring.*;
 import logic.placeables.Settlement;
 
 import java.util.ArrayList;
@@ -25,6 +27,7 @@ public class Scoring {
         this.players = players;
         this.objectives = objectives;
         this.board = board;
+        calculateScores();
     }
 
     /**
@@ -32,6 +35,13 @@ public class Scoring {
      */
     private void calculateScores () {
         // Calculate the scores of players in the list
+        for (Player p: players){
+            ArrayList<Integer> scores = new ArrayList<>();
+            for (ObjectiveCard card: objectives)
+                scores.add(scoreCard(p, card));
+            p.setScores(scores);
+            //System.out.println(scores.toString());
+        }
     }
 
     /**
@@ -40,12 +50,22 @@ public class Scoring {
      */
     private int scoreCard (Player player, ObjectiveCard card) {
         int score = 0;
-        if (card.type() == ObjectiveEnum.FISHERMAN){
-
+        Objective objScorer = null;
+        //System.out.println(card.type());
+        switch(card.type()){
+            //case LORD -> {objScorer = new Lord();}
+            case FARMER ->{objScorer = new Farmer();}
+            case MINER -> {objScorer = new Miner();}
+            //case HERMIT -> {objScorer = new Hermit();}
+            case KNIGHT -> {objScorer = new Knight();}
+            case WORKER -> {objScorer = new Worker();}
+            //case CITIZEN -> {objScorer = new Citizen();}
+            //case MERCHANT -> {objScorer = new Merchant();}
+            case FISHERMAN -> {objScorer = new Fisherman();}
+            case DISCOVERER -> {objScorer = new Discoverer();}
         }
-        else if (card.type() ==  ObjectiveEnum.CITIZEN){
-
-        }
+        if (objScorer != null)
+            score = objScorer.scoreObjective(player, board);
         return score;
     }
     // checking the number of connected

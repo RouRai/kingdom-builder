@@ -19,6 +19,12 @@ public class Player {
     private int settlementsRemaining;
     private final int playerNumber;
     private TerrainCard card;
+
+    public ArrayList<Integer> getScores() {
+        return scores;
+    }
+
+    private ArrayList<Integer> scores;
     private final HashMap<ActionEnum, Integer> actionTiles;
     private int points, numSettlementsPlaced;
     private boolean hasPlacedSettlements, isPlacingRegSettlements, isUsingActionTile;
@@ -46,6 +52,10 @@ public class Player {
         Settlement temp = new Settlement(playerNumber, row, col, quadNum, this);
         settlements.add(temp);
         return temp;
+    }
+
+    public void setScores(ArrayList<Integer> scores) {
+        this.scores = scores;
     }
 
     public ArrayList<Settlement> getSettlements() {
