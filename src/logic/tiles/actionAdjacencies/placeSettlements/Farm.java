@@ -25,6 +25,6 @@ public class Farm implements ActionAdjacency {
      */
     @Override
     public ArrayList<TerrainNode> getValidNodes() {
-        return board.regularCanUseTiles(player, new TerrainCard(TerrainEnum.DESERT, Constants.getImage("landscapeCards/KB-Card-Meadow.png")));
+        return board.regularCanUseTiles(player, new TerrainCard(TerrainEnum.GRASS, Constants.getImage("landscapeCards/KB-Card-Meadow.png")));
     }
 }
