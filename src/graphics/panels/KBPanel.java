@@ -22,7 +22,7 @@ import javax.swing.JPanel;
 public class KBPanel extends JPanel implements ActionListener{
    //Images
 
-   private BufferedImage background, highlight;
+   private BufferedImage background, highlight, firstMarker;
    private ArrayList<TerrainNode> legalPlaces;
    private TranslucentButton menuButton, finishButton,endGameScreen;
    private TranslucentButton[] objectivesButton;
@@ -157,6 +157,8 @@ public class KBPanel extends JPanel implements ActionListener{
          //number
          g2.setColor(Color.black);
          g2.setFont(new Font(fontStr, Font.PLAIN, 40));
+         if(players.get(i+1).getPlayerNumber() == 1)
+            g2.drawImage(firstMarker,913,i*space_between_Players-2,47,43,null);
          if (i%2 ==0)
             g2.drawString("" + game.getAllPlayers().get(i + 1).getPlayerNumber(), 1040, 85+space_between_Players*i);
          else
@@ -191,6 +193,8 @@ public class KBPanel extends JPanel implements ActionListener{
       g2.setColor(Color.black);
       g2.setFont(new Font(fontStr, Font.PLAIN, 50));
       g2.drawString("" + game.getCurrentPlayer().getPlayerNumber(),1185,460);
+      if(game.getCurrentPlayer().getPlayerNumber() == 1)
+         g2.drawImage(firstMarker,913,392,50,48,null);
 
       //action tiles
       g2.setFont(new Font(fontStr, Font.PLAIN, 20));
@@ -437,6 +441,7 @@ public class KBPanel extends JPanel implements ActionListener{
       try{
          background = ImageIO.read(Objects.requireNonNull(getClass().getResource("/images/backgroundImages/game play2.png")));
          highlight = ImageIO.read(Objects.requireNonNull(getClass().getResource("/images/graphicsExtra/Hex.png")));
+         firstMarker = ImageIO.read(Objects.requireNonNull(getClass().getResource("/images/backgroundImages/1st player.png")));
       } catch (Exception ex) {
          System.out.println("----------------------------------------- Image Error -----------------------------------------");
       }

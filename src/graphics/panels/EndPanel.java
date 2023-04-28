@@ -21,7 +21,7 @@ public class EndPanel extends JPanel{
     private final CardLayout cardLayout;
     private static Game game;
     private Scoring score;
-    private BufferedImage background;
+    private BufferedImage background, firstMarker;
     private ArrayList<Player> players;
     private Graphics2D g2;
     private Constants constantClass;
@@ -81,6 +81,9 @@ public class EndPanel extends JPanel{
         int space_between_Players = 123;
         g2.setFont(new Font(fontStr, Font.PLAIN, 40));
 
+        if(game.getCurrentPlayer().getPlayerNumber() == 1)
+            g2.drawImage(firstMarker,970,15,50,48,null);
+
         for (int i = 0; i<4; i++){
             //settlement icon
             g2.drawImage(Constants.getSettlements()[i], 1020+i * space_between_Players, 150, 100, 80, null);
@@ -132,6 +135,7 @@ public class EndPanel extends JPanel{
         try{
             // 1 -- BACKGROUND - BOTTOM LAYER
             background = ImageIO.read(Objects.requireNonNull(getClass().getResource("/images/backgroundImages/EndGame.png")));
+            firstMarker = ImageIO.read(Objects.requireNonNull(getClass().getResource("/images/backgroundImages/1st player.png")));
         } catch (Exception ex) {
             System.out.println("----------------------------------------- Image Error -----------------------------------------");
         }
