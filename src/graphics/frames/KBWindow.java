@@ -40,7 +40,7 @@ public class KBWindow extends JFrame {
       pool.add(2); //farm
       pool.add(0); //oasis
       pool.add(5); //oracle
-      pool.add(6); //tower
+      //pool.add(6); //tower
       pool.add(7); //tavern
       int [] arr = new int[4];
       for(int i = 0; i < 4; i++) {

@@ -1,5 +1,7 @@
 package graphics.panels;
 
+import custom.ButtonQuadrant;
+import custom.HexagonButton;
 import logic.constantFolder.Constants;
 import logic.gameLogic.Game;
 import logic.gameLogic.Player;
@@ -41,6 +43,38 @@ public class EndPanel extends JPanel{
         drawSettlements();
         drawScoreComponents();
         drawWinnerString();
+        drawLeftPanel();
+    }
+    public void drawLeftPanel(){
+        for (int i = 0; i < 4; i++){
+            ButtonQuadrant b = game.getButtonBoard()[i];
+            double x = b.startX;
+            double y = b.startY;
+            if (game.getBoardNumbers()[i]>=8)
+                g2.drawImage(Constants.getFlippedBoards()[game.getBoardNumbers()[i]%8],(int)x+2, (int)y-1,435, 369, null);
+            else
+                g2.drawImage(Constants.getBoards()[game.getBoardNumbers()[i]],(int)x+2, (int)y-1,435, 369, null);
+            }
+
+        for (ButtonQuadrant b: game.getButtonBoard()) {
+            double x = b.startX;
+            double y = b.startY;
+            HexagonButton[][] board = b.getBoard();
+            for (int r = 0; r < 10; r++) {
+                for (int c = 0; c < 10; c++) {
+                    //CONDITION IF HEX IS ENABLED IN MATRIX.
+                    if (board[r][c] != null) {
+                        if (r % 2 == 0)
+                            board[r][c].setBounds((int) (x + c * 41.2), (int) y, 46, 46);
+                        else
+                            board[r][c].setBounds((int) (x + 21 + c * 41.3), (int) y, 46, 46);
+
+                        board[r][c].drawSettlement(g2);
+                    }
+                }
+                y += 35.5;
+            }
+        }
     }
     public void drawSettlements(){
         int space_between_Players = 123;
