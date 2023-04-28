@@ -21,6 +21,8 @@ public class KBWindow extends JFrame {
       pack();
       cl = new CardLayout();
       panels = new HashMap<>();
+      Constants c = new Constants();
+
       System.out.println();
 
       game = new Game(getboardNumbers(), getobjectiveNumbers());
@@ -34,20 +36,23 @@ public class KBWindow extends JFrame {
    }
 
    private int[] getboardNumbers() {
-      ArrayList<Integer> boardNumbers = new ArrayList<>();
-      for (int i = 0; i < 8; i++)
-         boardNumbers.add(i);
+      ArrayList<Integer> pool = new ArrayList<>();
+      pool.add(2); //farm
+      pool.add(0); //oasis
+      pool.add(5); //oracle
+      pool.add(6); //tower
+      pool.add(7); //tavern
       int [] arr = new int[4];
       for(int i = 0; i < 4; i++) {
          int rand;
-            rand = (int) (Math.random() * (boardNumbers.size()));
+            rand = (int) (Math.random() * (pool.size()));
             int flipped = (int) (Math.random() * 2);
-         //System.out.println(flipped + "_");
+         System.out.println("flipped " + rand );
             if (flipped ==1)
-               arr[i]=boardNumbers.get(rand);
+               arr[i]=pool.get(rand);
             else
-               arr[i]= boardNumbers.get(rand)+8;
-            boardNumbers.remove(rand);
+               arr[i]= pool.get(rand)+8;
+            pool.remove(rand);
       }
       for(int i = 0; i < 4; i++) {
          System.out.println(arr[i]);
@@ -56,8 +61,8 @@ public class KBWindow extends JFrame {
    }
    private int[] getobjectiveNumbers() {
       ArrayList<Integer> pool = new ArrayList<>();
-      pool.add(1); // discoveror
-      pool.add(2); // farmers
+      pool.add(1); //discoveror
+      pool.add(2); //farmers
       pool.add(3); //fish
       pool.add(4); //knights
       pool.add(8); //lords
