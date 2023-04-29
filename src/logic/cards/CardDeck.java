@@ -68,9 +68,4 @@ public class CardDeck<T> {
     public void addCards (ArrayList<T> additionalCards) {
         cards.addAll(additionalCards);
     }
-
-    public boolean isEmpty () {
-        return cards.isEmpty();
-    }
-
 }

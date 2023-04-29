@@ -17,7 +17,7 @@ public class CardPanel extends JPanel {
    private BufferedImage background;
    private final BufferedImage[] objectiveCards;
    private final TranslucentButton resume, menu;
-   private Graphics2D g2;
+
    public CardPanel(CardLayout cardLayout, Game game) {
       this.cardLayout = cardLayout;
       resume = new TranslucentButton();
@@ -40,7 +40,7 @@ public class CardPanel extends JPanel {
       }
    }
    public void paintComponent(Graphics g) {
-      g2 = (Graphics2D) g;
+      Graphics2D g2 = (Graphics2D) g;
       //Base Calls
       g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
       super.paintComponent(g2);
