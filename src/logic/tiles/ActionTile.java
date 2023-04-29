@@ -3,6 +3,7 @@ package logic.tiles;
 import logic.constantFolder.ActionEnum;
 import logic.gameLogic.Player;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 
 /**
@@ -14,11 +15,11 @@ import java.util.HashSet;
 
 public class ActionTile extends Tile<ActionEnum> {
     private int count;
-    private HashSet<Player> players;
+    private ArrayList<Player> players;
 
     public ActionTile (ActionEnum type) {
         super(type);
-        players = new HashSet<>();
+        players = new ArrayList<>();
         count = 2;
     }
 
@@ -29,10 +30,10 @@ public class ActionTile extends Tile<ActionEnum> {
     public void takeTile (Player p) {
         if (!players.contains(p)) {
             count--;
-            players.add(p);
         }
+        players.add(p);
     }
-    public HashSet<Player> getPlayers(){
+    public ArrayList<Player> getPlayers(){
         return players;
     }
     
