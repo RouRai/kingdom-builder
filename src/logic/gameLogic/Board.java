@@ -74,6 +74,11 @@ public class Board {
         }
         HashSet<TerrainNode> settlementsAdjacentToTerrain = hasSettlementAdjacentToTerrain(player, card);
         boolean needToUseSettlementAdjacentToTerrain = !(settlementsAdjacentToTerrain.size() == 0);
+        if (needToUseSettlementAdjacentToTerrain && settlementsAdjacentToTerrain.size() < 3 && !tilesAdjacentToTerrain(node, card.type()).isEmpty()){
+            for (TerrainNode n : settlementsAdjacentToTerrain){
+                //System.out.println(n.getTile().getSettlement()+ " -------+++++");
+            }
+        }
         boolean nodeChosenIsAdjacentToSettlementAdjacentToTerrain = settlementsAdjacentToTerrain.contains(node);
         return !needToUseSettlementAdjacentToTerrain || nodeChosenIsAdjacentToSettlementAdjacentToTerrain;
     }

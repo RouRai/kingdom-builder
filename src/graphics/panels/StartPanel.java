@@ -1,8 +1,10 @@
 package graphics.panels;
 
+import custom.HexagonButton;
 import custom.TranslucentButton;
 import graphics.frames.KBWindow;
 import logic.constantFolder.Constants;
+import logic.gameLogic.Game;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -10,20 +12,22 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
-import java.util.Objects;
 
 
 public class StartPanel extends JPanel implements ActionListener {
-    private TranslucentButton gameButton;
+    private CardLayout cl;
+    private BufferedImage bg;
+private TranslucentButton gameButton;
     private BufferedImage startBackground;
-
-    public StartPanel(){
+    public StartPanel(CardLayout c){
         //background image
         try{
-        startBackground = ImageIO.read(Objects.requireNonNull(getClass().getResource("/images/backgroundImages/startPage.png")));
+        startBackground = ImageIO.read(getClass().getResource("/images/backgroundImages/startPage.png"));
         } catch (Exception ex) {
             System.out.println("----------------------------------------- Image Error");
         }
+        // cardlayout
+        cl = c;
         //setting up buttons
         setUpButtons();
     }
@@ -38,10 +42,18 @@ public class StartPanel extends JPanel implements ActionListener {
         gameButton = new TranslucentButton();
         add(gameButton);
         // cl.show(Constants.PANEL_CONT, Constants.GAME_PANEL);
-        gameButton.addActionListener(e -> KBWindow.setup());
+        gameButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                KBWindow.setup();
+            }
+        });
 
     }
-
+    private void setUpHexes(HexagonButton J){
+        add(J);
+        J.addActionListener(this);
+    }
     public void actionPerformed(ActionEvent e) {
 
     }

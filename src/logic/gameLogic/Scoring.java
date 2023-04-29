@@ -1,6 +1,8 @@
 package logic.gameLogic;
 
 import logic.cards.ObjectiveCard;
+import logic.constantFolder.Constants;
+import logic.constantFolder.ObjectiveEnum;
 import logic.gameLogic.objectiveScoring.*;
 import logic.placeables.Settlement;
 
@@ -52,15 +54,15 @@ public class Scoring {
         //System.out.println(card.type());
         switch(card.type()){
             //case LORD -> {objScorer = new Lord();}
-            case FARMER -> objScorer = new Farmer();
-            case MINER -> objScorer = new Miner();
+            case FARMER ->{objScorer = new Farmer();}
+            case MINER -> {objScorer = new Miner();}
             //case HERMIT -> {objScorer = new Hermit();}
-            case KNIGHT -> objScorer = new Knight();
-            case WORKER -> objScorer = new Worker();
+            case KNIGHT -> {objScorer = new Knight();}
+            case WORKER -> {objScorer = new Worker();}
             //case CITIZEN -> {objScorer = new Citizen();}
             //case MERCHANT -> {objScorer = new Merchant();}
-            case FISHERMAN -> objScorer = new Fisherman();
-            case DISCOVERER -> objScorer = new Discoverer();
+            case FISHERMAN -> {objScorer = new Fisherman();}
+            case DISCOVERER -> {objScorer = new Discoverer();}
         }
         if (objScorer != null)
             score = objScorer.scoreObjective(player, board);
@@ -70,5 +72,14 @@ public class Scoring {
     private HashSet<Settlement> numConnected (Player player, Settlement origin){
 
         return null;
+    }
+
+
+    public ArrayList<Player> getPlayers() {
+        return players;
+    }
+
+    public ArrayList<ObjectiveCard> getObjectives() {
+        return objectives;
     }
 }

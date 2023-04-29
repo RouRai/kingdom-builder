@@ -1,3 +1,0 @@
-1. Check if the player has settlements on the edges.
-    a. If not, highlight the entire edge.
-    b. If so, highlight the adjacent tiles.

@@ -27,6 +27,11 @@ public class TerrainTile extends Tile<TerrainEnum> {
         settlement = settle;
     }
 
+    public void removeOwner () {
+        owner = null;
+        settlement = null;
+    }
+
     public String toString (){return ""+getType();}
 
     public Settlement getSettlement() {

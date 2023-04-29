@@ -1,5 +1,6 @@
 package graphics.panels;
 
+import custom.ActionProcessButton;
 import custom.ButtonQuadrant;
 import custom.HexagonButton;
 import logic.cards.ObjectiveCard;
@@ -23,11 +24,15 @@ public class EndPanel extends JPanel{
     private BufferedImage background, firstMarker;
     private ArrayList<Player> players;
     private Graphics2D g2;
+    private Constants constantClass;
     private final String fontStr = "Lucida Calligraphy";
     public EndPanel(CardLayout c, Game g){
+
         cardLayout = c;
+        constantClass = new Constants();
         game = g;
         setUpMiscellaneous();
+
     }
     public void paintComponent(Graphics g) {
         g2 = (Graphics2D) g;
@@ -142,8 +147,12 @@ public class EndPanel extends JPanel{
         addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
-                System.out.println("mouse clicked on coordinate (" +e.getX()+ ", " +e.getY()+ ")");
+                System.out.println("mouse clicked on coord (" +e.getX()+ ", " +e.getY()+ ")");
             }});
+    }
+    //@Override
+    public void actionPerformed(ActionEvent e) {
+
     }
     public static void setGame(Game g){
         game = g;

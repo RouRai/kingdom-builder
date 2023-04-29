@@ -15,6 +15,7 @@ import java.util.ArrayList;
 public class TerrainDeck extends CardDeck<TerrainCard> {
 
     public TerrainDeck () {
+        Constants c = new Constants();
         ArrayList<TerrainCard> cards = new ArrayList<>();
         for(int i = 0; i < 5; i++){
             cards.add(new TerrainCard(TerrainEnum.GRASS, Constants.getLandCardsCards()[0]));

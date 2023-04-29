@@ -5,6 +5,7 @@ import custom.ButtonQuadrant;
 import custom.HexagonButton;
 import custom.TranslucentButton;
 import datastructures.gameDatastructures.boardNodes.TerrainNode;
+import logic.cards.TerrainCard;
 import logic.constantFolder.Constants;
 import logic.gameLogic.Game;
 import logic.gameLogic.Player;
@@ -23,19 +24,20 @@ public class KBPanel extends JPanel implements ActionListener{
 
    private BufferedImage background, highlight, firstMarker;
    private ArrayList<TerrainNode> legalPlaces;
-   private final TranslucentButton menuButton, finishButton,endGameScreen;
+   private TranslucentButton menuButton, finishButton,endGameScreen;
    private TranslucentButton[] objectivesButton;
    private ActionProcessButton[] currentActions;
    private final ButtonQuadrant[] buttonBoards;
    private Graphics2D g2;
-   private final int[] boardNumbers, objectiveNumbers;
+   private int [] boardNumbers, objectiveNumbers;
    private final ArrayList <BufferedImage> boardImages, objectiveCardImages;
    private final CardLayout cardLay;
    private final String fontStr = "Lucida Calligraphy";
-   private final Game game;
+   private Game game;
    private ActionProcessButton inUse;
    private Boolean clickedOnActionOnBoard = false;
    private HexagonButton actionClicked;
+   private int currentAction;
 
    public KBPanel (CardLayout cl, Game g ){
       cardLay = cl;
@@ -220,6 +222,9 @@ public class KBPanel extends JPanel implements ActionListener{
          clickedOnActionOnBoard = false;
       }
       //landscape card drawn by the current player
+      //System.out.println(game.getCurrentPlayer().getCard());
+      TerrainCard tempc = game.getCurrentPlayer().getCard();
+      BufferedImage temp = game.getCurrentPlayer().getCard().image();
       g2.drawImage(game.getCurrentPlayer().getCard().image(), 1335, 530, 130, 200, null);
 
       //settlement icon - based on color
@@ -282,7 +287,7 @@ public class KBPanel extends JPanel implements ActionListener{
                        i++;
                    }
                   if(legalPlaces.contains(game.getBoard().getTerrainBoard().getBoardMatrix()[tempr][tempc]) && !game.getCurrentPlayer().hasPlacedSettlements()) {
-                     board[r][c].drawHighlight(g2, highlight);
+                     board[r][c].drawHighlight(g2, highlight, game.getCurrentPlayer().getCard());
                   }
                   board[r][c].drawSettlement(g2);
                }
@@ -345,6 +350,7 @@ public class KBPanel extends JPanel implements ActionListener{
       temp.addActionListener(e -> {
          System.out.println("Current Action Tile Button clicked -" + temp + "  ");
          if(!game.getCurrentPlayer().isPlacingRegSettlements() && temp.getNumUses() > 0){
+            currentAction = temp.getquadNum();
             game.getCurrentPlayer().setUsingActionTile(true);
             game.getCurrentPlayer().setPlacingRegSettlements(false);
             inUse = temp;

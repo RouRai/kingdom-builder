@@ -27,6 +27,10 @@ public class Settlement {
         }
     }
 
+    public int getColor() {
+        return color;
+    }
+
     public void setLocation (TerrainNode location) {
         this.location = location;
     }

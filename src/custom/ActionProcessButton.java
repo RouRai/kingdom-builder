@@ -6,6 +6,8 @@ import logic.constantFolder.Constants;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
+import static java.util.Objects.requireNonNull;
+
 public class ActionProcessButton extends HexagonButton{
     private BufferedImage front, process;
     private int numUses;

@@ -3,36 +3,42 @@ package graphics.panels;
 import custom.TranslucentButton;
 import graphics.frames.KBWindow;
 import logic.constantFolder.Constants;
+import logic.gameLogic.Game;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
-import java.util.Objects;
 
 public class MenuPanel extends JPanel {
-    private final CardLayout cardLayout;
+    private CardLayout cl;
     private int pageNumber;
     private BufferedImage background;
-    private final TranslucentButton startPage, resume, leftButton, rightButton;
+    private BufferedImage[] RulebookPages;
+    private TranslucentButton startPage, resume, leftButton, rightButton;
+    private Graphics2D g2;
+    private Constants constantClass;
     private BufferedImage ruleBookPage;
-    public MenuPanel(CardLayout c ){
+    public MenuPanel(CardLayout c, Game g ){
 
         pageNumber = 1;
-        cardLayout = c;
+        cl = c;
+        constantClass = new Constants();        // for coordinates
         //775, 225
         //1250, 805
 
         addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
-                System.out.println("mouse clicked on coordinate (" +e.getX()+ ", " +e.getY()+ ")");
+                System.out.println("mouse clicked on coord (" +e.getX()+ ", " +e.getY()+ ")");
             }});
         try{
             // 1 -- BACKGROUND - BOTTOM LAYER
-            background = ImageIO.read(Objects.requireNonNull(getClass().getResource("/images/backgroundImages/menu.png")));
+            background = ImageIO.read(getClass().getResource("/images/backgroundImages/menu.png"));
         } catch (Exception ex) {
             System.out.println("----------------------------------------- Image Error -----------------------------------------");
         }
@@ -47,7 +53,7 @@ public class MenuPanel extends JPanel {
         setUpRight();
     }
     public void paintComponent(Graphics g) {
-        Graphics2D g2 = (Graphics2D) g;
+        g2 = (Graphics2D) g;
         //Base Calls
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         super.paintComponent(g2);
@@ -64,21 +70,27 @@ public class MenuPanel extends JPanel {
     private void setUpButtons(){
         add(startPage);
         // cl.show(Constants.PANEL_CONT, Constants.GAME_PANEL);
-        startPage.addActionListener(e -> {
-            System.out.println("start page");
-            KBWindow.terminate();
-            cardLayout.show(Constants.PANEL_CONT, Constants.START_PANEL);
+        startPage.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("start page");
+                KBWindow.terminate();
+                cl.show(Constants.PANEL_CONT, Constants.START_PANEL);
+            }
         });
     }
     private void setUpResume(){
         add(resume);
-        resume.addActionListener(e -> {
-            System.out.println("resume");
-            cardLayout.show(Constants.PANEL_CONT, Constants.GAME_PANEL);
+        resume.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("resume");
+                cl.show(Constants.PANEL_CONT, Constants.GAME_PANEL);
+            }
         });}
     private void updateImage (){
         try{  //5- landCards
-            ruleBookPage = ImageIO.read(Objects.requireNonNull(getClass().getResource("/images/ruleBook/13-kingdom-builder-big-box-rulebook (1)-" + pageNumber + ".jpg")));
+            ruleBookPage = ImageIO.read(getClass().getResource("/images/rulBook/13-kingdom-builder-big-box-rulebook (1)-"+ pageNumber+".jpg"));
 
         } catch (Exception ex5) {
             System.out.println("rulebook error" + pageNumber);
@@ -86,22 +98,28 @@ public class MenuPanel extends JPanel {
     }
     private void setUpLeft(){
         add(leftButton);
-        leftButton.addActionListener(e -> {
-            System.out.println("Left");
-            if(pageNumber > 0)
-                pageNumber--;
+        leftButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("Left");
+                if(pageNumber > 0)
+                    pageNumber--;
 
-            updateImage();
-            repaint();
+                updateImage();
+                repaint();
+            }
         });}
     private void setUpRight(){
         add(rightButton);
-        rightButton.addActionListener(e -> {
-            System.out.println("Right");
-            if(pageNumber <= 15)
-                pageNumber++;
-            updateImage();
-            repaint();
+        rightButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("Right");
+                if(pageNumber <= 15)
+                    pageNumber++;
+                updateImage();
+                repaint();
+            }
         });}
 
 }
