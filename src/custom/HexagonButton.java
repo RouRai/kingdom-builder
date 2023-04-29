@@ -1,6 +1,6 @@
 package custom;
+
 import logic.cards.TerrainCard;
-import logic.constantFolder.TerrainEnum;
 import logic.tiles.ActionTile;
 import logic.tiles.TerrainTile;
 import logic.tiles.Tile;
@@ -58,8 +58,8 @@ public class HexagonButton extends JButton {
         int y0 = getSize().height/2;
         for(int i = 0; i < n; i++) {
             double v = i*angle;
-            x[i] = x0 + (int)Math.round((getWidth()/2)*Math.cos(v + Math.PI/2));
-            y[i] = y0 + (int)Math.round((getHeight()/2)*Math.sin(v + Math.PI/2));
+            x[i] = x0 + (int)Math.round((getWidth()/2.0)*Math.cos(v + Math.PI/2));
+            y[i] = y0 + (int)Math.round((getHeight()/2.0)*Math.sin(v + Math.PI/2));
         }
     }
     public boolean contains(int x1, int y1) {
@@ -68,15 +68,15 @@ public class HexagonButton extends JButton {
             int y0 = getSize().height/2;
             for(int i=0; i<n; i++) {
                 double v = i*angle;
-                x[i] = x0 + (int)Math.round((getWidth()/2)*Math.cos(v + Math.PI/2));
-                y[i] = y0 + (int)Math.round((getHeight()/2)*Math.sin(v + Math.PI/2));
+                x[i] = x0 + (int)Math.round((getWidth()/2.0)*Math.cos(v + Math.PI/2));
+                y[i] = y0 + (int)Math.round((getHeight()/2.0)*Math.sin(v + Math.PI/2));
             }
             polygon = new Polygon(x,y,n);
         }
         return polygon.contains(x1, y1);
     }
 
-    public void drawHighlight(Graphics2D g, BufferedImage highlight, TerrainCard currentTerrain){
+    public void drawHighlight(Graphics2D g, BufferedImage highlight){
         g.drawImage(highlight, this.getX() - 40, this.getY() - 40, 120, 133, null);
     }
     public void drawSettlement(Graphics2D g){

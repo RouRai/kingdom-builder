@@ -23,9 +23,8 @@ public class Tavern implements ActionAdjacency {
     @Override
     public ArrayList<TerrainNode> getValidNodes() {
         for(int r = 0; r < 20; r++){
-            for(int c = 0; c < 20; r++){
+            for(int c = 0; c < 20; c++){
                 TerrainNode node = board.getTerrainBoard().getBoardMatrix()[r][c];
-
             }
         }
         return null;

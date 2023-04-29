@@ -26,10 +26,10 @@ public class Worker implements Objective{
             index++;
         }
 
-        return analyzeAdjacentNodesForCityTile(player, rows, columns, board);
+        return analyzeAdjacentNodesForCityTile(rows, columns, board);
     }
 
-    private int analyzeAdjacentNodesForCityTile (Player player, int[] rows, int[] columns, Board board) {
+    private int analyzeAdjacentNodesForCityTile (int[] rows, int[] columns, Board board) {
         int score = 0;
         for (int index = 0; index < rows.length; index++) {
             CityNode adjacentCityNode = board.getCityBoard().getBoardMatrix()[rows[index]][columns[index]];

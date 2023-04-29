@@ -2,7 +2,6 @@ package graphics.frames;
 
 import graphics.panels.*;
 import logic.constantFolder.Constants;
-import logic.gameLogic.Board;
 import logic.gameLogic.Game;
 
 import javax.swing.*;
@@ -14,18 +13,17 @@ import java.util.HashSet;
 public class KBWindow extends JFrame {
 
    private static CardLayout cl;
-   private static HashMap<String,JPanel> panels;
+   private static HashMap<String, JPanel> panels;
    private static Game game;
    public KBWindow (){
       super("Kingdom Builder");
       pack();
       cl = new CardLayout();
       panels = new HashMap<>();
-      Constants c = new Constants();
 
       System.out.println();
 
-      game = new Game(getboardNumbers(), getobjectiveNumbers());
+      game = new Game(getBoardNumbers(), getObjectiveNumbers());
       
       init();
       add(Constants.PANEL_CONT);
@@ -35,7 +33,7 @@ public class KBWindow extends JFrame {
       setVisible(true);
    }
 
-   private int[] getboardNumbers() {
+   private int[] getBoardNumbers() {
       ArrayList<Integer> pool = new ArrayList<>();
       pool.add(2); //farm
       pool.add(0); //oasis
@@ -59,15 +57,15 @@ public class KBWindow extends JFrame {
       }
       return arr;
    }
-   private int[] getobjectiveNumbers() {
+   private int[] getObjectiveNumbers() {
       ArrayList<Integer> pool = new ArrayList<>();
-      pool.add(1); //discoveror
+      pool.add(1); //discoverer
       pool.add(2); //farmers
       pool.add(3); //fish
       pool.add(4); //knights
       pool.add(8); //lords
       pool.add(6); //miners
-      HashSet<Integer> boardNumbers = new HashSet<Integer>();
+      HashSet<Integer> boardNumbers = new HashSet<>();
       for(int i = 0; i < 3; i++){
          int rand;
          do {
@@ -84,8 +82,8 @@ public class KBWindow extends JFrame {
    }
 
    private void init(){
-      panels.put(Constants.START_PANEL, new StartPanel(cl));
-      panels.put(Constants.MENU_PANEL, new MenuPanel(cl,game));
+      panels.put(Constants.START_PANEL, new StartPanel());
+      panels.put(Constants.MENU_PANEL, new MenuPanel(cl));
       panels.put(Constants.CARD_PANEL, new CardPanel(cl,game));
       Constants.PANEL_CONT.setLayout(cl);
       Constants.PANEL_CONT.add(panels.get(Constants.START_PANEL), Constants.START_PANEL);

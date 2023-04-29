@@ -1,6 +1,5 @@
 package logic.gameLogic;
 
-import custom.ActionProcessButton;
 import custom.ButtonQuadrant;
 import custom.HexagonButton;
 import datastructures.gameDatastructures.boardNodes.ActionNode;
@@ -9,7 +8,9 @@ import datastructures.gameDatastructures.boardNodes.TerrainNode;
 import files.mainMakers.ActionMaker;
 import files.mainMakers.CityMaker;
 import files.mainMakers.TerrainMaker;
-import logic.cards.*;
+import logic.cards.TerrainCard;
+import logic.cards.TerrainDeck;
+import logic.constantFolder.ActionEnum;
 import logic.constantFolder.Constants;
 import logic.placeables.Settlement;
 import logic.tiles.TerrainTile;
@@ -17,6 +18,7 @@ import logic.tiles.actionAdjacencies.ActionAdjacency;
 import logic.tiles.actionAdjacencies.placeSettlements.Oracle;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class Game {
    public ArrayList<Player> allPlayers;
@@ -129,8 +131,8 @@ public class Game {
    }
    public ArrayList<TerrainNode> getLegalActionPlaces(ActionNode node){
       ActionAdjacency checker = null;
-      switch(node.getType()){
-         case ORACLE -> { checker = new Oracle(getBoard(), getCurrentPlayer());     }
+      if (Objects.requireNonNull(node.getType()) == ActionEnum.ORACLE) {
+         checker = new Oracle(getBoard(), getCurrentPlayer());
       }
       if (checker != null)
          return checker.getValidNodes();

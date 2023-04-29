@@ -14,7 +14,7 @@ import java.util.HashSet;
 
 public class ActionTile extends Tile<ActionEnum> {
     private int count;
-    private HashSet<Player> players;
+    private final HashSet<Player> players;
 
     public ActionTile (ActionEnum type) {
         super(type);
