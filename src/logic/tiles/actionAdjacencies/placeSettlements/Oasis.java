@@ -2,7 +2,6 @@ package logic.tiles.actionAdjacencies.placeSettlements;
 
 import datastructures.gameDatastructures.boardNodes.TerrainNode;
 import logic.cards.TerrainCard;
-import logic.constantFolder.Constants;
 import logic.constantFolder.TerrainEnum;
 import logic.gameLogic.Board;
 import logic.gameLogic.Player;
@@ -25,6 +24,6 @@ public class Oasis implements ActionAdjacency {
      */
     @Override
     public ArrayList<TerrainNode> getValidNodes() {
-        return board.regularCanUseTiles(player, new TerrainCard(TerrainEnum.DESERT, Constants.getImage("landscapeCards/KB-Card-Desert.png")));
+        return board.regularCanUseTiles(player, new TerrainCard(TerrainEnum.DESERT, null));
     }
 }

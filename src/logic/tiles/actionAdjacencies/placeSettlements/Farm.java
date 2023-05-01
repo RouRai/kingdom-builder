@@ -2,7 +2,6 @@ package logic.tiles.actionAdjacencies.placeSettlements;
 
 import datastructures.gameDatastructures.boardNodes.TerrainNode;
 import logic.cards.TerrainCard;
-import logic.constantFolder.Constants;
 import logic.constantFolder.TerrainEnum;
 import logic.gameLogic.Board;
 import logic.gameLogic.Player;
@@ -25,6 +24,6 @@ public class Farm implements ActionAdjacency {
      */
     @Override
     public ArrayList<TerrainNode> getValidNodes() {
-        return board.regularCanUseTiles(player, new TerrainCard(TerrainEnum.GRASS, Constants.getImage("landscapeCards/KB-Card-Meadow.png")));
+        return board.regularCanUseTiles(player, new TerrainCard(TerrainEnum.GRASS, null));
     }
 }

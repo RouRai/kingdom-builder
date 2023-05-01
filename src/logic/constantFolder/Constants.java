@@ -13,8 +13,10 @@ public class Constants {
         public static BufferedImage[] actionTiles = new BufferedImage[8];
         public static BufferedImage[] charCards = new BufferedImage[10];
         public static BufferedImage[] landCards = new BufferedImage [6];
+
         public static BufferedImage[] settlements = new BufferedImage[4];
         public static BufferedImage[] actionProcess = new BufferedImage[8];
+        public static DirectionEnum[] allDirections = new DirectionEnum[]{DirectionEnum.BOTTOM_RIGHT, DirectionEnum.BOTTOM_LEFT, DirectionEnum.LEFT, DirectionEnum.RIGHT, DirectionEnum.TOP_LEFT, DirectionEnum.TOP_RIGHT};
 
     // Screen dimensions
         public static final int WIDTH = 1536;
@@ -135,34 +137,32 @@ public class Constants {
         return actionProcess;
     }
     public static ActionEnum getActionType(int symbol){
-        
-        switch(symbol % 8){
-            case 0 :return  ActionEnum.OASIS;
-            case 1 :return  ActionEnum.HARBOR;
-            case 2 :return  ActionEnum.FARM;
-            case 3 :return  ActionEnum.PADDOCK;
-            case 4 :return  ActionEnum.BARN;
-            case 5 :return  ActionEnum.ORACLE;
-            case 6 :return  ActionEnum.TOWER;
-            case 7 :return  ActionEnum.TAVERN;
-            default: return null;
-        }
+        return switch (symbol % 8) {
+            case 0 -> ActionEnum.OASIS;
+            case 1 -> ActionEnum.HARBOR;
+            case 2 -> ActionEnum.FARM;
+            case 3 -> ActionEnum.PADDOCK;
+            case 4 -> ActionEnum.BARN;
+            case 5 -> ActionEnum.ORACLE;
+            case 6 -> ActionEnum.TOWER;
+            case 7 -> ActionEnum.TAVERN;
+            default -> null;
+        };
     }
     public static ObjectiveEnum getObjectiveType(int symbol){
-
-        switch(symbol){
-            case 0 :return  ObjectiveEnum.CITIZEN;
-            case 1 :return  ObjectiveEnum.DISCOVERER;
-            case 2 :return  ObjectiveEnum.FARMER;
-            case 3 :return  ObjectiveEnum.FISHERMAN;
-            case 4 :return  ObjectiveEnum.KNIGHT;
-            case 5 :return  ObjectiveEnum.MERCHANT;
-            case 6 :return  ObjectiveEnum.MINER;
-            case 7 :return  ObjectiveEnum.WORKER;
-            case 8 :return  ObjectiveEnum.LORD;
-            case 9 :return  ObjectiveEnum.HERMIT;
-            default: return null;
-        }
+        return switch (symbol) {
+            case 0 -> ObjectiveEnum.CITIZEN;
+            case 1 -> ObjectiveEnum.DISCOVERER;
+            case 2 -> ObjectiveEnum.FARMER;
+            case 3 -> ObjectiveEnum.FISHERMAN;
+            case 4 -> ObjectiveEnum.KNIGHT;
+            case 5 -> ObjectiveEnum.MERCHANT;
+            case 6 -> ObjectiveEnum.MINER;
+            case 7 -> ObjectiveEnum.WORKER;
+            case 8 -> ObjectiveEnum.LORD;
+            case 9 -> ObjectiveEnum.HERMIT;
+            default -> null;
+        };
     }
     
 }

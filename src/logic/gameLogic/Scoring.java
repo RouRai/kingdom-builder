@@ -1,8 +1,6 @@
 package logic.gameLogic;
 
 import logic.cards.ObjectiveCard;
-import logic.constantFolder.Constants;
-import logic.constantFolder.ObjectiveEnum;
 import logic.gameLogic.objectiveScoring.*;
 import logic.placeables.Settlement;
 
