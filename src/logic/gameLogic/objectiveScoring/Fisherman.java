@@ -18,6 +18,7 @@ public class Fisherman implements Objective {
         }
         return score;
     }
+
     private int checkAdjacency(Settlement settle){
         for(TerrainNode terrainNode: settle.getLocation().getAdjacentNodes().values()){
             if (terrainNode.getType() == TerrainEnum.WATER) {

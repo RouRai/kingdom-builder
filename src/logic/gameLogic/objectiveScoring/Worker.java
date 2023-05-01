@@ -11,11 +11,11 @@ public class Worker implements Objective{
     public int scoreObjective(Player player, Board board) {
         int score = 0;
         for(Settlement settle : player.getSettlements()){
-            score += checkAdjacencyToCityTile(player, settle.getLocation(), board);
+            score += checkAdjacencyToCityTile(settle.getLocation(), board);
         }
         return score;
     }
-    private int checkAdjacencyToCityTile (Player player, TerrainNode terrainNode, Board board) {
+    private int checkAdjacencyToCityTile (TerrainNode terrainNode, Board board) {
         int[] rows = new int[6];
         int[] columns = new int[6];
 
@@ -26,10 +26,10 @@ public class Worker implements Objective{
             index++;
         }
 
-        return analyzeAdjacentNodesForCityTile(player, rows, columns, board);
+        return analyzeAdjacentNodesForCityTile(rows, columns, board);
     }
 
-    private int analyzeAdjacentNodesForCityTile (Player player, int[] rows, int[] columns, Board board) {
+    private int analyzeAdjacentNodesForCityTile (int[] rows, int[] columns, Board board) {
         int score = 0;
         for (int index = 0; index < rows.length; index++) {
             CityNode adjacentCityNode = board.getCityBoard().getBoardMatrix()[rows[index]][columns[index]];
