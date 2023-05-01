@@ -1,0 +1,2 @@
+1. Get every node that isn't null that is two nodes far away in every direction from the current node.
+2. Verify that it is a node that you can place on.
