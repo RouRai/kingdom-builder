@@ -1,10 +1,10 @@
-package logic.gameLogic.objectiveScoring;
+package logic.objectiveScoring.objectives;
 
 import logic.gameLogic.Board;
 import logic.gameLogic.Player;
-import logic.placeables.Settlement;
+import logic.objectiveScoring.Objective;
 
-public class Hermit implements Objective{
+public class Merchant implements Objective {
     @Override
     public int scoreObjective(Player player, Board board) {
         return 0;

@@ -1,14 +1,15 @@
-package logic.gameLogic.objectiveScoring;
+package logic.objectiveScoring.objectives;
 
 import datastructures.gameDatastructures.boardNodes.TerrainNode;
 import logic.constantFolder.TerrainEnum;
 import logic.gameLogic.Board;
 import logic.gameLogic.Player;
+import logic.objectiveScoring.Objective;
 import logic.placeables.Settlement;
 
 import java.util.ArrayList;
 
-public class Miner implements Objective{
+public class Miner implements Objective {
     @Override
     public int scoreObjective(Player player, Board board) {
         int score = 0;

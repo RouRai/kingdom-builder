@@ -1,7 +1,8 @@
-package logic.gameLogic.objectiveScoring;
+package logic.objectiveScoring.objectives;
 
 import logic.gameLogic.Board;
 import logic.gameLogic.Player;
+import logic.objectiveScoring.Objective;
 import logic.placeables.Settlement;
 
 import java.util.ArrayList;

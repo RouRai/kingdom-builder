@@ -1,4 +1,4 @@
-package logic.gameLogic.objectiveScoring;
+package logic.objectiveScoring;
 
 import logic.gameLogic.Board;
 import logic.gameLogic.Player;

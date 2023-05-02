@@ -1,7 +1,8 @@
 package logic.gameLogic;
 
 import logic.cards.ObjectiveCard;
-import logic.gameLogic.objectiveScoring.*;
+import logic.objectiveScoring.*;
+import logic.objectiveScoring.objectives.*;
 import logic.placeables.Settlement;
 
 import java.util.ArrayList;
@@ -51,7 +52,7 @@ public class Scoring {
         Objective objScorer = null;
         //System.out.println(card.type());
         switch(card.type()){
-            //case LORD -> {objScorer = new Lord();}
+            case LORD -> objScorer = new Lord();
             case FARMER ->{objScorer = new Farmer();}
             case MINER -> {objScorer = new Miner();}
             //case HERMIT -> {objScorer = new Hermit();}

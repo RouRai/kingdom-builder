@@ -1,12 +1,13 @@
-package logic.gameLogic.objectiveScoring;
+package logic.objectiveScoring.objectives;
 
 import datastructures.gameDatastructures.boardNodes.CityNode;
 import datastructures.gameDatastructures.boardNodes.TerrainNode;
 import logic.gameLogic.Board;
 import logic.gameLogic.Player;
+import logic.objectiveScoring.Objective;
 import logic.placeables.Settlement;
 
-public class Worker implements Objective{
+public class Worker implements Objective {
     @Override
     public int scoreObjective(Player player, Board board) {
         int score = 0;

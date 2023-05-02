@@ -1,13 +1,14 @@
-package logic.gameLogic.objectiveScoring;
+package logic.objectiveScoring.objectives;
 
 import logic.gameLogic.Board;
 import logic.gameLogic.Player;
+import logic.objectiveScoring.Objective;
 import logic.placeables.Settlement;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class Knight implements Objective{
+public class Knight implements Objective {
     @Override
     public int scoreObjective(Player player, Board board) {
         HashMap<Integer, Integer> knightRows = new HashMap<>();
