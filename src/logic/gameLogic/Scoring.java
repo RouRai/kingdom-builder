@@ -72,7 +72,6 @@ public class Scoring {
         return null;
     }
 
-
     public ArrayList<Player> getPlayers() {
         return players;
     }
