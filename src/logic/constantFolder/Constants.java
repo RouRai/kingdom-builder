@@ -164,5 +164,14 @@ public class Constants {
             default -> null;
         };
     }
+
+    public static DirectionEnum getOppositeDirection (DirectionEnum directionEnum) {
+        if (directionEnum == DirectionEnum.LEFT) return DirectionEnum.RIGHT;
+        if (directionEnum == DirectionEnum.RIGHT) return DirectionEnum.LEFT;
+        if (directionEnum == DirectionEnum.TOP_LEFT) return DirectionEnum.BOTTOM_RIGHT;
+        if (directionEnum == DirectionEnum.TOP_RIGHT) return DirectionEnum.BOTTOM_LEFT;
+        if (directionEnum == DirectionEnum.BOTTOM_LEFT) return DirectionEnum.TOP_RIGHT;
+        return DirectionEnum.TOP_LEFT;
+    }
     
 }

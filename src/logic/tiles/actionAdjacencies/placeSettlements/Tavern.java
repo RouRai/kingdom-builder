@@ -1,11 +1,14 @@
 package logic.tiles.actionAdjacencies.placeSettlements;
 
 import datastructures.gameDatastructures.boardNodes.TerrainNode;
+import logic.constantFolder.Constants;
+import logic.constantFolder.DirectionEnum;
 import logic.gameLogic.Board;
 import logic.gameLogic.Player;
 import logic.tiles.actionAdjacencies.ActionAdjacency;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 
 public class Tavern implements ActionAdjacency {
     private final Board board;
@@ -22,13 +25,49 @@ public class Tavern implements ActionAdjacency {
      */
     @Override
     public ArrayList<TerrainNode> getValidNodes() {
-        for(int r = 0; r < 20; r++){
-            for(int c = 0; c < 20; r++){
-
+        HashSet<TerrainNode> validNodes = new HashSet<>();
+        for(int row = 0; row < 20; row++){
+            for(int column = 0; column < 20; column++){
+                validNodes.addAll(processDirections(board.getTerrainBoard().getBoardMatrix()[row][column]));
             }
         }
-        return null;
+        return new ArrayList<>(validNodes);
     }
 
-    //https://code-with-me.global.jetbrains.com/TQj0J8I2xw83Rg-fitfb3w#p=IC&fp=2AD9154C027F93D81993DDF7D68E7842B3469E095D53B6EA4CDF170CC1D108DA
+    private HashSet<TerrainNode> processDirections (TerrainNode node) {
+        HashSet<TerrainNode> nodes = new HashSet<>();
+        nodes.addAll(getEnds(node, DirectionEnum.LEFT));
+        nodes.addAll(getEnds(node, DirectionEnum.RIGHT));
+        nodes.addAll(getEnds(node, DirectionEnum.TOP_LEFT));
+        nodes.addAll(getEnds(node, DirectionEnum.TOP_RIGHT));
+        nodes.addAll(getEnds(node, DirectionEnum.BOTTOM_LEFT));
+        nodes.addAll(getEnds(node, DirectionEnum.BOTTOM_RIGHT));
+        return nodes;
+    }
+
+    private HashSet<TerrainNode> getEnds (TerrainNode firstNode, DirectionEnum direction) {
+        HashSet<TerrainNode> validNodes = new HashSet<>();
+        validNodes.add(firstNode.getAdjacentNodes().get(Constants.getOppositeDirection(direction)));
+        validNodes.add(secondEnd(firstNode, direction));
+        validNodes.remove(null);
+        return validNodes;
+    }
+
+    private boolean isFullRowOfThree (TerrainNode firstNode, DirectionEnum direction) {
+        if (firstNode.getAdjacentNodes().get(direction) == null) {
+            return false;
+        }
+        TerrainNode secondNode = firstNode.getAdjacentNodes().get(direction);
+        TerrainNode thirdNode = secondEnd(firstNode, direction);
+
+        boolean firstNodeSettlementOfPlayer = firstNode.getTile().getSettlement().getPlayer().equals(player);
+        boolean secondNodeSettlementOfPlayer = secondNode.getTile().getSettlement().getPlayer().equals(player);
+        boolean thirdNodeSettlementOFPlayer = thirdNode.getTile().getSettlement().getPlayer().equals(player);
+
+        return firstNodeSettlementOfPlayer && secondNodeSettlementOfPlayer && thirdNodeSettlementOFPlayer;
+    }
+
+    private TerrainNode secondEnd (TerrainNode node, DirectionEnum direction) {
+        return node.getAdjacentNodes().get(direction).getAdjacentNodes().get(direction);
+    }
 }
