@@ -47,8 +47,6 @@ public class Tavern implements ActionAdjacency {
 
     private HashSet<TerrainNode> getEnds (TerrainNode firstNode, DirectionEnum direction) {
         HashSet<TerrainNode> validNodes = new HashSet<>();
-        if (!isFullRowOfThree(firstNode, direction))
-            return validNodes;
         validNodes.add(firstNode.getAdjacentNodes().get(Constants.getOppositeDirection(direction)));
         validNodes.add(secondEnd(firstNode, direction));
         validNodes.remove(null);
