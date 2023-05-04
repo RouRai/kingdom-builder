@@ -6,10 +6,11 @@ import logic.constantFolder.TerrainEnum;
 import logic.gameLogic.Board;
 import logic.gameLogic.Player;
 import logic.tiles.actionAdjacencies.ActionAdjacency;
+import logic.tiles.actionAdjacencies.ActionProcess;
 
 import java.util.ArrayList;
 
-public class Oasis implements ActionAdjacency {
+public class Oasis extends ActionProcess implements ActionAdjacency {
     private final Board board;
     private final Player player;
 

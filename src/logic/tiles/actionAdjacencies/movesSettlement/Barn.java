@@ -4,10 +4,11 @@ import datastructures.gameDatastructures.boardNodes.TerrainNode;
 import logic.gameLogic.Board;
 import logic.gameLogic.Player;
 import logic.tiles.actionAdjacencies.ActionAdjacency;
+import logic.tiles.actionAdjacencies.ActionProcess;
 
 import java.util.ArrayList;
 
-public class Barn implements ActionAdjacency {
+public class Barn extends ActionProcess implements ActionAdjacency {
 
     private final Board board;
     private final Player player;

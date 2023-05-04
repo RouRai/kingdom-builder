@@ -5,9 +5,11 @@ import datastructures.gameDatastructures.boardNodes.TerrainNode;
 import logic.gameLogic.Board;
 import logic.gameLogic.Player;
 import logic.tiles.actionAdjacencies.ActionAdjacency;
+import logic.tiles.actionAdjacencies.ActionProcess;
+
 import java.util.ArrayList;
 
-public class Oracle implements ActionAdjacency {
+public class Oracle extends ActionProcess implements ActionAdjacency {
     private final Board board;
     private final Player player;
 

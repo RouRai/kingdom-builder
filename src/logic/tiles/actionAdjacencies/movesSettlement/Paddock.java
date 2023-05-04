@@ -5,10 +5,11 @@ import logic.constantFolder.Constants;
 import logic.constantFolder.DirectionEnum;
 import logic.constantFolder.TerrainEnum;
 import logic.tiles.actionAdjacencies.ActionAdjacency;
+import logic.tiles.actionAdjacencies.ActionProcess;
 
 import java.util.ArrayList;
 
-public class Paddock implements ActionAdjacency {
+public class Paddock extends ActionProcess implements ActionAdjacency {
 
     private final TerrainNode currentNode;
 

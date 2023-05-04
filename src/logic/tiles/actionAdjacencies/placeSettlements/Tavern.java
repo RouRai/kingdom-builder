@@ -6,11 +6,12 @@ import logic.constantFolder.DirectionEnum;
 import logic.gameLogic.Board;
 import logic.gameLogic.Player;
 import logic.tiles.actionAdjacencies.ActionAdjacency;
+import logic.tiles.actionAdjacencies.ActionProcess;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 
-public class Tavern implements ActionAdjacency {
+public class Tavern extends ActionProcess implements ActionAdjacency {
     private final Board board;
     private final Player player;
 

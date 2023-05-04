@@ -2,6 +2,8 @@ package custom;
 
 import logic.constantFolder.ActionEnum;
 import logic.constantFolder.Constants;
+import logic.tiles.actionAdjacencies.ActionProcess;
+import logic.tiles.actionAdjacencies.placeSettlements.Farm;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -13,6 +15,7 @@ public class ActionProcessButton extends HexagonButton{
     private int numUses;
     private int numTiles;
     private ActionEnum type;
+
     public ActionProcessButton(int boardNum){
         super();
         numTiles = 0;
@@ -77,5 +80,8 @@ public class ActionProcessButton extends HexagonButton{
     }
     public void reduceNumUses(){
         numUses--;
+    }
+    public void setUpAction(){
+
     }
 }

@@ -1,8 +1,13 @@
 package logic.constantFolder;
 
+import logic.tiles.actionAdjacencies.ActionAdjacency;
+import logic.tiles.actionAdjacencies.ActionProcess;
+import logic.tiles.actionAdjacencies.placeSettlements.Tavern;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.image.BufferedImage;
+import java.util.HashMap;
 
 import static java.util.Objects.requireNonNull;
 
@@ -17,6 +22,7 @@ public class Constants {
         public static BufferedImage[] settlements = new BufferedImage[4];
         public static BufferedImage[] actionProcess = new BufferedImage[8];
         public static DirectionEnum[] allDirections = new DirectionEnum[]{DirectionEnum.BOTTOM_RIGHT, DirectionEnum.BOTTOM_LEFT, DirectionEnum.LEFT, DirectionEnum.RIGHT, DirectionEnum.TOP_LEFT, DirectionEnum.TOP_RIGHT};
+        public static HashMap<TerrainEnum, ? extends ActionProcess> actionProcesses;
 
     // Screen dimensions
         public static final int WIDTH = 1536;
@@ -30,6 +36,7 @@ public class Constants {
         public static final String MENU_PANEL = "menuPanel";
         // Image Directory
         public static final String IMG_DIRECTORY = "/images/";
+
 
     public static final String[] boardNames = {"beach", "boat","farm", "paddock", "house", "oracle", "tower", "tavern"};
 

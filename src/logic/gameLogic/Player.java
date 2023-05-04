@@ -2,7 +2,12 @@ package logic.gameLogic;
 
 import logic.cards.TerrainCard;
 import logic.constantFolder.ActionEnum;
+import logic.constantFolder.TerrainEnum;
 import logic.placeables.Settlement;
+import logic.tiles.actionAdjacencies.ActionProcess;
+import logic.tiles.actionAdjacencies.movesSettlement.Barn;
+import logic.tiles.actionAdjacencies.movesSettlement.Harbor;
+import logic.tiles.actionAdjacencies.placeSettlements.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -28,6 +33,7 @@ public class Player {
     private final HashMap<ActionEnum, Integer> actionTiles;
     private int points, numSettlementsPlaced;
     private boolean hasPlacedSettlements, isPlacingRegSettlements, isUsingActionTile;
+    private HashMap<ActionEnum, ? super ActionProcess> actionProcess;
 
     public Player (int playerNumber) {
         settlements = new ArrayList<>();
@@ -39,7 +45,19 @@ public class Player {
         hasPlacedSettlements = false;
         isPlacingRegSettlements = false;
         isUsingActionTile = false;
+        actionProcess = new HashMap<>();
     }
+
+    public void setActionProcess(Board board) {
+        actionProcess.put(ActionEnum.FARM, new Farm(board, this));
+        actionProcess.put(ActionEnum.HARBOR, new Harbor(board, this));
+        actionProcess.put(ActionEnum.BARN, new Barn(board, this));
+        actionProcess.put(ActionEnum.TAVERN, new Tavern(board, this));
+        actionProcess.put(ActionEnum.ORACLE, new Oracle(board, this));
+        actionProcess.put(ActionEnum.OASIS, new Oasis(board, this));
+        actionProcess.put(ActionEnum.TOWER, new Tower(board, this));
+    }
+
     public void addToHashMap(ActionEnum type){
         actionTiles.put(type, 0);
     }

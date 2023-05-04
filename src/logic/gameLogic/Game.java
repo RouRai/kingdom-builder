@@ -48,7 +48,7 @@ public class Game {
     *
     */
    public boolean canEndTurn(){
-      return allPlayers.get(0).hasPlacedSettlements() || allPlayers.get(0).getSettlementsRemaining() == 0;
+      return (allPlayers.get(0).hasPlacedSettlements() || allPlayers.get(0).getSettlementsRemaining() == 0) && !allPlayers.get(0).isUsingActionTile();
    }
    public boolean checkEndGame(){
       return allPlayers.get(0).getSettlementsRemaining() == 0 || allPlayers.get(1).getSettlementsRemaining() == 0 || allPlayers.get(2).getSettlementsRemaining() == 0 || allPlayers.get(3).getSettlementsRemaining() == 0;
@@ -167,6 +167,7 @@ public class Game {
          Player temp = new Player (i+1);
          temp.setCard(getCard());
          allPlayers.add(temp);
+         temp.setActionProcess(board);
       }
       allPlayers.get(0).setCard(getCard());
    }
