@@ -1,6 +1,5 @@
 package graphics.panels;
 
-import custom.ActionProcessButton;
 import custom.ButtonQuadrant;
 import custom.HexagonButton;
 import logic.cards.ObjectiveCard;
@@ -106,7 +105,7 @@ public class EndPanel extends JPanel{
         ArrayList<ObjectiveCard> cards = new ArrayList<>();
         for (int i: game.getObjectiveNumbers())
             cards.add(new ObjectiveCard(Constants.getObjectiveType(i)));
-        score = new Scoring(game.getAllPlayers(),cards,game.board);
+        score = new Scoring(game.getAllPlayers(),cards,game.board, game);
 
         int space_between_Players = 123;
         g2.setColor(Color.WHITE);

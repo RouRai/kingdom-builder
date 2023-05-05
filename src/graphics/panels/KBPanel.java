@@ -12,13 +12,15 @@ import logic.gameLogic.Player;
 import logic.tiles.ActionTile;
 
 import javax.imageio.ImageIO;
+import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
-import java.awt.Color;
 import java.util.Objects;
-import javax.swing.JPanel;
 public class KBPanel extends JPanel implements ActionListener{
    //Images
 
@@ -218,6 +220,7 @@ public class KBPanel extends JPanel implements ActionListener{
       else if(clickedOnActionOnBoard && game.getBoard().getActionBoard().getBoardMatrix()[actionClicked.getTrueRow()][actionClicked.getTrueCol()] != null){
          g2.drawImage(Constants.getActionTiles()[boardNumbers[actionClicked.getquadNum()] % 8],1165,600,80,85,null);
          ActionTile tile  = game.getBoard().getActionBoard().getBoardMatrix()[actionClicked.getTrueRow()][actionClicked.getTrueCol()].getTile();
+
          g2.drawString("Has "+ tile.getCount() + " Tiles",1150,730);
          clickedOnActionOnBoard = false;
       }

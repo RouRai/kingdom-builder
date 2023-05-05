@@ -1,12 +1,10 @@
 package logic.gameLogic;
 
 import logic.cards.ObjectiveCard;
-import logic.objectiveScoring.*;
+import logic.objectiveScoring.Objective;
 import logic.objectiveScoring.objectives.*;
-import logic.placeables.Settlement;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 
 /**
  * Author: Rounak Rai <br>
@@ -21,11 +19,13 @@ public class Scoring {
     private final ArrayList<Player> players;
     private final ArrayList<ObjectiveCard> objectives;
     private final Board board;
+    private final Game game;
 
-    public Scoring (ArrayList<Player> players, ArrayList<ObjectiveCard> objectives, Board board) {
+    public Scoring (ArrayList<Player> players, ArrayList<ObjectiveCard> objectives, Board board, Game game) {
         this.players = players;
         this.objectives = objectives;
         this.board = board;
+        this.game = game;
         calculateScores();
     }
 
@@ -50,31 +50,21 @@ public class Scoring {
     private int scoreCard (Player player, ObjectiveCard card) {
         int score = 0;
         Objective objScorer = null;
-        //System.out.println(card.type());
+        Lord lord = null;
         switch(card.type()){
-            case LORD -> objScorer = new Lord();
-            case FARMER ->{objScorer = new Farmer();}
-            case MINER -> {objScorer = new Miner();}
-            //case HERMIT -> {objScorer = new Hermit();}
-            case KNIGHT -> {objScorer = new Knight();}
-            case WORKER -> {objScorer = new Worker();}
-            //case CITIZEN -> {objScorer = new Citizen();}
-            //case MERCHANT -> {objScorer = new Merchant();}
-            case FISHERMAN -> {objScorer = new Fisherman();}
-            case DISCOVERER -> {objScorer = new Discoverer();}
+            case LORD -> lord = new Lord();
+            case FARMER ->objScorer = new Farmer();
+            case MINER -> objScorer = new Miner();
+            case KNIGHT -> objScorer = new Knight();
+            case WORKER -> objScorer = new Worker();
+            case FISHERMAN -> objScorer = new Fisherman();
+            case DISCOVERER -> objScorer = new Discoverer();
         }
         if (objScorer != null)
             score = objScorer.scoreObjective(player, board);
+        else if (lord != null)
+            lord.scoreObjective(game);
         return score;
-    }
-    // checking the number of connected
-    private HashSet<Settlement> numConnected (Player player, Settlement origin){
-
-        return null;
-    }
-
-    public ArrayList<Player> getPlayers() {
-        return players;
     }
 
     public ArrayList<ObjectiveCard> getObjectives() {
