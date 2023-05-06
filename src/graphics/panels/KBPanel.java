@@ -392,7 +392,7 @@ public class KBPanel extends JPanel implements ActionListener{
             if (game.getCurrentPlayer().getPlayerNumber() == 4) {
                //make sure to check this later
                if (game.checkEndGame()){
-                  EndPanel.setGame(game);
+                  //EndPanel.setGame(game);
                   cardLay.show(Constants.PANEL_CONT, Constants.END_PANEL);
                }
             }
