@@ -36,12 +36,16 @@ public class Scoring {
         // Calculate the scores of players in the list
         for (Player p: players){
             ArrayList<Integer> scores = new ArrayList<>();
+            //scores.add();
             for (ObjectiveCard card: objectives)
                 scores.add(scoreCard(p, card));
             p.setScores(scores);
             //System.out.println(scores.toString());
         }
     }
+    //private int calculateCityScores(Player p){
+
+    //}
 
     /**
      * Scores each player individually and updates their score
