@@ -29,7 +29,9 @@ public class Tavern extends ActionProcess implements ActionAdjacency {
         HashSet<TerrainNode> validNodes = new HashSet<>();
         for(int row = 0; row < 20; row++){
             for(int column = 0; column < 20; column++){
-                validNodes.addAll(processDirections(board.getTerrainBoard().getBoardMatrix()[row][column]));
+                TerrainNode currentNode = board.getTerrainBoard().getBoardMatrix()[row][column];
+                if (currentNode != null)
+                    validNodes.addAll(processDirections(board.getTerrainBoard().getBoardMatrix()[row][column]));
             }
         }
         return new ArrayList<>(validNodes);
