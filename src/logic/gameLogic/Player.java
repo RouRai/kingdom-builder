@@ -1,9 +1,11 @@
 package logic.gameLogic;
 
+import datastructures.gameDatastructures.boardNodes.CityNode;
 import logic.cards.TerrainCard;
 import logic.constantFolder.ActionEnum;
 import logic.constantFolder.TerrainEnum;
 import logic.placeables.Settlement;
+import logic.tiles.CityTile;
 import logic.tiles.actionAdjacencies.ActionProcess;
 import logic.tiles.actionAdjacencies.movesSettlement.Barn;
 import logic.tiles.actionAdjacencies.movesSettlement.Harbor;
@@ -11,6 +13,7 @@ import logic.tiles.actionAdjacencies.placeSettlements.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 
 /**
  * Author: Rounak Rai <br>
@@ -28,6 +31,7 @@ public class Player {
     public ArrayList<Integer> getScores() {
         return scores;
     }
+    private HashSet<CityNode> cityNodes;
 
     private ArrayList<Integer> scores;
     private final HashMap<ActionEnum, Integer> actionTiles;
@@ -90,6 +94,7 @@ public class Player {
     public int getPlayerNumber() {
         return playerNumber;
     }
+    public void addCityNode(CityNode n){cityNodes.add(n);}
 
     public void removeSettlement (int amount) {
         setSettlementsRemaining(getSettlementsRemaining() - amount);
