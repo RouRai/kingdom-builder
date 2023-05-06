@@ -96,9 +96,22 @@ public class EndPanel extends JPanel{
 
     }
     public void drawWinnerString(){
+        int maxPoints = 0; // initialize variable to track maximum points
+        int maxPlayer = Integer.MIN_VALUE; // initialize variable to track index of player with maximum points
+
+        for (int i = 0; i < game.getAllPlayers().size(); i++) {
+            int score = 0;
+            for(int k = 0; k < game.getAllPlayers().get(i).getScores().size(); k++){
+                score += game.getAllPlayers().get(i).getScores().get(k);
+            }
+            if (score > maxPoints) {
+                maxPoints = score; // update maximum points
+                maxPlayer = i + 1; // update index of player with maximum points
+            }
+        }
         g2.setColor(Color.WHITE);
         g2.setFont(new Font(fontStr, Font.PLAIN, 28));
-        g2.drawString("1", 550,810);
+        g2.drawString("" + maxPlayer, 550,810);
     }
     public void drawScoreComponents(){
 
