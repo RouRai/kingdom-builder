@@ -314,9 +314,9 @@ public class KBPanel extends JPanel implements ActionListener{
     *             the console will print out the quad number, the row, and the column of the hex
     */
    public void setUpBoardHexes(HexagonButton temp) {
-      if(temp == null){
+      if(temp == null)
          return;
-      }
+
       add(temp);
       // cl.show(Constants.PANEL_CONT, Constants.GAME_PANEL);
       temp.addActionListener(e -> {
@@ -327,9 +327,9 @@ public class KBPanel extends JPanel implements ActionListener{
           if(quad == 2 || quad == 3){
               tempr = temp.getRow() + 10;
           }
-          if(quad == 1 || quad == 3){
+          if(quad == 1 || quad == 3)
               tempc = temp.getCol() + 10;
-          }
+
          if(legalPlaces.contains(game.getBoard().getTerrainBoard().getBoardMatrix()[tempr][tempc])){
             game.checkRegularSettlementPlacement(game.getCurrentPlayer(), temp, inUse);
          }
@@ -452,7 +452,7 @@ public class KBPanel extends JPanel implements ActionListener{
 
    public void setUpMiscellaneous(){
       try{
-         background = ImageIO.read(Objects.requireNonNull(getClass().getResource("/images/backgroundImages/game play2.png")));
+         background = ImageIO.read(Objects.requireNonNull(getClass().getResource("/images/backgroundImages/gamePLAY.png")));
          highlight = ImageIO.read(Objects.requireNonNull(getClass().getResource("/images/graphicsExtra/Hex.png")));
          firstMarker = ImageIO.read(Objects.requireNonNull(getClass().getResource("/images/backgroundImages/1st player.png")));
       } catch (Exception ex) {
