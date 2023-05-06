@@ -57,6 +57,9 @@ public class Player {
         actionProcess.put(ActionEnum.OASIS, new Oasis(board, this));
         actionProcess.put(ActionEnum.TOWER, new Tower(board, this));
     }
+    public HashMap<ActionEnum, ? super ActionProcess> getActionProcess(){
+        return actionProcess;
+    }
 
     public void addToHashMap(ActionEnum type){
         actionTiles.put(type, 0);

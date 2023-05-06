@@ -81,7 +81,4 @@ public class ActionProcessButton extends HexagonButton{
     public void reduceNumUses(){
         numUses--;
     }
-    public void setUpAction(){
-
-    }
 }

@@ -10,6 +10,7 @@ import logic.constantFolder.Constants;
 import logic.gameLogic.Game;
 import logic.gameLogic.Player;
 import logic.tiles.ActionTile;
+import logic.tiles.actionAdjacencies.ActionProcess;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -173,9 +174,9 @@ public class KBPanel extends JPanel implements ActionListener{
             int y = 35;
             g2.drawImage(currentActions[j].getFront(), x-25+j *68, y-5 + i * space_between_Players, 60, 60, null);
             if (i%2 ==0)
-               g2.drawString("" + game.getAllPlayers().get(i + 1).getActionTiles().get(currentActions[j].getType()), x+j *65,  y+80+i  * space_between_Players);
+               g2.drawString("" + game.getAllPlayers().get(i + 1).getActionTiles().get(currentActions[j].getType()), x+j *69,  y+80+i  * space_between_Players);
             else
-               g2.drawString("" + game.getAllPlayers().get(i + 1).getActionTiles().get(currentActions[j].getType()), x+j *65,  y+80+i  * (space_between_Players+8));
+               g2.drawString("" + game.getAllPlayers().get(i + 1).getActionTiles().get(currentActions[j].getType()), x+j *69,  y+80+i  * (space_between_Players+8));
 
          }
          //settlement
@@ -216,6 +217,7 @@ public class KBPanel extends JPanel implements ActionListener{
       //action tile selected - this part shows the hint when using the action tile
       if (game.getCurrentPlayer().isUsingActionTile()) {
          g2.drawImage(inUse.getProcess(), 1135, 645, 150, 60, null);
+         //legalPlaces = game.getLegalActionPlaces();
       }
       else if(clickedOnActionOnBoard && game.getBoard().getActionBoard().getBoardMatrix()[actionClicked.getTrueRow()][actionClicked.getTrueCol()] != null){
          g2.drawImage(Constants.getActionTiles()[boardNumbers[actionClicked.getquadNum()] % 8],1165,600,80,85,null);
@@ -281,16 +283,21 @@ public class KBPanel extends JPanel implements ActionListener{
                   }
                   //if(board[r][c].tile)
                   int i = 0;
-                  while(legalPlaces == null && !game.getCurrentPlayer().hasPlacedSettlements()){
+                  while(legalPlaces == null /*&& !game.getCurrentPlayer().hasPlacedSettlements()*/){
                       if(i > 3){
                          i = 0;
                          game.getCurrentPlayer().setCard(game.getCard());
                       }
                        legalPlaces = game.getLegalRegularPlaces();
                        i++;
-                   }
-                  if(legalPlaces.contains(game.getBoard().getTerrainBoard().getBoardMatrix()[tempr][tempc]) && !game.getCurrentPlayer().hasPlacedSettlements()) {
-                     board[r][c].drawHighlight(g2, highlight, game.getCurrentPlayer().getCard());
+                  }
+                  if(game.getCurrentPlayer().isUsingActionTile()){
+                     legalPlaces = game.getLegalActionPlaces(inUse.getType());
+                  }
+                  if(legalPlaces.contains(game.getBoard().getTerrainBoard().getBoardMatrix()[tempr][tempc])) {
+                     if(!game.getCurrentPlayer().hasPlacedSettlements() || game.getCurrentPlayer().isUsingActionTile()){
+                        board[r][c].drawHighlight(g2, highlight, game.getCurrentPlayer().getCard());
+                     }
                   }
                   board[r][c].drawSettlement(g2);
                }
@@ -323,19 +330,22 @@ public class KBPanel extends JPanel implements ActionListener{
           if(quad == 1 || quad == 3){
               tempc = temp.getCol() + 10;
           }
-         if(legalPlaces.contains(game.getBoard().getTerrainBoard().getBoardMatrix()[tempr][tempc]))
-             game.checkRegularSettlementPlacement(game.getCurrentPlayer(), temp);
+         if(legalPlaces.contains(game.getBoard().getTerrainBoard().getBoardMatrix()[tempr][tempc])){
+            game.checkRegularSettlementPlacement(game.getCurrentPlayer(), temp, inUse);
+         }
 
          if (game.getCurrentPlayer().getNumSettlementsPlaced()!=3){
             System.out.println("player has started regular settlement");
-            game.getCurrentPlayer().setUsingActionTile(false);
+            //game.getCurrentPlayer().setUsingActionTile(false);
          }
          //action tile processes
-         else if (game.getCurrentPlayer().isUsingActionTile()){
-            game.getCurrentPlayer().setPlacingRegSettlements(false);
+         if (!game.getCurrentPlayer().isUsingActionTile()){
+            inUse = null;
+            //game.getCurrentPlayer().setPlacingRegSettlements(false);
          }
          game.setButtonBoard(buttonBoards);
-         legalPlaces = game.getLegalRegularPlaces();
+         if(inUse == null)
+            legalPlaces = game.getLegalRegularPlaces();
          reassignActionButtonNumTiles();
          repaint();
       });
@@ -352,7 +362,7 @@ public class KBPanel extends JPanel implements ActionListener{
       add(temp);
       temp.addActionListener(e -> {
          System.out.println("Current Action Tile Button clicked -" + temp + "  ");
-         if(!game.getCurrentPlayer().isPlacingRegSettlements() && temp.getNumUses() > 0){
+         if(!game.getCurrentPlayer().isPlacingRegSettlements() && temp.getNumUses() > 0 && game.getLegalActionPlaces(temp.getType()) != null){
             currentAction = temp.getquadNum();
             game.getCurrentPlayer().setUsingActionTile(true);
             game.getCurrentPlayer().setPlacingRegSettlements(false);

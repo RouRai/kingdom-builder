@@ -1,5 +1,6 @@
 package logic.gameLogic;
 
+import custom.ActionProcessButton;
 import custom.ButtonQuadrant;
 import custom.HexagonButton;
 import datastructures.gameDatastructures.boardNodes.ActionNode;
@@ -15,7 +16,7 @@ import logic.constantFolder.Constants;
 import logic.placeables.Settlement;
 import logic.tiles.TerrainTile;
 import logic.tiles.actionAdjacencies.ActionAdjacency;
-import logic.tiles.actionAdjacencies.placeSettlements.Oracle;
+import logic.tiles.actionAdjacencies.placeSettlements.*;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -55,15 +56,31 @@ public class Game {
    public boolean checkEndGame(){
       return allPlayers.get(0).getSettlementsRemaining() == 0 || allPlayers.get(1).getSettlementsRemaining() == 0 || allPlayers.get(2).getSettlementsRemaining() == 0 || allPlayers.get(3).getSettlementsRemaining() == 0;
    }
+   private void determineActionType(Player player, HexagonButton button, ActionProcessButton action){
+      if(action.getType() == ActionEnum.HARBOR || action.getType() == ActionEnum.BARN || action.getType() == ActionEnum.PADDOCK){
+
+      } else {
+         doPlacementAction(player, button, action);
+      }
+   }
+   private void doPlacementAction(Player player, HexagonButton button, ActionProcessButton action){
+      if(button.getSettlement() == null) {
+         placeSettlement(player, button);
+         player.setUsingActionTile(false);
+      }
+   }
    /**
     * Logic method by Sri which checks the conditions of each regular settlement placement...
     * @param player current player
     * @param button hexagon button which was clicked
     */
-   public void checkRegularSettlementPlacement (Player player, HexagonButton button) {
+   public void checkRegularSettlementPlacement (Player player, HexagonButton button, ActionProcessButton action) {
+      if(player.isUsingActionTile()){
+         determineActionType(player, button, action);
+         return;
+      }
       if(player.hasPlacedSettlements())
          return;
-
       //we set the boolean is placing reg settlement true b/c we know its true now
       if(!player.isPlacingRegSettlements()) {
          player.setPlacingRegSettlements(true);
@@ -72,6 +89,7 @@ public class Game {
       //when the current player have already settled somewhere
       if (player.getNumSettlementsPlaced() < 3 && button.getSettlement() == null){
          placeSettlement(player, button);
+         player.setNumSettlementsPlaced(player.getNumSettlementsPlaced() + 1);
       }
       //giving the tile / button TO the current player's settlement
 
@@ -88,6 +106,7 @@ public class Game {
       //when the current player have already settled somewhere
       if (player.getNumSettlementsPlaced() < 1 && button.getSettlement() == null){
          placeSettlement(player, button);
+
       }
       System.out.println();
 
@@ -129,13 +148,21 @@ public class Game {
    public ArrayList<TerrainNode> getLegalRegularPlaces(){
       return board.regularCanUseTiles(allPlayers.get(0), allPlayers.get(0).getCard());
    }
-   public ArrayList<TerrainNode> getLegalActionPlaces(ActionNode node){
+   public ArrayList<TerrainNode> getLegalActionPlaces(ActionEnum node){
       ActionAdjacency checker = null;
-      if (Objects.requireNonNull(node.getType()) == ActionEnum.ORACLE) {
+      if (node == ActionEnum.ORACLE) {
          checker = new Oracle(getBoard(), getCurrentPlayer());
+      } else if(node == ActionEnum.OASIS){
+         checker = new Oasis(getBoard(), getCurrentPlayer());
+      } else if(node == ActionEnum.FARM){
+         checker = new Farm(getBoard(), getCurrentPlayer());
+      } else if(node == ActionEnum.TOWER){
+         checker = new Tower(getBoard(), getCurrentPlayer());
+      } else if(node == ActionEnum.TAVERN){
+         checker = new Tavern(getBoard(), getCurrentPlayer());
       }
       if (checker != null)
-         return checker.getValidNodes();
+          return checker.getValidNodes();
       else return null;
    }
 
@@ -180,7 +207,6 @@ public class Game {
       tempSettlement.setLocation(board.getTerrainBoard().getBoardMatrix()[tempSettlement.getTrueRow()][tempSettlement.getTrueColumn()]);
       TerrainTile temp = (TerrainTile)button.getTileType();
       temp.setOwner(getCurrentPlayer(), tempSettlement);
-      player.setNumSettlementsPlaced(player.getNumSettlementsPlaced() + 1);
       getBoard().getTerrainBoard().getBoardMatrix()[tempSettlement.getTrueRow()][tempSettlement.getTrueColumn()].getTile().setOwner(player,tempSettlement);
       getBoard().checkAdjacencyToActionTile(player, tempSettlement.getTrueRow(), tempSettlement.getTrueColumn());
    }

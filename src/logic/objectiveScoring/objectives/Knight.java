@@ -14,7 +14,7 @@ public class Knight implements Objective {
         HashMap<Integer, Integer> knightRows = new HashMap<>();
         setUpKnightRows(knightRows, player);
         int longestRow = Integer.MIN_VALUE;
-        for(int length: knightRows.keySet()){
+        for(int length: knightRows.values()){
             longestRow = Math.max(longestRow, length);
         }
         return 2 * longestRow;
