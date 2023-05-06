@@ -40,6 +40,7 @@ public class Scoring {
             for (ObjectiveCard card: objectives)
                 scores.add(scoreCard(p, card));
             p.setScores(scores);
+
             //System.out.println(scores.toString());
         }
     }

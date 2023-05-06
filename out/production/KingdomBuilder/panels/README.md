@@ -1,1 +1,0 @@
-This file is to be used in order to store JPanel files.

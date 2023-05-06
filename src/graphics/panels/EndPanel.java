@@ -2,6 +2,7 @@ package graphics.panels;
 
 import custom.ButtonQuadrant;
 import custom.HexagonButton;
+import custom.TranslucentButton;
 import logic.cards.ObjectiveCard;
 import logic.constantFolder.Constants;
 import logic.gameLogic.Game;
@@ -16,7 +17,7 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class EndPanel extends JPanel{
+public class EndPanel extends JPanel implements ActionListener{
     private final CardLayout cardLayout;
     private static Game game;
     private Scoring score;
@@ -24,14 +25,17 @@ public class EndPanel extends JPanel{
     private ArrayList<Player> players;
     private Graphics2D g2;
     private Constants constantClass;
+    private TranslucentButton menuButton;
     private final String fontStr = "Lucida Calligraphy";
     public EndPanel(CardLayout c, Game g){
 
         cardLayout = c;
         constantClass = new Constants();
         game = g;
+        menuButton = new TranslucentButton();
+        add(menuButton);
+        menuButton.addActionListener(this);
         setUpMiscellaneous();
-
     }
     public void paintComponent(Graphics g) {
         g2 = (Graphics2D) g;
@@ -39,7 +43,7 @@ public class EndPanel extends JPanel{
         super.paintComponent(g2);
 
         g2.drawImage(background, 0, 0, Constants.WIDTH, Constants.HEIGHT - 8, null);
-
+        menuButton.setBounds(785, 770, 70, 65);
         drawSettlements();
         drawScoreComponents();
         drawWinnerString();
@@ -114,12 +118,10 @@ public class EndPanel extends JPanel{
         g2.drawString("" + maxPlayer, 550,810);
     }
     public void drawScoreComponents(){
-
         ArrayList<ObjectiveCard> cards = new ArrayList<>();
         for (int i: game.getObjectiveNumbers())
             cards.add(new ObjectiveCard(Constants.getObjectiveType(i)));
         score = new Scoring(game.getAllPlayers(),cards,game.board, game);
-
         int space_between_Players = 123;
         g2.setColor(Color.WHITE);
         g2.setFont(new Font(fontStr, Font.PLAIN, 40));
@@ -140,7 +142,7 @@ public class EndPanel extends JPanel{
         }
         //Total scores
         for (int i = 0; i<4; i++)
-            g2.drawString(String.format("%3d", 0), startX+i * space_between_Players, startY+4 * space_between_Players);
+            g2.drawString(String.format("%3d", game.getAllPlayers().get(i).getFinalScore()), startX+i * space_between_Players, startY+4 * space_between_Players);
 
     }
     public void setUpMiscellaneous(){
@@ -164,7 +166,10 @@ public class EndPanel extends JPanel{
     }
     //@Override
     public void actionPerformed(ActionEvent e) {
-
+        if(e.getSource().equals(menuButton)){
+            MenuPanel.setPanelCameFrom("end");
+            cardLayout.show(Constants.PANEL_CONT, Constants.MENU_PANEL);
+        }
     }
     public static void setGame(Game g){
         game = g;

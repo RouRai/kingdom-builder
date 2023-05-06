@@ -23,6 +23,7 @@ public class MenuPanel extends JPanel {
     private Graphics2D g2;
     private Constants constantClass;
     private BufferedImage ruleBookPage;
+    private static String panel;
     public MenuPanel(CardLayout c, Game g ){
 
         pageNumber = 1;
@@ -85,7 +86,11 @@ public class MenuPanel extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 System.out.println("resume");
-                cl.show(Constants.PANEL_CONT, Constants.GAME_PANEL);
+                if(panel.equals("game")){
+                    cl.show(Constants.PANEL_CONT, Constants.GAME_PANEL);
+                } else {
+                    cl.show(Constants.PANEL_CONT, Constants.END_PANEL);
+                }
             }
         });}
     private void updateImage (){
@@ -121,5 +126,7 @@ public class MenuPanel extends JPanel {
                 repaint();
             }
         });}
-
+        public static void setPanelCameFrom(String p){
+            panel = p;
+        }
 }

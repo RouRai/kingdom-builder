@@ -81,6 +81,12 @@ public class Player {
 
     public void setScores(ArrayList<Integer> scores) {
         this.scores = scores;
+        for(int i = 0; i < scores.size(); i++){
+            addPoints(scores.get(i));
+        }
+    }
+    public int getFinalScore(){
+        return points;
     }
 
     public ArrayList<Settlement> getSettlements() {

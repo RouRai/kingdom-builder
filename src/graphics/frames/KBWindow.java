@@ -24,8 +24,6 @@ public class KBWindow extends JFrame {
       Constants c = new Constants();
 
       System.out.println();
-
-      game = new Game(getboardNumbers(), getobjectiveNumbers());
       
       init();
       add(Constants.PANEL_CONT);
@@ -35,13 +33,15 @@ public class KBWindow extends JFrame {
       setVisible(true);
    }
 
-   private int[] getboardNumbers() {
+   private static int[] getboardNumbers() {
       ArrayList<Integer> pool = new ArrayList<>();
       pool.add(2); //farm
       pool.add(0); //oasis
       pool.add(5); //oracle
-      pool.add(6); //tower
-      pool.add(7); //tavern
+      //pool.add(6); //tower
+      //pool.add(7); //tavern
+      pool.add(1);
+      pool.add(4);
       int [] arr = new int[4];
       for(int i = 0; i < 4; i++) {
          int rand;
@@ -59,7 +59,7 @@ public class KBWindow extends JFrame {
       }
       return arr;
    }
-   private int[] getobjectiveNumbers() {
+   private static int[] getobjectiveNumbers() {
       ArrayList<Integer> pool = new ArrayList<>();
       pool.add(1); //discoveror
       pool.add(2); //farmers
@@ -85,21 +85,18 @@ public class KBWindow extends JFrame {
 
    private void init(){
       panels.put(Constants.START_PANEL, new StartPanel(cl));
-      panels.put(Constants.MENU_PANEL, new MenuPanel(cl,game));
-      panels.put(Constants.CARD_PANEL, new CardPanel(cl,game));
       Constants.PANEL_CONT.setLayout(cl);
       Constants.PANEL_CONT.add(panels.get(Constants.START_PANEL), Constants.START_PANEL);
-      Constants.PANEL_CONT.add(panels.get(Constants.MENU_PANEL), Constants.MENU_PANEL);
-      Constants.PANEL_CONT.add(panels.get(Constants.CARD_PANEL), Constants.CARD_PANEL);
       //remove the part below later
-      panels.put(Constants.GAME_PANEL, new KBPanel(cl,game));
-      Constants.PANEL_CONT.add(panels.get(Constants.GAME_PANEL), Constants.GAME_PANEL);
-      panels.put(Constants.END_PANEL, new EndPanel(cl,game));
-      Constants.PANEL_CONT.add(panels.get(Constants.END_PANEL), Constants.END_PANEL);
-      cl.show(Constants.PANEL_CONT, Constants.GAME_PANEL);
+      cl.show(Constants.PANEL_CONT, Constants.START_PANEL);
    }
    public static void setup(){
+      game = new Game(getboardNumbers(), getobjectiveNumbers());
+      panels.put(Constants.MENU_PANEL, new MenuPanel(cl,game));
+      panels.put(Constants.CARD_PANEL, new CardPanel(cl,game));
       panels.put(Constants.GAME_PANEL, new KBPanel(cl,game));
+      Constants.PANEL_CONT.add(panels.get(Constants.MENU_PANEL), Constants.MENU_PANEL);
+      Constants.PANEL_CONT.add(panels.get(Constants.CARD_PANEL), Constants.CARD_PANEL);
       Constants.PANEL_CONT.add(panels.get(Constants.GAME_PANEL), Constants.GAME_PANEL);
       panels.put(Constants.END_PANEL, new EndPanel(cl,game));
       Constants.PANEL_CONT.add(panels.get(Constants.END_PANEL), Constants.END_PANEL);

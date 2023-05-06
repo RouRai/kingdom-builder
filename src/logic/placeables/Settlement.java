@@ -6,7 +6,7 @@ import logic.gameLogic.Player;
 public class Settlement {
 
     private final int color;
-    private final int row, column, quadrantNumber;
+    private int row, column, quadrantNumber;
     private int trueRow, trueColumn;
     private TerrainNode location;
     private final Player player;
@@ -42,7 +42,23 @@ public class Settlement {
     public int getRow() {
         return row;
     }
-
+    public void setRow(int r){
+        row = r;
+        trueRow = r;
+        if(quadrantNumber == 2 || quadrantNumber == 3){
+            trueRow = row +10;
+        }
+    }
+    public void setColumn(int c){
+        column = c;
+        trueColumn = column;
+        if(quadrantNumber == 3 || quadrantNumber == 1){
+            trueColumn = column + 10;
+        }
+    }
+    public void setQuadrantNumber(int q){
+        quadrantNumber = q;
+    }
     public int getColumn() {
         return column;
     }

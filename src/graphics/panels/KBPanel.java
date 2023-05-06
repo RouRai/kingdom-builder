@@ -6,9 +6,11 @@ import custom.HexagonButton;
 import custom.TranslucentButton;
 import datastructures.gameDatastructures.boardNodes.TerrainNode;
 import logic.cards.TerrainCard;
+import logic.constantFolder.ActionEnum;
 import logic.constantFolder.Constants;
 import logic.gameLogic.Game;
 import logic.gameLogic.Player;
+import logic.placeables.Settlement;
 import logic.tiles.ActionTile;
 import logic.tiles.actionAdjacencies.ActionProcess;
 
@@ -41,6 +43,7 @@ public class KBPanel extends JPanel implements ActionListener{
    private Boolean clickedOnActionOnBoard = false;
    private HexagonButton actionClicked;
    private int currentAction;
+   private HexagonButton chosenHex;
 
    public KBPanel (CardLayout cl, Game g ){
       cardLay = cl;
@@ -195,7 +198,7 @@ public class KBPanel extends JPanel implements ActionListener{
       //cardcount
       g2.setColor(Color.black);
       g2.setFont(new Font(fontStr, Font.PLAIN, 35));
-      int count = 25-(game.turns%25);
+      int count = 24-(game.turns%25);
       g2.drawString(""+count,1256,725);
 
       //number
@@ -223,6 +226,7 @@ public class KBPanel extends JPanel implements ActionListener{
       //action tile selected - this part shows the hint when using the action tile
       if (game.getCurrentPlayer().isUsingActionTile()) {
          g2.drawImage(inUse.getProcess(), 1135, 570, 150, 60, null);
+
          //legalPlaces = game.getLegalActionPlaces();
       }
       else if(clickedOnActionOnBoard && game.getBoard().getActionBoard().getBoardMatrix()[actionClicked.getTrueRow()][actionClicked.getTrueCol()] != null){
@@ -298,7 +302,14 @@ public class KBPanel extends JPanel implements ActionListener{
                        i++;
                   }
                   if(game.getCurrentPlayer().isUsingActionTile()){
-                     legalPlaces = game.getLegalActionPlaces(inUse.getType());
+                     if(chosenHex == null && (inUse.getType() == ActionEnum.HARBOR || inUse.getType() == ActionEnum.PADDOCK || inUse.getType() == ActionEnum.BARN)){
+                        legalPlaces = new ArrayList<>();
+                        for(Settlement settle: game.getCurrentPlayer().getSettlements()){
+                           legalPlaces.add(settle.getLocation());
+                        }
+                     } else{
+                        legalPlaces = game.getLegalActionPlaces(inUse.getType());
+                     }
                   }
                   if(legalPlaces.contains(game.getBoard().getTerrainBoard().getBoardMatrix()[tempr][tempc])) {
                      if(!game.getCurrentPlayer().hasPlacedSettlements() || game.getCurrentPlayer().isUsingActionTile()){
@@ -337,7 +348,14 @@ public class KBPanel extends JPanel implements ActionListener{
               tempc = temp.getCol() + 10;
 
          if(legalPlaces.contains(game.getBoard().getTerrainBoard().getBoardMatrix()[tempr][tempc])){
-            game.checkRegularSettlementPlacement(game.getCurrentPlayer(), temp, inUse);
+            if(game.getCurrentPlayer().isUsingActionTile()){
+               if((inUse.getType() == ActionEnum.HARBOR || inUse.getType() == ActionEnum.PADDOCK || inUse.getType() == ActionEnum.BARN) && chosenHex == null){
+                  chosenHex = temp;
+                  repaint();
+                  return;
+               }
+            }
+            game.checkRegularSettlementPlacement(game.getCurrentPlayer(), temp, inUse, chosenHex);
          }
 
          if (game.getCurrentPlayer().getNumSettlementsPlaced()!=3){
@@ -347,11 +365,14 @@ public class KBPanel extends JPanel implements ActionListener{
          //action tile processes
          if (!game.getCurrentPlayer().isUsingActionTile()){
             inUse = null;
+            chosenHex = null;
             //game.getCurrentPlayer().setPlacingRegSettlements(false);
          }
          game.setButtonBoard(buttonBoards);
-         if(inUse == null)
+         if(inUse == null){
+            chosenHex = null;
             legalPlaces = game.getLegalRegularPlaces();
+         }
          reassignActionButtonNumTiles();
          repaint();
       });
@@ -368,7 +389,7 @@ public class KBPanel extends JPanel implements ActionListener{
       add(temp);
       temp.addActionListener(e -> {
          System.out.println("Current Action Tile Button clicked -" + temp + "  ");
-         if(!game.getCurrentPlayer().isPlacingRegSettlements() && temp.getNumUses() > 0 && game.getLegalActionPlaces(temp.getType()) != null){
+         if(!game.getCurrentPlayer().isPlacingRegSettlements() && temp.getNumUses() > 0 && (game.getLegalActionPlaces(temp.getType()) != null || temp.getType() == ActionEnum.BARN || temp.getType() == ActionEnum.PADDOCK || temp.getType() == ActionEnum.HARBOR)){
             currentAction = temp.getquadNum();
             game.getCurrentPlayer().setUsingActionTile(true);
             game.getCurrentPlayer().setPlacingRegSettlements(false);
@@ -383,8 +404,10 @@ public class KBPanel extends JPanel implements ActionListener{
 
    @Override
    public void actionPerformed(ActionEvent e) {
-      if(e.getSource().equals(menuButton))
+      if(e.getSource().equals(menuButton)){
+         MenuPanel.setPanelCameFrom("game");
          cardLay.show(Constants.PANEL_CONT, Constants.MENU_PANEL);
+      }
 
       else if(e.getSource().equals(finishButton)){
          if(game.canEndTurn()) {

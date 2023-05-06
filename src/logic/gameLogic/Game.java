@@ -16,8 +16,11 @@ import logic.constantFolder.Constants;
 import logic.placeables.Settlement;
 import logic.tiles.TerrainTile;
 import logic.tiles.actionAdjacencies.ActionAdjacency;
+import logic.tiles.actionAdjacencies.movesSettlement.Barn;
+import logic.tiles.actionAdjacencies.movesSettlement.Harbor;
 import logic.tiles.actionAdjacencies.placeSettlements.*;
 
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -59,12 +62,29 @@ public class Game {
    public boolean checkEndGame(){
       return allPlayers.get(0).getSettlementsRemaining() == 0 || allPlayers.get(1).getSettlementsRemaining() == 0 || allPlayers.get(2).getSettlementsRemaining() == 0 || allPlayers.get(3).getSettlementsRemaining() == 0;
    }
-   private void determineActionType(Player player, HexagonButton button, ActionProcessButton action){
+   private void determineActionType(Player player, HexagonButton button, ActionProcessButton action, HexagonButton chosenHex){
       if(action.getType() == ActionEnum.HARBOR || action.getType() == ActionEnum.BARN || action.getType() == ActionEnum.PADDOCK){
-
+         doMovementAction(player, button, action, chosenHex);
       } else {
          doPlacementAction(player, button, action);
       }
+   }
+   private void doMovementAction(Player player, HexagonButton button, ActionProcessButton action, HexagonButton chosenHex){
+      if(chosenHex == null){
+         return;
+      }
+      BufferedImage settlementImage = chosenHex.getSettlement();
+      Settlement tempSettlement = board.getTerrainBoard().getBoardMatrix()[chosenHex.getTrueRow()][chosenHex.getTrueCol()].getTile().getSettlement();
+      button.setSettlementImage(settlementImage);
+      board.getTerrainBoard().getBoardMatrix()[button.getTrueRow()][button.getTrueCol()].getTile().setOwner(player, tempSettlement);
+      tempSettlement.setQuadrantNumber(button.getquadNum());
+      tempSettlement.setRow(button.getRow());
+      tempSettlement.setColumn(button.getCol());
+      tempSettlement.setLocation(board.getTerrainBoard().getBoardMatrix()[tempSettlement.getTrueRow()][tempSettlement.getTrueColumn()]);
+      chosenHex.setSettlementImage(null);
+      board.getTerrainBoard().getBoardMatrix()[chosenHex.getTrueRow()][chosenHex.getTrueCol()].getTile().removeOwner();
+      player.setUsingActionTile(false);
+      board.analyzeAdjacencyToActionTile(player, button.getTrueRow(), button.getTrueCol());
    }
    private void doPlacementAction(Player player, HexagonButton button, ActionProcessButton action){
       if(button.getSettlement() == null) {
@@ -77,13 +97,13 @@ public class Game {
     * @param player current player
     * @param button hexagon button which was clicked
     */
-   public void checkRegularSettlementPlacement (Player player, HexagonButton button, ActionProcessButton action) {
+   public void checkRegularSettlementPlacement (Player player, HexagonButton button, ActionProcessButton action, HexagonButton chosenHex) {
 
       //checking for all adjacent cities
      // board.getTerrainBoard().getBoardMatrix();
 
       if(player.isUsingActionTile()){
-         determineActionType(player, button, action);
+         determineActionType(player, button, action, chosenHex);
          return;
       }
       if(player.hasPlacedSettlements())
@@ -167,6 +187,10 @@ public class Game {
          checker = new Tower(getBoard(), getCurrentPlayer());
       } else if(node == ActionEnum.TAVERN){
          checker = new Tavern(getBoard(), getCurrentPlayer());
+      } else if(node == ActionEnum.BARN){
+         checker = new Barn(getBoard(), getCurrentPlayer());
+      } else if(node == ActionEnum.HARBOR){
+         checker = new Harbor(getBoard(), getCurrentPlayer());
       }
       if (checker != null)
           return checker.getValidNodes();

@@ -150,4 +150,32 @@ public class Board {
             }
         }
     }
+    public void analyzeAdjacencyToActionTile (Player player, int row, int column) {
+        analyzeAdjacencyToActionTile(player, terrainBoard.getBoardMatrix()[row][column]);
+    }
+    private void analyzeAdjacencyToActionTile (Player player, TerrainNode terrainNode) {
+        int[] rows = new int[6];
+        int[] columns = new int[6];
+
+        int index = 0;
+        for (TerrainNode adjacentNode : terrainNode.getAdjacentNodes().values()) {
+            rows[index] = adjacentNode.getTrueRow();
+            columns[index] = adjacentNode.getTrueColumn();
+            index++;
+        }
+        checkAdjacentNodesForActionTile(player, rows, columns);
+    }
+
+    private void checkAdjacentNodesForActionTile (Player player, int[] rows, int[] columns) {
+        for (int index = 0; index < rows.length; index++) {
+            ActionNode adjacentActionNode = actionBoard.getBoardMatrix()[rows[index]][columns[index]];
+            boolean terrainAdjacentToActionNode = /*terrainBoard.getBoardMatrix()[rows[index]][columns[index]] == null && */adjacentActionNode != null;
+            if (terrainAdjacentToActionNode /*&& adjacentActionNode.getTile().getCount() > 0 && !adjacentActionNode.getTile().getPlayers().contains(player)*/) {
+                adjacentActionNode.getTile().getPlayers().remove(player);
+                if(!adjacentActionNode.getTile().getPlayers().contains(player)){
+                    player.removeActionTile(adjacentActionNode.getType());
+                }
+            }
+        }
+    }
 }
