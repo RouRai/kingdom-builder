@@ -234,7 +234,6 @@ public class KBPanel extends JPanel implements ActionListener{
 
       }
       //landscape card drawn by the current player
-      //System.out.println(game.getCurrentPlayer().getCard());
       TerrainCard tempc = game.getCurrentPlayer().getCard();
       BufferedImage temp = game.getCurrentPlayer().getCard().image();
       g2.drawImage(game.getCurrentPlayer().getCard().image(), 1335, 530, 130, 200, null);

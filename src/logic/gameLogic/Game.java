@@ -28,7 +28,9 @@ public class Game {
    private final int[] boardNumbers,objectiveNumbers;
    private ButtonQuadrant[] buttonBoard;
    public Board board;
+   public int turns;
    public Game (int [] boardNumbers, int[] objectiveNumbers){
+      turns = 0;
       terrainDeck = new TerrainDeck();
       terrainCards = terrainDeck.getTerrainDeck();
       this.objectiveNumbers = objectiveNumbers;
@@ -37,6 +39,7 @@ public class Game {
       setUpPlayers();
    }
    public void endTurn(){
+      turns ++;
       Player temp = allPlayers.get(0);
       temp.setHasPlacedSettlements(false);
       temp.setUsingActionTile(false);
@@ -75,6 +78,10 @@ public class Game {
     * @param button hexagon button which was clicked
     */
    public void checkRegularSettlementPlacement (Player player, HexagonButton button, ActionProcessButton action) {
+
+      //checking for all adjacent cities
+     // board.getTerrainBoard().getBoardMatrix();
+
       if(player.isUsingActionTile()){
          determineActionType(player, button, action);
          return;
@@ -210,4 +217,5 @@ public class Game {
       getBoard().getTerrainBoard().getBoardMatrix()[tempSettlement.getTrueRow()][tempSettlement.getTrueColumn()].getTile().setOwner(player,tempSettlement);
       getBoard().checkAdjacencyToActionTile(player, tempSettlement.getTrueRow(), tempSettlement.getTrueColumn());
    }
+
 }
