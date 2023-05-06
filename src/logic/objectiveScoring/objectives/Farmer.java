@@ -17,10 +17,18 @@ public class Farmer implements Objective {
         ArrayList<Settlement> quad3 = new ArrayList<>();
         for(Settlement settle: player.getSettlements()){
             switch (settle.getQuadrantNumber()) {
-                case 0: quad0.add(settle);
-                case 1: quad1.add(settle);
-                case 2: quad2.add(settle);
-                case 3: quad3.add(settle);
+                case 0 -> {
+                    quad0.add(settle);
+                }
+                case 1 -> {
+                    quad1.add(settle);
+                }
+                case 2 -> {
+                    quad2.add(settle);
+                }
+                case 3 -> {
+                    quad3.add(settle);
+                }
             }
         }
         return 3 * Math.min(Math.min(quad0.size(), quad1.size()), Math.min(quad2.size(), quad3.size()));
