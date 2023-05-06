@@ -192,6 +192,12 @@ public class KBPanel extends JPanel implements ActionListener{
    }
    public void drawCurrentPlayer(){
       //Player p = null;
+      //cardcount
+      g2.setColor(Color.black);
+      g2.setFont(new Font(fontStr, Font.PLAIN, 35));
+      int count = 25-(game.turns%25);
+      g2.drawString(""+count,1256,725);
+
       //number
       g2.setColor(Color.black);
       g2.setFont(new Font(fontStr, Font.PLAIN, 50));
@@ -216,15 +222,16 @@ public class KBPanel extends JPanel implements ActionListener{
       }
       //action tile selected - this part shows the hint when using the action tile
       if (game.getCurrentPlayer().isUsingActionTile()) {
-         g2.drawImage(inUse.getProcess(), 1135, 645, 150, 60, null);
+         g2.drawImage(inUse.getProcess(), 1135, 570, 150, 60, null);
          //legalPlaces = game.getLegalActionPlaces();
       }
       else if(clickedOnActionOnBoard && game.getBoard().getActionBoard().getBoardMatrix()[actionClicked.getTrueRow()][actionClicked.getTrueCol()] != null){
-         g2.drawImage(Constants.getActionTiles()[boardNumbers[actionClicked.getquadNum()] % 8],1165,600,80,85,null);
+         g2.drawImage(Constants.getActionTiles()[boardNumbers[actionClicked.getquadNum()] % 8],1165,570,75,80,null);
          ActionTile tile  = game.getBoard().getActionBoard().getBoardMatrix()[actionClicked.getTrueRow()][actionClicked.getTrueCol()].getTile();
-
-         g2.drawString("Has "+ tile.getCount() + " Tiles",1150,730);
+         g2.setFont(new Font(fontStr, Font.PLAIN, 18));
+         g2.drawString("Has "+ tile.getCount() + " Tiles",1150,665);
          clickedOnActionOnBoard = false;
+
       }
       //landscape card drawn by the current player
       //System.out.println(game.getCurrentPlayer().getCard());
