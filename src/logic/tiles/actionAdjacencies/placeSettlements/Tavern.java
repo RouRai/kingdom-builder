@@ -60,9 +60,14 @@ public class Tavern extends ActionProcess implements ActionAdjacency {
         if (firstNode.getAdjacentNodes().get(direction) == null) {
             return false;
         }
+        if (firstNode.getAdjacentNodes().get(direction).getType() == null) {
+            return false;
+        }
         TerrainNode secondNode = firstNode.getAdjacentNodes().get(direction);
         TerrainNode thirdNode = secondEnd(firstNode, direction);
-
+        if(firstNode.getTile().getSettlement() == null || secondNode.getTile().getSettlement() == null || thirdNode.getTile().getSettlement() == null){
+            return false;
+        }
         boolean firstNodeSettlementOfPlayer = firstNode.getTile().getSettlement().getPlayer().equals(player);
         boolean secondNodeSettlementOfPlayer = secondNode.getTile().getSettlement().getPlayer().equals(player);
         boolean thirdNodeSettlementOFPlayer = thirdNode.getTile().getSettlement().getPlayer().equals(player);
