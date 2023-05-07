@@ -20,7 +20,7 @@ import java.util.Objects;
 public class EndPanel extends JPanel implements ActionListener{
     private final CardLayout cardLayout;
     private static Game game;
-    private Scoring score;
+    private static Scoring score;
     private BufferedImage background, firstMarker;
     private ArrayList<Player> players;
     private Graphics2D g2;
@@ -118,10 +118,6 @@ public class EndPanel extends JPanel implements ActionListener{
         g2.drawString("" + maxPlayer, 550,810);
     }
     public void drawScoreComponents(){
-        ArrayList<ObjectiveCard> cards = new ArrayList<>();
-        for (int i: game.getObjectiveNumbers())
-            cards.add(new ObjectiveCard(Constants.getObjectiveType(i)));
-        score = new Scoring(game.getAllPlayers(),cards,game.board, game);
         int space_between_Players = 123;
         g2.setColor(Color.WHITE);
         g2.setFont(new Font(fontStr, Font.PLAIN, 40));
@@ -173,5 +169,9 @@ public class EndPanel extends JPanel implements ActionListener{
     }
     public static void setGame(Game g){
         game = g;
+        ArrayList<ObjectiveCard> cards = new ArrayList<>();
+        for (int i: game.getObjectiveNumbers())
+            cards.add(new ObjectiveCard(Constants.getObjectiveType(i)));
+        score = new Scoring(game.getAllPlayers(),cards,game.board, game);
     }
 }
