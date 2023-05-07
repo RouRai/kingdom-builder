@@ -41,12 +41,14 @@ private TranslucentButton gameButton;
     private void setUpButtons(){
         gameButton = new TranslucentButton();
         add(gameButton);
-        // cl.show(Constants.PANEL_CONT, Constants.GAME_PANEL);
-        gameButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                KBWindow.setup();
-            }
+        gameButton.addActionListener(e -> {
+            cl.show(Constants.PANEL_CONT, Constants.LOADING_PANEL);
+            Thread setupThread = new Thread(() -> {
+                SwingUtilities.invokeLater(() -> {
+                    KBWindow.setup();
+                });
+            });
+            setupThread.start();
         });
 
     }

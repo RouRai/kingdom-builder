@@ -34,6 +34,7 @@ public class Constants {
         public static final String END_PANEL = "endPanel";
         public static final String CARD_PANEL = "cardPanel";
         public static final String MENU_PANEL = "menuPanel";
+        public static final String LOADING_PANEL = "loadingPanel";
         // Image Directory
         public static final String IMG_DIRECTORY = "/images/";
 

@@ -85,8 +85,10 @@ public class KBWindow extends JFrame {
 
    private void init(){
       panels.put(Constants.START_PANEL, new StartPanel(cl));
+      panels.put(Constants.LOADING_PANEL, new LoadingPanel(cl));
       Constants.PANEL_CONT.setLayout(cl);
       Constants.PANEL_CONT.add(panels.get(Constants.START_PANEL), Constants.START_PANEL);
+      Constants.PANEL_CONT.add(panels.get(Constants.LOADING_PANEL), Constants.LOADING_PANEL);
       //remove the part below later
       cl.show(Constants.PANEL_CONT, Constants.START_PANEL);
    }
