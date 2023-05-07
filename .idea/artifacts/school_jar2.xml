@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="school:jar2">
+    <output-path>$USER_HOME$/IdeaProjects/KingdomBuilderProject/artifacts/school_jar2</output-path>
+    <root id="archive" name="school.jar">
+      <element id="module-output" name="school" />
+    </root>
+  </artifact>
+</component>

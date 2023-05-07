@@ -84,7 +84,7 @@ public class Game {
       chosenHex.setSettlementImage(null);
       board.getTerrainBoard().getBoardMatrix()[chosenHex.getTrueRow()][chosenHex.getTrueCol()].getTile().removeOwner();
       player.setUsingActionTile(false);
-      board.analyzeAdjacencyToActionTile(player, button.getTrueRow(), button.getTrueCol());
+      board.analyzeAdjacencyToActionTile(player, chosenHex.getTrueRow(), chosenHex.getTrueCol());
    }
    private void doPlacementAction(Player player, HexagonButton button, ActionProcessButton action){
       if(button.getSettlement() == null) {
