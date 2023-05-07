@@ -2,13 +2,9 @@ package custom;
 
 import logic.constantFolder.ActionEnum;
 import logic.constantFolder.Constants;
-import logic.tiles.actionAdjacencies.ActionProcess;
-import logic.tiles.actionAdjacencies.placeSettlements.Farm;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
-
-import static java.util.Objects.requireNonNull;
 
 public class ActionProcessButton extends HexagonButton{
     private BufferedImage front, process;
@@ -59,13 +55,7 @@ public class ActionProcessButton extends HexagonButton{
     public int getNumTiles(){
         return numTiles;
     }
-    //method to check if the current action tile is usable
-    public boolean canUse(){
-        if(numUses > 0){
-            return true;
-        }
-        return false;
-    }
+
     public ActionEnum getType(){
         return type;
     }

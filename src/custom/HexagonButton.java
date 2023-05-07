@@ -1,6 +1,6 @@
 package custom;
+
 import logic.cards.TerrainCard;
-import logic.constantFolder.TerrainEnum;
 import logic.tiles.ActionTile;
 import logic.tiles.TerrainTile;
 import logic.tiles.Tile;
