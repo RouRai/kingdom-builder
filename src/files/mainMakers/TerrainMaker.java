@@ -4,8 +4,9 @@ import logic.constantFolder.Constants;
 import logic.constantFolder.TerrainEnum;
 import logic.tiles.TerrainTile;
 
-import java.io.File;
-import java.io.FileNotFoundException;
+import javax.imageio.ImageIO;
+import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.Objects;
 import java.util.Scanner;
 
@@ -14,8 +15,10 @@ import static logic.constantFolder.Constants.boardNames;
 public class TerrainMaker {
     private final int boardNumber;
     private TerrainTile[][] boardTiles;
+    private Constants constants;
 
     public TerrainMaker(int boardNumber) {
+        constants = new Constants();
         this.boardNumber = boardNumber;
         boardTiles = new TerrainTile[10][10];
         setUpEnumMatrix(boardNumber);
@@ -23,33 +26,44 @@ public class TerrainMaker {
 
     public void setUpEnumMatrix(int boardNumber) {
         try {
-            String fileURL = Objects.requireNonNull(getClass().getResource("/files/textFiles/" + boardNames[boardNumber % 8] + "")).getFile();
-            File myObj = new File(fileURL);
-            Scanner myReader = new Scanner(myObj);
+            /*String fileURL = Objects.requireNonNull(getClass().getResource("/files/textFiles/" + boardNames[boardNumber % 8] + "")).getFile();*/
+            /*InputStream stream = Objects.requireNonNull(getClass().getClassLoader().getResourceAsStream("/files/textFiles/" + boardNames[boardNumber % 8] + ""));
+            System.out.println(stream);
+            InputStreamReader myObj = new InputStreamReader(stream, StandardCharsets.UTF_8);
+            BufferedReader myReader = new BufferedReader(myObj);*/
+            InputStream stream = Objects.requireNonNull(getClass().getClassLoader().getResourceAsStream("files/textFiles/" + boardNames[boardNumber % 8] + ""));
+            InputStreamReader isr = new InputStreamReader(stream, StandardCharsets.UTF_8);
+            BufferedReader myReader = new BufferedReader(isr);
+            //File myObj = new File(fileURL);
+            //FileReader myReader = new FileReader(myObj);
+            //BufferedReader myReader = new BufferedReader(new InputStreamReader(getClass().getClassLoader().getResourceAsStream("/files/textFiles/" + boardNames[boardNumber % 8] + "")));
             createMatrix(myReader);
             if (boardNumber >= Constants.getBoards().length) {
                 flipMatrix();
             }
-        }catch(FileNotFoundException e){
-            e.printStackTrace();
-        }catch(IndexOutOfBoundsException e) {
+        } catch(IndexOutOfBoundsException e) {
             System.out.println("The board number given is out of bounds.");
             e.printStackTrace();
         }
     }
 
-    protected void createMatrix(Scanner fileReader) {
-        int rows = 0;
-        while (fileReader.hasNext()) {
-            String data = fileReader.nextLine();
-            String[] symbols = data.split(" ");
-            int columns = 0;
-            for (String symbol: symbols){
-                boardTiles[rows][columns] = getTypeFromSymbol(symbol);
-                columns++;
+    protected void createMatrix(BufferedReader fileReader) {
+        try{
+            int rows = 0;
+            while (fileReader.ready()) {
+                String data = fileReader.readLine();
+                String[] symbols = data.split(" ");
+                int columns = 0;
+                for (String symbol: symbols){
+                    boardTiles[rows][columns] = getTypeFromSymbol(symbol);
+                    columns++;
+                }
+                rows++;
             }
-            rows++;
+        }catch (Exception e){
+
         }
+
     }
 
     protected void flipMatrix() {
