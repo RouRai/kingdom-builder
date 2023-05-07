@@ -69,6 +69,7 @@ public class CardPanel extends JPanel {
       add(menu);
       menu.addActionListener(e -> {
          System.out.println("menu");
+         MenuPanel.setPanelCameFrom("menu");
          cardLayout.show(Constants.PANEL_CONT, Constants.MENU_PANEL);
       });
    }

@@ -86,10 +86,10 @@ public class MenuPanel extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 System.out.println("resume");
-                if(panel.equals("game")){
-                    cl.show(Constants.PANEL_CONT, Constants.GAME_PANEL);
-                } else {
+                if(panel.equals("end")){
                     cl.show(Constants.PANEL_CONT, Constants.END_PANEL);
+                } else {
+                    cl.show(Constants.PANEL_CONT, Constants.GAME_PANEL);
                 }
             }
         });}
