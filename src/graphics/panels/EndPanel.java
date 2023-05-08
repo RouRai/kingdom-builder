@@ -37,6 +37,8 @@ public class EndPanel extends JPanel implements ActionListener{
         menuButton.addActionListener(this);
         setUpMiscellaneous();
     }
+
+
     public void paintComponent(Graphics g) {
         g2 = (Graphics2D) g;
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
@@ -117,49 +119,55 @@ public class EndPanel extends JPanel implements ActionListener{
         g2.setFont(new Font(fontStr, Font.PLAIN, 28));
         g2.drawString("" + maxPlayer, 550,810);
     }
-    public void drawScoreComponents(){
+    public void drawScoreComponents() {
         int space_between_Players = 123;
         g2.setColor(Color.WHITE);
         g2.setFont(new Font(fontStr, Font.PLAIN, 40));
 
-        for (int i = 0; i<3; i++)
-            g2.drawImage(Constants.getCharCards()[game.getObjectiveNumbers()[i]], 930, 350+i * space_between_Players,80,105,null);
+        for (int i = 0; i < 3; i++)
+            g2.drawImage(Constants.getCharCards()[game.getObjectiveNumbers()[i]], 930, 350 + i * space_between_Players, 80, 105, null);
 
         int startX = 1030;
         int startY = 305;
 
         //city scores
-        for (int i = 0; i<4; i++)
-            g2.drawString(String.format("%3d", game.getAllPlayers().get(i).getScores().get(0)), startX+i * space_between_Players, startY);
+        for (int i = 0; i < 4; i++)
+            g2.drawString(String.format("%3d", game.getAllPlayers().get(i).getScores().get(0)), startX + i * space_between_Players, startY);
         //card 1 scores
         for (int r = 1; r < 4; r++) {
             for (int i = 0; i < 4; i++)
-                g2.drawString(String.format("%3d", game.getAllPlayers().get(i).getScores().get(r)), startX + i * space_between_Players, startY + (r+1) * space_between_Players);
+                g2.drawString(String.format("%3d", game.getAllPlayers().get(i).getScores().get(r)), startX + i * space_between_Players, startY + (r) * space_between_Players);
         }
         //Total scores
-        for (int i = 0; i<4; i++)
-            g2.drawString(String.format("%3d", game.getAllPlayers().get(i).getFinalScore()), startX+i * space_between_Players, startY+4 * space_between_Players);
+        for (int i = 0; i < 4; i++) {
+            int score = 0;
+            for (int k = 0; k < game.getAllPlayers().get(i).getScores().size(); k++) {
+                score += game.getAllPlayers().get(i).getScores().get(k);
+            }
+            g2.drawString(String.format("%3d", score), startX + i * space_between_Players, startY + 4 * space_between_Players);
 
-    }
-    public void setUpMiscellaneous(){
-        try{
-            // 1 -- BACKGROUND - BOTTOM LAYER
-            background = ImageIO.read(Objects.requireNonNull(getClass().getResource("/images/backgroundImages/EndGame.png")));
-            firstMarker = ImageIO.read(Objects.requireNonNull(getClass().getResource("/images/backgroundImages/1st player.png")));
-        } catch (Exception ex) {
-            System.out.println("----------------------------------------- Image Error -----------------------------------------");
         }
-
-        String [] boardNames = {"beach", "boat", "farm", "paddock", "house", "oracle", "tower", "tavern"};
-        // type in the board you want to check corresponding to the string array above
-        int n = 7;
-        // for coordinates
-        addMouseListener(new MouseAdapter() {
-            @Override
-            public void mousePressed(MouseEvent e) {
-                System.out.println("mouse clicked on coord (" +e.getX()+ ", " +e.getY()+ ")");
-            }});
     }
+    public void setUpMiscellaneous() {
+            try {
+                // 1 -- BACKGROUND - BOTTOM LAYER
+                background = ImageIO.read(Objects.requireNonNull(getClass().getResource("/images/backgroundImages/EndGame.png")));
+                firstMarker = ImageIO.read(Objects.requireNonNull(getClass().getResource("/images/backgroundImages/1st player.png")));
+            } catch (Exception ex) {
+                System.out.println("----------------------------------------- Image Error -----------------------------------------");
+            }
+
+            String[] boardNames = {"beach", "boat", "farm", "paddock", "house", "oracle", "tower", "tavern"};
+            // type in the board you want to check corresponding to the string array above
+            int n = 7;
+            // for coordinates
+            addMouseListener(new MouseAdapter() {
+                @Override
+                public void mousePressed(MouseEvent e) {
+                    System.out.println("mouse clicked on coord (" + e.getX() + ", " + e.getY() + ")");
+                }
+            });
+        }
     //@Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource().equals(menuButton)){

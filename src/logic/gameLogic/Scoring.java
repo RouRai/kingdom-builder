@@ -88,7 +88,14 @@ public class Scoring {
         }
 
         for (Player player : players) {
-            player.getScores().set(0, scores.get(player));
+            player.getScores().add(0, scores.get(player));
+            ArrayList<Integer> newScores = new ArrayList<>();
+            for (ObjectiveCard card: objectives)
+                newScores.add(scoreCard(player, card));
+            //player.setScores(scores);
+            for(int i = 0; i < 3; i++){
+                player.getScores().set(i + 1, newScores.get(i));
+            }
         }
     }
 

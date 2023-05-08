@@ -17,7 +17,7 @@ import java.awt.image.BufferedImage;
 public class MenuPanel extends JPanel {
     private CardLayout cl;
     private int pageNumber;
-    private BufferedImage background;
+    private BufferedImage background, leftArrow, rightArrow;
     private BufferedImage[] RulebookPages;
     private TranslucentButton startPage, resume, leftButton, rightButton;
     private Graphics2D g2;
@@ -40,6 +40,8 @@ public class MenuPanel extends JPanel {
         try{
             // 1 -- BACKGROUND - BOTTOM LAYER
             background = ImageIO.read(getClass().getResource("/images/backgroundImages/menu.png"));
+            leftArrow = ImageIO.read(getClass().getResource(("/images/graphicsExtra/leftArrow.png")));
+            rightArrow = ImageIO.read((getClass().getResource("/images/graphicsExtra/right-arrow.png")));
         } catch (Exception ex) {
             System.out.println("----------------------------------------- Image Error -----------------------------------------");
         }
@@ -66,7 +68,9 @@ public class MenuPanel extends JPanel {
         startPage.setBounds(305,250,310,100);
         resume.setBounds(305,390,240,110);
         leftButton.setBounds(660,395,40,60);
+        g.drawImage(leftArrow, 660,395,40,60, null);
         rightButton.setBounds(1305,405,40,60);
+        g.drawImage(rightArrow, 1305,405,40,60, null);
     }
     private void setUpButtons(){
         add(startPage);
