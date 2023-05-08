@@ -58,7 +58,7 @@ public class EndPanel extends JPanel implements ActionListener{
                 g2.drawImage(Constants.getFlippedBoards()[game.getBoardNumbers()[i]%8],(int)x+2, (int)y-1,435, 369, null);
             else
                 g2.drawImage(Constants.getBoards()[game.getBoardNumbers()[i]],(int)x+2, (int)y-1,435, 369, null);
-            }
+        }
 
         for (ButtonQuadrant b: game.getButtonBoard()) {
             double x = b.startX;
@@ -130,9 +130,9 @@ public class EndPanel extends JPanel implements ActionListener{
 
         //city scores
         for (int i = 0; i<4; i++)
-            g2.drawString(String.format("%3d", 0), startX+i * space_between_Players, startY);
+            g2.drawString(String.format("%3d", game.getAllPlayers().get(i).getScores().get(0)), startX+i * space_between_Players, startY);
         //card 1 scores
-        for (int r = 0; r < 3; r++) {
+        for (int r = 1; r < 4; r++) {
             for (int i = 0; i < 4; i++)
                 g2.drawString(String.format("%3d", game.getAllPlayers().get(i).getScores().get(r)), startX + i * space_between_Players, startY + (r+1) * space_between_Players);
         }
