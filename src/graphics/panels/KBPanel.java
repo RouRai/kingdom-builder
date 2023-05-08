@@ -29,7 +29,7 @@ public class KBPanel extends JPanel implements ActionListener{
 
    private BufferedImage background, highlight, firstMarker;
    private ArrayList<TerrainNode> legalPlaces;
-   private TranslucentButton menuButton, finishButton,endGameScreen;
+   private TranslucentButton menuButton, finishButton;
    private TranslucentButton[] objectivesButton;
    private ActionProcessButton[] currentActions;
    private final ButtonQuadrant[] buttonBoards;
@@ -69,9 +69,6 @@ public class KBPanel extends JPanel implements ActionListener{
       add(finishButton);
       finishButton.addActionListener(this);
 
-      endGameScreen = new TranslucentButton();
-      add(endGameScreen);
-      endGameScreen.addActionListener(this);
 
       setUpObjectiveButtons();
 
@@ -131,7 +128,6 @@ public class KBPanel extends JPanel implements ActionListener{
 
       menuButton.setBounds(785, 770, 70, 65);
       finishButton.setBounds(1310, 745, 180, 65);
-      endGameScreen.setBounds(1100, 745, 90, 65);
       for(int p = 0; p < 3; p++){
          objectivesButton[p].setBounds(330 + p * 150, 735, 120, 100);
       }
@@ -425,10 +421,6 @@ public class KBPanel extends JPanel implements ActionListener{
             }
             legalPlaces = game.getLegalRegularPlaces();
          }
-      }
-      else if(e.getSource().equals(endGameScreen)){
-         EndPanel.setGame(game);
-         cardLay.show(Constants.PANEL_CONT, Constants.END_PANEL);
       }
       repaint();
    }
