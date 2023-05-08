@@ -22,7 +22,6 @@ import logic.tiles.actionAdjacencies.placeSettlements.*;
 
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
-import java.util.Objects;
 
 public class Game {
    public ArrayList<Player> allPlayers;
@@ -90,6 +89,7 @@ public class Game {
       board.getTerrainBoard().getBoardMatrix()[chosenHex.getTrueRow()][chosenHex.getTrueCol()].getTile().removeOwner();
       player.setUsingActionTile(false);
       board.analyzeAdjacencyToActionTile(player, chosenHex.getTrueRow(), chosenHex.getTrueCol());
+      board.analyzeAdjacencyToCityTile(player, chosenHex.getTrueRow(), chosenHex.getTrueCol());
    }
    private void doPlacementAction(Player player, HexagonButton button, ActionProcessButton action){
       if(button.getSettlement() == null) {
@@ -245,6 +245,7 @@ public class Game {
       temp.setOwner(getCurrentPlayer(), tempSettlement);
       getBoard().getTerrainBoard().getBoardMatrix()[tempSettlement.getTrueRow()][tempSettlement.getTrueColumn()].getTile().setOwner(player,tempSettlement);
       getBoard().checkAdjacencyToActionTile(player, tempSettlement.getTrueRow(), tempSettlement.getTrueColumn());
+      getBoard().checkAdjacencyToCityTile(player, tempSettlement.getTrueRow(), tempSettlement.getTrueColumn());
    }
 
 }
