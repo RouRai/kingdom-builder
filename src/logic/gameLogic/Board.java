@@ -4,6 +4,7 @@ import datastructures.gameDatastructures.boardMatrices.ActionMatrix;
 import datastructures.gameDatastructures.boardMatrices.CityMatrix;
 import datastructures.gameDatastructures.boardMatrices.TerrainMatrix;
 import datastructures.gameDatastructures.boardNodes.ActionNode;
+import datastructures.gameDatastructures.boardNodes.CityNode;
 import datastructures.gameDatastructures.boardNodes.TerrainNode;
 import files.mainMakers.ActionMaker;
 import files.mainMakers.CityMaker;
@@ -143,7 +144,7 @@ public class Board {
     private void analyzeAdjacentNodesForActionTile (Player player, int[] rows, int[] columns) {
         for (int index = 0; index < rows.length; index++) {
             ActionNode adjacentActionNode = actionBoard.getBoardMatrix()[rows[index]][columns[index]];
-            boolean terrainAdjacentToActionNode = /*terrainBoard.getBoardMatrix()[rows[index]][columns[index]] == null && */adjacentActionNode != null;
+            boolean terrainAdjacentToActionNode = adjacentActionNode != null;
             if (terrainAdjacentToActionNode && adjacentActionNode.getTile().getCount() > 0 && !adjacentActionNode.getTile().getPlayers().contains(player)) {
                 adjacentActionNode.getTile().takeTile(player);
                 player.giveActionTile(adjacentActionNode.getType());
@@ -169,12 +170,66 @@ public class Board {
     private void checkAdjacentNodesForActionTile (Player player, int[] rows, int[] columns) {
         for (int index = 0; index < rows.length; index++) {
             ActionNode adjacentActionNode = actionBoard.getBoardMatrix()[rows[index]][columns[index]];
-            boolean terrainAdjacentToActionNode = /*terrainBoard.getBoardMatrix()[rows[index]][columns[index]] == null && */adjacentActionNode != null;
-            if (terrainAdjacentToActionNode /*&& adjacentActionNode.getTile().getCount() > 0 && !adjacentActionNode.getTile().getPlayers().contains(player)*/) {
+            boolean terrainAdjacentToActionNode = adjacentActionNode != null;
+            if (terrainAdjacentToActionNode) {
                 adjacentActionNode.getTile().getPlayers().remove(player);
                 if(!adjacentActionNode.getTile().getPlayers().contains(player)){
                     player.removeActionTile(adjacentActionNode.getType());
                 }
+            }
+        }
+    }
+
+    public void checkAdjacencyToCityTile(Player player, int row, int column) {
+        checkAdjacencyToCityTile(player, terrainBoard.getBoardMatrix()[row][column]);
+    }
+
+    private void checkAdjacencyToCityTile(Player player, TerrainNode terrainNode) {
+        int[] rows = new int[6];
+        int[] columns = new int[6];
+
+        int index = 0;
+        for (TerrainNode adjacentNode : terrainNode.getAdjacentNodes().values()) {
+            rows[index] = adjacentNode.getTrueRow();
+            columns[index] = adjacentNode.getTrueColumn();
+            index++;
+        }
+
+        analyzeAdjacentNodesForCityTile(player, rows, columns);
+    }
+
+    private void analyzeAdjacentNodesForCityTile(Player player, int[] rows, int[] columns) {
+        for (int index = 0; index < rows.length; index++) {
+            CityNode adjacentCityNode = cityBoard.getBoardMatrix()[rows[index]][columns[index]];
+            boolean terrainAdjacentToCityNode = adjacentCityNode != null;
+            if (terrainAdjacentToCityNode) {
+                adjacentCityNode.addAdjacentPlayer(player);
+            }
+        }
+    }
+
+    public void analyzeAdjacencyToCityTile (Player player, int row, int column) {
+        analyzeAdjacencyToCityTile(player, terrainBoard.getBoardMatrix()[row][column]);
+    }
+    private void analyzeAdjacencyToCityTile (Player player, TerrainNode terrainNode) {
+        int[] rows = new int[6];
+        int[] columns = new int[6];
+
+        int index = 0;
+        for (TerrainNode adjacentNode : terrainNode.getAdjacentNodes().values()) {
+            rows[index] = adjacentNode.getTrueRow();
+            columns[index] = adjacentNode.getTrueColumn();
+            index++;
+        }
+        checkAdjacentNodesForCityTile(player, rows, columns);
+    }
+
+    private void checkAdjacentNodesForCityTile (Player player, int[] rows, int[] columns) {
+        for (int index = 0; index < rows.length; index++) {
+            CityNode adjacentCityNode = cityBoard.getBoardMatrix()[rows[index]][columns[index]];
+            boolean terrainAdjacentToCityNode = adjacentCityNode != null;
+            if (terrainAdjacentToCityNode) {
+                adjacentCityNode.getAdjacentPlayers().remove(player);
             }
         }
     }

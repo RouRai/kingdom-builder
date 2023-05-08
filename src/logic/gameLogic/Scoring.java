@@ -1,10 +1,12 @@
 package logic.gameLogic;
 
+import datastructures.gameDatastructures.boardNodes.CityNode;
 import logic.cards.ObjectiveCard;
 import logic.objectiveScoring.Objective;
 import logic.objectiveScoring.objectives.*;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Author: Rounak Rai <br>
@@ -27,6 +29,7 @@ public class Scoring {
         this.board = board;
         this.game = game;
         calculateScores();
+        analyzeCityScoring();
     }
 
     /**
@@ -36,17 +39,11 @@ public class Scoring {
         // Calculate the scores of players in the list
         for (Player p: players){
             ArrayList<Integer> scores = new ArrayList<>();
-            //scores.add();
             for (ObjectiveCard card: objectives)
                 scores.add(scoreCard(p, card));
             p.setScores(scores);
-
-            //System.out.println(scores.toString());
         }
     }
-    //private int calculateCityScores(Player p){
-
-    //}
 
     /**
      * Scores each player individually and updates their score
@@ -74,5 +71,30 @@ public class Scoring {
 
     public ArrayList<ObjectiveCard> getObjectives() {
         return objectives;
+    }
+
+    private void analyzeCityScoring () {
+        HashMap<Player, Integer> scores = new HashMap<>();
+        for (Player player : players) {
+            scores.put(player, 0);
+        }
+
+        for (CityNode[] row : board.getCityBoard().getBoardMatrix()) {
+            for (CityNode cityNode : row) {
+                if (cityNode == null)
+                    continue;
+                scoreSingleCity(cityNode, scores);
+            }
+        }
+
+        for (Player player : players) {
+            player.getScores().set(0, scores.get(player));
+        }
+    }
+
+    private void scoreSingleCity (CityNode cityNode, HashMap<Player, Integer> scores) {
+        for (Player player : cityNode.getAdjacentPlayers()) {
+            scores.put(player, scores.get(player) + 3);
+        }
     }
 }
