@@ -69,9 +69,7 @@ public class Game {
       }
    }
    public void doSetUpForEndDisplay(){
-      while(getCurrentPlayer().getPlayerNumber() != 1){
-         endTurn();
-      }
+      endTurn();
    }
    private void doMovementAction(Player player, HexagonButton button, ActionProcessButton action, HexagonButton chosenHex){
       if(chosenHex == null){

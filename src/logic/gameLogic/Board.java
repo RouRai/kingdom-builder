@@ -146,9 +146,10 @@ public class Board {
             ActionNode adjacentActionNode = actionBoard.getBoardMatrix()[rows[index]][columns[index]];
             boolean terrainAdjacentToActionNode = adjacentActionNode != null;
             if (terrainAdjacentToActionNode && adjacentActionNode.getTile().getCount() > 0 && !adjacentActionNode.getTile().getPlayers().contains(player)) {
-                adjacentActionNode.getTile().takeTile(player);
                 player.giveActionTile(adjacentActionNode.getType());
             }
+            if(terrainAdjacentToActionNode)
+                adjacentActionNode.getTile().takeTile(player);
         }
     }
     public void analyzeAdjacencyToActionTile (Player player, int row, int column) {

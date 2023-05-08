@@ -177,7 +177,7 @@ public class EndPanel extends JPanel implements ActionListener{
     }
     public static void setGame(Game g){
         game = g;
-        game.doSetUpForEndDisplay();
+        //game.doSetUpForEndDisplay();
         ArrayList<ObjectiveCard> cards = new ArrayList<>();
         for (int i: game.getObjectiveNumbers())
             cards.add(new ObjectiveCard(Constants.getObjectiveType(i)));
