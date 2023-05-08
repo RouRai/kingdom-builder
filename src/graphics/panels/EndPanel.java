@@ -89,13 +89,13 @@ public class EndPanel extends JPanel implements ActionListener{
 
         for (int i = 0; i<4; i++){
             //settlement icon
-            g2.drawImage(Constants.getSettlements()[i], 1020+i * space_between_Players, 150, 100, 80, null);
-            if(i == 3)
+            g2.drawImage(Constants.getSettlements()[game.getAllPlayers().get(i).getPlayerNumber() - 1], 1020+i * space_between_Players, 150, 100, 80, null);
+            if(game.getAllPlayers().get(i).getPlayerNumber() - 1 == 3)
                 g2.setColor(Color.BLACK);
             else
                 g2.setColor(Color.WHITE);
             // players.get(i + 1).getSettlementsRemaining()
-            g2.drawString(""+game.getAllPlayers().get(i ).getSettlementsRemaining(), 1050+i * space_between_Players, 210);
+            g2.drawString(""+game.getAllPlayers().get(i).getSettlementsRemaining(), 1050+i * space_between_Players, 210);
         }
 
     }
@@ -110,7 +110,7 @@ public class EndPanel extends JPanel implements ActionListener{
             }
             if (score > maxPoints) {
                 maxPoints = score; // update maximum points
-                maxPlayer = i + 1; // update index of player with maximum points
+                maxPlayer = game.getAllPlayers().get(i).getPlayerNumber(); // update index of player with maximum points
             }
         }
         g2.setColor(Color.WHITE);
@@ -169,6 +169,7 @@ public class EndPanel extends JPanel implements ActionListener{
     }
     public static void setGame(Game g){
         game = g;
+        game.doSetUpForEndDisplay();
         ArrayList<ObjectiveCard> cards = new ArrayList<>();
         for (int i: game.getObjectiveNumbers())
             cards.add(new ObjectiveCard(Constants.getObjectiveType(i)));
